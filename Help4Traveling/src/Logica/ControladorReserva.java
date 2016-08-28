@@ -9,6 +9,23 @@ package Logica;
  *
  * @author Santiago
  */
-public class ControladorReserva {
+public class ControladorReserva implements IControladorReserva {
+    
+    public void altaDeReserva() {
+        
+    }
+    
+    public void actualizarEstadoDeReserva() {
+        
+    }
+    
+    public void verInfoDeReserva() {
+        
+    }
+    
+    public void cancelarUnaReserva() {
+        
+    }
+    
     
 }

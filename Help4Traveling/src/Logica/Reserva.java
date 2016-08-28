@@ -5,6 +5,8 @@
  */
 package Logica;
 
+import java.util.List;
+
 /**
  *
  * @author Santiago
@@ -16,22 +18,25 @@ public class Reserva {
     //Atributos
     private long id;
     private eEstado estado;
-    private date creada;
+    private Date creada;
     private double total;
+    private List<ItemReserva> items;
     
     //Creadores
     public Reserva(){
         this.id = 0;
-        this.creada = new date(16,12,1994);
+        this.creada = new Date(16,12,1994);
         this.estado = eEstado.REGISTRADA;
         this.total = 0;
+        this.items = null;
     }
     
-    public Reserva(date creada, eEstado estado, float total){
+    public Reserva(Date creada, eEstado estado, float total){
         this.id = 0;
         this.estado = estado;
         this.creada = creada;
         this.total = total;
+        this.items = null;
     }
     
     //Geters
@@ -43,12 +48,16 @@ public class Reserva {
         return this.estado;
     }
     
-    public date getCreada(){
+    public Date getCreada(){
         return this.creada;
     }
     
     public double getTotal(){
         return this.total;
+    }
+
+    public List<ItemReserva> getItems() {
+        return items;
     }
     
     //Seters    
@@ -56,11 +65,16 @@ public class Reserva {
         this.estado = estado;
     }
     
-    public void setCreada(date creada){
+    public void setCreada(Date creada){
         this.creada = creada;
     }
     
     public void setTotal(double total){
         this.total = total;
     }
+
+    public void setItems(List<ItemReserva> items) {
+        this.items = items;
+    }    
+    
 }

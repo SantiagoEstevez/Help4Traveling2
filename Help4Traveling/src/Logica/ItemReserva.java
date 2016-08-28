@@ -1,0 +1,58 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package Logica;
+
+/**
+ *
+ * @author Leonardo
+ */
+public class ItemReserva {
+    private int cantidad;
+    private Date inicio;
+    private Date fin;
+    private Oferta oferta;
+
+    public ItemReserva(int cantidad, Date inicio, Date fin, Oferta oferta) {
+        this.cantidad = cantidad;
+        this.inicio = inicio;
+        this.fin = fin;
+        this.oferta = oferta;
+    }
+
+    public int getCantidad() {
+        return cantidad;
+    }
+
+    public Date getInicio() {
+        return inicio;
+    }
+
+    public Date getFin() {
+        return fin;
+    }
+
+    public Oferta getOferta() {
+        return oferta;
+    }
+
+    public void setCantidad(int cantidad) {
+        this.cantidad = cantidad;
+    }
+
+    public void setInicio(Date inicio) {
+        this.inicio = inicio;
+    }
+
+    public void setFin(Date fin) {
+        this.fin = fin;
+    }
+
+    public void setOferta(Oferta oferta) {
+        this.oferta = oferta;
+    }   
+    
+    
+}

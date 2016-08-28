@@ -6,6 +6,8 @@ package Logica;
  * @author yaman
  */
 public interface IControladorUsuario {
-       public abstract void registrarUsuario(String n, String ap, String ci);
+       public abstract void altaDeUsuario();
+       public abstract void verInfoDeCliente();
+       public abstract void verInfoDeProveedor();
     
 }

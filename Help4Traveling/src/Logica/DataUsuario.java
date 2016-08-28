@@ -14,23 +14,20 @@ public class DataUsuario {
     private String apellido;
     private String nickname;
     private String correo;
-    private String nacimiento;
+    private Date nacimiento;
+    private String tipo;
+    private String empresa;
+    private String link;
     
-    
-    public DataUsuario(){
-        this.nombre="";
-        this.apellido="";
-        this.nickname="";
-        this.correo="";
-        this.nacimiento="";       
-    }
-
-    public DataUsuario(String nombre, String apellido, String nickname, String correo, String nacimiento) {
+    public DataUsuario(String nombre, String apellido, String nickname, String correo, Date nacimiento, String tipo, String empresa, String link) {
         this.nombre = nombre;
         this.apellido = apellido;
         this.nickname = nickname;
         this.correo = correo;
-        this.nacimiento=nacimiento;
+        this.nacimiento = nacimiento;
+        this.tipo = tipo;
+        this.empresa = empresa;
+        this.link = link;
     }
 
     public String getNombre() {
@@ -49,12 +46,20 @@ public class DataUsuario {
         return correo;
     }
 
-    public String getNacimiento() {
+    public Date getNacimiento() {
         return nacimiento;
     }
     
-    
+    public String getTipo() {
+        return tipo;
+    }
 
-    
+    public String getEmpresa() {
+        return empresa;
+    }
+
+    public String getLink() {
+        return link;
+    }   
     
 }

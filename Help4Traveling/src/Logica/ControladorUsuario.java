@@ -9,7 +9,19 @@ package Logica;
  *
  * @author yaman
  */
-public class ControladorUsuario  {
+public class ControladorUsuario implements IControladorUsuario {
+    
 
+    public void altaDeUsuario() {
+        
+    }
+    
+    public void verInfoDeCliente() {
+        
+    }
+    
+    public void verInfoDeProveedor(){
+        
+    }    
     
 }

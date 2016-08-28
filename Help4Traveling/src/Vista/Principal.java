@@ -8,9 +8,9 @@ package Vista;
 
 import Logica.DataUsuario;
 import Logica.Fabrica;
-import Logica.IControladorUsuario;
 import Logica.ControladorUsuario;
 import javax.swing.JOptionPane;
+import Logica.IControladorUsuario;
 
 /**
  *

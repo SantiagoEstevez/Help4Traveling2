@@ -9,23 +9,23 @@ package Logica;
  *
  * @author yaman
  */
-public class Usuario {
-    
+public abstract class Usuario {    
     private String nombre;
     private String apellido;
     private String nickname;
     private String correo;
-    private String nacimiento;
+    private Date nacimiento;
+    private String imagen;
 
-    public Usuario(String nombre, String apellido, String nickname, String correo, String nacimiento) {
+    public Usuario(String nombre, String apellido, String nickname, String correo, Date nacimiento, String imagen) {
         this.nombre = nombre;
         this.apellido = apellido;
         this.nickname = nickname;
         this.correo = correo;
         this.nacimiento = nacimiento;
+        this.imagen = imagen;
     }
     
-
    //Getters
 
     public String getNombre() {
@@ -44,9 +44,17 @@ public class Usuario {
         return correo;
     }
     
+    public Date getNacimiento() {
+        return nacimiento;
+    }
+    
+    public String getImagen() {
+        return imagen;
+    }
+    
     //Setters
     
-     public void setNombre(String nombre) {
+    public void setNombre(String nombre) {
         this.nombre = nombre;
     }
 
@@ -61,7 +69,13 @@ public class Usuario {
     public void setCorreo(String correo) {
         this.correo = correo;
     }
-
-       
+    
+    public void setNacimiento(Date nacimiento) {
+        this.nacimiento = nacimiento;
+    }
+    
+    public void setImagen(String imagen) {
+        this.imagen = imagen;
+    }
 }
 
