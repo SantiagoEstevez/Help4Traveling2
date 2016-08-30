@@ -13,7 +13,5 @@ public interface IControladorReserva {
        public abstract void altaDeReserva();
        public abstract void actualizarEstadoDeReserva();
        public abstract void verInfoDeReserva();
-       public abstract void cancelarUnaReserva();
-
-    
+       public abstract void cancelarUnaReserva();    
 }
