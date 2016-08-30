@@ -5,11 +5,21 @@
  */
 package Logica;
 
-/**
- *
- * @author Santiago
- */
+
 public class ControladorReserva implements IControladorReserva {
+    //public enum eTipoItem{SERVICIO,PROMOCION};
+    private Reserva nueva;
+    
+    public void nuevaRserva(String nickname, double precio) {
+        nueva = new Reserva();
+        nueva.setTotal(precio);
+        nueva.setCliente(nickname);
+    }
+    
+    public void agregarItem(int cantidad, Date fi, Date ff){
+        nueva.agregarItem(cantidad, fi, ff, cantidad);
+        
+    }
     
     public void altaDeReserva() {
         

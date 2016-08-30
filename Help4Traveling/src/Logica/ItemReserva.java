@@ -10,34 +10,46 @@ package Logica;
  * @author Leonardo
  */
 public class ItemReserva {
+    private int id;
     private int cantidad;
     private Date inicio;
     private Date fin;
-    private Oferta oferta;
+    private int idOferta;
+    
+    public ItemReserva() {
+        
+    }
 
-    public ItemReserva(int cantidad, Date inicio, Date fin, Oferta oferta) {
+    public ItemReserva(int id, int cantidad, Date inicio, Date fin, int idOferta) {
+        this.id = id;
         this.cantidad = cantidad;
         this.inicio = inicio;
         this.fin = fin;
-        this.oferta = oferta;
+        this.idOferta = idOferta;
+    }
+    
+    //Geters
+    public int getId() {
+        return this.id;
     }
 
     public int getCantidad() {
-        return cantidad;
+        return this.cantidad;
     }
 
     public Date getInicio() {
-        return inicio;
+        return this.inicio;
     }
 
     public Date getFin() {
-        return fin;
+        return this.fin;
     }
 
-    public Oferta getOferta() {
-        return oferta;
+    public int getIdOferta() {
+        return this.idOferta;
     }
 
+    //Seters
     public void setCantidad(int cantidad) {
         this.cantidad = cantidad;
     }
@@ -50,8 +62,8 @@ public class ItemReserva {
         this.fin = fin;
     }
 
-    public void setOferta(Oferta oferta) {
-        this.oferta = oferta;
+    public void setIdOferta(int idOferta) {
+        this.idOferta = idOferta;
     }   
     
     
