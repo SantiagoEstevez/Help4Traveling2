@@ -9,6 +9,7 @@ package Vista;
 import Logica.DataUsuario;
 import Logica.Fabrica;
 import Logica.ControladorUsuario;
+import Logica.Date;
 import javax.swing.JOptionPane;
 import Logica.IControladorUsuario;
 
@@ -18,7 +19,7 @@ import Logica.IControladorUsuario;
  */
 public class Principal extends javax.swing.JFrame {
     private IControladorUsuario IControlador;
-
+    private String tipo;
     /**
      * Creates new form Principal
      */
@@ -34,7 +35,9 @@ public class Principal extends javax.swing.JFrame {
     
     public Principal(IControladorUsuario IControlador){
         initComponents();
-        this.IControlador= IControlador;
+        Fabrica fabrica = Fabrica.getInstance();
+        this.IControlador= fabrica.getIControladorUsuario();
+        this.tipo = "Cliente";
     }
 
     /**
@@ -63,7 +66,7 @@ public class Principal extends javax.swing.JFrame {
         sp_anio = new javax.swing.JSpinner();
         bt_aceptar = new javax.swing.JButton();
         bt_cancelar = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
+        btnSeleccionarImagen = new javax.swing.JButton();
         chb_proveedor = new javax.swing.JCheckBox();
         pn_proveedor = new javax.swing.JPanel();
         l_empresa = new javax.swing.JLabel();
@@ -138,10 +141,10 @@ public class Principal extends javax.swing.JFrame {
             }
         });
 
-        jButton1.setText("Seleccionar Imagen");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnSeleccionarImagen.setText("Seleccionar Imagen");
+        btnSeleccionarImagen.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnSeleccionarImagenActionPerformed(evt);
             }
         });
 
@@ -187,7 +190,7 @@ public class Principal extends javax.swing.JFrame {
                 .addGroup(pn_proveedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(l_direccion)
                     .addComponent(tf_direccion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(31, Short.MAX_VALUE))
+                .addContainerGap(25, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout if_registrar_clienteLayout = new javax.swing.GroupLayout(if_registrar_cliente.getContentPane());
@@ -233,7 +236,7 @@ public class Principal extends javax.swing.JFrame {
                         .addComponent(sp_anio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(if_registrar_clienteLayout.createSequentialGroup()
                         .addGap(19, 19, 19)
-                        .addComponent(jButton1))
+                        .addComponent(btnSeleccionarImagen))
                     .addGroup(if_registrar_clienteLayout.createSequentialGroup()
                         .addGap(19, 19, 19)
                         .addComponent(chb_proveedor))
@@ -280,7 +283,7 @@ public class Principal extends javax.swing.JFrame {
                     .addComponent(sp_mes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(sp_anio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(35, 35, 35)
-                .addComponent(jButton1)
+                .addComponent(btnSeleccionarImagen)
                 .addGap(26, 26, 26)
                 .addComponent(chb_proveedor)
                 .addGap(2, 2, 2)
@@ -388,7 +391,7 @@ public class Principal extends javax.swing.JFrame {
                 .addGroup(if_registrar_servicioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(bt_cancelar_s)
                     .addComponent(bt_aceptar_s))
-                .addContainerGap(88, Short.MAX_VALUE))
+                .addContainerGap(112, Short.MAX_VALUE))
         );
 
         jMenu1.setText("Inicio");
@@ -429,11 +432,11 @@ public class Principal extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(105, 105, 105)
+                .addGap(38, 38, 38)
                 .addComponent(if_registrar_cliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(26, 26, 26)
+                .addGap(18, 18, 18)
                 .addComponent(if_registrar_servicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(68, Short.MAX_VALUE))
+                .addContainerGap(143, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -442,7 +445,7 @@ public class Principal extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(if_registrar_servicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 35, Short.MAX_VALUE))
+                        .addGap(0, 27, Short.MAX_VALUE))
                     .addComponent(if_registrar_cliente))
                 .addContainerGap())
         );
@@ -480,12 +483,18 @@ public class Principal extends javax.swing.JFrame {
         String anio = this.sp_anio.toString();
         String empresa = this.tf_empresa.getText();
         String direccion = this.tf_direccion.getText();
-        String nacimiento = dia+mes+anio;
+        String imagen = "ruta";
+        //String nacimiento = dia+mes+anio;
         
+        Integer dd = Integer.parseInt(dia);
+        Integer mm = Integer.parseInt(mes);
+        Integer aaaa = Integer.parseInt(anio);
+        Date nacimiento = new Date(dd, mm, aaaa);
+        DataUsuario dtu = new DataUsuario(nombre, apellido, nickname, correo, nacimiento, imagen, this.tipo, empresa, direccion);
+        IControlador.altaDeUsuario(dtu);
         this.tf_apellido.setText("");
         this.tf_nombre.setText("");
         this.tf_correo.setText("");
-        this.tf_nickname.setText("");
         this.tf_nickname.setText("");
         this.tf_empresa.setText("");
         this.tf_direccion.setText("");
@@ -505,20 +514,24 @@ public class Principal extends javax.swing.JFrame {
                 
     }//GEN-LAST:event_bt_cancelarActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btnSeleccionarImagenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSeleccionarImagenActionPerformed
         // TODO add your handling code here:
         this.fc_seleccionar_archivo.setVisible(true);
         this.fc_seleccionar_archivo.showOpenDialog(null);
         
         
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_btnSeleccionarImagenActionPerformed
 
     private void chb_proveedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chb_proveedorActionPerformed
         // TODO add your handling code here:
-        if (this.chb_proveedor.isSelected())
+        if (this.chb_proveedor.isSelected()){
             this.pn_proveedor.setVisible(true);
-        else
+            this.tipo = "Proveedor";
+        }
+        else {
             this.pn_proveedor.setVisible(false);
+            this.tipo = "Cliente";
+        }
     }//GEN-LAST:event_chb_proveedorActionPerformed
 
     private void chb_proveedorStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_chb_proveedorStateChanged
@@ -611,11 +624,11 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JButton bt_cancelar;
     private javax.swing.JButton bt_cancelar_s;
     private javax.swing.JButton bt_categoria;
+    private javax.swing.JButton btnSeleccionarImagen;
     private javax.swing.JCheckBox chb_proveedor;
     private javax.swing.JFileChooser fc_seleccionar_archivo;
     private javax.swing.JInternalFrame if_registrar_cliente;
     private javax.swing.JInternalFrame if_registrar_servicio;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

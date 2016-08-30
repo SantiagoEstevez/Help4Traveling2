@@ -7,7 +7,7 @@ package Logica;
 
 /**
  *
- * @author yaman
+ * @author Leonardo
  */
 public class DataUsuario {
     private String nombre;
@@ -15,16 +15,18 @@ public class DataUsuario {
     private String nickname;
     private String correo;
     private Date nacimiento;
+    private String imagen;
     private String tipo;
     private String empresa;
     private String link;
     
-    public DataUsuario(String nombre, String apellido, String nickname, String correo, Date nacimiento, String tipo, String empresa, String link) {
+    public DataUsuario(String nombre, String apellido, String nickname, String correo, Date nacimiento, String imagen, String tipo, String empresa, String link) {
         this.nombre = nombre;
         this.apellido = apellido;
         this.nickname = nickname;
         this.correo = correo;
         this.nacimiento = nacimiento;
+        this.imagen = imagen;
         this.tipo = tipo;
         this.empresa = empresa;
         this.link = link;
@@ -48,6 +50,10 @@ public class DataUsuario {
 
     public Date getNacimiento() {
         return nacimiento;
+    }
+
+    public String getImagen() {
+        return imagen;
     }
     
     public String getTipo() {

@@ -6,6 +6,7 @@
 package Logica;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Iterator;
 
 /**
  *
@@ -20,7 +21,7 @@ public class ManejadorProveedor {
         proveedoresNK = new HashMap<String,Proveedor>();
     }
     
-    public static ManejadorProveedor getinstance(){
+    public static ManejadorProveedor getInstance(){
         if (instancia == null)
             instancia = new ManejadorProveedor();
         return instancia;
@@ -36,6 +37,21 @@ public class ManejadorProveedor {
         return proveedoresNK.containsKey(nk);        
     }
     
+    public boolean existeNickname(String nk){
+        return proveedoresNK.containsKey(nk);        
+    }
+    
+    public boolean existeCorreo(String correo){
+        boolean existe = false;
+	Iterator<Proveedor> iter = this.proveedoresNK.values().iterator();
+	while ((iter.hasNext()) && (!existe)) {
+            Proveedor prov = iter.next();
+            if (prov.getCorreo() == correo)
+		existe = true;
+	}
+	return existe;        
+    }
+
     public Proveedor obtenerProveedor(String nk){
         return ((Proveedor) proveedoresNK.get(nk));
     }
