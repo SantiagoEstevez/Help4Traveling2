@@ -14,30 +14,29 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class CatCompuesta extends Categoría {
-    List<Categoría> categorías = new ArrayList<Categoría>();
+public class CatCompuesta extends Categoria {
+    List<Categoria> categorías = new ArrayList<Categoria>();
     
-    public CatCompuesta(String nombre, Categoría categoríaPadre){
-            this.setTipoCategoría(Categoría.COMPUESTA);
+    public CatCompuesta(String nombre, Categoria categoríaPadre){
+            this.setTipoCategoria(Categoria.COMPUESTA);
             this.setNombre(nombre);  
-            
-            this.setCategoríaPadre(categoríaPadre);
+            this.setCategoriaPadre(categoríaPadre);
             
     }
     
-    public void insertarCategoría( Categoría categoría){
+    public void insertarCategoria( Categoria categoría){
         categorías.add(categoría);
     }
     
-    public void eliminarNodo(Categoría categoría){
+    public void eliminarNodo(Categoria categoría){
         categorías.remove(categoría);
     }
     
-   public List<Categoría> getCategorías(){
+   public List<Categoria> getCategorias(){
        return categorías;
    }
    
-   public Categoría getCategoría(int posición){
+   public Categoria getCategoria(int posición){
        return categorías.get(posición);
    }
    
