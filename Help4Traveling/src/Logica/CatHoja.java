@@ -9,13 +9,12 @@ package Logica;
  *
  * @author yaman
  */
-public class CatHoja extends Categoría {
+public class CatHoja extends Categoria {
     
-    public CatHoja(String nombre, Categoría categoríaPadre){
-        this.setTipoCategoría(Categoría.HOJA);
+    public CatHoja(String nombre, Categoria categoríaPadre){
+        this.setTipoCategoria(Categoria.HOJA);
         this.setNombre( nombre);
-        
-        this.setCategoríaPadre(categoríaPadre);
+        this.setCategoriaPadre(categoriaPadre);
     }
     
     
