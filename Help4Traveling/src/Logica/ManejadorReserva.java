@@ -23,8 +23,10 @@ public class ManejadorReserva {
        Connection con = conexion.getConnection();
        Statement st;
        
-       sql = "insert into .usuarios (Ref,Nick,Email,Nombre,Apellido) values('SA','santiago','san@gmail.com','santiago','estevez');";
-       
+       sql = "INSERT INTO mydb.reservas " + 
+             "(Ref,Número,FechadeCreación,Precio(USD),Estado,Cliente) " +
+             "VALUES ('RE'," + nueva.getId() + ",'" + nueva.getCreada() + "'," + nueva.getTotal() + 
+             ",'" + nueva.getEstado() + "','" + nueva.getCliente() + "')";
        
        try{
            st = con.createStatement();
