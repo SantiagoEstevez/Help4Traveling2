@@ -4,39 +4,36 @@
  * and open the template in the editor.
  */
 package Logica;
-
 import java.util.List;
-
-/**
- *
- * @author Santiago
- */
+import java.util.Map;
+import java.util.TreeMap;
 
 public class Reserva {
-    public enum eEstado{REGISTRADA,CANCELADA,PAGADA,FACTURADA};
+    public static enum eEstado{REGISTRADA,CANCELADA,PAGADA,FACTURADA};
     
     //Atributos
     private long id;
     private eEstado estado;
     private Date creada;
     private double total;
-    private List<ItemReserva> items;
+    private String cliente;
+    private Map<Integer, ItemReserva> items;
     
     //Creadores
     public Reserva(){
-        this.id = 0;
+        this.id = Reserva.proximoId();
         this.creada = new Date(16,12,1994);
         this.estado = eEstado.REGISTRADA;
         this.total = 0;
-        this.items = null;
+        this.items = new TreeMap<Integer, ItemReserva>();
     }
     
-    public Reserva(Date creada, eEstado estado, float total){
-        this.id = 0;
+    public Reserva(Date creada, eEstado estado, float total, TreeMap<Integer, ItemReserva> items){
+        this.id = Reserva.proximoId();
         this.estado = estado;
         this.creada = creada;
         this.total = total;
-        this.items = null;
+        this.items = items;
     }
     
     //Geters
@@ -52,11 +49,15 @@ public class Reserva {
         return this.creada;
     }
     
+    public String getCliente(){
+        return this.cliente;
+    }
+    
     public double getTotal(){
         return this.total;
     }
 
-    public List<ItemReserva> getItems() {
+    public Map<Integer, ItemReserva> getItems() {
         return items;
     }
     
@@ -69,12 +70,33 @@ public class Reserva {
         this.creada = creada;
     }
     
+    public void setCliente(String cliente){
+        this.cliente = cliente;
+    }
+    
     public void setTotal(double total){
         this.total = total;
     }
 
-    public void setItems(List<ItemReserva> items) {
+    public void setItems(Map<Integer, ItemReserva> items) {
         this.items = items;
     }    
     
+    
+    //-----> Funciones agregadas <-----
+    
+    
+    //Agrega un nuevo item a la lista. El idItem es el identificador del item dentro de la reserva y el idOferta el el identificador del servicio o promocion
+    public void agregarItem(int cantidad, Date fi, Date ff, int idOferta) {
+        int idItem = this.items.size() + 1;
+        
+        ItemReserva nuevoItem = new ItemReserva(idItem,cantidad,fi,ff,idOferta);
+        this.items.put(idItem, nuevoItem);
+    }
+    
+    //Por ver como implementar ersta funcion ya que el ID al ser identiti en la base de datos no se conoce hasta insertar el objeto.
+    private static int proximoId() {
+        //Aca se va a llamar a la base de datos para buscar el proximo ID disponible
+        return 0;
+    }
 }
