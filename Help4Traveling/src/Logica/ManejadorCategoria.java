@@ -35,10 +35,15 @@ public class ManejadorCategoria {
         categoriasNom.put(nombre,cat);
     }
     
-    public boolean existeCategoria(Categoria cat){
+    public boolean existeCategoria(String nombre){
+        return categoriasNom.containsKey(nombre);        
+    }
+    
+     public boolean existeCategoria(Categoria cat){
         String nombre = cat.getNombre();
         return categoriasNom.containsKey(nombre);        
     }
+    
     
     public Categoria obtenerCategoria(String nombre){
         return ((Categoria) categoriasNom.get(nombre));

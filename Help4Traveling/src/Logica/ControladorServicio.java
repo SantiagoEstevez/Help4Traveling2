@@ -103,8 +103,20 @@ public class ControladorServicio implements IControladorOferta  {
     
     }
     
-    public void altaDeCategoria() {
+    public void altaDeCategoria(String nombre, String NombPadre) {
         
+        if(!(ManejadorCategoria.getInstance().existeCategoria(nombre))) {
+            CatHoja nueva =new CatHoja(nombre,null);
+            if(NombPadre==null){
+                    
+         
+         if(!(ManejadorCategoria.getInstance().existeCategoria(nueva))) {
+            ManejadorCategoria.getInstance().agregarCategoria(nueva);
+         };
+         else (NombPadre)
+         
+        
+            
     }
     
     public void actualizarUnServicio() {
