@@ -6,6 +6,7 @@
 package Logica;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  *
@@ -14,6 +15,7 @@ import java.util.List;
 public class Servicio extends Oferta {
     private String descripcion;
     private List<String> imagenes;
+    //private Map<String,Categoria> serviciosNom;
     private float precio;
     private Ciudad origen;
     private Ciudad destino;
