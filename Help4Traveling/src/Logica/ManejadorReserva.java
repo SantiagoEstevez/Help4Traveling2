@@ -6,13 +6,18 @@ package Logica;
     import java.sql.Statement;
 
 public class ManejadorReserva {
-   private Conexion conexion;
-   private String sql;
+    private static ManejadorReserva instancia = null;
+    private Conexion conexion;
+    private String sql;
    
-   public ManejadorReserva(){
-   }
+    //Constructor
+    public static ManejadorReserva getInstance(){
+        if (instancia == null)
+            instancia = new ManejadorReserva();
+        return instancia;
+    }
     
-   public void altaReserva(){
+   public void altaReserva(Reserva nueva){
        //Nueva conexion
        conexion = new Conexion();
        Connection con = conexion.getConnection();

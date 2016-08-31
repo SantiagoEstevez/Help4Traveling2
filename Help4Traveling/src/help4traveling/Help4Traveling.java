@@ -13,9 +13,9 @@ public class Help4Traveling {
     public static void main(String[] args) {
        System.out.println("Iniciando......");
        
-       ManejadorReserva a;
-       a = new ManejadorReserva();
-       a.altaReserva();
+       //ManejadorReserva a;
+       //a = new ManejadorReserva();
+       //a.altaReserva();
        
        //private date a;
        //a = new ManejadorReserva();

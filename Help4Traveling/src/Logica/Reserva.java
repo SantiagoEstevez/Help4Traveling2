@@ -83,20 +83,27 @@ public class Reserva {
     }    
     
     
-    //-----> Funciones agregadas <-----
-    
-    
-    //Agrega un nuevo item a la lista. El idItem es el identificador del item dentro de la reserva y el idOferta el el identificador del servicio o promocion
-    public void agregarItem(int cantidad, Date fi, Date ff, int idOferta) {
-        int idItem = this.items.size() + 1;
-        
-        ItemReserva nuevoItem = new ItemReserva(idItem,cantidad,fi,ff,idOferta);
-        this.items.put(idItem, nuevoItem);
-    }
+    //-----> Metodos de clase agregados <-----
     
     //Por ver como implementar ersta funcion ya que el ID al ser identiti en la base de datos no se conoce hasta insertar el objeto.
     private static int proximoId() {
         //Aca se va a llamar a la base de datos para buscar el proximo ID disponible
         return 0;
+    }
+    
+    
+    //-----> Metodos de instancia agregados <-----
+    
+    //Agrega un nuevo item a la lista. El idItem es el identificador del item dentro de la reserva y el idOferta el el identificador del servicio o promocion
+    public void agregarItem(int cantidad, Date fi, Date ff, Oferta oferta) {
+        int idItem = this.items.size() + 1;
+        
+        ItemReserva nuevoItem = new ItemReserva(idItem,cantidad,fi,ff,oferta);
+        this.items.put(idItem, nuevoItem);
+    }
+    
+    public dtReserva verReserva() {
+        dtReserva dtR = new dtReserva();
+        return dtR;
     }
 }
