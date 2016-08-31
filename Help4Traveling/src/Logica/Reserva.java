@@ -25,14 +25,16 @@ public class Reserva {
         this.creada = new Date(16,12,1994);
         this.estado = eEstado.REGISTRADA;
         this.total = 0;
+        this.cliente = "";
         this.items = new TreeMap<Integer, ItemReserva>();
     }
     
-    public Reserva(Date creada, eEstado estado, float total, TreeMap<Integer, ItemReserva> items){
+    public Reserva(Date creada, eEstado estado, double total, String cliente, Map<Integer, ItemReserva> items){
         this.id = Reserva.proximoId();
         this.estado = estado;
         this.creada = creada;
         this.total = total;
+        this.cliente = cliente;
         this.items = items;
     }
     
@@ -103,7 +105,7 @@ public class Reserva {
     }
     
     public dtReserva verReserva() {
-        dtReserva dtR = new dtReserva();
+        dtReserva dtR = new dtReserva(this.id, this.creada, this.estado, this.total, this.cliente, this.items);
         return dtR;
     }
 }
