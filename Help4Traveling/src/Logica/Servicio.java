@@ -6,6 +6,7 @@
 package Logica;
 
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 // Comentario para que me reconozca los cambios y pueda comitear...
@@ -20,6 +21,16 @@ public class Servicio extends Oferta {
     private float precio;
     private Ciudad origen;
     private Ciudad destino;
+    
+    public Servicio() {
+        super("PorDefecto");
+        this.descripcion = "";
+        this.imagenes = new LinkedList<String>();;
+        this.categoriasNom = new HashMap<String,Categoria>();
+        this.precio = 0;
+        this.origen = null;
+        this.destino = null;
+    }
 
     public Servicio(String nombre, String descripcion, List<String> imagenes, float precio, Ciudad origen) {
         super(nombre);
