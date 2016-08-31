@@ -25,14 +25,16 @@ public class Reserva {
         this.creada = new Date(16,12,1994);
         this.estado = eEstado.REGISTRADA;
         this.total = 0;
+        this.cliente = "";
         this.items = new TreeMap<Integer, ItemReserva>();
     }
     
-    public Reserva(Date creada, eEstado estado, float total, TreeMap<Integer, ItemReserva> items){
+    public Reserva(Date creada, eEstado estado, double total, String cliente, Map<Integer, ItemReserva> items){
         this.id = Reserva.proximoId();
         this.estado = estado;
         this.creada = creada;
         this.total = total;
+        this.cliente = cliente;
         this.items = items;
     }
     
@@ -83,20 +85,27 @@ public class Reserva {
     }    
     
     
-    //-----> Funciones agregadas <-----
-    
-    
-    //Agrega un nuevo item a la lista. El idItem es el identificador del item dentro de la reserva y el idOferta el el identificador del servicio o promocion
-    public void agregarItem(int cantidad, Date fi, Date ff, int idOferta) {
-        int idItem = this.items.size() + 1;
-        
-        ItemReserva nuevoItem = new ItemReserva(idItem,cantidad,fi,ff,idOferta);
-        this.items.put(idItem, nuevoItem);
-    }
+    //-----> Metodos de clase agregados <-----
     
     //Por ver como implementar ersta funcion ya que el ID al ser identiti en la base de datos no se conoce hasta insertar el objeto.
     private static int proximoId() {
         //Aca se va a llamar a la base de datos para buscar el proximo ID disponible
         return 0;
+    }
+    
+    
+    //-----> Metodos de instancia agregados <-----
+    
+    //Agrega un nuevo item a la lista. El idItem es el identificador del item dentro de la reserva y el idOferta el el identificador del servicio o promocion
+    public void agregarItem(int cantidad, Date fi, Date ff, Oferta oferta) {
+        int idItem = this.items.size() + 1;
+        
+        ItemReserva nuevoItem = new ItemReserva(idItem,cantidad,fi,ff,oferta);
+        this.items.put(idItem, nuevoItem);
+    }
+    
+    public dtReserva verReserva() {
+        dtReserva dtR = new dtReserva(this.id, this.creada, this.estado, this.total, this.cliente, this.items);
+        return dtR;
     }
 }

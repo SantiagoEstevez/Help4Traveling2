@@ -14,18 +14,18 @@ public class ItemReserva {
     private int cantidad;
     private Date inicio;
     private Date fin;
-    private int idOferta;
+    private Oferta oferta;
     
     public ItemReserva() {
         
     }
 
-    public ItemReserva(int id, int cantidad, Date inicio, Date fin, int idOferta) {
+    public ItemReserva(int id, int cantidad, Date inicio, Date fin, Oferta oferta) {
         this.id = id;
         this.cantidad = cantidad;
         this.inicio = inicio;
         this.fin = fin;
-        this.idOferta = idOferta;
+        this.oferta = oferta;
     }
     
     //Geters
@@ -45,8 +45,8 @@ public class ItemReserva {
         return this.fin;
     }
 
-    public int getIdOferta() {
-        return this.idOferta;
+    public Oferta getOferta() {
+        return this.oferta;
     }
 
     //Seters
@@ -62,8 +62,8 @@ public class ItemReserva {
         this.fin = fin;
     }
 
-    public void setIdOferta(int idOferta) {
-        this.idOferta = idOferta;
+    public void setOferta(Oferta oferta) {
+        this.oferta = oferta;
     }   
     
     

@@ -16,9 +16,17 @@ public class ControladorReserva implements IControladorReserva {
         nueva.setCliente(nickname);
     }
     
-    public void agregarItem(int cantidad, Date fi, Date ff){
-        nueva.agregarItem(cantidad, fi, ff, cantidad);
-        
+    public void agregarItem(int cantidad, Date fi, Date ff, Oferta oferta){
+        nueva.agregarItem(cantidad, fi, ff, oferta);
+    }
+    
+    public dtReserva verReserva() {
+        return nueva.verReserva();
+    }
+    
+    public void altaReserva() {
+        ManejadorReserva mr = ManejadorReserva.getInstance();
+        mr.altaReserva(nueva);
     }
     
     public void altaDeReserva() {
