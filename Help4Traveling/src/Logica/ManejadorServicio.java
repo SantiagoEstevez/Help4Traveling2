@@ -7,7 +7,7 @@ package Logica;
 
 import java.util.HashMap;
 import java.util.Map;
-
+// Comentario para que me reconozca los cambios y pueda comitear...
 /**
  *
  * @author Leonardo

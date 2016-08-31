@@ -8,7 +8,7 @@ package Logica;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-
+// Comentario para que me reconozca los cambios y pueda comitear...
 /**
  *
  * @author Leonardo
@@ -68,7 +68,7 @@ public class ControladorOferta implements IControladorOferta  {
 		if (!existenk) {
                     existemail = mup.existeCorreo(dtu.getCorreo());
                     if (!existemail)
-                    datosok = true;
+                    datosok = true; 
 		}					
             }
 	}

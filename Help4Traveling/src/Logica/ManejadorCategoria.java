@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 package Logica;
-
+// Comentario para que me reconozca los cambios y pueda comitear...
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
