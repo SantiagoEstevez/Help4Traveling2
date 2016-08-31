@@ -6,7 +6,7 @@
 package Vista;
 
 
-import Logica.DataUsuario;
+import Logica.DtUsuario;
 import Logica.Fabrica;
 import Logica.ControladorUsuario;
 import Logica.Date;
@@ -481,7 +481,7 @@ public class Principal extends javax.swing.JFrame {
         Integer mm = Integer.parseInt(mes);
         Integer aaaa = Integer.parseInt(anio);
         Date nacimiento = new Date(dd, mm, aaaa);
-        DataUsuario dtu = new DataUsuario(nombre, apellido, nickname, correo, nacimiento, imagen, this.tipo, empresa, direccion);
+        DtUsuario dtu = new DtUsuario(nombre, apellido, nickname, correo, nacimiento, imagen, this.tipo, empresa, direccion);
         IControlador.altaDeUsuario(dtu);
         this.tf_apellido.setText("");
         this.tf_nombre.setText("");

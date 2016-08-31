@@ -9,7 +9,7 @@ package Logica;
  *
  * @author Leonardo
  */
-public class DataUsuario {
+public class DtUsuario {
     private String nombre;
     private String apellido;
     private String nickname;
@@ -20,7 +20,7 @@ public class DataUsuario {
     private String empresa;
     private String link;
     
-    public DataUsuario(String nombre, String apellido, String nickname, String correo, Date nacimiento, String imagen, String tipo, String empresa, String link) {
+    public DtUsuario(String nombre, String apellido, String nickname, String correo, Date nacimiento, String imagen, String tipo, String empresa, String link) {
         this.nombre = nombre;
         this.apellido = apellido;
         this.nickname = nickname;

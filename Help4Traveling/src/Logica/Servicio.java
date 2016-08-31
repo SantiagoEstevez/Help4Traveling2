@@ -5,6 +5,7 @@
  */
 package Logica;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -15,7 +16,7 @@ import java.util.Map;
 public class Servicio extends Oferta {
     private String descripcion;
     private List<String> imagenes;
-    //private Map<String,Categoria> serviciosNom;
+    private Map<String,Categoria> categoriasNom;
     private float precio;
     private Ciudad origen;
     private Ciudad destino;
@@ -24,6 +25,7 @@ public class Servicio extends Oferta {
         super(nombre);
         this.descripcion = descripcion;
         this.imagenes = imagenes;
+        this.categoriasNom = new HashMap<String,Categoria>();
         this.precio = precio;
         this.origen = origen;
         this.destino = null;
@@ -69,4 +71,18 @@ public class Servicio extends Oferta {
         this.destino = destino;
     }    
     
+    // Operaciones para manejar coleccion de Categorias del Servicio
+    public void agregarCategoria(Categoria cat){
+        String nombre = cat.getNombre();
+        categoriasNom.put(nombre,cat);
+    }
+    
+    public boolean existeCategoria(Categoria cat){
+        String nombre = cat.getNombre();
+        return categoriasNom.containsKey(nombre);        
+    }
+    
+    public Categoria obtenerCategoria(String nombre){
+        return ((Categoria) categoriasNom.get(nombre));
+    }      
 }

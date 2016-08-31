@@ -15,7 +15,7 @@ public class ControladorUsuario implements IControladorUsuario {
         return true;
     }
     
-    private boolean comprobarCompletitudDatos(DataUsuario dtu) {
+    private boolean comprobarCompletitudDatos(DtUsuario dtu) {
         if (dtu.getNickname() == "")
             return false;
         else if (dtu.getNombre() == "")
@@ -35,13 +35,13 @@ public class ControladorUsuario implements IControladorUsuario {
                                            else return true;		
     }
 	
-    private boolean esUsuarioCliente(DataUsuario dtu) {
+    private boolean esUsuarioCliente(DtUsuario dtu) {
 	if (dtu.getTipo() == "Cliente")
             return true;
 	else return false;		
     }
     
-    public boolean ingresarDatosUsuario(DataUsuario dtu) {
+    public boolean ingresarDatosUsuario(DtUsuario dtu) {
         boolean camposok, clienteok, existenk, existemail;
         boolean datosok = false;
 	camposok = comprobarCompletitudDatos(dtu);
@@ -69,14 +69,14 @@ public class ControladorUsuario implements IControladorUsuario {
 	return datosok;	
     }
 	
-    public void altaUsuarioCliente(DataUsuario dtu) {
+    public void altaUsuarioCliente(DtUsuario dtu) {
         Cliente cli = new Cliente(dtu.getNombre(), dtu.getApellido(), dtu.getNickname(), dtu.getCorreo(), dtu.getNacimiento(), dtu.getImagen());
 	ManejadorCliente muc = ManejadorCliente.getInstance();
 	muc.agregarCliente(cli);
     }
 	
-    public void altaUsuarioProveedor(DataUsuario dtu) {
-	Proveedor prov = new Proveedor(dtu.getEmpresa(), dtu.getLink(), dtu.getNombre(), dtu.getApellido(), dtu.getNickname(), dtu.getCorreo(), dtu.getNacimiento(), dtu.getImagen());
+    public void altaUsuarioProveedor(DtUsuario dtu) {
+	Proveedor prov = new Proveedor(dtu.getNombre(), dtu.getApellido(), dtu.getNickname(), dtu.getCorreo(), dtu.getNacimiento(), dtu.getImagen(), dtu.getEmpresa(), dtu.getLink());
 	ManejadorProveedor mup = ManejadorProveedor.getInstance();
 	mup.agregarProveedor(prov);	
     }
@@ -85,7 +85,7 @@ public class ControladorUsuario implements IControladorUsuario {
 		
     }
 		
-    public void altaDeUsuario(DataUsuario dtu) {
+    public void altaDeUsuario(DtUsuario dtu) {
 	boolean datosok, clienteok;
 	datosok = ingresarDatosUsuario(dtu);
 	if (datosok) {

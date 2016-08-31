@@ -19,7 +19,7 @@ public class Proveedor extends Usuario {
     private Map<String, Promocion> promocionesNom;
 
     //Constructor
-    public Proveedor(String empresa, String link, String nombre, String apellido, String nickname, String correo, Date nacimiento, String imagen) {
+    public Proveedor(String nombre, String apellido, String nickname, String correo, Date nacimiento, String imagen, String empresa, String link) {
         super(nombre, apellido, nickname, correo, nacimiento, imagen);
         this.empresa = empresa;
         this.link = link;
