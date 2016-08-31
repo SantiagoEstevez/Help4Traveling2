@@ -10,12 +10,20 @@ package Logica;
  * @author yaman
  */
 public abstract class Categoria {
-    public static final int HOJA = 1;
+
+/*    public static final int HOJA = 1;
     public static final int COMPUESTA = 2;
+     */    
+
     
-    protected String nombre = "";
-    protected int tipoCategoria;
-    protected Categoria categoriaPadre;
+    private String nombre = "";
+ //   protected int tipoCategoria;
+ //   protected Categoria categoriaPadre;
+
+    public Categoria(String nombre) {
+        this.nombre = nombre;
+    }
+    
     
     
     public String getNombre(){
@@ -25,7 +33,7 @@ public abstract class Categoria {
     public void setNombre(String nombre){
         this.nombre = nombre;
     }
-    
+  /*  
     public int getTipoCategoria(){
         return this.tipoCategoria;
     }
@@ -40,6 +48,5 @@ public abstract class Categoria {
     
     public void setCategoriaPadre(Categoria categoríaPadre){
         this.categoriaPadre = categoríaPadre;
-    }
+    }*/
 }
-
