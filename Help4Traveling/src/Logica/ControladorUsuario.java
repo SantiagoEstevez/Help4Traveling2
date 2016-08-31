@@ -49,7 +49,7 @@ public class ControladorUsuario implements IControladorUsuario {
             clienteok = esUsuarioCliente(dtu);
             if (clienteok) {
 		ManejadorCliente muc = ManejadorCliente.getInstance();
-		existenk = muc.existeNickname(dtu.getNickname());
+		existenk = muc.existeCliente(dtu.getNickname());
 		if (!existenk) {
                     existemail = muc.existeCorreo(dtu.getCorreo());
                     if (!existemail)
@@ -58,7 +58,7 @@ public class ControladorUsuario implements IControladorUsuario {
             }
             else {
 		ManejadorProveedor mup = ManejadorProveedor.getInstance();
-		existenk = mup.existeNickname(dtu.getNickname());
+		existenk = mup.existeProveedor(dtu.getNickname());
 		if (!existenk) {
                     existemail = mup.existeCorreo(dtu.getCorreo());
                     if (!existemail)

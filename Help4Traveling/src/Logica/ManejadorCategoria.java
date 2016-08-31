@@ -7,6 +7,8 @@ package Logica;
 
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -40,5 +42,15 @@ public class ManejadorCategoria {
     
     public Categoria obtenerCategoria(String nombre){
         return ((Categoria) categoriasNom.get(nombre));
+    }
+    
+    public List<String> getNombresCategorias(){
+        List<String> listaCat = new LinkedList<String>();
+        Iterator<Categoria> iter = this.categoriasNom.values().iterator();
+	while (iter.hasNext()) {
+            Categoria cat = iter.next();
+            listaCat.add(cat.getNombre());
+	}
+	return listaCat;        
     }
 }

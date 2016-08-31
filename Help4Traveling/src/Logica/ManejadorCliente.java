@@ -32,13 +32,8 @@ public class ManejadorCliente {
         clientesNK.put(nk,cli);
     }
     
-    public boolean existeCliente(Cliente cli){
-        String nk = cli.getNickname();
-        return clientesNK.containsKey(nk);        
-    }
-    
-    public boolean existeNickname(String nk){
-        return clientesNK.containsKey(nk);        
+    public boolean existeCliente(String nickname){
+        return clientesNK.containsKey(nickname);        
     }
     
     public boolean existeCorreo(String correo){

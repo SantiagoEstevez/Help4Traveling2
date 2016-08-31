@@ -32,13 +32,8 @@ public class ManejadorProveedor {
         proveedoresNK.put(nk,prov);
     }
     
-    public boolean existeProveedor(Proveedor prov){
-        String nk = prov.getNickname();
-        return proveedoresNK.containsKey(nk);        
-    }
-    
-    public boolean existeNickname(String nk){
-        return proveedoresNK.containsKey(nk);        
+    public boolean existeProveedor(String nickname){
+        return proveedoresNK.containsKey(nickname);        
     }
     
     public boolean existeCorreo(String correo){

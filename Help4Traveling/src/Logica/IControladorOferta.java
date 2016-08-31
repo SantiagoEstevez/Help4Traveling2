@@ -9,8 +9,8 @@ package Logica;
  *
  * @author Leonardo
  */
-public interface IControladorServicio {
-       public abstract void altaDeServicio();
+public interface IControladorOferta {
+       public abstract void altaDeServicio(DtServicio dts);
        public abstract void altaDePromocion();
        public abstract void altaDeCategoria();
        public abstract void actualizarUnServicio();
