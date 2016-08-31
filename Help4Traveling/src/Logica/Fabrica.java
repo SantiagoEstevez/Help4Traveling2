@@ -34,7 +34,7 @@ public class Fabrica {
     }
     
     public IControladorOferta getIControladorServicio() {
-        IControladorOferta ICU = new ControladorOferta();
+        IControladorOferta ICU = new ControladorServicio();
         return ICU;
     }
 

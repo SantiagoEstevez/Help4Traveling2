@@ -21,7 +21,7 @@ public class Servicio extends Oferta {
     private Ciudad origen;
     private Ciudad destino;
 
-    public Servicio(String descripcion, List<String> imagenes, float precio, Ciudad origen, String nombre) {
+    public Servicio(String nombre, String descripcion, List<String> imagenes, float precio, Ciudad origen) {
         super(nombre);
         this.descripcion = descripcion;
         this.imagenes = imagenes;
