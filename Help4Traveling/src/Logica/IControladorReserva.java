@@ -10,8 +10,15 @@ package Logica;
  * @author Leonardo
  */
 public interface IControladorReserva {
-       public abstract void altaDeReserva();
-       public abstract void actualizarEstadoDeReserva();
-       public abstract void verInfoDeReserva();
-       public abstract void cancelarUnaReserva();    
+    
+    //Nueva reserva
+    public abstract Reserva nuevaRserva(String nickname, double precio);
+    public abstract void agregarItem(Reserva nueva, int cantidad, Date fi, Date ff, Oferta oferta);
+    public abstract dtReserva verReserva(Reserva nueva);
+    public abstract void altaReserva(Reserva nueva);
+    
+    public abstract void altaDeReserva();
+    public abstract void actualizarEstadoDeReserva();
+    public abstract void verInfoDeReserva();
+    public abstract void cancelarUnaReserva();    
 }

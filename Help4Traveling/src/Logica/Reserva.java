@@ -47,8 +47,8 @@ public class Reserva {
         return this.estado;
     }
     
-    public Date getCreada(){
-        return this.creada;
+    public String getCreada(){
+        return String.valueOf(this.creada.getDia()) + "/" + String.valueOf(this.creada.getMes()) + "/" + String.valueOf(this.creada.getAno());
     }
     
     public String getCliente(){
@@ -98,7 +98,13 @@ public class Reserva {
     
     //Agrega un nuevo item a la lista. El idItem es el identificador del item dentro de la reserva y el idOferta el el identificador del servicio o promocion
     public void agregarItem(int cantidad, Date fi, Date ff, Oferta oferta) {
-        int idItem = this.items.size() + 1;
+        int idItem;
+        
+        if (this.items == null) {
+            idItem = 1;
+        }else {
+            idItem = this.items.size() + 1;
+        }
         
         ItemReserva nuevoItem = new ItemReserva(idItem,cantidad,fi,ff,oferta);
         this.items.put(idItem, nuevoItem);

@@ -24,9 +24,10 @@ public class ManejadorReserva {
        Statement st;
        
        sql = "INSERT INTO mydb.reservas " + 
-             "(Ref,Número,FechadeCreación,Precio(USD),Estado,Cliente) " +
+             "(Ref,Número,FechadeCreación,`Precio(USD)`,Estado,Cliente) " +
              "VALUES ('RE'," + nueva.getId() + ",'" + nueva.getCreada() + "'," + nueva.getTotal() + 
              ",'" + nueva.getEstado() + "','" + nueva.getCliente() + "')";
+       System.out.println(sql);
        
        try{
            st = con.createStatement();

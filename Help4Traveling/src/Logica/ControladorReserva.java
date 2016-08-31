@@ -6,25 +6,27 @@
 package Logica;
 
 
-public class ControladorReserva implements IControladorReserva {
-    //public enum eTipoItem{SERVICIO,PROMOCION};
-    private Reserva nueva;
+public class ControladorReserva implements IControladorReserva {   
     
-    public void nuevaRserva(String nickname, double precio) {
-        nueva = new Reserva();
+    //Crear una nueva reserva
+    public Reserva nuevaRserva(String nickname, double precio) {
+        Reserva nueva = new Reserva();
         nueva.setTotal(precio);
         nueva.setCliente(nickname);
+        return nueva;
     }
     
-    public void agregarItem(int cantidad, Date fi, Date ff, Oferta oferta){
+    public void agregarItem(Reserva nueva, int cantidad, Date fi, Date ff, Oferta oferta){
+        System.out.println("llegue");
+        System.out.println(nueva.getTotal());
         nueva.agregarItem(cantidad, fi, ff, oferta);
     }
     
-    public dtReserva verReserva() {
+    public dtReserva verReserva(Reserva nueva) {
         return nueva.verReserva();
     }
     
-    public void altaReserva() {
+    public void altaReserva(Reserva nueva) {
         ManejadorReserva mr = ManejadorReserva.getInstance();
         mr.altaReserva(nueva);
     }

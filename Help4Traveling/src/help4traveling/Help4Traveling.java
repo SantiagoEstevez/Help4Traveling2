@@ -4,7 +4,8 @@
  * and open the template in the editor.
  */
 package help4traveling;
-    import Logica.ManejadorReserva;
+import Logica.Fabrica;
+    import Logica.*;
 
 public class Help4Traveling {
     /**
@@ -12,6 +13,18 @@ public class Help4Traveling {
      */
     public static void main(String[] args) {
        System.out.println("Iniciando......");
+       
+       Fabrica fab = Fabrica.getInstance();
+       Reserva r = fab.getIControladorReserva().nuevaRserva("santiago", 0);
+       Date a = new Date(12,12,2016);
+       Date b = new Date(12,12,2017);     
+       //Servicio s = new Servicio();
+       
+       System.out.println("C ......");
+       fab.getIControladorReserva().agregarItem(r,1,a,b,s);
+       //fab.getIControladorReserva().verReserva();
+       System.out.println("Antes de guardar a la base de datos ......");
+       fab.getIControladorReserva().altaReserva(r);
        
        //ManejadorReserva a;
        //a = new ManejadorReserva();
