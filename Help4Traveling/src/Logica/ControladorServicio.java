@@ -13,7 +13,7 @@ import java.util.Map;
  *
  * @author Leonardo
  */
-public class ControladorOferta implements IControladorOferta  {
+public class ControladorServicio implements IControladorOferta  {
     
     private boolean comprobarCompletitudDatos(DtServicio dts) {
         if (dts.getNkProveedor() == "")
@@ -49,33 +49,43 @@ public class ControladorOferta implements IControladorOferta  {
     }
     
     public boolean altaServicio(DtServicio dts) {
-        boolean camposok, categoriasok, existeProv, existeCiuO, existeCiuD;
-        Proveedor p;
+        boolean altaok, camposok, categoriasok, existeProv, existeCiuO, existeCiuD;
         camposok = comprobarCompletitudDatos(dts);
+        Proveedor p;
+        altaok = true;
 	if (camposok) {
-            /*if (clienteok) {
-		ManejadorCliente muc = ManejadorCliente.getInstance();
-		existenk = muc.existeCliente(dtu.getNickname());
-		if (!existenk) {
-                    existemail = muc.existeCorreo(dtu.getCorreo());
-                    if (!existemail)
-			datosok = true;
-		}	
+            List<String> listaCat = ManejadorCategoria.getInstance().getNombresCategorias();
+            categoriasok = existenCategorias(dts.getDtCategorias(), listaCat);
+            if (categoriasok) {
+                existeProv = ManejadorProveedor.getInstance().existeProveedor(dts.getNkProveedor());
+                if (existeProv) {
+                    existeCiuO = ManejadorCiudad.getInstance().existeCiudad(dts.getNomCiuOrigen());
+                    if (existeCiuO) {
+                        if (dts.getNomCiuDestino() != "") {
+                            existeCiuD = ManejadorCiudad.getInstance().existeCiudad(dts.getNomCiuDestino());
+                            if (!existeCiuD)
+                                altaok = false;
+                        }                        
+                    }
+                    else altaok = false;
+                }
+                else altaok = false;
             }
-            else {
-		ManejadorProveedor mup = ManejadorProveedor.getInstance();
-		existenk = mup.existeProveedor(dtu.getNickname());
-		if (!existenk) {
-                    existemail = mup.existeCorreo(dtu.getCorreo());
-                    if (!existemail)
-                    datosok = true; 
-		}					
-            }
-	}
-	return datosok;´*/	  
-        
+            else altaok = false;
         }
-        return true;
+        else altaok = false;
+        if (altaok) {
+            Ciudad co = ManejadorCiudad.getInstance().obtenerCiudad(dts.getNomCiuOrigen());
+            Servicio s = new Servicio(dts.getNombre(), dts.getDescripcion(), dts.getImagenes(), dts.getPrecio(), co);
+            if (dts.getNomCiuDestino() != "") {
+                Ciudad cd = ManejadorCiudad.getInstance().obtenerCiudad(dts.getNomCiuDestino());
+                s.setDestino(cd);
+            }
+            p = ManejadorProveedor.getInstance().obtenerProveedor(dts.getNkProveedor());
+            p.agregarServicio(s);
+            ManejadorServicio.getInstance().agregarServicio(s);            
+        }
+        return altaok;
     }
     
     public void altaDeServicio(DtServicio dts) {
@@ -84,6 +94,9 @@ public class ControladorOferta implements IControladorOferta  {
 	if (!altaok) {
             
 	}
+        else {
+        
+        }
     }
     
     public void altaDePromocion() {
