@@ -42,7 +42,7 @@ public class Cliente extends Usuario {
         Iterator<Reserva> iter = this.reservasId.values().iterator();
         while (iter.hasNext()){
             Reserva res =iter.next();
-            listaReservas.add(res.verReserva());
+            listaReservas.add(res.getDtReserva());
         }
         return listaReservas;
     }
