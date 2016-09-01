@@ -52,7 +52,7 @@ public class ManejadorCliente {
         return ((Cliente) clientesNK.get(nk));
     }
     
-       public ArrayList<DtUsuario> listarClientes(){
+    public ArrayList<DtUsuario> listarClientes(){
         ArrayList<DtUsuario> listaClientes = new ArrayList<DtUsuario>();
         Iterator<Cliente> iter = this.clientesNK.values().iterator();
         while (iter.hasNext()){
