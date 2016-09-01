@@ -50,6 +50,9 @@ public class Principal extends javax.swing.JFrame {
     private void initComponents() {
 
         fc_seleccionar_archivo = new javax.swing.JFileChooser();
+        jDialog1 = new javax.swing.JDialog();
+        jDialog2 = new javax.swing.JDialog();
+        jDialog3 = new javax.swing.JDialog();
         if_registrar_cliente = new javax.swing.JInternalFrame();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -83,7 +86,6 @@ public class Principal extends javax.swing.JFrame {
         tf_nombre_s = new javax.swing.JTextField();
         tf_origen = new javax.swing.JTextField();
         bt_aceptar_s = new javax.swing.JButton();
-        if_registrar_reserva = new javax.swing.JInternalFrame();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenu2 = new javax.swing.JMenu();
@@ -93,6 +95,39 @@ public class Principal extends javax.swing.JFrame {
         jMenu3 = new javax.swing.JMenu();
 
         fc_seleccionar_archivo.setOpaque(true);
+
+        javax.swing.GroupLayout jDialog1Layout = new javax.swing.GroupLayout(jDialog1.getContentPane());
+        jDialog1.getContentPane().setLayout(jDialog1Layout);
+        jDialog1Layout.setHorizontalGroup(
+            jDialog1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 400, Short.MAX_VALUE)
+        );
+        jDialog1Layout.setVerticalGroup(
+            jDialog1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 300, Short.MAX_VALUE)
+        );
+
+        javax.swing.GroupLayout jDialog2Layout = new javax.swing.GroupLayout(jDialog2.getContentPane());
+        jDialog2.getContentPane().setLayout(jDialog2Layout);
+        jDialog2Layout.setHorizontalGroup(
+            jDialog2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 400, Short.MAX_VALUE)
+        );
+        jDialog2Layout.setVerticalGroup(
+            jDialog2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 300, Short.MAX_VALUE)
+        );
+
+        javax.swing.GroupLayout jDialog3Layout = new javax.swing.GroupLayout(jDialog3.getContentPane());
+        jDialog3.getContentPane().setLayout(jDialog3Layout);
+        jDialog3Layout.setHorizontalGroup(
+            jDialog3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 400, Short.MAX_VALUE)
+        );
+        jDialog3Layout.setVerticalGroup(
+            jDialog3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 300, Short.MAX_VALUE)
+        );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -214,11 +249,6 @@ public class Principal extends javax.swing.JFrame {
                         .addGap(19, 19, 19)
                         .addComponent(chb_proveedor))
                     .addGroup(if_registrar_clienteLayout.createSequentialGroup()
-                        .addGap(191, 191, 191)
-                        .addComponent(bt_aceptar)
-                        .addGap(39, 39, 39)
-                        .addComponent(bt_cancelar))
-                    .addGroup(if_registrar_clienteLayout.createSequentialGroup()
                         .addGap(36, 36, 36)
                         .addGroup(if_registrar_clienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel4)
@@ -241,6 +271,12 @@ public class Principal extends javax.swing.JFrame {
                         .addGap(26, 26, 26)
                         .addComponent(sp_anio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(0, 51, Short.MAX_VALUE))
+            .addGroup(if_registrar_clienteLayout.createSequentialGroup()
+                .addGap(198, 198, 198)
+                .addComponent(bt_aceptar)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(bt_cancelar)
+                .addGap(65, 65, 65))
         );
         if_registrar_clienteLayout.setVerticalGroup(
             if_registrar_clienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -277,15 +313,14 @@ public class Principal extends javax.swing.JFrame {
                         .addComponent(chb_proveedor)
                         .addGap(2, 2, 2)
                         .addComponent(pn_proveedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(18, 18, 18)
                         .addGroup(if_registrar_clienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(bt_aceptar)
-                            .addComponent(bt_cancelar))
-                        .addContainerGap())
+                            .addComponent(bt_cancelar)))
                     .addGroup(if_registrar_clienteLayout.createSequentialGroup()
                         .addGap(180, 180, 180)
-                        .addComponent(jLabel6)
-                        .addGap(436, 436, 436))))
+                        .addComponent(jLabel6)))
+                .addContainerGap(35, Short.MAX_VALUE))
         );
 
         if_registrar_servicio.setTitle("Registrar Servicio");
@@ -384,20 +419,7 @@ public class Principal extends javax.swing.JFrame {
                 .addGroup(if_registrar_servicioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(bt_cancelar_s)
                     .addComponent(bt_aceptar_s))
-                .addContainerGap(252, Short.MAX_VALUE))
-        );
-
-        if_registrar_reserva.setVisible(true);
-
-        javax.swing.GroupLayout if_registrar_reservaLayout = new javax.swing.GroupLayout(if_registrar_reserva.getContentPane());
-        if_registrar_reserva.getContentPane().setLayout(if_registrar_reservaLayout);
-        if_registrar_reservaLayout.setHorizontalGroup(
-            if_registrar_reservaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 22, Short.MAX_VALUE)
-        );
-        if_registrar_reservaLayout.setVerticalGroup(
-            if_registrar_reservaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jMenu1.setText("Inicio");
@@ -447,25 +469,20 @@ public class Principal extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(38, Short.MAX_VALUE)
+                .addGap(38, 38, 38)
                 .addComponent(if_registrar_cliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(27, 27, 27)
                 .addComponent(if_registrar_servicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(if_registrar_reserva, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(24, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(if_registrar_cliente)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(if_registrar_servicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(if_registrar_reserva, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(if_registrar_cliente, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(if_registrar_servicio, javax.swing.GroupLayout.Alignment.LEADING))
+                .addGap(31, 31, Short.MAX_VALUE))
         );
 
         pack();
@@ -601,6 +618,7 @@ public class Principal extends javax.swing.JFrame {
 
     private void bm_registrar_reservaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bm_registrar_reservaActionPerformed
         altaReserva fAltaReserva = new altaReserva();
+        
         fAltaReserva.setVisible(true);
     }//GEN-LAST:event_bm_registrar_reservaActionPerformed
 
@@ -652,8 +670,10 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JCheckBox chb_proveedor;
     private javax.swing.JFileChooser fc_seleccionar_archivo;
     private javax.swing.JInternalFrame if_registrar_cliente;
-    private javax.swing.JInternalFrame if_registrar_reserva;
     private javax.swing.JInternalFrame if_registrar_servicio;
+    private javax.swing.JDialog jDialog1;
+    private javax.swing.JDialog jDialog2;
+    private javax.swing.JDialog jDialog3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
