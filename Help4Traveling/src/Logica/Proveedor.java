@@ -4,10 +4,11 @@
  * and open the template in the editor.
  */
 package Logica;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Iterator;
-// Comentario para que me reconozca los cambios y pueda comitear...
+// Comentario para que me reconozca los cambios y pueda comitear...again
 /**
  *
  * @author Leonardo
@@ -90,5 +91,20 @@ public class Proveedor extends Usuario {
     public Promocion obtenerPromocion(String nombre){
         return ((Promocion) promocionesNom.get(nombre));
     }
+    
+    public ArrayList<DtServicio> listarServicios(){        
+        ArrayList<DtServicio> listaservicios = new ArrayList<DtServicio>();
+         Iterator<Servicio> iter = this.serviciosNom.values().iterator();
+        while (iter.hasNext()) {
+            Servicio serv = iter.next();
+            DtServicio dtServ = serv.getDtServicio(); 
+            listaservicios.add(dtServ);
+        }
+        return listaservicios;
+    }
+        /*
+        ArrayList<Servicio> lista = new ArrayList<Servicio>(serviciosNom.values());
+        return lista;*/
+    
        
 }

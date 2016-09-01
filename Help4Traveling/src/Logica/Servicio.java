@@ -6,10 +6,11 @@
 package Logica;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-// Comentario para que me reconozca los cambios y pueda comitear...
+// Comentario para que me reconozca los cambios y pueda comitear...again
 /**
  *
  * @author Leonardo
@@ -23,7 +24,7 @@ public class Servicio extends Oferta {
     private Ciudad destino;
     
     public Servicio() {
-        super("PorDefecto");
+        super("PorDefecto",null);
         this.descripcion = "";
         this.imagenes = new LinkedList<String>();;
         this.categoriasNom = new HashMap<String,Categoria>();
@@ -32,8 +33,8 @@ public class Servicio extends Oferta {
         this.destino = null;
     }
 
-    public Servicio(String nombre, String descripcion, List<String> imagenes, float precio, Ciudad origen) {
-        super(nombre);
+    public Servicio(String nombre, Proveedor prov, String descripcion, List<String> imagenes, float precio, Ciudad origen) {
+        super(nombre, prov);
         this.descripcion = descripcion;
         this.imagenes = imagenes;
         this.categoriasNom = new HashMap<String,Categoria>();
@@ -96,4 +97,15 @@ public class Servicio extends Oferta {
     public Categoria obtenerCategoria(String nombre){
         return ((Categoria) categoriasNom.get(nombre));
     }      
+    
+    public DtServicio getDtServicio() {
+        Map<String, DtCategoria> listaCat = new HashMap<String, DtCategoria>();
+        Iterator<Categoria> itercat = this.categoriasNom.values().iterator();
+        while (itercat.hasNext()) {
+            String nomcat = itercat.next().getNombre();
+            DtCategoria dtCat = new DtCategoria(nomcat); 
+            listaCat.put(nomcat, dtCat);
+        }
+        return new DtServicio(this.getNombre(), this.getProveedor().getNickname(), this.getDescripcion(), this.getImagenes(), listaCat, this.getPrecio(), this.getOrigen().getNombre(), this.getDestino().getNombre());
+    }
 }

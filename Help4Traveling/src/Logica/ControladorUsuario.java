@@ -114,6 +114,26 @@ public class ControladorUsuario implements IControladorUsuario {
         return reservas;
     }
     
+    
+    
+           public ArrayList<DtUsuario> listarProveedores() {
+        ManejadorProveedor map = ManejadorProveedor.getInstance();
+        return map.listarProveedores();
+        
+    }
+
+        
+    public ArrayList<DtServicio> listarServicioProveedor(DtUsuario dtu){
+        ManejadorProveedor map = ManejadorProveedor.getInstance();
+        ArrayList<DtServicio> servicios = new ArrayList<DtServicio>();
+        if (map.existeProveedor(dtu.getNickname())){
+            servicios = map.obtenerProveedor(dtu.getNickname()).listarServicios();
+        }
+        return servicios;
+    }
+    
+    
+    
     public void verInfoDeProveedor(){
         
     }    

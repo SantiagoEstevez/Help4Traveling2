@@ -10,7 +10,8 @@ import java.util.Map;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Iterator;
-// Comentario para que me reconozca los cambios y pueda comitear...
+import java.util.LinkedList;
+// Comentario para que me reconozca los cambios y pueda comitear...again
 /**
  *
  * @author Leonardo
@@ -43,8 +44,8 @@ public class ManejadorServicio {
         return ((Servicio) serviciosNom.get(nk));
     }
     
-    public List<String> listarServicios(){
-        List<String> listaserv = new ArrayList<String>();
+    public ArrayList<String> listarServicios(){
+        ArrayList<String> listaserv = new ArrayList<String>();
         Iterator<Servicio> iter = this.serviciosNom.values().iterator();
         while (iter.hasNext()){
             Servicio serv = iter.next();
@@ -52,7 +53,17 @@ public class ManejadorServicio {
             
         }
         return listaserv;
-        
-        
     }
+    
+    public List<DtServicio> getDtServicios() {
+        List<DtServicio> listaDtServ = new LinkedList<DtServicio>();
+        Iterator<Servicio> iter = this.serviciosNom.values().iterator();
+	while (iter.hasNext()) {
+            Servicio serv = iter.next();            
+            DtServicio dtServ = serv.getDtServicio(); 
+            listaDtServ.add(dtServ);
+	}
+	return listaDtServ;        
+    }
+    
 }

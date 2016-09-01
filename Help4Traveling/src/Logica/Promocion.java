@@ -6,7 +6,7 @@
 package Logica;
 
 import java.util.Map;
-
+// Comentario para que me reconozca los cambios y pueda comitear...again
 /**
  *
  * @author Leonardo
@@ -15,8 +15,8 @@ public class Promocion extends Oferta {
     float descuento;
     private Map<String,Servicio> serviciosNom;
 
-    public Promocion(float descuento, String nombre) {
-        super(nombre);
+    public Promocion(String nombre, Proveedor prov, float descuento) {
+        super(nombre,prov);
         this.descuento = descuento;
         this.serviciosNom = null;
     }

@@ -9,12 +9,12 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.ArrayList;
-// Comentario para que me reconozca los cambios y pueda comitear...
+// Comentario para que me reconozca los cambios y pueda comitear...again
 /**
  *
  * @author Leonardo
  */
-public class ControladorServicio implements IControladorOferta  {
+public class ControladorServicio implements IControladorServicio  {
     
     private boolean comprobarCompletitudDatos(DtServicio dts) {
         if (dts.getNkProveedor() == "")
@@ -77,12 +77,12 @@ public class ControladorServicio implements IControladorOferta  {
         else altaok = false;
         if (altaok) {
             Ciudad co = ManejadorCiudad.getInstance().obtenerCiudad(dts.getNomCiuOrigen());
-            Servicio s = new Servicio(dts.getNombre(), dts.getDescripcion(), dts.getImagenes(), dts.getPrecio(), co);
+            p = ManejadorProveedor.getInstance().obtenerProveedor(dts.getNkProveedor());
+            Servicio s = new Servicio(dts.getNombre(), p, dts.getDescripcion(), dts.getImagenes(), dts.getPrecio(), co);
             if (dts.getNomCiuDestino() != "") {
                 Ciudad cd = ManejadorCiudad.getInstance().obtenerCiudad(dts.getNomCiuDestino());
                 s.setDestino(cd);
             }
-            p = ManejadorProveedor.getInstance().obtenerProveedor(dts.getNkProveedor());
             p.agregarServicio(s);
             ManejadorServicio.getInstance().agregarServicio(s);            
         }
@@ -144,6 +144,10 @@ public class ControladorServicio implements IControladorOferta  {
                 
         }
     }   
+    
+    public List<DtServicio> listarServicios() {
+        return ManejadorServicio.getInstance().getDtServicios();  
+    }
     
     
     public void actualizarUnServicio() {
