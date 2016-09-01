@@ -18,7 +18,7 @@ public class Help4Traveling {
        Reserva r = fab.getIControladorReserva().nuevaRserva("santiago", 0);
        Date a = new Date(12,12,2016);
        Date b = new Date(12,12,2017);     
-       //Servicio s = new Servicio();
+       Servicio s = new Servicio();
        
        System.out.println("C ......");
        fab.getIControladorReserva().agregarItem(r,1,a,b,s);

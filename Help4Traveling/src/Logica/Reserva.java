@@ -48,7 +48,7 @@ public class Reserva {
     }
     
     public String getCreada(){
-        return String.valueOf(this.creada.getDia()) + "/" + String.valueOf(this.creada.getMes()) + "/" + String.valueOf(this.creada.getAno());
+        return String.valueOf(this.creada.getAno()) + "-" + String.valueOf(this.creada.getMes()) + "-" + String.valueOf(this.creada.getDia());
     }
     
     public String getCliente(){
