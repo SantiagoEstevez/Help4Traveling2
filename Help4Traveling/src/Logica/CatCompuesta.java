@@ -17,34 +17,47 @@ import java.util.List;
 public class CatCompuesta extends Categoria {
     
     //atributo lista de categorias "hijas"
-    List<Categoria> categorías = new ArrayList<Categoria>();
-    //padre de esta categoria en particular si padre es null la categoria es superior
-    private final CatCompuesta padre;
+    List<Categoria> categorias = new ArrayList<Categoria>();
+    
+
   
     
     public CatCompuesta(String nombre, CatCompuesta catPadre){
-        super(nombre);
-        this.padre=catPadre;
+        super(nombre,catPadre);
+        this.categorias.clear();
+        
      //   this.setTipoCategoria(Categoria.COMPUESTA);
     //        this.setNombre(nombre);  
     //         this.setCategoriaPadre(categoríaPadre);
             
     }
     
+    public CatCompuesta(String nombre, String NombrePadre){
+       
+        super(nombre,(CatCompuesta)(ManejadorCategoria.getInstance().obtenerCategoria(NombrePadre)));
+        this.categorias.clear();
+        
+     //   this.setTipoCategoria(Categoria.COMPUESTA);
+    //        this.setNombre(nombre);  
+    //         this.setCategoriaPadre(categoríaPadre);
+            
+    }
+    
+    
     public void insertarCategoria( Categoria categoría){
-        categorías.add(categoría);
+        categorias.add(categoría);
     }
     
     public void eliminarNodo(Categoria categoría){
-        categorías.remove(categoría);
+        categorias.remove(categoría);
     }
     
    public List<Categoria> getCategorias(){
-       return categorías;
+       return categorias;
    }
    /*
    public Categoria getCategoria(int posición){
-       return categorías.get(posición);
+       return categorias.get(posición);
    }
    */
 }

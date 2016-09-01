@@ -115,8 +115,21 @@ public class ControladorServicio implements IControladorOferta  {
             }
             else{
                 if((ManejadorCategoria.getInstance().existeCategoria(NombPadre))) {
-             
-                    CatHoja nueva1 =new CatHoja(nombre,ManejadorCategoria.getInstance().obtenerCategoria(NombPadre));
+                   /*busco si  el padre es valido tengo que saber si el padre es hoja o no, ya que si lo es
+                   debo cambiarlo por una categoria compuesta ya que va a pasar a ser padre de otra categoria
+                    n*/
+                    
+                    if(ManejadorCategoria.getInstance().obtenerCategoria(NombPadre) instanceof CatHoja){
+                        Categoria papa=ManejadorCategoria.getInstance().obtenerCategoria(NombPadre);
+                        //creo la nueva compuesta con los datos de la simple
+                        Categoria papaCompuesto =new CatCompuesta(NombPadre,papa.getPadre());
+                        //luego la sustituyo
+                        ManejadorCategoria.getInstance().sustituirCategoria(NombPadre, papaCompuesto);
+                    }
+                    CatCompuesta instPadre=(CatCompuesta)ManejadorCategoria.getInstance().obtenerCategoria(NombPadre);
+                 
+                    Categoria nueva1 =new CatHoja(nombre,instPadre);
+                    ((CatCompuesta)instPadre).insertarCategoria(nueva1);
                     ManejadorCategoria.getInstance().agregarCategoria(nueva1);
                     return true;
                 }

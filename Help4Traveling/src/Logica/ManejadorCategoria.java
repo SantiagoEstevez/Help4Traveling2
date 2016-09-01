@@ -49,6 +49,15 @@ public class ManejadorCategoria {
         return ((Categoria) categoriasNom.get(nombre));
     }
     
+    public void eliminarCategoria(String nombre){
+        categoriasNom.remove(nombre);
+    
+    }
+    
+    public void sustituirCategoria(String nombre,Categoria cat){
+        categoriasNom.replace(nombre, cat);
+  }
+    
     public List<String> getNombresCategorias(){
         List<String> listaCat = new LinkedList<String>();
         Iterator<Categoria> iter = this.categoriasNom.values().iterator();

@@ -17,17 +17,28 @@ public abstract class Categoria {
 
     
     private String nombre = "";
+ 
+    private final CatCompuesta padre;
  //   protected int tipoCategoria;
  //   protected Categoria categoriaPadre;
 
-    public Categoria(String nombre) {
+    public Categoria(String nombre, CatCompuesta dad) {
         this.nombre = nombre;
+        this.padre = dad;
     }
     
     
     
     public String getNombre(){
         return this.nombre;
+    }
+    
+    public String getNomPadre(){
+        return this.padre.getNombre();
+    }
+
+    public CatCompuesta getPadre() {
+        return padre;
     }
     
     public void setNombre(String nombre){
