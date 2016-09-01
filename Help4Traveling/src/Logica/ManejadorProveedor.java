@@ -47,8 +47,8 @@ public class ManejadorProveedor {
 	return existe;        
     }
 
-    public Proveedor obtenerProveedor(String nk){
-        return ((Proveedor) proveedoresNK.get(nk));
+    public Proveedor obtenerProveedor(String nickname){
+        return ((Proveedor) proveedoresNK.get(nickname));
     }
     
 }

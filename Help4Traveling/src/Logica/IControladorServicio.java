@@ -10,7 +10,7 @@ import java.util.List;
  *
  * @author Leonardo
  */
-public interface IControladorOferta {
+public interface IControladorServicio {
        public abstract void altaDeServicio(DtServicio dts);
        public abstract void altaDePromocion();
        public abstract boolean altaDeCategoria(String nombre, String NombPadre);

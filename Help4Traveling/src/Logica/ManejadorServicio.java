@@ -10,6 +10,7 @@ import java.util.Map;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.LinkedList;
 // Comentario para que me reconozca los cambios y pueda comitear...
 /**
  *
@@ -52,7 +53,17 @@ public class ManejadorServicio {
             
         }
         return listaserv;
-        
-        
     }
+    
+    public List<DtServicio> getDtServicios() {
+        List<DtServicio> listaDtServ = new LinkedList<DtServicio>();
+        Iterator<Servicio> iter = this.serviciosNom.values().iterator();
+	while (iter.hasNext()) {
+            Servicio serv = iter.next();            
+            DtServicio dtServ = serv.getDtServicio(); 
+            listaDtServ.add(dtServ);
+	}
+	return listaDtServ;        
+    }
+    
 }
