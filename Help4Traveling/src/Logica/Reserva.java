@@ -63,6 +63,8 @@ public class Reserva {
         return items;
     }
     
+    
+    
     //Seters    
     public void setEstado(eEstado estado){
         this.estado = estado;

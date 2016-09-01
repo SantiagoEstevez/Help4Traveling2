@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package Logica;
+import java.util.ArrayList;
 // Comentario para que me reconozca los cambios y pueda comitear...
 /**
  *
@@ -97,8 +98,20 @@ public class ControladorUsuario implements IControladorUsuario {
 	else {}
     }
     
-    public void verInfoDeCliente() {
+       public ArrayList<DtUsuario> listarClientes() {
+        ManejadorCliente muc = ManejadorCliente.getInstance();
+        return muc.listarClientes();
         
+    }
+
+        
+    public ArrayList<dtReserva> listarReservasCliente(DtUsuario dtu){
+        ManejadorCliente muc = ManejadorCliente.getInstance();
+        ArrayList<dtReserva> reservas = new ArrayList<dtReserva>();
+        if (muc.existeCliente(dtu.getNickname())){
+            reservas = muc.obtenerCliente(dtu.getNickname()).listarReservas();
+        }
+        return reservas;
     }
     
     public void verInfoDeProveedor(){

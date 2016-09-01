@@ -1,5 +1,6 @@
 
 package Logica;
+import java.util.ArrayList;
 // Comentario para que me reconozca los cambios y pueda comitear...
 /**
  *
@@ -11,7 +12,8 @@ public interface IControladorUsuario {
        public abstract void cancelarAltaUsuario();
        public abstract void altaUsuarioProveedor(DtUsuario dtu);
        public abstract void altaDeUsuario(DtUsuario dtu);
-       public abstract void verInfoDeCliente();
+       public abstract ArrayList<DtUsuario> listarClientes();
+       public abstract ArrayList<dtReserva> listarReservasCliente(DtUsuario dtu);
        public abstract void verInfoDeProveedor();
     
 }

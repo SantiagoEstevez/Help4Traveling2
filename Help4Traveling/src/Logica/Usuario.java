@@ -52,6 +52,13 @@ public abstract class Usuario {
         return imagen;
     }
     
+    public DtUsuario getDtUsuario(){
+        DtUsuario dtu = new DtUsuario(this.nombre,this.apellido,this.nickname,this.correo,this.nacimiento,this.imagen,"","","");
+        return dtu;
+        //Verificar desdpués
+        
+    }
+    
     //Setters
     
     public void setNombre(String nombre) {

@@ -7,6 +7,7 @@ package Logica;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Iterator;
+import java.util.ArrayList;
 // Comentario para que me reconozca los cambios y pueda comitear...
 /**
  *
@@ -49,6 +50,16 @@ public class ManejadorCliente {
 
     public Cliente obtenerCliente(String nk){
         return ((Cliente) clientesNK.get(nk));
+    }
+    
+       public ArrayList<DtUsuario> listarClientes(){
+        ArrayList<DtUsuario> listaClientes = new ArrayList<DtUsuario>();
+        Iterator<Cliente> iter = this.clientesNK.values().iterator();
+        while (iter.hasNext()){
+            Cliente cli =iter.next();
+            listaClientes.add(cli.getDtUsuario());
+        }
+            return listaClientes;
     }
     
 }
