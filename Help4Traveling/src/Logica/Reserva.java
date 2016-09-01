@@ -112,7 +112,7 @@ public class Reserva {
         this.items.put(idItem, nuevoItem);
     }
     
-    public DtReserva verReserva() {
+    public DtReserva getDtReserva() {
         DtReserva dtR = new DtReserva(this.id, this.creada, this.estado, this.total, this.cliente, this.items);
         return dtR;
     }

@@ -23,7 +23,7 @@ public class ControladorReserva implements IControladorReserva {
     }
     
     public DtReserva verReserva(Reserva nueva) {
-        return nueva.verReserva();
+        return nueva.getDtReserva();
     }
     
     public void altaReserva(Reserva nueva) {
@@ -43,8 +43,9 @@ public class ControladorReserva implements IControladorReserva {
         
     }
     
-    public void cancelarUnaReserva() {
-        
+    public void cancelarUnaReserva(long id) {
+        ManejadorReserva mr = ManejadorReserva.getInstance();
+        mr.cancelarReserva(id);
     }
     
     
