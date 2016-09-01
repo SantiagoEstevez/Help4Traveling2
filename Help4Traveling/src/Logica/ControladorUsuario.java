@@ -105,9 +105,9 @@ public class ControladorUsuario implements IControladorUsuario {
     }
 
         
-    public ArrayList<dtReserva> listarReservasCliente(DtUsuario dtu){
+    public ArrayList<DtReserva> listarReservasCliente(DtUsuario dtu){
         ManejadorCliente muc = ManejadorCliente.getInstance();
-        ArrayList<dtReserva> reservas = new ArrayList<dtReserva>();
+        ArrayList<DtReserva> reservas = new ArrayList<DtReserva>();
         if (muc.existeCliente(dtu.getNickname())){
             reservas = muc.obtenerCliente(dtu.getNickname()).listarReservas();
         }

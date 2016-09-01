@@ -112,8 +112,8 @@ public class Reserva {
         this.items.put(idItem, nuevoItem);
     }
     
-    public dtReserva verReserva() {
-        dtReserva dtR = new dtReserva(this.id, this.creada, this.estado, this.total, this.cliente, this.items);
+    public DtReserva verReserva() {
+        DtReserva dtR = new DtReserva(this.id, this.creada, this.estado, this.total, this.cliente, this.items);
         return dtR;
     }
 }

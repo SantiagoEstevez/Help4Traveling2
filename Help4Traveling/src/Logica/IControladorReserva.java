@@ -14,7 +14,7 @@ public interface IControladorReserva {
     //Nueva reserva
     public abstract Reserva nuevaRserva(String nickname, double precio);
     public abstract void agregarItem(Reserva nueva, int cantidad, Date fi, Date ff, Oferta oferta);
-    public abstract dtReserva verReserva(Reserva nueva);
+    public abstract DtReserva verReserva(Reserva nueva);
     public abstract void altaReserva(Reserva nueva);
     
     public abstract void altaDeReserva();

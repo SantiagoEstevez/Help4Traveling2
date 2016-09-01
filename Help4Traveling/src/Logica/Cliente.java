@@ -37,8 +37,8 @@ public class Cliente extends Usuario {
         return ((Reserva) reservasId.get(id));
     }
     
-     public ArrayList<dtReserva> listarReservas(){
-         ArrayList<dtReserva> listaReservas = new ArrayList<dtReserva>();
+     public ArrayList<DtReserva> listarReservas(){
+         ArrayList<DtReserva> listaReservas = new ArrayList<DtReserva>();
         Iterator<Reserva> iter = this.reservasId.values().iterator();
         while (iter.hasNext()){
             Reserva res =iter.next();

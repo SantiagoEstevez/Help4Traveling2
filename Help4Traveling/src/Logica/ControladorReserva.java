@@ -22,7 +22,7 @@ public class ControladorReserva implements IControladorReserva {
         nueva.agregarItem(cantidad, fi, ff, oferta);
     }
     
-    public dtReserva verReserva(Reserva nueva) {
+    public DtReserva verReserva(Reserva nueva) {
         return nueva.verReserva();
     }
     

@@ -12,7 +12,7 @@ import java.util.TreeMap;
  *
  * @author Santiago
  */
-public class dtReserva {
+public class DtReserva {
     //Atributos
     private long id;
     private Reserva.eEstado estado;
@@ -22,7 +22,7 @@ public class dtReserva {
     private Map<Integer, ItemReserva> items;
     
     //Creadores    
-    public dtReserva(long id, Date creada, Reserva.eEstado estado, double total, String cliente, Map<Integer, ItemReserva> items){
+    public DtReserva(long id, Date creada, Reserva.eEstado estado, double total, String cliente, Map<Integer, ItemReserva> items){
         this.id = id;
         this.estado = estado;
         this.creada = creada;
