@@ -12,7 +12,7 @@ package Logica;
 public interface IControladorOferta {
        public abstract void altaDeServicio(DtServicio dts);
        public abstract void altaDePromocion();
-       public abstract void altaDeCategoria();
+       public abstract boolean altaDeCategoria(String nombre, String NombPadre);
        public abstract void actualizarUnServicio();
        public abstract void verInfoDeServicio();
        public abstract void verInfoDePromocion();

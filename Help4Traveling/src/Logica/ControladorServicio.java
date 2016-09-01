@@ -103,12 +103,34 @@ public class ControladorServicio implements IControladorOferta  {
     
     }
     
-    public void altaDeCategoria() {
+    public boolean altaDeCategoria(String nombre, String NombPadre) {
         
-         
         
+        if(!(ManejadorCategoria.getInstance().existeCategoria(nombre))) {
             
-    }
+            if(NombPadre==null){
+                CatHoja nueva =new CatHoja(nombre,null);
+                ManejadorCategoria.getInstance().agregarCategoria(nueva);
+                return true;
+            }
+            else{
+                if((ManejadorCategoria.getInstance().existeCategoria(NombPadre))) {
+             
+                    CatHoja nueva1 =new CatHoja(nombre,ManejadorCategoria.getInstance().obtenerCategoria(NombPadre));
+                    ManejadorCategoria.getInstance().agregarCategoria(nueva1);
+                    return true;
+                }
+                else{
+                    return false;
+                }
+            }
+        }
+        else{ 
+                return false;
+                
+        }
+    }   
+    
     
     public void actualizarUnServicio() {
         
