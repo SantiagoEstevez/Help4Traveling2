@@ -14,6 +14,8 @@ public interface IControladorUsuario {
        public abstract void altaDeUsuario(DtUsuario dtu);
        public abstract ArrayList<DtUsuario> listarClientes();
        public abstract ArrayList<dtReserva> listarReservasCliente(DtUsuario dtu);
+       public abstract ArrayList<DtUsuario> listarProveedores();
+       public abstract ArrayList<DtServicio> listarServicioProveedor(DtUsuario dtu);
        public abstract void verInfoDeProveedor();
     
 }

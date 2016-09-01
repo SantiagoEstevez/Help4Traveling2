@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package Logica;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Iterator;
@@ -51,4 +52,14 @@ public class ManejadorProveedor {
         return ((Proveedor) proveedoresNK.get(nickname));
     }
     
+    
+        public ArrayList<DtUsuario> listarProveedores(){
+        ArrayList<DtUsuario> listaProveedores = new ArrayList<DtUsuario>();
+        Iterator<Proveedor> iter = this.proveedoresNK.values().iterator();
+        while (iter.hasNext()){
+            Proveedor pr =iter.next();
+            listaProveedores.add(pr.getDtUsuario());
+        }
+            return listaProveedores;
+    }
 }
