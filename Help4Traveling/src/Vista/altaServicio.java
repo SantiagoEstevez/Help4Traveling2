@@ -46,6 +46,7 @@ public class altaServicio extends javax.swing.JInternalFrame {
         setClosable(true);
         setIconifiable(true);
         setMaximizable(true);
+        setTitle("Nuevo servicio");
 
         lb_nombre_s.setText("Nombre");
 

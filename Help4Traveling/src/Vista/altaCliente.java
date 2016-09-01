@@ -71,6 +71,7 @@ public class altaCliente extends javax.swing.JInternalFrame {
         setClosable(true);
         setIconifiable(true);
         setMaximizable(true);
+        setTitle("Nuevo cliente");
 
         jLabel1.setText("Ingrese los siguientes datos");
 
