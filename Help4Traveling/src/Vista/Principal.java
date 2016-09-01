@@ -83,11 +83,13 @@ public class Principal extends javax.swing.JFrame {
         tf_nombre_s = new javax.swing.JTextField();
         tf_origen = new javax.swing.JTextField();
         bt_aceptar_s = new javax.swing.JButton();
+        if_registrar_reserva = new javax.swing.JInternalFrame();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenu2 = new javax.swing.JMenu();
         bm_registrar_cliente = new javax.swing.JMenuItem();
         bm_registrar_servicio = new javax.swing.JMenuItem();
+        bm_registrar_reserva = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
 
         fc_seleccionar_archivo.setOpaque(true);
@@ -382,7 +384,20 @@ public class Principal extends javax.swing.JFrame {
                 .addGroup(if_registrar_servicioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(bt_cancelar_s)
                     .addComponent(bt_aceptar_s))
-                .addContainerGap(192, Short.MAX_VALUE))
+                .addContainerGap(252, Short.MAX_VALUE))
+        );
+
+        if_registrar_reserva.setVisible(true);
+
+        javax.swing.GroupLayout if_registrar_reservaLayout = new javax.swing.GroupLayout(if_registrar_reserva.getContentPane());
+        if_registrar_reserva.getContentPane().setLayout(if_registrar_reservaLayout);
+        if_registrar_reservaLayout.setHorizontalGroup(
+            if_registrar_reservaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 22, Short.MAX_VALUE)
+        );
+        if_registrar_reservaLayout.setVerticalGroup(
+            if_registrar_reservaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
 
         jMenu1.setText("Inicio");
@@ -411,7 +426,16 @@ public class Principal extends javax.swing.JFrame {
         });
         jMenu2.add(bm_registrar_servicio);
 
+        bm_registrar_reserva.setText("Registrar Reserva");
+        bm_registrar_reserva.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bm_registrar_reservaActionPerformed(evt);
+            }
+        });
+        jMenu2.add(bm_registrar_reserva);
+
         jMenuBar1.add(jMenu2);
+        jMenu2.getAccessibleContext().setAccessibleDescription("");
 
         jMenu3.setText("Consultas");
         jMenuBar1.add(jMenu3);
@@ -423,21 +447,24 @@ public class Principal extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(38, 38, 38)
+                .addContainerGap(38, Short.MAX_VALUE)
                 .addComponent(if_registrar_cliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(if_registrar_servicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(143, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(if_registrar_reserva, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(if_registrar_cliente)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(if_registrar_servicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(if_registrar_cliente))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(if_registrar_servicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(if_registrar_reserva, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
 
@@ -572,6 +599,11 @@ public class Principal extends javax.swing.JFrame {
         
     }//GEN-LAST:event_bt_aceptar_sActionPerformed
 
+    private void bm_registrar_reservaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bm_registrar_reservaActionPerformed
+        altaReserva fAltaReserva = new altaReserva();
+        fAltaReserva.setVisible(true);
+    }//GEN-LAST:event_bm_registrar_reservaActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -609,6 +641,7 @@ public class Principal extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem bm_registrar_cliente;
+    private javax.swing.JMenuItem bm_registrar_reserva;
     private javax.swing.JMenuItem bm_registrar_servicio;
     private javax.swing.JButton bt_aceptar;
     private javax.swing.JButton bt_aceptar_s;
@@ -619,6 +652,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JCheckBox chb_proveedor;
     private javax.swing.JFileChooser fc_seleccionar_archivo;
     private javax.swing.JInternalFrame if_registrar_cliente;
+    private javax.swing.JInternalFrame if_registrar_reserva;
     private javax.swing.JInternalFrame if_registrar_servicio;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
