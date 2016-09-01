@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package Logica;
+import java.util.List;
 // Comentario para que me reconozca los cambios y pueda comitear...
 /**
  *
@@ -14,7 +15,9 @@ public interface IControladorOferta {
        public abstract void altaDePromocion();
        public abstract boolean altaDeCategoria(String nombre, String NombPadre);
        public abstract void actualizarUnServicio();
-       public abstract void verInfoDeServicio();
+       public abstract List<String> listarCategorias();
+       public abstract List<String> listarServiciosCategoria(String cat);
+       public abstract void verInfodeServicio();
        public abstract void verInfoDePromocion();
     
 }

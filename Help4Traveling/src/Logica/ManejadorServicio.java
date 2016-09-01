@@ -7,6 +7,9 @@ package Logica;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Iterator;
 // Comentario para que me reconozca los cambios y pueda comitear...
 /**
  *
@@ -38,5 +41,18 @@ public class ManejadorServicio {
     
     public Servicio obtenerServicio(String nk){
         return ((Servicio) serviciosNom.get(nk));
+    }
+    
+    public List<String> listarServicios(){
+        List<String> listaserv = new ArrayList<String>();
+        Iterator<Servicio> iter = this.serviciosNom.values().iterator();
+        while (iter.hasNext()){
+            Servicio serv = iter.next();
+            listaserv.add(serv.getNombre());
+            
+        }
+        return listaserv;
+        
+        
     }
 }

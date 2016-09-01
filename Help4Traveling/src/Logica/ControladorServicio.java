@@ -8,6 +8,7 @@ package Logica;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.ArrayList;
 // Comentario para que me reconozca los cambios y pueda comitear...
 /**
  *
@@ -149,7 +150,26 @@ public class ControladorServicio implements IControladorOferta  {
         
     }
     
-    public void verInfoDeServicio() {
+    public List<String> listarCategorias() {
+        ManejadorCategoria mac = ManejadorCategoria.getInstance();
+        return mac.getNombresCategorias();
+    }
+    
+    public List<String> listarServiciosCategoria(String cat){
+        ManejadorServicio mas = ManejadorServicio.getInstance();
+        List<String> listaserv = mas.listarServicios();
+        List<String> listaServiciosCategoria = new ArrayList<String>();
+        Iterator<String> iter =  listaserv.iterator();
+        while   (iter.hasNext()){
+            String serv = iter.next();
+            if (mas.obtenerServicio(serv).existeCategoria(mas.obtenerServicio(serv).obtenerCategoria(cat))){
+                listaServiciosCategoria.add(serv);
+            }    
+        }
+        return listaServiciosCategoria;
+    }
+    
+    public void verInfodeServicio(){
         
     }
     
