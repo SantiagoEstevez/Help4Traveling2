@@ -98,11 +98,11 @@ public class ControladorUsuario implements IControladorUsuario {
 	else {}
     }
     
-      /* public ArrayList<DtUsuario> listarClientes() {
+       public ArrayList<DtUsuario> listarClientes() {
         ManejadorCliente muc = ManejadorCliente.getInstance();
-        return muc.setClientesDB();
+        return muc.listarClientes();
         
-    }*/
+    }
 
         
     public ArrayList<DtReserva> listarReservasCliente(DtUsuario dtu){
@@ -137,10 +137,5 @@ public class ControladorUsuario implements IControladorUsuario {
     public void verInfoDeProveedor(){
         
     }    
-    
-    public ArrayList<DtUsuario> setClientesDB() {
-        ManejadorCliente muc = ManejadorCliente.getInstance();
-        return muc.setClientesDB();
-    }
 }
 

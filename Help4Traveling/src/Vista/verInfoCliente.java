@@ -12,6 +12,7 @@ import java.awt.event.MouseAdapter;
 import java.util.ArrayList;
 import java.util.Iterator;
 import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -32,11 +33,11 @@ public class verInfoCliente extends javax.swing.JInternalFrame {
         DefaultListModel modelo = new DefaultListModel();
        
         
-         this.listaClientes = this.IControlador.setClientesDB();
+         this.listaClientes = this.IControlador.listarClientes();
         Iterator<DtUsuario> i = this.listaClientes.iterator();
         while (i.hasNext()) {
             DtUsuario user = i.next();
-            modelo.addElement(user.getNickname());
+            modelo.addElement(user.getNombre()/*()+"   "+user.getApellido()+"   "+user.getNickname()*/);
         }
         
         jList1.setModel(modelo);
@@ -73,6 +74,8 @@ public class verInfoCliente extends javax.swing.JInternalFrame {
         });
         jScrollPane1.setViewportView(jList1);
 
+        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(0, 51, 51));
         jLabel1.setText("CLIENTES");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -80,13 +83,14 @@ public class verInfoCliente extends javax.swing.JInternalFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(114, 114, 114))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(130, 130, 130)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(147, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(47, 47, 47)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 312, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(167, 167, 167)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(166, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -94,23 +98,33 @@ public class verInfoCliente extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(116, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(204, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void jList1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jList1MouseClicked
-            String nombre = evt.toString();
-            
-            Iterator<DtUsuario> i = this.listaClientes.iterator();
-            boolean es = false;
+        
+        String nombre = jList1.getSelectedValue();
+        JOptionPane.showMessageDialog(null,nombre);
+              
+         
+        Iterator<DtUsuario> i = this.listaClientes.iterator();
+        boolean es = false;
+        DtUsuario dtu = new DtUsuario();
         while (i.hasNext() & !es) {
             DtUsuario user = i.next();
-            nombre.equals(user.getNickname());
-            
-        }
+            if (nombre.equals(user.getNombre())){
+                dtu = user;
+                es = true;
+                //JOptionPane.showMessageDialog(null,dtu.getNickname()+"  "+dtu.getNombre()+" "+dtu.getApellido());            }           
+                
+            }
+       // JOptionPane.showMessageDialog(null,dtu.getNickname());
+        }   
+
     }//GEN-LAST:event_jList1MouseClicked
 
 

@@ -59,18 +59,9 @@ public class ManejadorCliente {
         return ((Cliente) clientesNK.get(nk));
     }
     
-   /* public ArrayList<DtUsuario> listarClientes(){
-        ArrayList<DtUsuario> listaClientes = new ArrayList<DtUsuario>();
-        Iterator<Cliente> iter = this.clientesNK.values().iterator();
-        while (iter.hasNext()){
-            Cliente cli =iter.next();
-            listaClientes.add(cli.getDtUsuario());
-        }
-            return listaClientes;
-    }
-    */
+    
     //Obtener clientes de la base de datos.
-    public ArrayList<DtUsuario> setClientesDB() {
+    public ArrayList<DtUsuario> listarClientes() {
         ResultSet rsClientes;
         
         conexion = new Conexion();

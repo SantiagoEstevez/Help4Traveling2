@@ -24,7 +24,7 @@ public class altaReserva extends javax.swing.JInternalFrame {
         this.IControlador = fabrica.getIControladorUsuario();
         
         //Agregar los usuarios al combo box
-        this.listaClientes = this.IControlador.setClientesDB();
+        this.listaClientes = this.IControlador.listarClientes();
         Iterator<DtUsuario> i = this.listaClientes.iterator();
         while (i.hasNext()) {
             DtUsuario user = i.next();

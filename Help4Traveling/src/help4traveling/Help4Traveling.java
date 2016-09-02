@@ -17,7 +17,7 @@ public class Help4Traveling {
        
        Fabrica fab = Fabrica.getInstance();
        Reserva r = fab.getIControladorReserva().nuevaRserva("santiago", 0);
-       fab.getIControladorUsuario().setClientesDB();
+       fab.getIControladorUsuario().listarClientes();
        ///Date a = new Date(12,12,2016);
        //Date b = new Date(12,12,2017);     
        //Servicio s = new Servicio();

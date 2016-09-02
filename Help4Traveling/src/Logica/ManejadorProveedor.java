@@ -4,6 +4,10 @@
  * and open the template in the editor.
  */
 package Logica;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -17,6 +21,8 @@ public class ManejadorProveedor {
     //Clase que conserva la colección global de los Usuarios Proveedores del Sistema
     private Map<String,Proveedor> proveedoresNK;
     private static ManejadorProveedor instancia = null;
+    private Conexion conexion;
+    private String sql;
     
     private ManejadorProveedor(){
         proveedoresNK = new HashMap<String,Proveedor>();
@@ -53,13 +59,52 @@ public class ManejadorProveedor {
     }
     
     
-        public ArrayList<DtUsuario> listarProveedores(){
-        ArrayList<DtUsuario> listaProveedores = new ArrayList<DtUsuario>();
+    public ArrayList<DtUsuario> listarProveedores(){
+        
+        ResultSet rsProveedores;
+        
+        conexion = new Conexion();
+        Connection con = conexion.getConnection();
+        Statement st;
+       
+        sql = "SELECT * FROM mydb.usuarios";
+       
+        try{
+            st = con.createStatement();
+            rsProveedores = st.executeQuery(sql);
+            
+            System.out.println("llegue");
+            
+            while (rsProveedores.next()) {
+                System.out.println("llegue2");
+                String nombre = rsProveedores.getString("Nombre");
+                String apellido = rsProveedores.getString("Apellido");
+                String nickname = rsProveedores.getString("Nick");
+                String correo = rsProveedores.getString("Email");
+                Date nacimiento = new Date(12,12,1994);
+                String imagen = "";
+                String empresa = rsProveedores.getString("Empresa");
+                String direccion = rsProveedores.getString("Direccion");
+                
+                Proveedor nuevo = new Proveedor(nombre, apellido, nickname, correo, nacimiento, imagen,empresa,direccion);
+                proveedoresNK.put(nickname, nuevo);
+            }
+            rsProveedores.close();
+            con.close();
+            st.close();
+            
+            System.out.println("Usuarios cargados :)");
+        }catch(SQLException e){
+            System.out.println("No pude cargar usuarios :(");
+        }
+        
+          ArrayList<DtUsuario> listaProveedores = new ArrayList<>();
         Iterator<Proveedor> iter = this.proveedoresNK.values().iterator();
         while (iter.hasNext()){
             Proveedor pr =iter.next();
             listaProveedores.add(pr.getDtUsuario());
         }
             return listaProveedores;
-    }
+    }           
+       
 }

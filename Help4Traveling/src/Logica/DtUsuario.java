@@ -40,6 +40,9 @@ public class DtUsuario {
         this.nacimiento = nacimiento;
         this.imagen = imagen;
         this.tipo = tipo;
+    }
+        
+    public DtUsuario(){
         
     }
 
