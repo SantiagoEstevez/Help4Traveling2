@@ -31,6 +31,17 @@ public class DtUsuario {
         this.empresa = empresa;
         this.link = link;
     }
+    
+    public DtUsuario(String nombre, String apellido, String nickname, String correo, Date nacimiento, String imagen, String tipo) {
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.nickname = nickname;
+        this.correo = correo;
+        this.nacimiento = nacimiento;
+        this.imagen = imagen;
+        this.tipo = tipo;
+        
+    }
 
     public String getNombre() {
         return nombre;

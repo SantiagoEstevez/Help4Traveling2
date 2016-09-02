@@ -59,7 +59,7 @@ public class ManejadorCliente {
         return ((Cliente) clientesNK.get(nk));
     }
     
-    public ArrayList<DtUsuario> listarClientes(){
+   /* public ArrayList<DtUsuario> listarClientes(){
         ArrayList<DtUsuario> listaClientes = new ArrayList<DtUsuario>();
         Iterator<Cliente> iter = this.clientesNK.values().iterator();
         while (iter.hasNext()){
@@ -68,9 +68,9 @@ public class ManejadorCliente {
         }
             return listaClientes;
     }
-    
+    */
     //Obtener clientes de la base de datos.
-    public void setClientesDB() {
+    public ArrayList<DtUsuario> setClientesDB() {
         ResultSet rsClientes;
         
         conexion = new Conexion();
@@ -105,9 +105,18 @@ public class ManejadorCliente {
         }catch(SQLException e){
             System.out.println("No pude cargar usuarios :(");
         }
-       
-       
+        
+          ArrayList<DtUsuario> listaClientes = new ArrayList<>();
+        Iterator<Cliente> iter = this.clientesNK.values().iterator();
+        while (iter.hasNext()){
+            Cliente cli =iter.next();
+            listaClientes.add(cli.getDtUsuario());
+        }
+            return listaClientes;
     }
+        
+       
+       
+ }
     
-}
 

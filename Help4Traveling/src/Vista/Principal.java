@@ -55,6 +55,8 @@ public class Principal extends javax.swing.JFrame {
         bm_registrar_servicio = new javax.swing.JMenuItem();
         bm_registrar_reserva = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
+        bm_verInfoCliente = new javax.swing.JMenuItem();
+        bm_verInfoProveedor = new javax.swing.JMenuItem();
 
         fc_seleccionar_archivo.setOpaque(true);
 
@@ -109,6 +111,23 @@ public class Principal extends javax.swing.JFrame {
         jMenu2.getAccessibleContext().setAccessibleDescription("");
 
         jMenu3.setText("Consultas");
+
+        bm_verInfoCliente.setText("VerInfo Cliente");
+        bm_verInfoCliente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bm_verInfoClienteActionPerformed(evt);
+            }
+        });
+        jMenu3.add(bm_verInfoCliente);
+
+        bm_verInfoProveedor.setText("VerInfo Proveedor");
+        bm_verInfoProveedor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bm_verInfoProveedorActionPerformed(evt);
+            }
+        });
+        jMenu3.add(bm_verInfoProveedor);
+
         jMenuBar1.add(jMenu3);
 
         setJMenuBar(jMenuBar1);
@@ -154,6 +173,18 @@ public class Principal extends javax.swing.JFrame {
         fAltaReserva.setVisible(true);
     }//GEN-LAST:event_bm_registrar_reservaActionPerformed
 
+    private void bm_verInfoClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bm_verInfoClienteActionPerformed
+        verInfoCliente fverInfoCliente = new verInfoCliente();
+        escritorio.add(fverInfoCliente);
+        fverInfoCliente.setVisible(true);
+    }//GEN-LAST:event_bm_verInfoClienteActionPerformed
+
+    private void bm_verInfoProveedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bm_verInfoProveedorActionPerformed
+        verInfoProveedor fverInfoProveedor = new verInfoProveedor();
+        escritorio.add(fverInfoProveedor);
+        fverInfoProveedor.setVisible(true);
+    }//GEN-LAST:event_bm_verInfoProveedorActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -193,6 +224,8 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenuItem bm_registrar_cliente;
     private javax.swing.JMenuItem bm_registrar_reserva;
     private javax.swing.JMenuItem bm_registrar_servicio;
+    private javax.swing.JMenuItem bm_verInfoCliente;
+    private javax.swing.JMenuItem bm_verInfoProveedor;
     private javax.swing.JDesktopPane escritorio;
     private javax.swing.JFileChooser fc_seleccionar_archivo;
     private javax.swing.JMenu jMenu1;
