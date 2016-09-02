@@ -138,5 +138,9 @@ public class ControladorUsuario implements IControladorUsuario {
         
     }    
     
+    public void setClientesDB() {
+        ManejadorCliente muc = ManejadorCliente.getInstance();
+        muc.setClientesDB();
+    }
 }
 
