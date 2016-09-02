@@ -4,10 +4,15 @@
  * and open the template in the editor.
  */
 package Logica;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Iterator;
 import java.util.ArrayList;
+import java.sql.ResultSet;
+
 // Comentario para que me reconozca los cambios y pueda comitear...
 /**
  *
@@ -17,6 +22,8 @@ public class ManejadorCliente {
     //Clase que conserva la colección global de los Usuarios Clientes del Sistema
     private Map<String,Cliente> clientesNK;
     private static ManejadorCliente instancia = null;
+    private Conexion conexion;
+    private String sql;
     
     private ManejadorCliente(){
         clientesNK = new HashMap<String,Cliente>();
@@ -60,6 +67,34 @@ public class ManejadorCliente {
             listaClientes.add(cli.getDtUsuario());
         }
             return listaClientes;
+    }
+    
+    //Obtener clientes de la base de datos.
+    private void getClientesDB() {
+        ResultSet rsClientes;
+        
+        conexion = new Conexion();
+        Connection con = conexion.getConnection();
+        Statement st;
+       
+        sql = "SELECT * FROM mydb.usuarios";
+       
+        try{
+            st = con.createStatement();
+            rsClientes = st.executeQuery(sql);
+            con.close();
+            st.close();
+            
+            while (rsClientes.next()) {
+                rsClientes.getString(sql);
+            }
+            
+            System.out.println("INSERTE :)");
+        }catch(SQLException e){
+            System.out.println("No pude INSERTAR :(");
+        }
+       
+       
     }
     
 }

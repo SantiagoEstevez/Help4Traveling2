@@ -5,17 +5,31 @@
  */
 package Vista;
 
-/**
- *
- * @author Santiago
- */
-public class altaReserva extends javax.swing.JInternalFrame {
+    import Logica.Fabrica;
+    import Logica.IControladorUsuario;
+    import Logica.ControladorUsuario;
+    import Logica.DtUsuario;
+    import Logica.ManejadorCliente;
+    import java.util.ArrayList;
+    import java.util.Iterator;
 
-    /**
-     * Creates new form altaReservas
-     */
+public class altaReserva extends javax.swing.JInternalFrame {
+    private IControladorUsuario IControlador;
+    private ArrayList<DtUsuario> listaClientes;
+    
     public altaReserva() {
         initComponents();
+        
+        Fabrica fabrica = Fabrica.getInstance();
+        this.IControlador = fabrica.getIControladorUsuario();
+        
+        //Agregar los usuarios al combo box
+        this.listaClientes = this.IControlador.listarClientes();
+        Iterator<DtUsuario> i = this.listaClientes.iterator();
+        while (i.hasNext()) {
+            DtUsuario user = i.next();
+            this.clientes.addItem(user.getNickname());
+        }
     }
 
     /**
@@ -28,7 +42,7 @@ public class altaReserva extends javax.swing.JInternalFrame {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        cliente = new javax.swing.JComboBox<>();
+        clientes = new javax.swing.JComboBox<>();
         jLabel2 = new javax.swing.JLabel();
         total = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -39,8 +53,6 @@ public class altaReserva extends javax.swing.JInternalFrame {
         setTitle("Nueva reserva");
 
         jLabel1.setText("Usuario:");
-
-        cliente.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         jLabel2.setText("Precio total:");
 
@@ -65,7 +77,7 @@ public class altaReserva extends javax.swing.JInternalFrame {
                         .addGroup(layout.createSequentialGroup()
                             .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGap(18, 18, 18)
-                            .addComponent(cliente, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(clientes, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGroup(layout.createSequentialGroup()
                             .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGap(18, 18, 18)
@@ -79,7 +91,7 @@ public class altaReserva extends javax.swing.JInternalFrame {
                 .addGap(36, 36, 36)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(cliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(clientes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
@@ -98,7 +110,7 @@ public class altaReserva extends javax.swing.JInternalFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JComboBox<String> cliente;
+    private javax.swing.JComboBox<String> clientes;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
