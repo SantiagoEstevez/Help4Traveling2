@@ -82,11 +82,11 @@ public class ManejadorCliente {
         try{
             st = con.createStatement();
             rsClientes = st.executeQuery(sql);
-            con.close();
-            st.close();
+            
             System.out.println("llegue");
             
             while (rsClientes.next()) {
+                System.out.println("llegue2");
                 String nombre = rsClientes.getString("Nombre");
                 String apellido = rsClientes.getString("Apellido");
                 String nickname = rsClientes.getString("Nick");
@@ -98,6 +98,8 @@ public class ManejadorCliente {
                 clientesNK.put(nickname, nuevo);
             }
             rsClientes.close();
+            con.close();
+            st.close();
             
             System.out.println("Usuarios cargados :)");
         }catch(SQLException e){
