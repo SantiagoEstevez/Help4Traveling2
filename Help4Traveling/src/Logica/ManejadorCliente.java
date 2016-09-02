@@ -70,7 +70,7 @@ public class ManejadorCliente {
     }
     
     //Obtener clientes de la base de datos.
-    private void getClientesDB() {
+    public void setClientesDB() {
         ResultSet rsClientes;
         
         conexion = new Conexion();
@@ -84,6 +84,7 @@ public class ManejadorCliente {
             rsClientes = st.executeQuery(sql);
             con.close();
             st.close();
+            System.out.println("llegue");
             
             while (rsClientes.next()) {
                 String nombre = rsClientes.getString("Nombre");
@@ -100,7 +101,7 @@ public class ManejadorCliente {
             
             System.out.println("Usuarios cargados :)");
         }catch(SQLException e){
-            System.out.println("No pude INSERTAR :(");
+            System.out.println("No pude cargar usuarios :(");
         }
        
        

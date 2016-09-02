@@ -17,5 +17,6 @@ public interface IControladorUsuario {
        public abstract ArrayList<DtUsuario> listarProveedores();
        public abstract ArrayList<DtServicio> listarServicioProveedor(DtUsuario dtu);
        public abstract void verInfoDeProveedor();
+       public abstract void setClientesDB();
     
 }
