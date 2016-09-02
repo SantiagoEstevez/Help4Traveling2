@@ -86,10 +86,19 @@ public class ManejadorCliente {
             st.close();
             
             while (rsClientes.next()) {
-                rsClientes.getString(sql);
+                String nombre = rsClientes.getString("Nombre");
+                String apellido = rsClientes.getString("Apellido");
+                String nickname = rsClientes.getString("Nick");
+                String correo = rsClientes.getString("Email");
+                Date nacimiento = new Date(12,12,1994);
+                String imagen = "";
+                
+                Cliente nuevo = new Cliente(nombre, apellido, nickname, correo, nacimiento, imagen);
+                clientesNK.put(nickname, nuevo);
             }
+            rsClientes.close();
             
-            System.out.println("INSERTE :)");
+            System.out.println("Usuarios cargados :)");
         }catch(SQLException e){
             System.out.println("No pude INSERTAR :(");
         }
