@@ -56,9 +56,37 @@ public class ManejadorCliente {
     }
 
     public Cliente obtenerCliente(String nk){
-        return ((Cliente) clientesNK.get(nk));
-    }
-    
+        
+        ResultSet rsCliente;
+        Cliente cl = null;
+        
+        conexion = new Conexion();
+        Connection con = conexion.getConnection();
+        Statement st;
+        
+        sql = "SELECT * FROM mydb.usuarios WHERE Nick=" + nk; 
+        
+        try{
+            st = con.createStatement();
+            rsCliente = st.executeQuery(sql);   
+            
+            Date fecha = new Date();
+            cl = new Cliente(rsCliente.getString("Nombre"),rsCliente.getString("Apellido"),rsCliente.getString("Nick"),rsCliente.getString("Correo"),fecha,"imagen");
+
+        
+            rsCliente.close();
+            con.close();
+            st.close();
+           
+        } catch(SQLException e){
+            System.out.println("No pude cargar usuarios :(");
+        }
+        return cl; 
+        
+    } 
+        
+        //return ((Cliente) clientesNK.get(nk));
+
     
     //Obtener clientes de la base de datos.
     public ArrayList<DtUsuario> listarClientes() {

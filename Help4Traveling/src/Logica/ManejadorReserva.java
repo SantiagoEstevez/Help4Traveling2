@@ -2,6 +2,7 @@
 package Logica;
     import java.sql.Connection;
     import java.sql.DriverManager;
+import java.sql.ResultSet;
     import java.sql.SQLException;
     import java.sql.Statement;
     import java.util.ArrayList;
@@ -97,4 +98,51 @@ public class ManejadorReserva {
 	}
 	return listaDtRes;        
     }
+    
+    public ArrayList<DtReserva> listarReservasCliente(DtUsuario user){
+       conexion = new Conexion();
+       Connection con = conexion.getConnection();
+       Statement st;
+       ResultSet rsReservasCliente;
+       sql = "SELECT * FROM mydb.reservas" +
+               "WHERE Cliente= DT AND Cliente=EW"; 
+       try{
+            st = con.createStatement();
+            rsReservasCliente = st.executeQuery(sql);
+            
+            while (rsReservasCliente.next()) {
+                System.out.println("llegue2");
+                String id = rsReservasCliente.getString("Ref");
+                String estado = rsReservasCliente.getString("Estado");
+                String fecha = rsReservasCliente.getString("Fecha de Creacion");
+                String cliente = rsReservasCliente.getString("Cliente");
+                String precio = rsReservasCliente.getString("Precio");
+                
+                long idint = Integer.parseInt(id);
+                double precioint = Integer.parseInt(precio);
+                Reserva nueva = new Reserva(/*idint,"REGISTRADA", cliente,null*/);
+                nueva.setCliente(cliente);
+                nueva.setEstado(Reserva.eEstado.REGISTRADA);
+                nueva.setTotal(precioint);
+                this.reservasId.put(idint, nueva);
+                
+            } 
+            rsReservasCliente.close();
+            con.close();
+            st.close();
+            
+            }catch(SQLException e){
+           System.out.println("No hubo resultado");
+       }
+       
+        ArrayList<DtReserva> listaReservasCliente = new ArrayList<>();
+        Iterator<Reserva> iter = this.reservasId.values().iterator();
+        while (iter.hasNext()){
+            Reserva res =iter.next();
+            listaReservasCliente.add(res.getDtReserva());
+        }
+            return listaReservasCliente;
+    }
+          
+ 
 }
