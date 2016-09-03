@@ -10,18 +10,17 @@ import Logica.Fabrica;
 import Logica.IControladorReserva;
 import java.util.Iterator;
 import java.util.List;
+import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
-import javax.swing.table.DefaultTableModel;
 
 /**
  *
  * @author tecnoinf
  */
-public class cancelarReserva extends javax.swing.JInternalFrame {
+public class cancelarReservaLista extends javax.swing.JInternalFrame {
     private IControladorReserva IControlador;
     private List<DtReserva> listaReservas;
-    String [] columnas = {"ID","Creación","Estado","Total","Cliente"};
-    private DefaultTableModel tableModel = new DefaultTableModel(columnas,0);
+    private DefaultListModel listModel = new DefaultListModel();
     
     /**
      * Creates new form cancelarReserva
@@ -30,32 +29,17 @@ public class cancelarReserva extends javax.swing.JInternalFrame {
     private void actualizarReservas() {
         this.listaReservas = this.IControlador.listarReservas();
         Iterator<DtReserva> i = this.listaReservas.iterator();
-        tableModel.getDataVector().removeAllElements();
-        //Integer n=0;
+        listModel.clear();
         
         while (i.hasNext()) {
             DtReserva res = i.next();
-            Object [] fila = {res.getId(),
-                              res.getCreada().getFecha("-"),
-                              res.getEstado(),
-                              res.getTotal(),
-                              res.getCliente()
-            };
-            
-            tableModel.addRow(fila);
-            jTableRes.setModel(tableModel);
-            /*
-            jTableRes.setValueAt(res.getId(),n,0);
-            jTableRes.setValueAt(res.getCreada(),n,1);
-            jTableRes.setValueAt(res.getEstado(),n,2);
-            jTableRes.setValueAt(res.getTotal(),n,3);
-            jTableRes.setValueAt(res.getCliente(),n,4);
-            n++;
-            */
+            //System.out.println("Reserva: "+res.getId());
+            listModel.addElement(res.getId());
+            jListRes.setModel(listModel);
         }
     }
     
-    public cancelarReserva() {
+    public cancelarReservaLista() {
         initComponents();
         
         Fabrica fabrica = Fabrica.getInstance();
@@ -75,10 +59,10 @@ public class cancelarReserva extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jListRes = new javax.swing.JList();
         jButtonEliminar = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        jTableRes = new javax.swing.JTable();
 
         setClosable(true);
         setIconifiable(true);
@@ -86,7 +70,16 @@ public class cancelarReserva extends javax.swing.JInternalFrame {
         setResizable(true);
         setTitle("Cancelar reserva");
 
+        jListRes.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        jListRes.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                jListResValueChanged(evt);
+            }
+        });
+        jScrollPane1.setViewportView(jListRes);
+
         jButtonEliminar.setText("Eliminar");
+        jButtonEliminar.setEnabled(false);
         jButtonEliminar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonEliminarActionPerformed(evt);
@@ -95,19 +88,6 @@ public class cancelarReserva extends javax.swing.JInternalFrame {
 
         jLabel1.setText("Reservas:");
 
-        jTableRes.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "ID", "Creación", "Estado", "Total", "Cliente"
-            }
-        ));
-        jTableRes.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        jTableRes.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-        jTableRes.getTableHeader().setReorderingAllowed(false);
-        jScrollPane2.setViewportView(jTableRes);
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -115,11 +95,13 @@ public class cancelarReserva extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 466, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jButtonEliminar))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButtonEliminar)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -128,8 +110,8 @@ public class cancelarReserva extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 133, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(9, 9, 9)
                 .addComponent(jButtonEliminar)
                 .addContainerGap())
         );
@@ -138,23 +120,31 @@ public class cancelarReserva extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEliminarActionPerformed
-        if ((tableModel.getRowCount()!=0)&&(jTableRes.getSelectedRowCount()!=0)) {
+        if ((!listModel.isEmpty())&&(!jListRes.isSelectionEmpty())) {
+            
             Object[] opciones = { "No", "Si" };
             int respuesta = JOptionPane.showOptionDialog(null, "¿Está seguro de cancelar la reserva?", "Confirmación",JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE,null, opciones, opciones[1]);
             
             if (respuesta==1) {
-                this.IControlador.cancelarUnaReserva(Long.valueOf(jTableRes.getValueAt(jTableRes.getSelectedRow(),0).toString()));
-                
+                this.IControlador.cancelarUnaReserva(Long.valueOf(jListRes.getSelectedValue().toString()));
+            //listModel.removeElementAt(jListRes.getSelectedIndex());
             }
         }
         actualizarReservas();
     }//GEN-LAST:event_jButtonEliminarActionPerformed
-   
+
+    private void jListResValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_jListResValueChanged
+        if (!jListRes.isSelectionEmpty()) {
+            jButtonEliminar.setEnabled(true);
+        }
+        else jButtonEliminar.setEnabled(false);
+    }//GEN-LAST:event_jListResValueChanged
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonEliminar;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable jTableRes;
+    private javax.swing.JList jListRes;
+    private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
 }

@@ -17,9 +17,26 @@ public class Date {
     
     //Creadores
     public Date() {
-        this.dia = 0;
-        this.mes = 0;
-        this.ano = 0;
+        this.dia = 1;
+        this.mes = 1;
+        this.ano = 1970;
+    }
+    
+    /*
+    // Funciones obsoletas
+    public Date(java.sql.Date d){
+        this.dia = d.getDay();
+        this.mes = d.getMonth();
+        this.ano = d.getYear();
+    }
+    */
+    
+    public Date(String d){
+        String delims = "[ -/]";
+        String tokens[] = d.split(delims);
+        this.dia = Integer.valueOf(tokens[2]);
+        this.mes = Integer.valueOf(tokens[1]);
+        this.ano = Integer.valueOf(tokens[0]);
     }
     
     public Date(int dia, int mes, int ano){
@@ -39,6 +56,12 @@ public class Date {
     
     public int getAno(){
         return this.ano;
+    }
+    
+    public String getFecha(String sep) {
+        return String.valueOf(this.ano)+ sep +
+               String.format("%02d",this.mes) + sep +
+               String.format("%02d",this.dia);
     }
     
     //Seters

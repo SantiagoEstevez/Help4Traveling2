@@ -180,13 +180,10 @@ public class ManejadorReserva {
             
             while (rsReservas.next()) {
                 System.out.println("Cargando nueva Reserva");
-                /*
-                java.sql.Date fc = rsReservas.getDate("Fecha de Creación");
-                Date creada = new Date(fc.getDay(),fc.getMonth(),fc.getYear());
-                */
-                Date creada = new Date(2,9,2016);
                 
-                //String ref = rsReservas.getString("Ref");
+                Date creada = new Date(rsReservas.getString("Fecha de Creación"));
+                //Date creada = new Date(rsReservas.getDate("Fecha de Creación"));
+                //System.out.println(creada.getFecha("-"));
                 Long num = rsReservas.getLong("Número");
                 String estado = rsReservas.getString("Estado");
                 
