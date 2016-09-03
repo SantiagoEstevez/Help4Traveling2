@@ -93,7 +93,7 @@ public class Principal extends javax.swing.JFrame {
             }
         });
 
-        bm_registrar_cliente.setText("Registrar Cliente");
+        bm_registrar_cliente.setText("Registrar Usuario");
         bm_registrar_cliente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 bm_registrar_clienteActionPerformed(evt);
@@ -175,9 +175,9 @@ public class Principal extends javax.swing.JFrame {
 
     private void bm_registrar_clienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bm_registrar_clienteActionPerformed
         // TODO add your handling code here:
-        altaCliente fAltaCliente = new altaCliente();
-        escritorio.add(fAltaCliente);
-        fAltaCliente.setVisible(true);
+        altaUsuario fAltaUsuario = new altaUsuario();
+        escritorio.add(fAltaUsuario);
+        fAltaUsuario.setVisible(true);
     }//GEN-LAST:event_bm_registrar_clienteActionPerformed
 
     private void jMenu2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu2ActionPerformed
