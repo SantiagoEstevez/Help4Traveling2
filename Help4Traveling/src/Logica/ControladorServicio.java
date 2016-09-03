@@ -58,7 +58,7 @@ public class ControladorServicio implements IControladorServicio  {
             List<String> listaCat = ManejadorCategoria.getInstance().getNombresCategorias();
             categoriasok = existenCategorias(dts.getDtCategorias(), listaCat);
             if (categoriasok) {
-                existeProv = ManejadorProveedor.getInstance().existeProveedor(dts.getNkProveedor());
+                existeProv = ManejadorProveedor.getInstance().existeNickname(dts.getNkProveedor());
                 if (existeProv) {
                     existeCiuO = ManejadorCiudad.getInstance().existeCiudad(dts.getNomCiuOrigen());
                     if (existeCiuO) {
