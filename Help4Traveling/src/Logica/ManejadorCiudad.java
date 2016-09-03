@@ -5,10 +5,11 @@
  */
 package Logica;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Map;
 // Comentario para que me reconozca los cambios y pueda comitear...
 /**
@@ -35,12 +36,54 @@ public class ManejadorCiudad {
         ciudadesNom.put(nombre,ciu);
     }
     
-    public boolean existeCiudad(String nombre){
-        return ciudadesNom.containsKey(nombre);        
+    public boolean existeCiudad(String nombre/*, String pais*/){
+        boolean existe;
+        ResultSet rs;
+        Ciudad ciu = null;
+        Conexion conexion = new Conexion();
+        Connection con = conexion.getConnection();
+        Statement st;
+        //String sql = "SELECT * FROM mydb.ciudades, mydb.paises WHERE Pais='" + pais + "' AND Nombre='" + nombre + "')"; 
+        String sql = "SELECT * FROM mydb.ciudades WHERE Nombre='" + nombre + "')"; 
+        try {
+            st = con.createStatement();
+            rs = st.executeQuery(sql); 
+            Pais p = new Pais(rs.getString("Pais"),null);
+            ciu = new Ciudad(rs.getString("Nombre"),p);
+            rs.close();
+            con.close();
+            st.close();           
+        } catch (SQLException e){
+            System.out.println("No obtuve ciudad :(");
+        }
+        if (ciu == null)
+            existe = false;
+        else existe = true;
+        return existe; 
+        //return ciudadesNom.containsKey(nombre);        
     }
     
-    public Ciudad obtenerCiudad(String nombre){
-        return ((Ciudad) ciudadesNom.get(nombre));
+    public Ciudad obtenerCiudad(String nombre/*, String pais*/){
+        ResultSet rs;
+        Ciudad ciu = null;
+        Conexion conexion = new Conexion();
+        Connection con = conexion.getConnection();
+        Statement st;
+        //String sql = "SELECT * FROM mydb.ciudades, mydb.paises WHERE Pais='" + pais + "' AND Nombre='" + nombre + "')"; 
+        String sql = "SELECT * FROM mydb.ciudades WHERE Nombre='" + nombre + "')"; 
+        try {
+            st = con.createStatement();
+            rs = st.executeQuery(sql); 
+            //Pais p = new Pais(rs.getString("Pais"),null);
+            ciu = new Ciudad(rs.getString("Nombre"),null/*,p*/);
+            rs.close();
+            con.close();
+            st.close();           
+        } catch (SQLException e){
+            System.out.println("No obtuve ciudad :(");
+        }
+        return ciu; 
+        //return ((Ciudad) ciudadesNom.get(nombre));
     }
     
 }
