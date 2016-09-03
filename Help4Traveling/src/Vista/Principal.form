@@ -40,7 +40,7 @@
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="bm_registrar_cliente">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Registrar Cliente"/>
+                <Property name="text" type="java.lang.String" value="Registrar Usuario"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bm_registrar_clienteActionPerformed"/>
