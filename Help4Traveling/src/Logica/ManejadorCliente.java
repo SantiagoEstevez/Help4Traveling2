@@ -40,18 +40,52 @@ public class ManejadorCliente {
         clientesNK.put(nk,cli);
     }
     
-    public boolean existeCliente(String nickname){
-        return clientesNK.containsKey(nickname);        
+    public boolean existeNickname(String nickname){
+        boolean existe = false;
+        ResultSet rs;
+        Conexion conex = new Conexion();
+        Connection con = conex.getConnection();
+        Statement st;
+        String sql1 = "SELECT * FROM mydb.usuarios WHERE Nickname=" + nickname; 
+        try {
+            st = con.createStatement();
+            rs = st.executeQuery(sql1);
+            if (rs.next())
+                existe = true;
+            rs.close();
+            con.close();
+            st.close();           
+        } catch (SQLException e){
+            System.out.println("No exite cliente :(");
+        }
+        return existe;
+        //return clientesNK.containsKey(nickname);        
     }
     
     public boolean existeCorreo(String correo){
         boolean existe = false;
-	Iterator<Cliente> iter = this.clientesNK.values().iterator();
+        ResultSet rs;
+        Conexion conex = new Conexion();
+        Connection con = conex.getConnection();
+        Statement st;
+        String sql1 = "SELECT * FROM mydb.usuarios WHERE Correo=" + correo; 
+        try {
+            st = con.createStatement();
+            rs = st.executeQuery(sql1);
+            if (rs.next())
+                existe = true;
+            rs.close();
+            st.close();  
+            con.close();
+        } catch (SQLException e){
+            System.out.println("No existe correo :(");
+        }
+	/*Iterator<Cliente> iter = this.clientesNK.values().iterator();
 	while ((iter.hasNext()) && (!existe)) {
             Cliente cli = iter.next();
             if (cli.getCorreo() == correo)
 		existe = true;
-	}
+	}*/        
 	return existe;        
     }
 
