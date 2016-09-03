@@ -66,27 +66,34 @@ public class ManejadorProveedor {
         conexion = new Conexion();
         Connection con = conexion.getConnection();
         Statement st;
+        
+        String sitios = "mydb.sitios web y empresas de proveedores";
        
-        sql = "SELECT * FROM mydb.usuarios";
-       
+        sql = "SELECT * FROM mydb.usuarios, mydb.sitios WHERE mydb.usuarios.Ref = mydb.sitios.Ref"; 
+
+        
         try{
             st = con.createStatement();
             rsProveedores = st.executeQuery(sql);
+            String tabla = rsProveedores.toString();
+            
+            
+            System.out.println("realize el executeQuery" + tabla);
             
             System.out.println("llegue");
             
             while (rsProveedores.next()) {
-                System.out.println("llegue2");
                 String nombre = rsProveedores.getString("Nombre");
+
                 String apellido = rsProveedores.getString("Apellido");
                 String nickname = rsProveedores.getString("Nick");
                 String correo = rsProveedores.getString("Email");
+
                 Date nacimiento = new Date(12,12,1994);
                 String imagen = "";
-                String empresa = rsProveedores.getString("Empresa");
-                String direccion = rsProveedores.getString("Direccion");
-                
-                Proveedor nuevo = new Proveedor(nombre, apellido, nickname, correo, nacimiento, imagen,empresa,direccion);
+                //String empresa = rsProveedores.getString("Empresa");
+                //String direccion = rsProveedores.getString("Direccion");
+                Proveedor nuevo = new Proveedor(nombre, apellido, nickname, correo, nacimiento, imagen,"empresa","direccion");
                 proveedoresNK.put(nickname, nuevo);
             }
             rsProveedores.close();
