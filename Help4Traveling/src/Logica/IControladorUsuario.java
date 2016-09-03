@@ -6,6 +6,7 @@ import java.util.ArrayList;
  *
  * @author yaman
  */
+
 public interface IControladorUsuario {
        public abstract String ingresarDatosUsuario(DtUsuario dtu);
        public abstract String altaUsuarioCliente(DtUsuario dtu);

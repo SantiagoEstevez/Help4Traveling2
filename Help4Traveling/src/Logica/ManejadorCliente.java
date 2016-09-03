@@ -13,7 +13,7 @@ import java.util.Iterator;
 import java.util.ArrayList;
 import java.sql.ResultSet;
 
-// Comentario para que me reconozca los cambios y pueda comitear...
+
 /**
  *
  * @author Leonardo

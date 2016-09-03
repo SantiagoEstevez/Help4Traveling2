@@ -77,7 +77,7 @@ public class altaUsuario extends javax.swing.JInternalFrame {
         setClosable(true);
         setIconifiable(true);
         setMaximizable(true);
-        setTitle("Nuevo cliente");
+        setTitle("Nuevo Usuario");
 
         jLabel1.setText("Ingrese los siguientes datos");
 
