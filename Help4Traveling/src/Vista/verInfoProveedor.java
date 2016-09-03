@@ -5,6 +5,8 @@
  */
 package Vista;
 
+import Logica.DtReserva;
+import Logica.DtServicio;
 import Logica.DtUsuario;
 import Logica.Fabrica;
 import java.util.Iterator;
@@ -38,7 +40,7 @@ public class verInfoProveedor extends javax.swing.JInternalFrame {
             modelo.addElement(user.getNombre()/*()+"   "+user.getApellido()+"   "+user.getNickname()*/);
         }
         
-        jList2.setModel(modelo);
+        jListaProveedores.setModel(modelo);
         
     }
 
@@ -54,10 +56,14 @@ public class verInfoProveedor extends javax.swing.JInternalFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jList2 = new javax.swing.JList<>();
+        jListaProveedores = new javax.swing.JList<>();
         jLabel1 = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
+        jTablaServicios = new javax.swing.JTable();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        jTablaProveedores = new javax.swing.JTable();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -76,42 +82,66 @@ public class verInfoProveedor extends javax.swing.JInternalFrame {
         setIconifiable(true);
         setMaximizable(true);
 
-        jList2.setModel(new javax.swing.AbstractListModel<String>() {
+        jListaProveedores.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
         });
-        jList2.addMouseListener(new java.awt.event.MouseAdapter() {
+        jListaProveedores.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jList2MouseClicked(evt);
+                jListaProveedoresMouseClicked(evt);
             }
         });
-        jScrollPane1.setViewportView(jList2);
+        jScrollPane1.setViewportView(jListaProveedores);
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(0, 51, 51));
-        jLabel1.setText("Proveedores");
+        jLabel1.setText("PROVEEDORES");
 
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+        jTablaServicios.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
             },
             new String [] {
-                "Servicio", "Ciudad Origen", "Ciudad Destino"
+                "Servicio", "Precio", "Ciudad Origen", "Ciudad Destino"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
 
             public Class getColumnClass(int columnIndex) {
                 return types [columnIndex];
             }
         });
-        jScrollPane3.setViewportView(jTable2);
+        jScrollPane3.setViewportView(jTablaServicios);
+
+        jTablaProveedores.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null, null}
+            },
+            new String [] {
+                "Nombre", "Apellido", "Nickname", "Nacimiento", "Empresa", "Direccion"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+        });
+        jScrollPane4.setViewportView(jTablaProveedores);
+
+        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel2.setText("DATOS");
+
+        jLabel3.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel3.setText("SERVICIOS");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -120,14 +150,24 @@ public class verInfoProveedor extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(167, 167, 167)
+                        .addGap(47, 47, 47)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 312, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(151, 151, 151)
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(47, 47, 47)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 312, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 337, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(85, Short.MAX_VALUE))
+                        .addGap(168, 168, 168)
+                        .addComponent(jLabel3))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(182, 182, 182)
+                        .addComponent(jLabel2))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(32, 32, 32)
+                        .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 464, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(46, 46, 46)
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 423, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(26, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -135,19 +175,24 @@ public class verInfoProveedor extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 58, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
+                .addComponent(jLabel2)
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(33, 33, 33)
+                .addComponent(jLabel3)
+                .addGap(32, 32, 32)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(31, 31, 31))
+                .addGap(38, 38, 38))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jList2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jList2MouseClicked
+    private void jListaProveedoresMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jListaProveedoresMouseClicked
 
-        String nombre = jList2.getSelectedValue();
-        JOptionPane.showMessageDialog(null,nombre);
+        String nombre = jListaProveedores.getSelectedValue();
 
         Iterator<DtUsuario> i = this.listaProveedores.iterator();
         boolean es = false;
@@ -157,21 +202,43 @@ public class verInfoProveedor extends javax.swing.JInternalFrame {
             if (nombre.equals(user.getNombre())){
                 dtu = user;
                 es = true;
-                //JOptionPane.showMessageDialog(null,dtu.getNickname()+"  "+dtu.getNombre()+" "+dtu.getApellido());            }
+                jTablaProveedores.setValueAt(dtu.getNombre(),0,0);
+                jTablaProveedores.setValueAt(dtu.getApellido(),0,1);
+                jTablaProveedores.setValueAt(dtu.getNickname(),0,2);
+                jTablaProveedores.setValueAt("aca va la fecha",0,3);
+                jTablaProveedores.setValueAt(dtu.getEmpresa(),0,4);
+                jTablaProveedores.setValueAt(dtu.getLink(), 0, 5);
+                
+                Fabrica fabrica = Fabrica.getInstance(); 
+                
+                ArrayList<DtServicio> listaServicios = new ArrayList<>();
+                listaServicios = fabrica.getIControladorUsuario().listarServicioProveedor(dtu);
+                Iterator<DtServicio> iter = listaServicios.iterator();
+                int count = 0;
+                while (iter.hasNext()){
+                
+                    DtServicio res =iter.next();
+                    jTablaServicios.setValueAt(res.getNombre(),0,count);
+                    jTablaServicios.setValueAt(res.getPrecio(),1,count);
+                    jTablaServicios.setValueAt(res.getNomCiuOrigen(),2,count);
+                    jTablaServicios.setValueAt(res.getNomCiuDestino(),3,count);        
 
-        }
-        // JOptionPane.showMessageDialog(null,dtu.getNickname());
-        }
-    }//GEN-LAST:event_jList2MouseClicked
-
+                }
+            }
+    }//GEN-LAST:event_jListaProveedoresMouseClicked
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JList<String> jList2;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JList<String> jListaProveedores;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JTable jTablaProveedores;
+    private javax.swing.JTable jTablaServicios;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTable jTable2;
     // End of variables declaration//GEN-END:variables
 }

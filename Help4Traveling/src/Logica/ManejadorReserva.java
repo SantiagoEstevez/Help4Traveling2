@@ -105,7 +105,7 @@ public class ManejadorReserva {
        Statement st;
        ResultSet rsReservasCliente;
        sql = "SELECT * FROM mydb.reservas" +
-               "WHERE Cliente= DT AND Cliente=EW"; 
+               "WHERE Nick=" + user.getNickname() +" OR Nick="+user.getNickname(); 
        try{
             st = con.createStatement();
             rsReservasCliente = st.executeQuery(sql);

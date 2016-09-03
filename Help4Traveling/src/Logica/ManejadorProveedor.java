@@ -66,9 +66,7 @@ public class ManejadorProveedor {
         conexion = new Conexion();
         Connection con = conexion.getConnection();
         Statement st;
-        
-        String sitios = "mydb.sitios web y empresas de proveedores";
-       
+              
         sql = "SELECT * FROM mydb.usuarios, mydb.sitios WHERE mydb.usuarios.Ref = mydb.sitios.Ref"; 
 
         
