@@ -8,20 +8,35 @@ package Vista;
     import Logica.Fabrica;
     import Logica.ControladorUsuario;
     import Logica.Date;
+import Logica.IControladorServicio;
     import javax.swing.JOptionPane;
     import Logica.IControladorUsuario;
+import Logica.ManejadorCiudad;
+import java.util.Iterator;
+import java.util.List;
 /**
  *
  * @author Santiago
  */
 public class altaServicio extends javax.swing.JInternalFrame {
-
+    List<String> listaPaises = null;
+    private IControladorServicio IControlador;
     /**
      * Creates new form altaServicio
      */
     public altaServicio() {
         //this.tr_categoria.setVisible(false);
         initComponents();
+        Fabrica fabrica = Fabrica.getInstance();
+        this.IControlador = fabrica.getIControladorServicio();
+        this.listaPaises = ManejadorCiudad.getInstance().listarPaises();
+        Iterator<String> iter = this.listaPaises.iterator();
+        while (iter.hasNext()) {
+            String nompais = iter.next();
+            this.cmbPaises.addItem(nompais);
+        }           
+        
+        
     }
 
     /**
@@ -36,21 +51,23 @@ public class altaServicio extends javax.swing.JInternalFrame {
         lb_nombre_s = new javax.swing.JLabel();
         tf_nombre_s = new javax.swing.JTextField();
         lb_origen = new javax.swing.JLabel();
-        tf_origen = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         tr_categoria = new javax.swing.JTree();
         bt_categoria = new javax.swing.JButton();
         bt_aceptar_s = new javax.swing.JButton();
         bt_cancelar_s = new javax.swing.JButton();
+        cmbPaises = new javax.swing.JComboBox<>();
+        jLabel1 = new javax.swing.JLabel();
+        cmbCiudades = new javax.swing.JComboBox<>();
 
         setClosable(true);
         setIconifiable(true);
         setMaximizable(true);
         setTitle("Nuevo servicio");
 
-        lb_nombre_s.setText("Nombre");
+        lb_nombre_s.setText("Nombre:");
 
-        lb_origen.setText("Origen");
+        lb_origen.setText("País Origen:");
 
         javax.swing.tree.DefaultMutableTreeNode treeNode1 = new javax.swing.tree.DefaultMutableTreeNode("JTree");
         javax.swing.tree.DefaultMutableTreeNode treeNode2 = new javax.swing.tree.DefaultMutableTreeNode("Autos");
@@ -95,6 +112,14 @@ public class altaServicio extends javax.swing.JInternalFrame {
             }
         });
 
+        cmbPaises.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbPaisesActionPerformed(evt);
+            }
+        });
+
+        jLabel1.setText("Ciudad Origen:");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -104,15 +129,20 @@ public class altaServicio extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lb_origen)
-                            .addComponent(lb_nombre_s))
-                        .addGap(32, 32, 32)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lb_nombre_s)
+                            .addComponent(lb_origen))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(tf_nombre_s, javax.swing.GroupLayout.PREFERRED_SIZE, 318, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(tf_origen, javax.swing.GroupLayout.PREFERRED_SIZE, 318, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(cmbPaises, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jLabel1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(cmbCiudades, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addComponent(bt_categoria)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 395, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(24, Short.MAX_VALUE))
+                .addContainerGap(23, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(bt_aceptar_s)
@@ -123,14 +153,16 @@ public class altaServicio extends javax.swing.JInternalFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(15, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lb_nombre_s)
                     .addComponent(tf_nombre_s, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(22, 22, 22)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lb_origen)
-                    .addComponent(tf_origen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cmbPaises, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1)
+                    .addComponent(cmbCiudades, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(33, 33, 33)
                 .addComponent(bt_categoria)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -154,14 +186,14 @@ public class altaServicio extends javax.swing.JInternalFrame {
     private void bt_aceptar_sActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_aceptar_sActionPerformed
         // TODO add your handling code here:
         String nombre_s = this.tf_nombre_s.getText();
-        String origen = this.tf_origen.getText();
+        //String origen = this.tf_origen.getText();
         String categoria = this.tr_categoria.getSelectionPath().toString();
         JOptionPane.showMessageDialog(null,categoria );
 
         this.setVisible(false);
         this.tr_categoria.setVisible(false);
         this.tf_nombre_s.setText("");
-        this.tf_origen.setText("");
+        //this.tf_origen.setText("");
 
     }//GEN-LAST:event_bt_aceptar_sActionPerformed
 
@@ -170,20 +202,26 @@ public class altaServicio extends javax.swing.JInternalFrame {
         this.setVisible(false);
         this.tr_categoria.setVisible(false);
         this.tf_nombre_s.setText("");
-        this.tf_origen.setText("");
+        //this.tf_origen.setText("");
 
     }//GEN-LAST:event_bt_cancelar_sActionPerformed
+
+    private void cmbPaisesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbPaisesActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cmbPaisesActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bt_aceptar_s;
     private javax.swing.JButton bt_cancelar_s;
     private javax.swing.JButton bt_categoria;
+    private javax.swing.JComboBox<String> cmbCiudades;
+    private javax.swing.JComboBox<String> cmbPaises;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lb_nombre_s;
     private javax.swing.JLabel lb_origen;
     private javax.swing.JTextField tf_nombre_s;
-    private javax.swing.JTextField tf_origen;
     private javax.swing.JTree tr_categoria;
     // End of variables declaration//GEN-END:variables
 }

@@ -46,7 +46,7 @@ public class ManejadorCliente {
         Conexion conex = new Conexion();
         Connection con = conex.getConnection();
         Statement st;
-        String sql1 = "SELECT * FROM mydb.usuarios WHERE Nick='" + nickname + "'"; 
+        String sql1 = "SELECT * FROM help4traveling.usuarios WHERE nickname='" + nickname + "'"; 
         try {
             st = con.createStatement();
             rs = st.executeQuery(sql1);
@@ -71,7 +71,7 @@ public class ManejadorCliente {
         Conexion conex = new Conexion();
         Connection con = conex.getConnection();
         Statement st;
-        String sql1 = "SELECT * FROM mydb.usuarios WHERE Correo='" + correo + "'"; 
+        String sql1 = "SELECT * FROM help4traveling.usuarios WHERE email='" + correo + "'"; 
         try {
             st = con.createStatement();
             rs = st.executeQuery(sql1);
@@ -175,27 +175,27 @@ public class ManejadorCliente {
        Conexion conexion = new Conexion();
        Connection con = conexion.getConnection();
        Statement st;
-       char pn = cli.getNombre().charAt(0);
+       String mensaje = "Se dio de alta al Usuario Cliente.";
+       /*char pn = cli.getNombre().charAt(0);
        char pa = cli.getApellido().charAt(0);
        StringBuilder sb = new StringBuilder();
        sb.append(pn);
        sb.append(pa);
-       String mensaje = "Se dio de alta al Usuario Cliente.";
-       String ref = sb.toString();
+       
+       String ref = sb.toString();*/
     if (!existeNickname(cli.getNickname())) {
        String fecha = String.valueOf(cli.getNacimiento().getAno()) + "-" + String.valueOf(cli.getNacimiento().getMes()) + "-" + String.valueOf(cli.getNacimiento().getDia());
-       String sqlac = "INSERT INTO mydb.usuarios " + 
-             "(Ref,Nick,Email,Nombre,Apellido,Nacimiento) " +
-             "VALUES ('" + ref + "','" + cli.getNickname() + "','" + cli.getCorreo() + "','" + cli.getNombre() 
-             + "','" + cli.getApellido() + "','" + fecha + "')";
-       System.out.println(sqlac);
-       String sqlai = "INSERT INTO mydb.`imágenes de usuarios` (Ref,Imagen) VALUES ('" + ref + "','" + cli.getImagen() + "')";
-       System.out.println(sqlai);
+       String sqlau = "INSERT INTO help4traveling.usuarios " + 
+             "(nickname,nombre,apellido,email,imagen,fechaNac) " +
+             "VALUES ('" + cli.getNickname() + "','" + cli.getNombre() + "','" + cli.getApellido() + "','" + cli.getCorreo() 
+             + "','" + cli.getImagen() + "','" + fecha + "')";
+       System.out.println(sqlau);
+       String sqlac = "INSERT INTO help4traveling.clientes (nickname) VALUES ('" + cli.getNickname() + "')";
        try{
            st = con.createStatement();
            System.out.println("antes de insertar");
+           st.executeUpdate(sqlau);
            st.executeUpdate(sqlac);
-           st.executeUpdate(sqlai);
            con.close();
            st.close();
            System.out.println("INSERTE :)");

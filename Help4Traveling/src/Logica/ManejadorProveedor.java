@@ -46,7 +46,7 @@ public class ManejadorProveedor {
         Connection con = conex.getConnection();
         Statement st;
         //String sql1 = "SELECT * FROM mydb.usuarios WHERE Nickname='" + nickname + "' AND Empresa <> NULL AND Link <> NULL)"; 
-        String sql1 = "SELECT * FROM mydb.usuarios WHERE Nick='" + nickname + "'"; 
+        String sql1 = "SELECT * FROM help4traveling.usuarios WHERE nickname='" + nickname + "'"; 
         try {
             st = con.createStatement();
             rs = st.executeQuery(sql1);
@@ -69,7 +69,7 @@ public class ManejadorProveedor {
         Conexion conex = new Conexion();
         Connection con = conex.getConnection();
         Statement st;
-        String sql1 = "SELECT * FROM mydb.usuarios WHERE Correo='" + correo + "'"; 
+        String sql1 = "SELECT * FROM help4traveling.usuarios WHERE email='" + correo + "'"; 
         try {
             st = con.createStatement();
             rs = st.executeQuery(sql1);
@@ -176,27 +176,24 @@ public class ManejadorProveedor {
        String mensaje = "Se dio de alta al Usuario Proveedor.";
        Connection con = conexion.getConnection();
        Statement st;
-       char pn = prov.getNombre().charAt(0);
+       /*char pn = prov.getNombre().charAt(0);
        char pa = prov.getApellido().charAt(0);
        StringBuilder sb = new StringBuilder();
        sb.append(pn);
        sb.append(pa);
-       String ref = sb.toString();
+       String ref = sb.toString();*/
      if (!existeNickname(prov.getNickname())) {  
        String fecha = String.valueOf(prov.getNacimiento().getAno()) + "-" + String.valueOf(prov.getNacimiento().getMes()) + "-" + String.valueOf(prov.getNacimiento().getDia());
-       String sqlau = "INSERT INTO mydb.usuarios " + 
-             "(Ref,Nick,Email,Nombre,Apellido,Nacimiento) " +
-             "VALUES ('" + ref + "','" + prov.getNickname() + "','" + prov.getCorreo() + "','" + prov.getNombre() 
-             + "','" + prov.getApellido() + "','" + fecha + "')";
+       String sqlau = "INSERT INTO help4traveling.usuarios " + 
+             "(nickname,nombre,apellido,email,imagen,fechaNac) " +
+             "VALUES ('" + prov.getNickname() + "','" + prov.getNombre() + "','" + prov.getApellido() + "','" + prov.getCorreo() 
+             + "','" + prov.getImagen() + "','" + fecha + "')";
        System.out.println(sqlau);
-       String sqlai = "INSERT INTO mydb.`imágenes de usuarios` (Ref,Imagen) VALUES ('" + ref + "','" + prov.getImagen() + "')";
-       System.out.println(sqlai);
-       String sqlap = "INSERT INTO mydb.`sitios web y empresas de proveedores` (Ref,Nombre,`Sitio Web`) VALUES ('" + ref + "','" + prov.getEmpresa() + "','" + prov.getLink() + "')";
+       String sqlap = "INSERT INTO help4traveling.proveedores (nickname,empresa,link) VALUES ('" + prov.getNickname() + "','" + prov.getEmpresa() + "','" + prov.getLink() + "')";
        try{
            st = con.createStatement();
            System.out.println("antes de insertar");
            st.executeUpdate(sqlau);
-           st.executeUpdate(sqlai);
            st.executeUpdate(sqlap);
            con.close();
            st.close();

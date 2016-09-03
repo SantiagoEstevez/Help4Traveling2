@@ -10,6 +10,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 // Comentario para que me reconozca los cambios y pueda comitear...
 /**
@@ -19,6 +21,7 @@ import java.util.Map;
 public class ManejadorCiudad {
     //Clase que conserva la colección global de las Ciudads del Sistema
     private Map<String,Ciudad> ciudadesNom;
+    
     private static ManejadorCiudad instancia = null;
     
     private ManejadorCiudad(){
@@ -36,6 +39,58 @@ public class ManejadorCiudad {
         ciudadesNom.put(nombre,ciu);
     }
     
+    public List<String> listarPaises() {
+        ResultSet rs;
+        List<String> lista = new LinkedList<String>();
+        Conexion conexion = new Conexion();
+        Connection con = conexion.getConnection();
+        Statement st;
+        String sql = "SELECT * FROM help4traveling.paises ORDER BY nombre";
+        try{
+            st = con.createStatement();
+            rs = st.executeQuery(sql);
+            while (rs.next()) {
+                String nombre = rs.getString("nombre");
+                lista.add(nombre);
+            }
+            rs.close();
+            st.close();
+            con.close();
+            System.out.println("Paises cargados :)");
+        } 
+        catch (SQLException e){
+            System.out.println("No pude cargar Paises :(");
+        }
+        return lista;
+    }
+    
+    public List<String> listarCiudadesPorPais(String nombre) {
+        ResultSet rs;
+        List<String> lista = new LinkedList<String>();
+        Conexion conexion = new Conexion();
+        Connection con = conexion.getConnection();
+        Statement st;
+        String sql = "SELECT * FROM help4traveling.ciudades WHERE pais='" + nombre + "' ORDER BY nombre";
+        try{
+            st = con.createStatement();
+            rs = st.executeQuery(sql);
+            while (rs.next()) {
+                String ciudad = rs.getString("nombre");
+                lista.add(ciudad);
+            }
+            rs.close();
+            st.close();
+            con.close();
+            System.out.println("Paises cargados :)");
+        } 
+        catch (SQLException e){
+            System.out.println("No pude cargar Paises :(");
+        }
+        return lista;
+    }
+    
+    
+    
     public boolean existeCiudad(String nombre/*, String pais*/){
         boolean existe;
         ResultSet rs;
@@ -44,7 +99,7 @@ public class ManejadorCiudad {
         Connection con = conexion.getConnection();
         Statement st;
         //String sql = "SELECT * FROM mydb.ciudades, mydb.paises WHERE Pais='" + pais + "' AND Nombre='" + nombre + "')"; 
-        String sql = "SELECT * FROM mydb.ciudades WHERE Nombre='" + nombre + "')"; 
+        String sql = "SELECT * FROM mydb.ciudades WHERE Nombre='" + nombre + "'"; 
         try {
             st = con.createStatement();
             rs = st.executeQuery(sql); 
@@ -70,7 +125,7 @@ public class ManejadorCiudad {
         Connection con = conexion.getConnection();
         Statement st;
         //String sql = "SELECT * FROM mydb.ciudades, mydb.paises WHERE Pais='" + pais + "' AND Nombre='" + nombre + "')"; 
-        String sql = "SELECT * FROM mydb.ciudades WHERE Nombre='" + nombre + "')"; 
+        String sql = "SELECT * FROM mydb.ciudades WHERE Nombre='" + nombre + "'"; 
         try {
             st = con.createStatement();
             rs = st.executeQuery(sql); 
