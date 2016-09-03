@@ -4,12 +4,12 @@
  * and open the template in the editor.
  */
 package Vista;
-    import Logica.DtUsuario;
-    import Logica.Fabrica;
-    import Logica.ControladorUsuario;
-    import Logica.Date;
-    import javax.swing.JOptionPane;
-    import Logica.IControladorUsuario;
+import Logica.DtUsuario;
+import Logica.Fabrica;
+import Logica.ControladorUsuario;
+import Logica.Date;
+import javax.swing.JOptionPane;
+import Logica.IControladorUsuario;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
@@ -344,15 +344,17 @@ public class altaUsuario extends javax.swing.JInternalFrame {
         Date nacimiento = new Date(dia, mes, anio);
         //Date nacimiento = new Date();
         DtUsuario dtu = new DtUsuario(nombre, apellido, nickname, correo, nacimiento, this.pathimg, this.tipo, empresa, direccion);
-        IControlador.altaDeUsuario(dtu);
+        String mensaje = IControlador.altaDeUsuario(dtu);
+        JOptionPane.showMessageDialog(null, mensaje);
         this.tf_apellido.setText("");
         this.tf_nombre.setText("");
         this.tf_correo.setText("");
         this.tf_nickname.setText("");
         this.tf_empresa.setText("");
         this.tf_direccion.setText("");
-
-        this.setVisible(false);
+        this.pn_proveedor.setVisible(false);
+        if (mensaje.equals("Se dio de alta al Usuario Cliente.") || mensaje.equals("Se dio de alta al Usuario Proveedor."))
+            this.setVisible(false);
         this.chb_proveedor.setSelected(false);
 
     }//GEN-LAST:event_bt_aceptarActionPerformed

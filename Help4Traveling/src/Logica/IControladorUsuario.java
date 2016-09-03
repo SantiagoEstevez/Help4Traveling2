@@ -7,11 +7,11 @@ import java.util.ArrayList;
  * @author yaman
  */
 public interface IControladorUsuario {
-       public abstract boolean ingresarDatosUsuario(DtUsuario dtu);
-       public abstract void altaUsuarioCliente(DtUsuario dtu);
+       public abstract String ingresarDatosUsuario(DtUsuario dtu);
+       public abstract String altaUsuarioCliente(DtUsuario dtu);
        public abstract void cancelarAltaUsuario();
-       public abstract void altaUsuarioProveedor(DtUsuario dtu);
-       public abstract void altaDeUsuario(DtUsuario dtu);
+       public abstract String altaUsuarioProveedor(DtUsuario dtu);
+       public abstract String altaDeUsuario(DtUsuario dtu);
        public abstract ArrayList<DtUsuario> listarClientes();
        public abstract ArrayList<DtReserva> listarReservasCliente(DtUsuario dtu);
        public abstract ArrayList<DtUsuario> listarProveedores();

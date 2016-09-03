@@ -46,7 +46,7 @@ public class ManejadorCliente {
         Conexion conex = new Conexion();
         Connection con = conex.getConnection();
         Statement st;
-        String sql1 = "SELECT * FROM mydb.usuarios WHERE Nickname=" + nickname; 
+        String sql1 = "SELECT * FROM mydb.usuarios WHERE Nick='" + nickname + "'"; 
         try {
             st = con.createStatement();
             rs = st.executeQuery(sql1);
@@ -58,6 +58,9 @@ public class ManejadorCliente {
         } catch (SQLException e){
             System.out.println("No exite cliente :(");
         }
+        if (existe)
+            System.out.println("Existe nickname");
+        else System.out.println("NO Existe nickname");
         return existe;
         //return clientesNK.containsKey(nickname);        
     }
@@ -68,7 +71,7 @@ public class ManejadorCliente {
         Conexion conex = new Conexion();
         Connection con = conex.getConnection();
         Statement st;
-        String sql1 = "SELECT * FROM mydb.usuarios WHERE Correo=" + correo; 
+        String sql1 = "SELECT * FROM mydb.usuarios WHERE Correo='" + correo + "'"; 
         try {
             st = con.createStatement();
             rs = st.executeQuery(sql1);
@@ -98,7 +101,7 @@ public class ManejadorCliente {
         Connection con = conexion.getConnection();
         Statement st;
         
-        sql = "SELECT * FROM mydb.usuarios WHERE Nick=" + nk; 
+        sql = "SELECT * FROM mydb.usuarios WHERE Nick='" + nk + "'"; 
         
         try{
             st = con.createStatement();
@@ -168,7 +171,7 @@ public class ManejadorCliente {
             return listaClientes;
     }
         
-    public void persistirCliente(Cliente cli){
+    public String persistirCliente(Cliente cli){
        Conexion conexion = new Conexion();
        Connection con = conexion.getConnection();
        Statement st;
@@ -177,7 +180,9 @@ public class ManejadorCliente {
        StringBuilder sb = new StringBuilder();
        sb.append(pn);
        sb.append(pa);
+       String mensaje = "Se dio de alta al Usuario Cliente.";
        String ref = sb.toString();
+    if (!existeNickname(cli.getNickname())) {
        String fecha = String.valueOf(cli.getNacimiento().getAno()) + "-" + String.valueOf(cli.getNacimiento().getMes()) + "-" + String.valueOf(cli.getNacimiento().getDia());
        String sqlac = "INSERT INTO mydb.usuarios " + 
              "(Ref,Nick,Email,Nombre,Apellido,Nacimiento) " +
@@ -197,9 +202,12 @@ public class ManejadorCliente {
        }
 	   catch(SQLException e){
            System.out.println("No pude INSERTAR :(");
-       }
-   }   
-       
+       }       
+    }
+    else mensaje = "ERROR: El Nickname ingresado ya existe.";
+    return mensaje;
+    }
+    
  }
     
 

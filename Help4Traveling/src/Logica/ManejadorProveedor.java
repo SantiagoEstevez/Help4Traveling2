@@ -46,7 +46,7 @@ public class ManejadorProveedor {
         Connection con = conex.getConnection();
         Statement st;
         //String sql1 = "SELECT * FROM mydb.usuarios WHERE Nickname='" + nickname + "' AND Empresa <> NULL AND Link <> NULL)"; 
-        String sql1 = "SELECT * FROM mydb.usuarios WHERE Nickname=" + nickname; 
+        String sql1 = "SELECT * FROM mydb.usuarios WHERE Nick='" + nickname + "'"; 
         try {
             st = con.createStatement();
             rs = st.executeQuery(sql1);
@@ -69,7 +69,7 @@ public class ManejadorProveedor {
         Conexion conex = new Conexion();
         Connection con = conex.getConnection();
         Statement st;
-        String sql1 = "SELECT * FROM mydb.usuarios WHERE Correo=" + correo; 
+        String sql1 = "SELECT * FROM mydb.usuarios WHERE Correo='" + correo + "'"; 
         try {
             st = con.createStatement();
             rs = st.executeQuery(sql1);
@@ -97,7 +97,7 @@ public class ManejadorProveedor {
         Connection con = conex.getConnection();
         Statement st;
         //String sql1 = "SELECT * FROM mydb.usuarios WHERE Nickname='" + nickname + "' AND Empresa <> NULL AND Link <> NULL)"; 
-        String sql1 = "SELECT * FROM mydb.usuarios WHERE Nickname=" + nickname; 
+        String sql1 = "SELECT * FROM mydb.usuarios WHERE Nick='" + nickname + "'";  
         try {
             st = con.createStatement();
             rs = st.executeQuery(sql1);
@@ -169,10 +169,11 @@ public class ManejadorProveedor {
             return listaProveedores;
     }           
        
-    public void persistirProveedor(Proveedor prov){
+    public String persistirProveedor(Proveedor prov){
        Conexion conexion;
        System.out.println("Entro a persistir");
        conexion = new Conexion();
+       String mensaje = "Se dio de alta al Usuario Proveedor.";
        Connection con = conexion.getConnection();
        Statement st;
        char pn = prov.getNombre().charAt(0);
@@ -181,6 +182,7 @@ public class ManejadorProveedor {
        sb.append(pn);
        sb.append(pa);
        String ref = sb.toString();
+     if (!existeNickname(prov.getNickname())) {  
        String fecha = String.valueOf(prov.getNacimiento().getAno()) + "-" + String.valueOf(prov.getNacimiento().getMes()) + "-" + String.valueOf(prov.getNacimiento().getDia());
        String sqlau = "INSERT INTO mydb.usuarios " + 
              "(Ref,Nick,Email,Nombre,Apellido,Nacimiento) " +
@@ -203,6 +205,9 @@ public class ManejadorProveedor {
        catch(SQLException e){
            System.out.println("No pude INSERTAR :(");
        }
+     }
+     else mensaje = "ERROR: El Nickname ingresado ya existe.";
+     return mensaje;      
    }
     
 }
