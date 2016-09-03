@@ -5,6 +5,8 @@
  */
 package Logica;
 
+import java.util.List;
+
 
 public class ControladorReserva implements IControladorReserva {   
     
@@ -43,10 +45,18 @@ public class ControladorReserva implements IControladorReserva {
         
     }
     
-    public void cancelarUnaReserva(long id) {
+    public Boolean cancelarUnaReserva(long id) {
         ManejadorReserva mr = ManejadorReserva.getInstance();
-        mr.cancelarReserva(id);
+        return mr.cancelarReserva(id);
     }
     
+    public List<DtReserva> listarReservas() {
+        ManejadorReserva mr = ManejadorReserva.getInstance();
+        return mr.listarReservas();
+    }
     
+    public void setReservasDB() {
+        ManejadorReserva mr = ManejadorReserva.getInstance();
+        mr.setReservasDB();
+    }
 }

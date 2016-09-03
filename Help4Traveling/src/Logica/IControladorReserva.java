@@ -5,6 +5,8 @@
  */
 package Logica;
 
+import java.util.List;
+
 /**
  *
  * @author Leonardo
@@ -17,8 +19,13 @@ public interface IControladorReserva {
     public abstract DtReserva verReserva(Reserva nueva);
     public abstract void altaReserva(Reserva nueva);
     
+    public abstract List<DtReserva> listarReservas();
+
     public abstract void altaDeReserva();
     public abstract void actualizarEstadoDeReserva();
     public abstract void verInfoDeReserva();
-    public abstract void cancelarUnaReserva(long id);    
+    public abstract Boolean cancelarUnaReserva(long id);    
+    
+    public abstract void setReservasDB();
+
 }

@@ -1,9 +1,8 @@
 
 package Logica;
     import java.sql.Connection;
-    import java.sql.DriverManager;
-import java.sql.ResultSet;
-    import java.sql.SQLException;
+    import java.sql.ResultSet;
+import java.sql.SQLException;
     import java.sql.Statement;
     import java.util.ArrayList;
     import java.util.HashMap;
@@ -16,10 +15,12 @@ public class ManejadorReserva {
     private static ManejadorReserva instancia = null;
     private Conexion conexion;
     private String sql;
+    public static enum eEstado{REGISTRADA,CANCELADA,PAGADA,FACTURADA};
+
    
     private Map<Long,Reserva> reservasId;
     private ManejadorReserva(){
-        reservasId = new HashMap<Long,Reserva>();
+        reservasId = new HashMap<>();
     }
     
     //Constructor
@@ -53,43 +54,65 @@ public class ManejadorReserva {
        }
    }
    
-      public void cancelarReserva(long id){
+      public Boolean cancelarReserva(long id){
        conexion = new Conexion();
        Connection con = conexion.getConnection();
        Statement st;
        
-       sql = "DELETE FROM mydb.reservas " + 
-             "WHERE id=" + id;
+       sql = "DELETE FROM `reservas y cantidades` " + 
+             "WHERE Ref=\"R" + id + "\"";
        System.out.println(sql);
        
        try{
            st = con.createStatement();
-           System.out.println("Eliminando reserva...");
+           System.out.print("Eliminando items...");
+           st.executeUpdate(sql);
+           //con.close();
+           st.close();
+           System.out.println("OK");
+           
+           reservasId.remove(id);
+           sql = "DELETE FROM mydb.reservas " + 
+             "WHERE Número=" + id;
+           
+           System.out.println(sql);
+       
+           st = con.createStatement();
+           System.out.print("Eliminando reserva...");
            st.executeUpdate(sql);
            con.close();
            st.close();
-           System.out.println("Reserva eliminada");
+           System.out.println("OK");
+           
+           reservasId.remove(id);
+           
+           return true;
+           
        }catch(SQLException e){
-           System.out.println("Reserva no eliminada");
+           System.out.println("ERROR");
+           System.out.println(e.getMessage());
+           return false;
        }
+
+       
    }
       
     public boolean existeReserva(long id){
         return reservasId.containsKey(id);        
     }
     
-    public List<Long> listarReservas(){
-        List<Long> listares = new ArrayList<Long>();
+    public List<DtReserva> listarReservas(){
+        List<DtReserva> listares = new ArrayList<>();
         Iterator<Reserva> iter = this.reservasId.values().iterator();
         while (iter.hasNext()){
             Reserva res = iter.next();
-            listares.add(res.getId());
+            listares.add(res.getDtReserva());
         }
         return listares;
     }
     
     public List<DtReserva> getDtReservas() {
-        List<DtReserva> listaDtRes = new LinkedList<DtReserva>();
+        List<DtReserva> listaDtRes = new LinkedList<>();
         Iterator<Reserva> iter = this.reservasId.values().iterator();
 	while (iter.hasNext()) {
             Reserva res = iter.next();            
@@ -143,6 +166,53 @@ public class ManejadorReserva {
         }
             return listaReservasCliente;
     }
+    public void setReservasDB() {
+        ResultSet rsReservas;
+        
+        conexion = new Conexion();
+        Connection con = conexion.getConnection();
+        Statement st;
+       
+        sql = "SELECT * FROM mydb.reservas";
+       
+        try{
+            st = con.createStatement();
+            rsReservas = st.executeQuery(sql);
+            
+            System.out.println("Cargando Reservas");
+            
+            while (rsReservas.next()) {
+                System.out.println("Cargando nueva Reserva");
+                /*
+                java.sql.Date fc = rsReservas.getDate("Fecha de Creación");
+                Date creada = new Date(fc.getDay(),fc.getMonth(),fc.getYear());
+                */
+                Date creada = new Date(2,9,2016);
+                
+                //String ref = rsReservas.getString("Ref");
+                Long num = rsReservas.getLong("Número");
+                String estado = rsReservas.getString("Estado");
+                
+                double total = rsReservas.getDouble("Precio (USD)");
+                String cliente = rsReservas.getString("Cliente");
+                Map<Integer,ItemReserva> mapa = new HashMap();
+                
+                Reserva nueva = new Reserva(creada,Reserva.eEstado.REGISTRADA,total,cliente,mapa);
+                nueva.setId(num);
+                Long id = nueva.getId();
+                reservasId.put(id,nueva);
+                System.out.println("Reserva: "+nueva.getId());
+
+            }
+            rsReservas.close();
+            con.close();
+            st.close();
+            
+            System.out.println("Reservas cargadas!");
+        }catch(SQLException e){
+            System.out.println("Reservas no cargadas!");
+            System.out.println(e.getMessage());
+        }
           
- 
+    }
 }

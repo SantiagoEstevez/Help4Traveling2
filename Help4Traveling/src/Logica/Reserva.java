@@ -4,7 +4,6 @@
  * and open the template in the editor.
  */
 package Logica;
-import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -66,6 +65,10 @@ public class Reserva {
     
     
     //Seters    
+    public void setId(long id){
+        this.id = id;
+    }
+    
     public void setEstado(eEstado estado){
         this.estado = estado;
     }

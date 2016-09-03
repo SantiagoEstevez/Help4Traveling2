@@ -5,17 +5,42 @@
  */
 package Vista;
 
+import Logica.DtReserva;
+import Logica.Fabrica;
+import Logica.IControladorReserva;
+import java.util.Iterator;
+import java.util.List;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author tecnoinf
  */
 public class verInfoReserva extends javax.swing.JInternalFrame {
+    private IControladorReserva IControlador;
+    private List<DtReserva> listaReservas;
+    private DefaultTableModel tableModel = new DefaultTableModel();
 
     /**
      * Creates new form verInfoReserva
      */
     public verInfoReserva() {
         initComponents();
+        
+        Fabrica fabrica = Fabrica.getInstance();
+        this.IControlador = fabrica.getIControladorReserva();
+        
+        fabrica.getIControladorReserva().setReservasDB();
+        this.listaReservas = this.IControlador.listarReservas();
+        
+        Iterator<DtReserva> i = this.listaReservas.iterator();
+        while (i.hasNext()) {
+            DtReserva res = i.next();
+            System.out.println("Reserva: "+res.getId());
+            jComboBoxRes.addItem(res.getId());
+            //listModel.addElement(res.getId());
+            //jList1.setModel(listModel);
+        }
     }
 
     /**
@@ -27,14 +52,14 @@ public class verInfoReserva extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jComboBox1 = new javax.swing.JComboBox();
-        jLabel1 = new javax.swing.JLabel();
+        jComboBoxRes = new javax.swing.JComboBox();
+        jLabelID = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
+        jTableItems = new javax.swing.JTable();
+        jLabelRes = new javax.swing.JLabel();
+        jLabelItems = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
+        jTableRes = new javax.swing.JTable();
 
         setClosable(true);
         setIconifiable(true);
@@ -42,9 +67,15 @@ public class verInfoReserva extends javax.swing.JInternalFrame {
         setResizable(true);
         setTitle("Ver info reserva");
 
-        jLabel1.setText("ID:");
+        jComboBoxRes.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jComboBoxResItemStateChanged(evt);
+            }
+        });
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        jLabelID.setText("ID:");
+
+        jTableItems.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -63,19 +94,19 @@ public class verInfoReserva extends javax.swing.JInternalFrame {
                 return canEdit [columnIndex];
             }
         });
-        jTable1.setColumnSelectionAllowed(true);
-        jTable1.getTableHeader().setReorderingAllowed(false);
-        jScrollPane1.setViewportView(jTable1);
-        jTable1.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-        if (jTable1.getColumnModel().getColumnCount() > 0) {
-            jTable1.getColumnModel().getColumn(0).setHeaderValue("ID");
+        jTableItems.setColumnSelectionAllowed(true);
+        jTableItems.getTableHeader().setReorderingAllowed(false);
+        jScrollPane1.setViewportView(jTableItems);
+        jTableItems.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        if (jTableItems.getColumnModel().getColumnCount() > 0) {
+            jTableItems.getColumnModel().getColumn(0).setHeaderValue("ID");
         }
 
-        jLabel3.setText("Reserva:");
+        jLabelRes.setText("Reserva:");
 
-        jLabel4.setText("Items:");
+        jLabelItems.setText("Items:");
 
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+        jTableRes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null}
             },
@@ -91,9 +122,14 @@ public class verInfoReserva extends javax.swing.JInternalFrame {
                 return canEdit [columnIndex];
             }
         });
-        jTable2.getTableHeader().setReorderingAllowed(false);
-        jScrollPane2.setViewportView(jTable2);
-        jTable2.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        jTableRes.getTableHeader().setReorderingAllowed(false);
+        jScrollPane2.setViewportView(jTableRes);
+        jTableRes.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        if (jTableRes.getColumnModel().getColumnCount() > 0) {
+            jTableRes.getColumnModel().getColumn(0).setHeaderValue("Creación");
+            jTableRes.getColumnModel().getColumn(1).setHeaderValue("Condición");
+            jTableRes.getColumnModel().getColumn(2).setHeaderValue("Total");
+        }
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -103,15 +139,15 @@ public class verInfoReserva extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1)
+                        .addComponent(jLabelID)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(jComboBoxRes, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 366, Short.MAX_VALUE)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel4)
-                            .addComponent(jLabel3))
+                            .addComponent(jLabelItems)
+                            .addComponent(jLabelRes))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -120,14 +156,14 @@ public class verInfoReserva extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1))
+                    .addComponent(jComboBoxRes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabelID))
                 .addGap(24, 24, 24)
-                .addComponent(jLabel3)
+                .addComponent(jLabelRes)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jLabel4)
+                .addComponent(jLabelItems)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -136,15 +172,19 @@ public class verInfoReserva extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jComboBoxResItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBoxResItemStateChanged
+            
+    }//GEN-LAST:event_jComboBoxResItemStateChanged
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JComboBox jComboBox1;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
+    private javax.swing.JComboBox jComboBoxRes;
+    private javax.swing.JLabel jLabelID;
+    private javax.swing.JLabel jLabelItems;
+    private javax.swing.JLabel jLabelRes;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTable jTable2;
+    private javax.swing.JTable jTableItems;
+    private javax.swing.JTable jTableRes;
     // End of variables declaration//GEN-END:variables
 }

@@ -7,7 +7,7 @@ package Logica;
 public class Conexion {
     private static String servidor = "jdbc:mysql://localhost:3306/mydb";
     private static String user = "root";
-    private static String pass = "santiagopako";
+    private static String pass = "root";
     private static String driver = "com.mysql.jdbc.Driver";
     private static Connection conexion;
     

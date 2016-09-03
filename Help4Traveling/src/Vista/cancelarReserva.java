@@ -5,17 +5,41 @@
  */
 package Vista;
 
+import Logica.DtReserva;
+import Logica.Fabrica;
+import Logica.IControladorReserva;
+import java.util.Iterator;
+import java.util.List;
+import javax.swing.DefaultListModel;
+
 /**
  *
  * @author tecnoinf
  */
 public class cancelarReserva extends javax.swing.JInternalFrame {
-
+    private IControladorReserva IControlador;
+    private List<DtReserva> listaReservas;
+    private DefaultListModel listModel = new DefaultListModel();
+    
     /**
      * Creates new form cancelarReserva
      */
     public cancelarReserva() {
         initComponents();
+        
+        Fabrica fabrica = Fabrica.getInstance();
+        this.IControlador = fabrica.getIControladorReserva();
+        
+        fabrica.getIControladorReserva().setReservasDB();
+        this.listaReservas = this.IControlador.listarReservas();
+        
+        Iterator<DtReserva> i = this.listaReservas.iterator();
+        while (i.hasNext()) {
+            DtReserva res = i.next();
+            System.out.println("Reserva: "+res.getId());
+            listModel.addElement(res.getId());
+            jListRes.setModel(listModel);
+        }
     }
 
     /**
@@ -28,7 +52,7 @@ public class cancelarReserva extends javax.swing.JInternalFrame {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList();
+        jListRes = new javax.swing.JList();
         jButton1 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
 
@@ -38,15 +62,15 @@ public class cancelarReserva extends javax.swing.JInternalFrame {
         setResizable(true);
         setTitle("Cancelar reserva");
 
-        jList1.setModel(new javax.swing.AbstractListModel() {
-            String[] strings = { "Reserva 1", "Reserva 2", "Reserva 3" };
-            public int getSize() { return strings.length; }
-            public Object getElementAt(int i) { return strings[i]; }
-        });
-        jList1.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-        jScrollPane1.setViewportView(jList1);
+        jListRes.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        jScrollPane1.setViewportView(jListRes);
 
         jButton1.setText("Eliminar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jLabel1.setText("Reservas:");
 
@@ -59,7 +83,7 @@ public class cancelarReserva extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 126, Short.MAX_VALUE)
+                        .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jButton1))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1)
@@ -72,8 +96,8 @@ public class cancelarReserva extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 9, Short.MAX_VALUE)
+                .addComponent(jScrollPane1)
+                .addGap(9, 9, 9)
                 .addComponent(jButton1)
                 .addContainerGap())
         );
@@ -81,11 +105,15 @@ public class cancelarReserva extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        if (this.IControlador.cancelarUnaReserva(Long.valueOf(jListRes.getSelectedValue().toString()))) listModel.removeElementAt(jListRes.getSelectedIndex());
+    }//GEN-LAST:event_jButton1ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JList jList1;
+    private javax.swing.JList jListRes;
     private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
 }

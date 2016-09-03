@@ -6,11 +6,7 @@
 package Vista;
 
 
-import Logica.DtUsuario;
 import Logica.Fabrica;
-import Logica.ControladorUsuario;
-import Logica.Date;
-import javax.swing.JOptionPane;
 import Logica.IControladorUsuario;
 
 /**
@@ -50,13 +46,17 @@ public class Principal extends javax.swing.JFrame {
         escritorio = new javax.swing.JDesktopPane();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
+        jMenuItemSalir = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         bm_registrar_cliente = new javax.swing.JMenuItem();
         bm_registrar_servicio = new javax.swing.JMenuItem();
         bm_registrar_reserva = new javax.swing.JMenuItem();
+        jSeparator1 = new javax.swing.JPopupMenu.Separator();
+        jMenuItemCancelar = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
         bm_verInfoCliente = new javax.swing.JMenuItem();
         bm_verInfoProveedor = new javax.swing.JMenuItem();
+        jMenuItemVerRes = new javax.swing.JMenuItem();
 
         fc_seleccionar_archivo.setOpaque(true);
 
@@ -74,6 +74,16 @@ public class Principal extends javax.swing.JFrame {
         );
 
         jMenu1.setText("Inicio");
+
+        jMenuItemSalir.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_Q, java.awt.event.InputEvent.CTRL_MASK));
+        jMenuItemSalir.setText("Salir");
+        jMenuItemSalir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemSalirActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItemSalir);
+
         jMenuBar1.add(jMenu1);
 
         jMenu2.setText("Registros");
@@ -106,6 +116,15 @@ public class Principal extends javax.swing.JFrame {
             }
         });
         jMenu2.add(bm_registrar_reserva);
+        jMenu2.add(jSeparator1);
+
+        jMenuItemCancelar.setText("Cancelar Reserva");
+        jMenuItemCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemCancelarActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuItemCancelar);
 
         jMenuBar1.add(jMenu2);
         jMenu2.getAccessibleContext().setAccessibleDescription("");
@@ -127,6 +146,14 @@ public class Principal extends javax.swing.JFrame {
             }
         });
         jMenu3.add(bm_verInfoProveedor);
+
+        jMenuItemVerRes.setText("VerInfo Reserva");
+        jMenuItemVerRes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemVerResActionPerformed(evt);
+            }
+        });
+        jMenu3.add(jMenuItemVerRes);
 
         jMenuBar1.add(jMenu3);
 
@@ -185,6 +212,22 @@ public class Principal extends javax.swing.JFrame {
         fverInfoProveedor.setVisible(true);
     }//GEN-LAST:event_bm_verInfoProveedorActionPerformed
 
+    private void jMenuItemCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemCancelarActionPerformed
+        cancelarReserva cr = new cancelarReserva();
+        escritorio.add(cr);
+        cr.setVisible(true);
+    }//GEN-LAST:event_jMenuItemCancelarActionPerformed
+
+    private void jMenuItemVerResActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemVerResActionPerformed
+        verInfoReserva vir = new verInfoReserva();
+        escritorio.add(vir);
+        vir.setVisible(true);
+    }//GEN-LAST:event_jMenuItemVerResActionPerformed
+
+    private void jMenuItemSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemSalirActionPerformed
+        System.exit(0);
+    }//GEN-LAST:event_jMenuItemSalirActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -232,5 +275,9 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItemCancelar;
+    private javax.swing.JMenuItem jMenuItemSalir;
+    private javax.swing.JMenuItem jMenuItemVerRes;
+    private javax.swing.JPopupMenu.Separator jSeparator1;
     // End of variables declaration//GEN-END:variables
 }
