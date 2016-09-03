@@ -17,7 +17,7 @@ import javax.swing.JOptionPane;
  *
  * @author tecnoinf
  */
-public class cancelarReservaLista extends javax.swing.JInternalFrame {
+public class cancelarReserva2 extends javax.swing.JInternalFrame {
     private IControladorReserva IControlador;
     private List<DtReserva> listaReservas;
     private DefaultListModel listModel = new DefaultListModel();
@@ -39,7 +39,7 @@ public class cancelarReservaLista extends javax.swing.JInternalFrame {
         }
     }
     
-    public cancelarReservaLista() {
+    public cancelarReserva2() {
         initComponents();
         
         Fabrica fabrica = Fabrica.getInstance();
