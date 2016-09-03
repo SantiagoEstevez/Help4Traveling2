@@ -134,7 +134,37 @@ public class ManejadorCliente {
             return listaClientes;
     }
         
-       
+    public void persistirCliente(Cliente cli){
+       Conexion conexion = new Conexion();
+       Connection con = conexion.getConnection();
+       Statement st;
+       char pn = cli.getNombre().charAt(0);
+       char pa = cli.getApellido().charAt(0);
+       StringBuilder sb = new StringBuilder();
+       sb.append(pn);
+       sb.append(pa);
+       String ref = sb.toString();
+       String fecha = String.valueOf(cli.getNacimiento().getAno()) + "-" + String.valueOf(cli.getNacimiento().getMes()) + "-" + String.valueOf(cli.getNacimiento().getDia());
+       String sqlac = "INSERT INTO mydb.usuarios " + 
+             "(Ref,Nick,Email,Nombre,Apellido,Nacimiento) " +
+             "VALUES ('" + ref + "','" + cli.getNickname() + "','" + cli.getCorreo() + "','" + cli.getNombre() 
+             + "','" + cli.getApellido() + "','" + fecha + "')";
+       System.out.println(sqlac);
+       String sqlai = "INSERT INTO mydb.`imágenes de usuarios` (Ref,Imagen) VALUES ('" + ref + "','" + cli.getImagen() + "')";
+       System.out.println(sqlai);
+       try{
+           st = con.createStatement();
+           System.out.println("antes de insertar");
+           st.executeUpdate(sqlac);
+           st.executeUpdate(sqlai);
+           con.close();
+           st.close();
+           System.out.println("INSERTE :)");
+       }
+	   catch(SQLException e){
+           System.out.println("No pude INSERTAR :(");
+       }
+   }   
        
  }
     

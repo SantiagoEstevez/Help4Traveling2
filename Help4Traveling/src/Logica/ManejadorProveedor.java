@@ -114,4 +114,40 @@ public class ManejadorProveedor {
             return listaProveedores;
     }           
        
+    public void persistirProveedor(Proveedor prov){
+       Conexion conexion;
+       System.out.println("Entro a persistir");
+       conexion = new Conexion();
+       Connection con = conexion.getConnection();
+       Statement st;
+       char pn = prov.getNombre().charAt(0);
+       char pa = prov.getApellido().charAt(0);
+       StringBuilder sb = new StringBuilder();
+       sb.append(pn);
+       sb.append(pa);
+       String ref = sb.toString();
+       String fecha = String.valueOf(prov.getNacimiento().getAno()) + "-" + String.valueOf(prov.getNacimiento().getMes()) + "-" + String.valueOf(prov.getNacimiento().getDia());
+       String sqlau = "INSERT INTO mydb.usuarios " + 
+             "(Ref,Nick,Email,Nombre,Apellido,Nacimiento) " +
+             "VALUES ('" + ref + "','" + prov.getNickname() + "','" + prov.getCorreo() + "','" + prov.getNombre() 
+             + "','" + prov.getApellido() + "','" + fecha + "')";
+       System.out.println(sqlau);
+       String sqlai = "INSERT INTO mydb.`imágenes de usuarios` (Ref,Imagen) VALUES ('" + ref + "','" + prov.getImagen() + "')";
+       System.out.println(sqlai);
+       String sqlap = "INSERT INTO mydb.`sitios web y empresas de proveedores` (Ref,Nombre,`Sitio Web`) VALUES ('" + ref + "','" + prov.getEmpresa() + "','" + prov.getLink() + "')";
+       try{
+           st = con.createStatement();
+           System.out.println("antes de insertar");
+           st.executeUpdate(sqlau);
+           st.executeUpdate(sqlai);
+           st.executeUpdate(sqlap);
+           con.close();
+           st.close();
+           System.out.println("INSERTE :)");
+       }
+       catch(SQLException e){
+           System.out.println("No pude INSERTAR :(");
+       }
+   }
+    
 }

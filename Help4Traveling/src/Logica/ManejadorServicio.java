@@ -5,6 +5,9 @@
  */
 package Logica;
 
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.List;
@@ -65,5 +68,44 @@ public class ManejadorServicio {
 	}
 	return listaDtServ;        
     }
+    
+    public void persistirServicio(Servicio serv){
+       Conexion conexion;
+       String sql;
+       conexion = new Conexion();
+       Connection con = conexion.getConnection();
+       Statement st;
+       String categorias = "";
+       List<String> imagserv = serv.getImagenes();
+       String imagenes = "";
+       Iterator<String> iteri = imagserv.iterator();
+       while (iteri.hasNext()) {
+            String img = iteri.next();
+            imagenes = imagenes + img + ", ";
+       }
+       Map<String,Categoria> catserv = serv.getCategorias();
+       Iterator<Categoria> iter = catserv.values().iterator();
+       while (iter.hasNext()) {
+            Categoria cat = iter.next();
+            categorias = categorias + cat.getNombre() + ", ";
+       }
+       sql = "INSERT INTO mydb.servicios " + 
+             "(Ref,Nombre,Categorias,Proveedor,`Ciudad Origen`,`Ciudad Destino`,Imágenes,`Precio (USD)`) " +
+             "VALUES ('S25','" + serv.getNombre() + "','" + categorias + "','TC"/* + serv.getProveedor().getNickname()*/
+             + "','" + serv.getOrigen().getNombre() + "','" + serv.getDestino().getNombre() + "','" + imagenes + "'," + serv.getPrecio() +")";
+       System.out.println(sql);
+       
+       try{
+           st = con.createStatement();
+           System.out.println("antes de insertar");
+           st.executeUpdate(sql);
+           con.close();
+           st.close();
+           System.out.println("INSERTE :)");
+       }
+       catch (SQLException e){
+           System.out.println("No pude INSERTAR :(");
+       }
+   }
     
 }

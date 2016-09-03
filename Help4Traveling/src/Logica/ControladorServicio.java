@@ -17,15 +17,15 @@ import java.util.ArrayList;
 public class ControladorServicio implements IControladorServicio  {
     
     private boolean comprobarCompletitudDatos(DtServicio dts) {
-        if (dts.getNkProveedor() == "")
+        if (dts.getNkProveedor().equals(""))
             return false;
-        else if (dts.getNombre() == "")
+        else if (dts.getNombre().equals(""))
 		 return false;
-             else if (dts.getDescripcion() == "")
+             else if (dts.getDescripcion().equals(""))
                       return false;
                   else if (dts.getPrecio() >= 0)
                            return true;
-                       else if (dts.getNomCiuOrigen() == "")
+                       else if (dts.getNomCiuOrigen().equals(""))
 				return false;
                             else if (dts.getDtCategorias().isEmpty())
                                      return false; 
@@ -62,7 +62,7 @@ public class ControladorServicio implements IControladorServicio  {
                 if (existeProv) {
                     existeCiuO = ManejadorCiudad.getInstance().existeCiudad(dts.getNomCiuOrigen());
                     if (existeCiuO) {
-                        if (dts.getNomCiuDestino() != "") {
+                        if (!dts.getNomCiuDestino().equals("")) {
                             existeCiuD = ManejadorCiudad.getInstance().existeCiudad(dts.getNomCiuDestino());
                             if (!existeCiuD)
                                 altaok = false;
@@ -79,12 +79,14 @@ public class ControladorServicio implements IControladorServicio  {
             Ciudad co = ManejadorCiudad.getInstance().obtenerCiudad(dts.getNomCiuOrigen());
             p = ManejadorProveedor.getInstance().obtenerProveedor(dts.getNkProveedor());
             Servicio s = new Servicio(dts.getNombre(), p, dts.getDescripcion(), dts.getImagenes(), dts.getPrecio(), co);
-            if (dts.getNomCiuDestino() != "") {
+            if (!dts.getNomCiuDestino().equals("")) {
                 Ciudad cd = ManejadorCiudad.getInstance().obtenerCiudad(dts.getNomCiuDestino());
                 s.setDestino(cd);
             }
             p.agregarServicio(s);
-            ManejadorServicio.getInstance().agregarServicio(s);            
+            //ManejadorServicio.getInstance().agregarServicio(s); 
+            ManejadorServicio ms = ManejadorServicio.getInstance();
+            ms.persistirServicio(s);
         }
         return altaok;
     }

@@ -51,6 +51,10 @@ public class Servicio extends Oferta {
         return imagenes;
     }
 
+    public Map<String, Categoria> getCategorias() {
+        return categoriasNom;
+    }   
+    
     public float getPrecio() {
         return precio;
     }

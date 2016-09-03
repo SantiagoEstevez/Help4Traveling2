@@ -17,27 +17,27 @@ public class ControladorUsuario implements IControladorUsuario {
     }
     
     private boolean comprobarCompletitudDatos(DtUsuario dtu) {
-        if (dtu.getNickname() == "")
+        if (dtu.getNickname().equals(""))
             return false;
-        else if (dtu.getNombre() == "")
+        else if (dtu.getNombre().equals(""))
 		 return false;
-             else if (dtu.getApellido() == "")
+             else if (dtu.getApellido().equals(""))
                       return false;
-		  else if (dtu.getCorreo() == "")
+		  else if (dtu.getCorreo().equals(""))
 			   return false;
                        else if (!esFechaValida(dtu.getNacimiento()))
                                 return false;
-                            else if (dtu.getTipo() == "Cliente")
+                            else if (dtu.getTipo().equals("Cliente"))
                                      return true;
-				 else if (dtu.getEmpresa() == "")
+				 else if (dtu.getEmpresa().equals(""))
 					  return false;
-                                      else if (dtu.getLink() == "")
+                                      else if (dtu.getLink().equals(""))
                                                return false; 
                                            else return true;		
     }
 	
     private boolean esUsuarioCliente(DtUsuario dtu) {
-	if (dtu.getTipo() == "Cliente")
+	if (dtu.getTipo().equals("Cliente"))
             return true;
 	else return false;		
     }
@@ -73,13 +73,15 @@ public class ControladorUsuario implements IControladorUsuario {
     public void altaUsuarioCliente(DtUsuario dtu) {
         Cliente cli = new Cliente(dtu.getNombre(), dtu.getApellido(), dtu.getNickname(), dtu.getCorreo(), dtu.getNacimiento(), dtu.getImagen());
 	ManejadorCliente muc = ManejadorCliente.getInstance();
-	muc.agregarCliente(cli);
+	//muc.agregarCliente(cli);
+        muc.persistirCliente(cli);
     }
 	
     public void altaUsuarioProveedor(DtUsuario dtu) {
 	Proveedor prov = new Proveedor(dtu.getNombre(), dtu.getApellido(), dtu.getNickname(), dtu.getCorreo(), dtu.getNacimiento(), dtu.getImagen(), dtu.getEmpresa(), dtu.getLink());
 	ManejadorProveedor mup = ManejadorProveedor.getInstance();
-	mup.agregarProveedor(prov);	
+	//mup.agregarProveedor(prov);	
+        mup.persistirProveedor(prov);
     }
 	
     public void cancelarAltaUsuario() {

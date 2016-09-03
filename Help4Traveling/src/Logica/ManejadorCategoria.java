@@ -5,6 +5,10 @@
  */
 package Logica;
 // Comentario para que me reconozca los cambios y pueda comitear...
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -58,13 +62,29 @@ public class ManejadorCategoria {
         categoriasNom.replace(nombre, cat);
   }
     
-    public List<String> getNombresCategorias(){
+    public List<String> getNombresCategorias() {
         List<String> listaCat = new LinkedList<String>();
-        Iterator<Categoria> iter = this.categoriasNom.values().iterator();
+        /*Iterator<Categoria> iter = this.categoriasNom.values().iterator();
 	while (iter.hasNext()) {
             Categoria cat = iter.next();
             listaCat.add(cat.getNombre());
-	}
+	}*/
+        Conexion conexion;
+        conexion = new Conexion();
+        Connection con = conexion.getConnection();
+		String sql = "SELECT * FROM mydb.categorias";
+        try{
+			Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery(sql);
+            while (rs.next())
+                listaCat.add(rs.getString("Nombre"));	
+            rs.close();
+            st.close();
+            con.close();
+        }
+        catch(SQLException e){
+           System.out.println("No pude LISTAR :(");
+        }
 	return listaCat;        
     }
 }
