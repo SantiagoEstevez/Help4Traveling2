@@ -24,7 +24,7 @@ public interface IControladorReserva {
     public abstract void altaDeReserva();
     public abstract void actualizarEstadoDeReserva();
     public abstract void verInfoDeReserva();
-    public abstract Boolean cancelarUnaReserva(long id);    
+    public abstract void cancelarUnaReserva(long id);    
     
     public abstract void setReservasDB();
 

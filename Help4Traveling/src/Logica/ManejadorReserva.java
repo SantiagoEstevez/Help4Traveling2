@@ -54,7 +54,7 @@ public class ManejadorReserva {
        }
    }
    
-      public Boolean cancelarReserva(long id){
+      public void cancelarReserva(long id){
        conexion = new Conexion();
        Connection con = conexion.getConnection();
        Statement st;
@@ -85,13 +85,10 @@ public class ManejadorReserva {
            System.out.println("OK");
            
            reservasId.remove(id);
-           
-           return true;
-           
+                      
        }catch(SQLException e){
            System.out.println("ERROR");
            System.out.println(e.getMessage());
-           return false;
        }
 
        

@@ -45,9 +45,9 @@ public class ControladorReserva implements IControladorReserva {
         
     }
     
-    public Boolean cancelarUnaReserva(long id) {
+    public void cancelarUnaReserva(long id) {
         ManejadorReserva mr = ManejadorReserva.getInstance();
-        return mr.cancelarReserva(id);
+        mr.cancelarReserva(id);
     }
     
     public List<DtReserva> listarReservas() {
