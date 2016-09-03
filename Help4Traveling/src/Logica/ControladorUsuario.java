@@ -50,7 +50,7 @@ public class ControladorUsuario implements IControladorUsuario {
             clienteok = esUsuarioCliente(dtu);
             if (clienteok) {
 		ManejadorCliente muc = ManejadorCliente.getInstance();
-		existenk = muc.existeCliente(dtu.getNickname());
+		existenk = muc.existeNickname(dtu.getNickname());
 		if (!existenk) {
                     existemail = muc.existeCorreo(dtu.getCorreo());
                     if (!existemail)
@@ -59,7 +59,7 @@ public class ControladorUsuario implements IControladorUsuario {
             }
             else {
 		ManejadorProveedor mup = ManejadorProveedor.getInstance();
-		existenk = mup.existeProveedor(dtu.getNickname());
+		existenk = mup.existeNickname(dtu.getNickname());
 		if (!existenk) {
                     existemail = mup.existeCorreo(dtu.getCorreo());
                     if (!existemail)
@@ -110,7 +110,7 @@ public class ControladorUsuario implements IControladorUsuario {
     public ArrayList<DtReserva> listarReservasCliente(DtUsuario dtu){
         ManejadorCliente muc = ManejadorCliente.getInstance();
         ArrayList<DtReserva> reservas = new ArrayList<DtReserva>();
-        if (muc.existeCliente(dtu.getNickname())){
+        if (muc.existeNickname(dtu.getNickname())){
             reservas = muc.obtenerCliente(dtu.getNickname()).listarReservas();
         }
         return reservas;
@@ -118,7 +118,7 @@ public class ControladorUsuario implements IControladorUsuario {
     
     
     
-           public ArrayList<DtUsuario> listarProveedores() {
+    public ArrayList<DtUsuario> listarProveedores() {
         ManejadorProveedor map = ManejadorProveedor.getInstance();
         return map.listarProveedores();
         
@@ -128,7 +128,7 @@ public class ControladorUsuario implements IControladorUsuario {
     public ArrayList<DtServicio> listarServicioProveedor(DtUsuario dtu){
         ManejadorProveedor map = ManejadorProveedor.getInstance();
         ArrayList<DtServicio> servicios = new ArrayList<DtServicio>();
-        if (map.existeProveedor(dtu.getNickname())){
+        if (map.existeNickname(dtu.getNickname())){
             servicios = map.obtenerProveedor(dtu.getNickname()).listarServicios();
         }
         return servicios;
