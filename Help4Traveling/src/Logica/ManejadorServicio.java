@@ -6,6 +6,7 @@
 package Logica;
 
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.HashMap;
@@ -23,6 +24,8 @@ public class ManejadorServicio {
     //Clase que conserva la colección global de las Ofertas Servicios del Sistema
     private Map<String,Servicio> serviciosNom;
     private static ManejadorServicio instancia = null;
+    private Conexion conexion;
+    private String sql;
     
     private ManejadorServicio(){
         serviciosNom = new HashMap<String,Servicio>();
@@ -57,6 +60,70 @@ public class ManejadorServicio {
         }
         return listaserv;
     }
+    
+    public ArrayList<DtServicio> listarServiciosProveedor(DtUsuario user){
+        conexion = new Conexion();
+       Connection con = conexion.getConnection();
+       Statement st;
+       ResultSet rsServiciosProveedor;
+       sql = "SELECT * FROM mydb.servicios" +
+               "WHERE Nick=" + user.getNickname() +" OR Nick="+user.getNickname(); 
+       try{
+            st = con.createStatement();
+            rsServiciosProveedor = st.executeQuery(sql);
+            
+            while (rsServiciosProveedor.next()) {
+                System.out.println("llegue2");
+                String nombre = rsServiciosProveedor.getString("Nombre");
+                String nkproveedor = rsServiciosProveedor.getString("Proveedor");
+                String descripcion = rsServiciosProveedor.getString("");
+                String precio = rsServiciosProveedor.getString("Precio");
+                String ciuorigen = rsServiciosProveedor.getString("Ciudad Origen");
+                String ciuodestino = rsServiciosProveedor.getString("Ciudad Destino");
+                
+                long precioint = Integer.parseInt(precio);
+                
+                Servicio nuevo = new Servicio(/*idint,"REGISTRADA", cliente,null*/);
+                nuevo.setNombre(nombre);
+                nuevo.setPrecio(precioint);
+                //nuevo.setOrigen(origen);
+                this.serviciosNom.put(nombre, nuevo);
+                
+            } 
+            rsServiciosProveedor.close();
+            con.close();
+            st.close();
+            
+            }catch(SQLException e){
+           System.out.println("No hubo resultado");
+       }
+       
+        ArrayList<DtServicio> listaServiciosProveedor = new ArrayList<>();
+        Iterator<Servicio> iter = this.serviciosNom.values().iterator();
+        while (iter.hasNext()){
+            Servicio res =iter.next();
+            listaServiciosProveedor.add(res.getDtServicio());
+        }
+            return listaServiciosProveedor;
+    }
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+    
     
     public List<DtServicio> getDtServicios() {
         List<DtServicio> listaDtServ = new LinkedList<DtServicio>();
