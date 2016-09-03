@@ -39,23 +39,80 @@ public class ManejadorProveedor {
         proveedoresNK.put(nk,prov);
     }
     
-    public boolean existeProveedor(String nickname){
-        return proveedoresNK.containsKey(nickname);        
+    public boolean existeNickname(String nickname){
+        boolean existe = false;
+        ResultSet rs;
+        Conexion conex = new Conexion();
+        Connection con = conex.getConnection();
+        Statement st;
+        //String sql1 = "SELECT * FROM mydb.usuarios WHERE Nickname='" + nickname + "' AND Empresa <> NULL AND Link <> NULL)"; 
+        String sql1 = "SELECT * FROM mydb.usuarios WHERE Nickname=" + nickname; 
+        try {
+            st = con.createStatement();
+            rs = st.executeQuery(sql1);
+            if (rs.next())
+                existe = true;
+            rs.close();
+            con.close();
+            st.close();           
+        } catch (SQLException e){
+            System.out.println("No existe proveedor :(");
+        }
+        return existe; 
+    
+        //return proveedoresNK.containsKey(nickname);        
     }
     
     public boolean existeCorreo(String correo){
         boolean existe = false;
-	Iterator<Proveedor> iter = this.proveedoresNK.values().iterator();
+        ResultSet rs;
+        Conexion conex = new Conexion();
+        Connection con = conex.getConnection();
+        Statement st;
+        String sql1 = "SELECT * FROM mydb.usuarios WHERE Correo=" + correo; 
+        try {
+            st = con.createStatement();
+            rs = st.executeQuery(sql1);
+            if (rs.next())
+                existe = true;
+            rs.close();
+            st.close();  
+            con.close();
+        } catch (SQLException e){
+            System.out.println("No existe correo :(");
+        }
+	/*Iterator<Proveedor> iter = this.proveedoresNK.values().iterator();
 	while ((iter.hasNext()) && (!existe)) {
             Proveedor prov = iter.next();
             if (prov.getCorreo() == correo)
 		existe = true;
-	}
+	}*/
 	return existe;        
     }
 
     public Proveedor obtenerProveedor(String nickname){
-        return ((Proveedor) proveedoresNK.get(nickname));
+        ResultSet rs;
+        Proveedor p = null;
+        Conexion conex = new Conexion();
+        Connection con = conex.getConnection();
+        Statement st;
+        //String sql1 = "SELECT * FROM mydb.usuarios WHERE Nickname='" + nickname + "' AND Empresa <> NULL AND Link <> NULL)"; 
+        String sql1 = "SELECT * FROM mydb.usuarios WHERE Nickname=" + nickname; 
+        try {
+            st = con.createStatement();
+            rs = st.executeQuery(sql1);
+            if (rs.next()) {
+                Date fecha = new Date();
+                p = new Proveedor(rs.getString("Nombre"),rs.getString("Apellido"),rs.getString("Nick"),rs.getString("Correo"),fecha,"imagen","empresa","link");
+            }            
+            rs.close();
+            con.close();
+            st.close();           
+        } catch (SQLException e){
+            System.out.println("No obtuve proveedor :(");
+        }
+        return p;
+        //return ((Proveedor) proveedoresNK.get(nickname));
     }
     
     
