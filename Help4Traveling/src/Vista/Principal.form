@@ -19,6 +19,9 @@
                 <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
                   <KeyStroke key="Ctrl+Q"/>
                 </Property>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/Iconos/check-icon.png"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Salir"/>
               </Properties>
               <Events>
@@ -40,6 +43,9 @@
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="bm_registrar_cliente">
               <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/Iconos/add-icon.png"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Registrar Usuario"/>
               </Properties>
               <Events>
@@ -48,6 +54,9 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="bm_registrar_servicio">
               <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/Iconos/add-icon.png"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Registrar Servicio"/>
               </Properties>
               <Events>
@@ -56,6 +65,9 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="bm_registrar_reserva">
               <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/Iconos/add-icon.png"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Registrar Reserva"/>
               </Properties>
               <Events>
@@ -66,6 +78,9 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="jMenuItemCancelar">
               <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/Iconos/delete-icon.png"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Cancelar Reserva"/>
               </Properties>
               <Events>
@@ -81,6 +96,9 @@
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="bm_verInfoCliente">
               <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/Iconos/info-icon.png"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="VerInfo Cliente"/>
               </Properties>
               <Events>
@@ -89,6 +107,9 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="bm_verInfoProveedor">
               <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/Iconos/info-icon.png"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="VerInfo Proveedor"/>
               </Properties>
               <Events>
@@ -97,6 +118,9 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="jMenuItemVerRes">
               <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/Iconos/info-icon.png"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="VerInfo Reserva"/>
               </Properties>
               <Events>
