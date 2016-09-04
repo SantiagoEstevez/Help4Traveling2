@@ -57,12 +57,11 @@ public class verInfoReserva extends javax.swing.JInternalFrame {
     }
 
     private void actualizarItems() {
-        this.listaReservas = this.IControlador.listarReservas();
+        //this.listaReservas = this.IControlador.listarReservas();
         Integer index = jTableRes.getSelectedRow();
         if (index != -1) {
-            DtReserva res = listaReservas.get(index);
-            System.out.println(res.getCliente());
-            Iterator<ItemReserva> it = res.getItems().values().iterator();
+            //DtReserva res = listaReservas.get(index);
+            Iterator<ItemReserva> it = this.IControlador.listarItems(index).iterator();
             tableModelItems.getDataVector().removeAllElements();
 
             while (it.hasNext()) {
@@ -102,6 +101,7 @@ public class verInfoReserva extends javax.swing.JInternalFrame {
         this.IControlador = fabrica.getIControladorReserva();
 
         fabrica.getIControladorReserva().setReservasDB();
+        fabrica.getIControladorReserva().setItemsDB();
         actualizarReservas();
         jTableRes.setRowSelectionInterval(0, 0);
         if (jTableRes.getSelectedRowCount() != -1) {
@@ -261,6 +261,7 @@ public class verInfoReserva extends javax.swing.JInternalFrame {
 
     private void jButtonActualActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonActualActionPerformed
         this.IControlador.setReservasDB();
+        this.IControlador.setItemsDB();
         actualizarReservas();
     }//GEN-LAST:event_jButtonActualActionPerformed
 

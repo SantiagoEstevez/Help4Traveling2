@@ -5,7 +5,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -23,7 +22,7 @@ public class ManejadorReserva {
     };
 
     private Map<Long, Reserva> reservasId;
-    private Collection<ItemReserva> itemsId;
+    private Map<Integer, List<ItemReserva>> itemsId;
 
     private ManejadorReserva() {
         reservasId = new HashMap<>();
@@ -112,6 +111,10 @@ public class ManejadorReserva {
             listares.add(res.getDtReserva());
         }
         return listares;
+    }
+
+    public List<ItemReserva> listarItems(Integer reserva) {
+        return this.itemsId.get(reserva);
     }
 
     public List<DtReserva> getDtReservas() {
@@ -241,13 +244,17 @@ public class ManejadorReserva {
                 Date fin = new Date();
                 //Date inicio = new Date(rsItems.getString("inicio"));
                 //Date fin = new Date(rsItems.getString("fin"));
-                String proveedor = rsItems.getString("proveedorOferta");
-                //Oferta oferta = new Oferta(sql, prov);
+                String nombre = rsItems.getString("proveedorOferta");
+                //Proveedor proveedor = ManejadorProveedor.getInstance().obtenerProveedor(nombre);
+                //Oferta oferta = ;
 
-                ItemReserva nuevo = new ItemReserva();
-                //ItemReserva nuevo = new ItemReserva(reserva, cantidad, inicio, fin, oferta);
+                ItemReserva nuevo = new ItemReserva(reserva, cantidad, inicio, fin, null);
 
-                itemsId.add(nuevo);
+                if (itemsId.containsKey(reserva)) {
+                    itemsId.get(reserva).add(nuevo);
+                } else {
+                    itemsId.put(reserva, (List) nuevo);
+                }
                 System.out.println(nuevo.getId());
 
             }
