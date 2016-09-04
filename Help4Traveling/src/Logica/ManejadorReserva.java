@@ -115,7 +115,9 @@ public class ManejadorReserva {
     }
 
     public List<ItemReserva> listarItems(Integer reserva) {
-        return this.itemsId.get(reserva);
+        List<ItemReserva> listaitems = new ArrayList<>();
+        listaitems = itemsId.get(reserva);
+        return listaitems;
     }
 
     public List<DtReserva> getDtReservas() {
@@ -187,10 +189,9 @@ public class ManejadorReserva {
             st = con.createStatement();
             rsReservas = st.executeQuery(sql);
 
-            System.out.println("Cargando Reservas");
+            System.out.print("Cargando Reservas: ");
 
             while (rsReservas.next()) {
-                System.out.println("Cargando nueva Reserva");
 
                 Long num = rsReservas.getLong("numero");
                 Date creada = new Date(rsReservas.getString("fecha"));
@@ -206,9 +207,9 @@ public class ManejadorReserva {
                 nueva.setId(num);       //Temporal?
                 Long id = nueva.getId();
                 reservasId.put(id, nueva);
-                System.out.println("Reserva: " + nueva.getId());
-
+                System.out.print(nueva.getId() + " ");
             }
+            System.out.println();
             rsReservas.close();
             con.close();
             st.close();
@@ -223,6 +224,7 @@ public class ManejadorReserva {
 
     public void setItemsDB() {
         ResultSet rsItems;
+        itemsId.clear();
 
         conexion = new Conexion();
         Connection con = conexion.getConnection();
@@ -234,10 +236,9 @@ public class ManejadorReserva {
             st = con.createStatement();
             rsItems = st.executeQuery(sql);
 
-            System.out.println("Cargando Items");
+            System.out.print("Cargando Items ");
 
             while (rsItems.next()) {
-                System.out.print(" Cargando nuevo Item: ");
 
                 int reserva = rsItems.getInt("reserva");
                 int cantidad = rsItems.getInt("cantidad");
@@ -261,9 +262,10 @@ public class ManejadorReserva {
                     item.add(nuevo);
                     itemsId.put(reserva, item);
                 }
-                System.out.println(nuevo.getId());
+                System.out.print(nuevo.getId() + " ");
 
             }
+            System.out.println();
             rsItems.close();
             con.close();
             st.close();
