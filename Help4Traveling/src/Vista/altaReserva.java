@@ -11,12 +11,15 @@ package Vista;
     import Logica.DtUsuario;
     import Logica.ManejadorCliente;
     import java.util.ArrayList;
+    import java.util.HashSet;
     import java.util.Iterator;
+    import java.util.Set;
     import javax.swing.table.DefaultTableModel;
 
 public class altaReserva extends javax.swing.JInternalFrame {
     private IControladorUsuario IControlador;
     private ArrayList<DtUsuario> listaClientes;
+    private DefaultTableModel modelo;
     
     public altaReserva() {
         initComponents();
@@ -31,7 +34,13 @@ public class altaReserva extends javax.swing.JInternalFrame {
             DtUsuario user = i.next();
             this.clientes.addItem(user.getNickname());
         }
-        //DefautTableModel modelo = new DefautTableModel();
+        
+        //Setear tabla
+        modelo = (DefaultTableModel) items.getModel();
+        modelo.addRow(new Object[]{true,5,"hola"});
+        //modelo.setRowCount(0);
+        //modelo.setRowCount(1);
+        
     }
 
     /**
@@ -81,6 +90,11 @@ public class altaReserva extends javax.swing.JInternalFrame {
         });
 
         jButton2.setText("Borrar");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         items.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -91,7 +105,7 @@ public class altaReserva extends javax.swing.JInternalFrame {
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Boolean.class, java.lang.Integer.class, java.lang.Boolean.class
+                java.lang.Boolean.class, java.lang.Integer.class, java.lang.String.class
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -169,6 +183,10 @@ public class altaReserva extends javax.swing.JInternalFrame {
        Principal.escritorio.add(listaOfertas);
        listaOfertas.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        modelo.setRowCount(0);
+    }//GEN-LAST:event_jButton2ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
