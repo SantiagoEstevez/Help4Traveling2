@@ -11,6 +11,8 @@ import Logica.IControladorReserva;
 import Logica.ItemReserva;
 import java.util.Iterator;
 import java.util.List;
+import javax.swing.SwingConstants;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -18,41 +20,46 @@ import javax.swing.table.DefaultTableModel;
  * @author tecnoinf
  */
 public class verInfoReserva extends javax.swing.JInternalFrame {
+
     private IControladorReserva IControlador;
     private List<DtReserva> listaReservas;
     //private List<DtItems> listaItems;
-    String [] colReservas = {"Número","Fecha","Estado","Total","Cliente"};
-    String [] colItems = {"Nombre","Cantidad","Inicio","Fin"};
-    private DefaultTableModel tableModelRes = new DefaultTableModel(colReservas,0);
-    private DefaultTableModel tableModelItems = new DefaultTableModel(colItems,0);
+    String[] colReservas = {"Número", "Fecha", "Estado", "Total", "Cliente"};
+    String[] colItems = {"Nombre", "Cantidad", "Inicio", "Fin"};
+    private DefaultTableModel tableModelRes;
+    private DefaultTableModel tableModelItems;
+    private DefaultTableCellRenderer centerRenderer;
+    private DefaultTableCellRenderer rightRenderer;
 
     /**
      * Creates new form verInfoReserva
      */
-    
     private void actualizarReservas() {
         this.listaReservas = this.IControlador.listarReservas();
         Iterator<DtReserva> i = this.listaReservas.iterator();
         tableModelRes.getDataVector().removeAllElements();
-        
+
         while (i.hasNext()) {
             DtReserva res = i.next();
-            Object [] fila = {res.getId(),
-                              res.getCreada().getFecha("-"),
-                              res.getEstado(),
-                              res.getTotal(),
-                              res.getCliente()
+            Object[] fila = {res.getId(),
+                res.getCreada().getFecha("-"),
+                res.getEstado(),
+                res.getTotal(),
+                res.getCliente()
             };
-            
             tableModelRes.addRow(fila);
         }
         jTableRes.setModel(tableModelRes);
+        jTableRes.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
+        jTableRes.getColumnModel().getColumn(1).setCellRenderer(centerRenderer);
+        jTableRes.getColumnModel().getColumn(3).setCellRenderer(rightRenderer);
+        jTableRes.getColumnModel().getColumn(4).setCellRenderer(centerRenderer);
     }
-    
+
     private void actualizarItems() {
         this.listaReservas = this.IControlador.listarReservas();
         Integer index = jTableRes.getSelectedRow();
-        if (index!=-1) {
+        if (index != -1) {
             DtReserva res = listaReservas.get(index);
             System.out.println(res.getCliente());
             Iterator<ItemReserva> it = res.getItems().values().iterator();
@@ -60,28 +67,46 @@ public class verInfoReserva extends javax.swing.JInternalFrame {
 
             while (it.hasNext()) {
                 ItemReserva item = it.next();
-                Object [] fila = {item.getOferta().getNombre(),
-                                  item.getCantidad(),
-                                  item.getInicio().getFecha("-"),
-                                  item.getFin().getFecha("-"),
-                };
+                Object[] fila = {item.getOferta().getNombre(),
+                    item.getCantidad(),
+                    item.getInicio().getFecha("-"),
+                    item.getFin().getFecha("-"),};
 
                 tableModelItems.addRow(fila);
             }
             jTableItems.setModel(tableModelItems);
         }
     }
-    
+
     public verInfoReserva() {
+        this.centerRenderer = new DefaultTableCellRenderer();
+        centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
+        this.rightRenderer = new DefaultTableCellRenderer();
+        rightRenderer.setHorizontalAlignment(SwingConstants.RIGHT);
+
+        this.tableModelItems = new DefaultTableModel(colItems, 0) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+        this.tableModelRes = new DefaultTableModel(colReservas, 0) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
         initComponents();
-        
+
         Fabrica fabrica = Fabrica.getInstance();
         this.IControlador = fabrica.getIControladorReserva();
-        
+
         fabrica.getIControladorReserva().setReservasDB();
         actualizarReservas();
-        jTableRes.setRowSelectionInterval(0,0);
-        if (jTableRes.getSelectedRowCount()!=-1) actualizarItems();
+        jTableRes.setRowSelectionInterval(0, 0);
+        if (jTableRes.getSelectedRowCount() != -1) {
+            actualizarItems();
+        }
     }
 
     /**
@@ -131,7 +156,7 @@ public class verInfoReserva extends javax.swing.JInternalFrame {
         jScrollPane1.setViewportView(jTableItems);
         jTableItems.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
 
-        jLabelItems.setText("Items correspondientes a la reserva seleccionada:");
+        jLabelItems.setText("Servicios y promociones  correspondientes a la reserva seleccionada:");
 
         jTableRes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -181,8 +206,8 @@ public class verInfoReserva extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 566, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 566, Short.MAX_VALUE)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 586, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 586, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabelRes)
@@ -216,11 +241,15 @@ public class verInfoReserva extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jTableResMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableResMouseClicked
-        if (jTableRes.getSelectedRowCount()!=-1) actualizarItems();
+        if (jTableRes.getSelectedRowCount() != -1) {
+            actualizarItems();
+        }
     }//GEN-LAST:event_jTableResMouseClicked
 
     private void jTableResKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTableResKeyTyped
-        if (jTableRes.getSelectedRowCount()!=-1) actualizarItems();
+        if (jTableRes.getSelectedRowCount() != -1) {
+            actualizarItems();
+        }
     }//GEN-LAST:event_jTableResKeyTyped
 
     private void jButtonActualActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonActualActionPerformed
@@ -231,7 +260,6 @@ public class verInfoReserva extends javax.swing.JInternalFrame {
     private void jButtonCerrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCerrarActionPerformed
         this.setVisible(false);
     }//GEN-LAST:event_jButtonCerrarActionPerformed
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonActual;

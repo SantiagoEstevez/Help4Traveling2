@@ -11,6 +11,8 @@ import Logica.IControladorReserva;
 import java.util.Iterator;
 import java.util.List;
 import javax.swing.JOptionPane;
+import javax.swing.SwingConstants;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -18,40 +20,56 @@ import javax.swing.table.DefaultTableModel;
  * @author tecnoinf
  */
 public class cancelarReserva extends javax.swing.JInternalFrame {
+
     private IControladorReserva IControlador;
     private List<DtReserva> listaReservas;
-    String [] columnas = {"Número","Fecha","Estado","Total","Cliente"};
-    private DefaultTableModel tableModel = new DefaultTableModel(columnas,0);
-    
+    String[] columnas = {"Número", "Fecha", "Estado", "Total", "Cliente"};
+    private DefaultTableModel tableModel;
+    private DefaultTableCellRenderer centerRenderer;
+    private DefaultTableCellRenderer rightRenderer;
+
     /**
      * Creates new form cancelarReserva
      */
-    
     private void actualizarReservas() {
         this.listaReservas = this.IControlador.listarReservas();
         Iterator<DtReserva> i = this.listaReservas.iterator();
         tableModel.getDataVector().removeAllElements();
-        
+
         while (i.hasNext()) {
             DtReserva res = i.next();
-            Object [] fila = {res.getId(),
-                              res.getCreada().getFecha("-"),
-                              res.getEstado(),
-                              res.getTotal(),
-                              res.getCliente()
+            Object[] fila = {res.getId(),
+                res.getCreada().getFecha("-"),
+                res.getEstado(),
+                res.getTotal(),
+                res.getCliente()
             };
-            
             tableModel.addRow(fila);
-            jTableRes.setModel(tableModel);
         }
+        jTableRes.setModel(tableModel);
+        jTableRes.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
+        jTableRes.getColumnModel().getColumn(1).setCellRenderer(centerRenderer);
+        jTableRes.getColumnModel().getColumn(3).setCellRenderer(rightRenderer);
+        jTableRes.getColumnModel().getColumn(4).setCellRenderer(centerRenderer);
     }
-    
+
     public cancelarReserva() {
+        this.centerRenderer = new DefaultTableCellRenderer();
+        centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
+        this.rightRenderer = new DefaultTableCellRenderer();
+        rightRenderer.setHorizontalAlignment(SwingConstants.RIGHT);
+
+        this.tableModel = new DefaultTableModel(columnas, 0) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
         initComponents();
-        
+
         Fabrica fabrica = Fabrica.getInstance();
         this.IControlador = fabrica.getIControladorReserva();
-        
+
         this.IControlador.setReservasDB();
         actualizarReservas();
     }
@@ -159,13 +177,13 @@ public class cancelarReserva extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEliminarActionPerformed
-        if ((tableModel.getRowCount()!=0)&&(jTableRes.getSelectedRowCount()!=0)) {
-            Object[] opciones = { "No", "Si" };
-            int respuesta = JOptionPane.showOptionDialog(null, "¿Está seguro de cancelar la reserva?", "Confirmar",JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE,null, opciones, opciones[1]);
-            
-            if (respuesta==1) {
-                this.IControlador.cancelarUnaReserva(Long.valueOf(jTableRes.getValueAt(jTableRes.getSelectedRow(),0).toString()));
-                
+        if ((tableModel.getRowCount() != 0) && (jTableRes.getSelectedRowCount() != 0)) {
+            Object[] opciones = {"No", "Si"};
+            int respuesta = JOptionPane.showOptionDialog(null, "¿Está seguro de cancelar la reserva?", "Confirmar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, opciones, opciones[1]);
+
+            if (respuesta == 1) {
+                this.IControlador.cancelarUnaReserva(Long.valueOf(jTableRes.getValueAt(jTableRes.getSelectedRow(), 0).toString()));
+
             }
         }
         actualizarReservas();
@@ -179,7 +197,6 @@ public class cancelarReserva extends javax.swing.JInternalFrame {
     private void jButtonCerrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCerrarActionPerformed
         this.setVisible(false);
     }//GEN-LAST:event_jButtonCerrarActionPerformed
-   
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonActual;
