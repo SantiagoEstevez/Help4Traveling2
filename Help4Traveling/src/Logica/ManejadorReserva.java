@@ -26,6 +26,7 @@ public class ManejadorReserva {
 
     private ManejadorReserva() {
         reservasId = new HashMap<>();
+        itemsId = new HashMap<>();
     }
 
     //Constructor
@@ -236,24 +237,29 @@ public class ManejadorReserva {
             System.out.println("Cargando Items");
 
             while (rsItems.next()) {
-                System.out.println(" Cargando nuevo Item: ");
+                System.out.print(" Cargando nuevo Item: ");
 
                 int reserva = rsItems.getInt("reserva");
                 int cantidad = rsItems.getInt("cantidad");
+
                 Date inicio = new Date();
                 Date fin = new Date();
                 //Date inicio = new Date(rsItems.getString("inicio"));
                 //Date fin = new Date(rsItems.getString("fin"));
-                String nombre = rsItems.getString("proveedorOferta");
-                //Proveedor proveedor = ManejadorProveedor.getInstance().obtenerProveedor(nombre);
-                //Oferta oferta = ;
 
-                ItemReserva nuevo = new ItemReserva(reserva, cantidad, inicio, fin, null);
+                //String nombre = rsItems.getString("proveedorOferta");
+                //Proveedor proveedor = ManejadorProveedor.getInstance().obtenerProveedor(nombre);
+                Oferta oferta = new Servicio();
+                oferta.setNombre("Prueba");
+
+                ItemReserva nuevo = new ItemReserva(reserva, cantidad, inicio, fin, oferta);
 
                 if (itemsId.containsKey(reserva)) {
                     itemsId.get(reserva).add(nuevo);
                 } else {
-                    itemsId.put(reserva, (List) nuevo);
+                    List<ItemReserva> item = new ArrayList();
+                    item.add(nuevo);
+                    itemsId.put(reserva, item);
                 }
                 System.out.println(nuevo.getId());
 

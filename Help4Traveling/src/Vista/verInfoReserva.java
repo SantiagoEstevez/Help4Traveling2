@@ -23,6 +23,7 @@ public class verInfoReserva extends javax.swing.JInternalFrame {
 
     private IControladorReserva IControlador;
     private List<DtReserva> listaReservas;
+    private List<ItemReserva> listaItems;
     //private List<DtItems> listaItems;
     String[] colReservas = {"Número", "Fecha", "Estado", "Total", "Cliente"};
     String[] colItems = {"Nombre", "Cantidad", "Inicio", "Fin"};
@@ -57,23 +58,32 @@ public class verInfoReserva extends javax.swing.JInternalFrame {
     }
 
     private void actualizarItems() {
-        //this.listaReservas = this.IControlador.listarReservas();
         Integer index = jTableRes.getSelectedRow();
         if (index != -1) {
-            //DtReserva res = listaReservas.get(index);
-            Iterator<ItemReserva> it = this.IControlador.listarItems(index).iterator();
+            DtReserva res = listaReservas.get(index);
+            Integer reserva = (int) (long) listaReservas.get(index).getId();
+            this.listaItems = this.IControlador.listarItems(reserva);
             tableModelItems.getDataVector().removeAllElements();
 
-            while (it.hasNext()) {
-                ItemReserva item = it.next();
-                Object[] fila = {item.getOferta().getNombre(),
-                    item.getCantidad(),
-                    item.getInicio().getFecha("-"),
-                    item.getFin().getFecha("-"),};
+            if (listaItems != null) {
+                Iterator<ItemReserva> it = this.listaItems.iterator();
 
-                tableModelItems.addRow(fila);
+                while (it.hasNext()) {
+                    ItemReserva item = it.next();
+                    Object[] fila = {//item.getId(),
+                        item.getOferta().getNombre(),
+                        item.getCantidad(),
+                        item.getInicio().getFecha("-"),
+                        item.getFin().getFecha("-"),};
+
+                    tableModelItems.addRow(fila);
+                }
             }
             jTableItems.setModel(tableModelItems);
+            jTableItems.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
+            jTableItems.getColumnModel().getColumn(1).setCellRenderer(centerRenderer);
+            jTableItems.getColumnModel().getColumn(2).setCellRenderer(centerRenderer);
+            jTableItems.getColumnModel().getColumn(3).setCellRenderer(centerRenderer);
         }
     }
 
@@ -263,6 +273,8 @@ public class verInfoReserva extends javax.swing.JInternalFrame {
         this.IControlador.setReservasDB();
         this.IControlador.setItemsDB();
         actualizarReservas();
+        tableModelItems.getDataVector().removeAllElements();
+        jTableItems.setModel(tableModelItems);
     }//GEN-LAST:event_jButtonActualActionPerformed
 
     private void jButtonCerrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCerrarActionPerformed

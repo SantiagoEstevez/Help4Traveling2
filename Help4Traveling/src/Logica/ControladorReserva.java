@@ -66,6 +66,6 @@ public class ControladorReserva implements IControladorReserva {
 
     public void setItemsDB() {
         ManejadorReserva mr = ManejadorReserva.getInstance();
-        mr.setReservasDB();
+        mr.setItemsDB();
     }
 }
