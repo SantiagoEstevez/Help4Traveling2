@@ -70,12 +70,14 @@ public class cancelarReserva extends javax.swing.JInternalFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         jTableRes = new javax.swing.JTable();
         jButtonActual = new javax.swing.JButton();
+        jButtonCerrar = new javax.swing.JButton();
 
         setClosable(true);
         setIconifiable(true);
         setMaximizable(true);
         setResizable(true);
         setTitle("Cancelar Reserva");
+        setFrameIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/delete-icon.png"))); // NOI18N
         setMinimumSize(new java.awt.Dimension(400, 220));
         setName(""); // NOI18N
         setPreferredSize(new java.awt.Dimension(600, 220));
@@ -111,6 +113,14 @@ public class cancelarReserva extends javax.swing.JInternalFrame {
             }
         });
 
+        jButtonCerrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/check-icon.png"))); // NOI18N
+        jButtonCerrar.setText("Cerrar");
+        jButtonCerrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonCerrarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -123,8 +133,10 @@ public class cancelarReserva extends javax.swing.JInternalFrame {
                         .addComponent(jLabel1)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jButtonActual)
+                        .addComponent(jButtonCerrar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButtonActual)
+                        .addGap(18, 18, 18)
                         .addComponent(jButtonEliminar)))
                 .addContainerGap())
         );
@@ -138,7 +150,8 @@ public class cancelarReserva extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButtonEliminar)
-                    .addComponent(jButtonActual))
+                    .addComponent(jButtonActual)
+                    .addComponent(jButtonCerrar))
                 .addGap(12, 12, 12))
         );
 
@@ -162,10 +175,15 @@ public class cancelarReserva extends javax.swing.JInternalFrame {
         this.IControlador.setReservasDB();
         actualizarReservas();
     }//GEN-LAST:event_jButtonActualActionPerformed
+
+    private void jButtonCerrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCerrarActionPerformed
+        this.setVisible(false);
+    }//GEN-LAST:event_jButtonCerrarActionPerformed
    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonActual;
+    private javax.swing.JButton jButtonCerrar;
     private javax.swing.JButton jButtonEliminar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane2;

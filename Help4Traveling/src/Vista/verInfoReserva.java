@@ -100,12 +100,14 @@ public class verInfoReserva extends javax.swing.JInternalFrame {
         jTableRes = new javax.swing.JTable();
         jLabelRes = new javax.swing.JLabel();
         jButtonActual = new javax.swing.JButton();
+        jButtonCerrar = new javax.swing.JButton();
 
         setClosable(true);
         setIconifiable(true);
         setMaximizable(true);
         setResizable(true);
         setTitle("Ver Info Reserva");
+        setFrameIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/info-icon.png"))); // NOI18N
         setMinimumSize(new java.awt.Dimension(400, 240));
 
         jTableItems.setModel(new javax.swing.table.DefaultTableModel(
@@ -164,6 +166,14 @@ public class verInfoReserva extends javax.swing.JInternalFrame {
             }
         });
 
+        jButtonCerrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/check-icon.png"))); // NOI18N
+        jButtonCerrar.setText("Cerrar");
+        jButtonCerrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonCerrarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -179,7 +189,8 @@ public class verInfoReserva extends javax.swing.JInternalFrame {
                             .addComponent(jLabelItems))
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jButtonCerrar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jButtonActual)))
                 .addContainerGap())
         );
@@ -195,7 +206,9 @@ public class verInfoReserva extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButtonActual)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButtonActual)
+                    .addComponent(jButtonCerrar))
                 .addContainerGap())
         );
 
@@ -215,9 +228,14 @@ public class verInfoReserva extends javax.swing.JInternalFrame {
         actualizarReservas();
     }//GEN-LAST:event_jButtonActualActionPerformed
 
+    private void jButtonCerrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCerrarActionPerformed
+        this.setVisible(false);
+    }//GEN-LAST:event_jButtonCerrarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonActual;
+    private javax.swing.JButton jButtonCerrar;
     private javax.swing.JLabel jLabelItems;
     private javax.swing.JLabel jLabelRes;
     private javax.swing.JScrollPane jScrollPane1;
