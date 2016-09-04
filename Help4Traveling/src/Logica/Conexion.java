@@ -5,7 +5,7 @@ package Logica;
     //import java.sql.SQLException;
 
 public class Conexion {
-    private static String servidor = "jdbc:mysql://localhost:3306/mydb";
+    private static String servidor = "jdbc:mysql://localhost:3306/help4traveling";
     private static String user = "root";
     private static String pass = "root";
     private static String driver = "com.mysql.jdbc.Driver";
