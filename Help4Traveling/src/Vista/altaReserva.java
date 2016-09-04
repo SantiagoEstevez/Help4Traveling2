@@ -163,7 +163,8 @@ public class altaReserva extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_totalKeyTyped
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        altaReserva2 listaOfertas = new altaReserva2();
+       altaReserva2 listaOfertas = new altaReserva2();
+       Principal.escritorio.add(listaOfertas);
        listaOfertas.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
 

@@ -309,7 +309,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenuItem bm_registrar_servicio;
     private javax.swing.JMenuItem bm_verInfoCliente;
     private javax.swing.JMenuItem bm_verInfoProveedor;
-    private javax.swing.JDesktopPane escritorio;
+    public static javax.swing.JDesktopPane escritorio;
     private javax.swing.JFileChooser fc_seleccionar_archivo;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
