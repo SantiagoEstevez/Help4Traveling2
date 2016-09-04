@@ -42,7 +42,7 @@ public class ManejadorReserva {
         Connection con = conexion.getConnection();
         Statement st;
 
-        sql = "INSERT INTO mydb.reservas "
+        sql = "INSERT INTO help4traveling.reservas "
                 + "(Ref,Número,`Fecha de Creación`,`Precio (USD)`,Estado,Cliente) "
                 + "VALUES ('R1'," + nueva.getId() + ",'" + nueva.getCreada() + "'," + nueva.getTotal()
                 + ",'" + nueva.getEstado() + "','SE')";
@@ -134,27 +134,27 @@ public class ManejadorReserva {
         Connection con = conexion.getConnection();
         Statement st;
         ResultSet rsReservasCliente;
-        sql = "SELECT * FROM mydb.reservas"
-                + "WHERE Nick=" + user.getNickname() + " OR Nick=" + user.getNickname();
+        sql = "SELECT * FROM help4traveling.reservas WHERE cliente='" + user.getNickname() +"'";
+        
         try {
             st = con.createStatement();
             rsReservasCliente = st.executeQuery(sql);
-
             while (rsReservasCliente.next()) {
-                System.out.println("llegue2");
-                String id = rsReservasCliente.getString("Ref");
-                String estado = rsReservasCliente.getString("Estado");
-                String fecha = rsReservasCliente.getString("Fecha de Creacion");
-                String cliente = rsReservasCliente.getString("Cliente");
-                String precio = rsReservasCliente.getString("Precio");
+                String id = rsReservasCliente.getString("numero");
+                String estado = rsReservasCliente.getString("estado");
+                String fecha = rsReservasCliente.getString("fecha");
+                String cliente = rsReservasCliente.getString("cliente");
+                String precio = rsReservasCliente.getString("total");
 
                 long idint = Integer.parseInt(id);
                 double precioint = Integer.parseInt(precio);
                 Reserva nueva = new Reserva(/*idint,"REGISTRADA", cliente,null*/);
                 nueva.setCliente(cliente);
+                nueva.setId(idint);
                 nueva.setEstado(Reserva.eEstado.REGISTRADA);
                 nueva.setTotal(precioint);
                 this.reservasId.put(idint, nueva);
+                System.out.println("Agregué una");
 
             }
             rsReservasCliente.close();
@@ -181,7 +181,7 @@ public class ManejadorReserva {
         Connection con = conexion.getConnection();
         Statement st;
 
-        sql = "SELECT * FROM Reservas";
+        sql = "SELECT * FROM hel4traveling.reservas";
 
         try {
             st = con.createStatement();
@@ -228,7 +228,7 @@ public class ManejadorReserva {
         Connection con = conexion.getConnection();
         Statement st;
 
-        sql = "SELECT * FROM ReservasItems";
+        sql = "SELECT * FROM help4traveling.reservasitems";
 
         try {
             st = con.createStatement();

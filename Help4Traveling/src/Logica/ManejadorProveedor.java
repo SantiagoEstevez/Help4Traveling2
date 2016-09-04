@@ -97,13 +97,13 @@ public class ManejadorProveedor {
         Connection con = conex.getConnection();
         Statement st;
         //String sql1 = "SELECT * FROM mydb.usuarios WHERE Nickname='" + nickname + "' AND Empresa <> NULL AND Link <> NULL)"; 
-        String sql1 = "SELECT * FROM mydb.usuarios WHERE Nick='" + nickname + "'";  
+        String sql1 = "SELECT * FROM help4traveling.usuarios WHERE nickname=" + nickname  ;  
         try {
             st = con.createStatement();
             rs = st.executeQuery(sql1);
             if (rs.next()) {
                 Date fecha = new Date();
-                p = new Proveedor(rs.getString("Nombre"),rs.getString("Apellido"),rs.getString("Nick"),rs.getString("Correo"),fecha,"imagen","empresa","link");
+                p = new Proveedor(rs.getString("nombre"),rs.getString("apellido"),rs.getString("nickname"),rs.getString("correo"),fecha,"imagen","empresa","link");
             }            
             rs.close();
             con.close();
@@ -124,25 +124,26 @@ public class ManejadorProveedor {
         Connection con = conexion.getConnection();
         Statement st;
               
-        sql = "SELECT * FROM mydb.usuarios, mydb.sitios WHERE mydb.usuarios.Ref = mydb.sitios.Ref"; 
+        sql = "SELECT * FROM help4traveling.usuarios U, help4traveling.proveedores P WHERE U.nickname = P.nickname"; 
 
         
         try{
             st = con.createStatement();
             rsProveedores = st.executeQuery(sql);
-            String tabla = rsProveedores.toString();
+            
+            //String tabla = rsProveedores.toString();
             
             
-            System.out.println("realize el executeQuery" + tabla);
+            System.out.println("realize el executeQuery" /*+ tabla*/);
             
             System.out.println("llegue");
             
             while (rsProveedores.next()) {
-                String nombre = rsProveedores.getString("Nombre");
+                String nombre = rsProveedores.getString("nombre");
 
-                String apellido = rsProveedores.getString("Apellido");
-                String nickname = rsProveedores.getString("Nick");
-                String correo = rsProveedores.getString("Email");
+                String apellido = rsProveedores.getString("apellido");
+                String nickname = rsProveedores.getString("nickname");
+                String correo = rsProveedores.getString("email");
 
                 Date nacimiento = new Date(12,12,1994);
                 String imagen = "";

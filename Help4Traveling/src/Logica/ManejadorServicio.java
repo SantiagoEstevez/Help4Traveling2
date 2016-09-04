@@ -66,8 +66,7 @@ public class ManejadorServicio {
        Connection con = conexion.getConnection();
        Statement st;
        ResultSet rsServiciosProveedor;
-       sql = "SELECT * FROM mydb.servicios" +
-               "WHERE Nick=" + user.getNickname() +" OR Nick="+user.getNickname(); 
+       sql = "SELECT * FROM help4traveling.servicios WHERE proveedor='" + user.getNickname()+"'"; 
        try{
             st = con.createStatement();
             rsServiciosProveedor = st.executeQuery(sql);

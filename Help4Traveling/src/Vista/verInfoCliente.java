@@ -112,10 +112,7 @@ public class verInfoCliente extends javax.swing.JInternalFrame {
 
         jTablaReservas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
                 "id", "Estado", "Total", "Title 4"
@@ -201,12 +198,11 @@ public class verInfoCliente extends javax.swing.JInternalFrame {
                 Iterator<DtReserva> iter = listaReservas.iterator();
                 int count = 0;
                 while (iter.hasNext()){
-                
                     DtReserva res =iter.next();
-                    jTablaReservas.setValueAt(res.getId(),0,count);
-                    jTablaReservas.setValueAt(res.getEstado(),1,count);
-                    jTablaReservas.setValueAt(res.getTotal(),2,count);
-                                
+                    jTablaReservas.setValueAt(res.getId(),count,0);
+                    jTablaReservas.setValueAt(res.getEstado(),count,1);
+                    jTablaReservas.setValueAt(res.getTotal(),count,2);
+                    count++;
                 }
             } 
     }//GEN-LAST:event_jListaClientesMouseClicked

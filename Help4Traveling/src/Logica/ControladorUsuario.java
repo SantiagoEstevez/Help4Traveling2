@@ -123,12 +123,12 @@ public class ControladorUsuario implements IControladorUsuario {
 
         
     public ArrayList<DtReserva> listarReservasCliente(DtUsuario dtu){
-        ManejadorCliente muc = ManejadorCliente.getInstance();
-        ArrayList<DtReserva> reservas = new ArrayList<DtReserva>();
+        ManejadorReserva mr = ManejadorReserva.getInstance();
+        /*ArrayList<DtReserva> reservas = new ArrayList<DtReserva>();
         if (muc.existeNickname(dtu.getNickname())){
-            reservas = muc.obtenerCliente(dtu.getNickname()).listarReservas();
-        }
-        return reservas;
+            reservas = muc.obtenerCliente(dtu.getNickname()).listarReservasCliente();
+        }*/
+        return mr.listarReservasCliente(dtu);
     }
     
     
@@ -141,12 +141,12 @@ public class ControladorUsuario implements IControladorUsuario {
 
         
     public ArrayList<DtServicio> listarServicioProveedor(DtUsuario dtu){
-        ManejadorProveedor map = ManejadorProveedor.getInstance();
-        ArrayList<DtServicio> servicios = new ArrayList<DtServicio>();
+        ManejadorServicio ms = ManejadorServicio.getInstance();
+        /*ArrayList<DtServicio> servicios = new ArrayList<DtServicio>();
         if (map.existeNickname(dtu.getNickname())){
             servicios = map.obtenerProveedor(dtu.getNickname()).listarServicios();
-        }
-        return servicios;
+        }*/
+        return ms.listarServiciosProveedor(dtu);
     }
     
     

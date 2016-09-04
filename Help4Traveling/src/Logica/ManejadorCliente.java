@@ -102,14 +102,14 @@ public class ManejadorCliente {
         Connection con = conexion.getConnection();
         Statement st;
         
-        sql = "SELECT * FROM mydb.usuarios WHERE Nick='" + nk + "'"; 
+        sql = "SELECT * FROM help4traveling.usuarios WHERE Nick='" + nk + "'"; 
         
         try{
             st = con.createStatement();
             rsCliente = st.executeQuery(sql);   
             
             Date fecha = new Date();
-            cl = new Cliente(rsCliente.getString("Nombre"),rsCliente.getString("Apellido"),rsCliente.getString("Nick"),rsCliente.getString("Correo"),fecha,"imagen");
+            cl = new Cliente(rsCliente.getString("nombre"),rsCliente.getString("apellido"),rsCliente.getString("nickname"),rsCliente.getString("email"),fecha,"imagen");
 
         
             rsCliente.close();
@@ -141,10 +141,10 @@ public class ManejadorCliente {
             rsClientes = st.executeQuery(sql);
             
             while (rsClientes.next()) {
-                String nombre = rsClientes.getString("Nombre");
-                String apellido = rsClientes.getString("Apellido");
+                String nombre = rsClientes.getString("nombre");
+                String apellido = rsClientes.getString("apellido");
                 String nickname = rsClientes.getString("nickname");
-                String correo = rsClientes.getString("Email");
+                String correo = rsClientes.getString("email");
                 Date nacimiento = new Date(12,12,1994);
                 String imagen = "";
                 
