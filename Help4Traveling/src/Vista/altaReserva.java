@@ -12,6 +12,7 @@ package Vista;
     import Logica.ManejadorCliente;
     import java.util.ArrayList;
     import java.util.Iterator;
+    import javax.swing.table.DefaultTableModel;
 
 public class altaReserva extends javax.swing.JInternalFrame {
     private IControladorUsuario IControlador;
@@ -30,6 +31,7 @@ public class altaReserva extends javax.swing.JInternalFrame {
             DtUsuario user = i.next();
             this.clientes.addItem(user.getNickname());
         }
+        //DefautTableModel modelo = new DefautTableModel();
     }
 
     /**
@@ -48,7 +50,7 @@ public class altaReserva extends javax.swing.JInternalFrame {
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        items = new javax.swing.JTable();
 
         setClosable(true);
         setIconifiable(true);
@@ -80,7 +82,7 @@ public class altaReserva extends javax.swing.JInternalFrame {
 
         jButton2.setText("Borrar");
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        items.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -96,12 +98,12 @@ public class altaReserva extends javax.swing.JInternalFrame {
                 return types [columnIndex];
             }
         });
-        jScrollPane2.setViewportView(jTable1);
-        if (jTable1.getColumnModel().getColumnCount() > 0) {
-            jTable1.getColumnModel().getColumn(0).setMinWidth(40);
-            jTable1.getColumnModel().getColumn(0).setMaxWidth(40);
-            jTable1.getColumnModel().getColumn(1).setMinWidth(100);
-            jTable1.getColumnModel().getColumn(1).setMaxWidth(100);
+        jScrollPane2.setViewportView(items);
+        if (items.getColumnModel().getColumnCount() > 0) {
+            items.getColumnModel().getColumn(0).setMinWidth(40);
+            items.getColumnModel().getColumn(0).setMaxWidth(40);
+            items.getColumnModel().getColumn(1).setMinWidth(100);
+            items.getColumnModel().getColumn(1).setMaxWidth(100);
         }
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -171,12 +173,12 @@ public class altaReserva extends javax.swing.JInternalFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> clientes;
+    private javax.swing.JTable items;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable jTable1;
     private javax.swing.JTextField total;
     // End of variables declaration//GEN-END:variables
 }

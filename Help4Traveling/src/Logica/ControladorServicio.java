@@ -151,7 +151,7 @@ public class ControladorServicio implements IControladorServicio  {
     }   
     
     public List<DtServicio> listarServicios() {
-        return ManejadorServicio.getInstance().getDtServicios();  
+        return ManejadorServicio.getInstance().listarServicios();  
     }
     
     
@@ -165,7 +165,7 @@ public class ControladorServicio implements IControladorServicio  {
     }
     
     public List<String> listarServiciosCategoria(String cat){
-        ManejadorServicio mas = ManejadorServicio.getInstance();
+        /*ManejadorServicio mas = ManejadorServicio.getInstance();
         List<String> listaserv = mas.listarServicios();
         List<String> listaServiciosCategoria = new ArrayList<String>();
         Iterator<String> iter =  listaserv.iterator();
@@ -174,7 +174,8 @@ public class ControladorServicio implements IControladorServicio  {
             if (mas.obtenerServicio(serv).existeCategoria(mas.obtenerServicio(serv).obtenerCategoria(cat))){
                 listaServiciosCategoria.add(serv);
             }    
-        }
+        }*/
+        List<String> listaServiciosCategoria = new ArrayList<String>();
         return listaServiciosCategoria;
     }
     

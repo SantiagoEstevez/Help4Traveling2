@@ -50,15 +50,64 @@ public class ManejadorServicio {
         return ((Servicio) serviciosNom.get(nk));
     }
     
-    public ArrayList<String> listarServicios(){
-        ArrayList<String> listaserv = new ArrayList<String>();
-        Iterator<Servicio> iter = this.serviciosNom.values().iterator();
-        while (iter.hasNext()){
-            Servicio serv = iter.next();
-            listaserv.add(serv.getNombre());
+    public List<DtServicio> listarServicios(){
+        ResultSet rsServicios;
+        ResultSet rsServImagenes;
+        ResultSet rsServCategorias;
+        conexion = new Conexion();
+        Connection con = conexion.getConnection();
+        Statement st, sti, stc;
+        String sql,sqlImagenes,sqlCategorias;
+        List<DtServicio> listaServicios = new LinkedList<DtServicio>();
+        List<String> listaImagenes = new LinkedList<String>();
+        List<DtCategoria> listaCategorias = new LinkedList<DtCategoria>();
+       
+        sql = "SELECT * FROM help4traveling.servicios";
+      
+        try{
+            st = con.createStatement();
+            rsServicios = st.executeQuery(sql);
             
+            while (rsServicios.next()) {
+                String nombre = rsServicios.getString("nombre");
+                String apellido = rsServicios.getString("apellido");
+                String nickname = rsServicios.getString("nickname");
+                String correo = rsServicios.getString("email");
+                Date nacimiento = new Date(12,12,1994);
+                String imagen = "";
+                
+                sqlImagenes = "SELECT * FROM help4traveling.serviciosImagenes WHERE servicio = '" + nombre + "'";
+                sti = con.createStatement();
+                rsServImagenes = sti.executeQuery(sqlImagenes);
+                while (rsServImagenes.next()) {
+                    listaImagenes.add(rsServImagenes.getString("imagen"));
+                }
+                rsServImagenes.close();
+                sti.close();
+                
+                sqlCategorias = "SELECT * FROM help4traveling.serviciosImagenes WHERE servicio = '" + nombre + "'";
+                stc = con.createStatement();
+                rsServCategorias = stc.executeQuery(sqlImagenes);
+                while (rsServCategorias.next()) {
+                    //DtCategoria categoria = new DtCategoria();
+                    //listaCategorias.add(e);
+                }
+                rsServCategorias.close();
+                stc.close();
+                
+                //DtServicio nuevo = new DtServicio();
+                //String nombre, String nkproveedor, String descripcion, List<String> imagenes, Map<String, DtCategoria> categorias, float precio, String origen, String destino)
+                //listaServicios.add(nuevo);
+            }
+            rsServicios.close();
+            con.close();
+            st.close();
+            
+            System.out.println("Usuarios cargados :)");
+        }catch(SQLException e){
+            System.out.println("No pude cargar usuarios :(");
         }
-        return listaserv;
+        return listaServicios;
     }
     
     public ArrayList<DtServicio> listarServiciosProveedor(DtUsuario user){
@@ -105,24 +154,6 @@ public class ManejadorServicio {
         }
             return listaServiciosProveedor;
     }
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-    
     
     public List<DtServicio> getDtServicios() {
         List<DtServicio> listaDtServ = new LinkedList<DtServicio>();
