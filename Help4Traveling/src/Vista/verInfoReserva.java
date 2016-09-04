@@ -21,7 +21,7 @@ public class verInfoReserva extends javax.swing.JInternalFrame {
     private IControladorReserva IControlador;
     private List<DtReserva> listaReservas;
     //private List<DtItems> listaItems;
-    String [] colReservas = {"ID","Creación","Estado","Total","Cliente"};
+    String [] colReservas = {"Número","Fecha","Estado","Total","Cliente"};
     String [] colItems = {"Nombre","Cantidad","Inicio","Fin"};
     private DefaultTableModel tableModelRes = new DefaultTableModel(colReservas,0);
     private DefaultTableModel tableModelItems = new DefaultTableModel(colItems,0);
@@ -54,7 +54,7 @@ public class verInfoReserva extends javax.swing.JInternalFrame {
         Integer index = jTableRes.getSelectedRow();
         if (index!=-1) {
             DtReserva res = listaReservas.get(index);
-            //System.out.println(jTableRes.getSelectedRow());
+            System.out.println(res.getCliente());
             Iterator<ItemReserva> it = res.getItems().values().iterator();
             tableModelItems.getDataVector().removeAllElements();
 
@@ -81,7 +81,7 @@ public class verInfoReserva extends javax.swing.JInternalFrame {
         fabrica.getIControladorReserva().setReservasDB();
         actualizarReservas();
         jTableRes.setRowSelectionInterval(0,0);
-        actualizarItems();
+        if (jTableRes.getSelectedRowCount()!=-1) actualizarItems();
     }
 
     /**
@@ -127,14 +127,14 @@ public class verInfoReserva extends javax.swing.JInternalFrame {
         jScrollPane1.setViewportView(jTableItems);
         jTableItems.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
 
-        jLabelItems.setText("Items:");
+        jLabelItems.setText("Items correspondientes a la reserva seleccionada:");
 
         jTableRes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "ID", "Creación", "Estado", "Total", "Cliente"
+                "Número", "Fecha", "Estado", "Total", "Cliente"
             }
         ));
         jTableRes.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
@@ -152,7 +152,7 @@ public class verInfoReserva extends javax.swing.JInternalFrame {
         });
         jScrollPane3.setViewportView(jTableRes);
 
-        jLabelRes.setText("Reservas:");
+        jLabelRes.setText("Seleccione la reserva para la cual desea ver mas información:");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -188,11 +188,11 @@ public class verInfoReserva extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jTableResMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableResMouseClicked
-        actualizarItems();
+        if (jTableRes.getSelectedRowCount()!=-1) actualizarItems();
     }//GEN-LAST:event_jTableResMouseClicked
 
     private void jTableResKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTableResKeyTyped
-        actualizarItems();
+        if (jTableRes.getSelectedRowCount()!=-1) actualizarItems();
     }//GEN-LAST:event_jTableResKeyTyped
 
 
