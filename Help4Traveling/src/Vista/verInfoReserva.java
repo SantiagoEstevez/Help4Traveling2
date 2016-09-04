@@ -99,13 +99,14 @@ public class verInfoReserva extends javax.swing.JInternalFrame {
         jScrollPane3 = new javax.swing.JScrollPane();
         jTableRes = new javax.swing.JTable();
         jLabelRes = new javax.swing.JLabel();
+        jButtonActual = new javax.swing.JButton();
 
         setClosable(true);
         setIconifiable(true);
         setMaximizable(true);
         setResizable(true);
         setTitle("Ver Info Reserva");
-        setMinimumSize(new java.awt.Dimension(400, 200));
+        setMinimumSize(new java.awt.Dimension(400, 240));
 
         jTableItems.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -155,6 +156,14 @@ public class verInfoReserva extends javax.swing.JInternalFrame {
 
         jLabelRes.setText("Seleccione la reserva para la cual desea ver mas información:");
 
+        jButtonActual.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/refresh-icon.png"))); // NOI18N
+        jButtonActual.setText("Actualizar");
+        jButtonActual.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonActualActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -168,12 +177,15 @@ public class verInfoReserva extends javax.swing.JInternalFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabelRes)
                             .addComponent(jLabelItems))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jButtonActual)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabelRes)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -182,6 +194,8 @@ public class verInfoReserva extends javax.swing.JInternalFrame {
                 .addComponent(jLabelItems)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jButtonActual)
                 .addContainerGap())
         );
 
@@ -196,8 +210,14 @@ public class verInfoReserva extends javax.swing.JInternalFrame {
         if (jTableRes.getSelectedRowCount()!=-1) actualizarItems();
     }//GEN-LAST:event_jTableResKeyTyped
 
+    private void jButtonActualActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonActualActionPerformed
+        this.IControlador.setReservasDB();
+        actualizarReservas();
+    }//GEN-LAST:event_jButtonActualActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButtonActual;
     private javax.swing.JLabel jLabelItems;
     private javax.swing.JLabel jLabelRes;
     private javax.swing.JScrollPane jScrollPane1;
