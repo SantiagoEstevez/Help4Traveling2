@@ -5,6 +5,8 @@
  */
 package Logica;
 
+import java.util.logging.Logger;
+
 /**
  *
  * @author yaman
@@ -18,11 +20,11 @@ public abstract class Categoria {
     
     private String nombre = "";
  
-    private final CatCompuesta padre;
+    private  /*CatCompuesta*/String padre= null;
  //   protected int tipoCategoria;
  //   protected Categoria categoriaPadre;
 
-    public Categoria(String nombre, CatCompuesta dad) {
+    public Categoria(String nombre, /*CatCompuesta*/String dad) {
         this.nombre = nombre;
         this.padre = dad;
     }
@@ -34,17 +36,21 @@ public abstract class Categoria {
     }
     
     public String getNomPadre(){
-        return this.padre.getNombre();
+        return this.padre/*.getNombre()*/;
     }
-
+/*
     public CatCompuesta getPadre() {
         return padre;
     }
     
-    public void setNombre(String nombre){
-        this.nombre = nombre;
+   */ 
+    public void setNomPadre(String nombrePad){
+        this.padre = nombrePad;
     }
   /*  
+     public void setNombre(String nombre){
+        this.nombre = nombre;
+    }
     public int getTipoCategoria(){
         return this.tipoCategoria;
     }
@@ -60,4 +66,5 @@ public abstract class Categoria {
     public void setCategoriaPadre(Categoria categoríaPadre){
         this.categoriaPadre = categoríaPadre;
     }*/
+    private static final Logger LOG = Logger.getLogger(Categoria.class.getName());
 }

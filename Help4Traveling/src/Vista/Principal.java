@@ -43,6 +43,7 @@ public class Principal extends javax.swing.JFrame {
     private void initComponents() {
 
         fc_seleccionar_archivo = new javax.swing.JFileChooser();
+        jMenuItem1 = new javax.swing.JMenuItem();
         escritorio = new javax.swing.JDesktopPane();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
@@ -50,6 +51,7 @@ public class Principal extends javax.swing.JFrame {
         jMenu2 = new javax.swing.JMenu();
         bm_registrar_cliente = new javax.swing.JMenuItem();
         bm_registrar_servicio = new javax.swing.JMenuItem();
+        jMenuItem2 = new javax.swing.JMenuItem();
         bm_registrar_reserva = new javax.swing.JMenuItem();
         jSeparator1 = new javax.swing.JPopupMenu.Separator();
         jMenuItemCancelar = new javax.swing.JMenuItem();
@@ -59,6 +61,8 @@ public class Principal extends javax.swing.JFrame {
         jMenuItemVerRes = new javax.swing.JMenuItem();
 
         fc_seleccionar_archivo.setOpaque(true);
+
+        jMenuItem1.setText("jMenuItem1");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -111,6 +115,15 @@ public class Principal extends javax.swing.JFrame {
             }
         });
         jMenu2.add(bm_registrar_servicio);
+
+        jMenuItem2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/add-icon.png"))); // NOI18N
+        jMenuItem2.setText("Alta Categoria");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuItem2);
 
         bm_registrar_reserva.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/add-icon.png"))); // NOI18N
         bm_registrar_reserva.setText("Registrar Reserva");
@@ -236,6 +249,12 @@ public class Principal extends javax.swing.JFrame {
         System.exit(0);
     }//GEN-LAST:event_jMenuItemSalirActionPerformed
 
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        altaCategoria altacat = new altaCategoria();
+        escritorio.add(altacat);
+        altacat.setVisible(true);
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -283,6 +302,8 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItemCancelar;
     private javax.swing.JMenuItem jMenuItemSalir;
     private javax.swing.JMenuItem jMenuItemVerRes;

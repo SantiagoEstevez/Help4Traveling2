@@ -54,6 +54,12 @@ public class altaReserva extends javax.swing.JInternalFrame {
 
         jLabel1.setText("Usuario:");
 
+        clientes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                clientesActionPerformed(evt);
+            }
+        });
+
         jLabel2.setText("Precio total:");
 
         jScrollPane1.setViewportView(listaItems);
@@ -107,6 +113,10 @@ public class altaReserva extends javax.swing.JInternalFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void clientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clientesActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_clientesActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -13,7 +13,7 @@ import java.util.List;
 public interface IControladorServicio {
        public abstract void altaDeServicio(DtServicio dts);
        public abstract void altaDePromocion();
-       public abstract boolean altaDeCategoria(String nombre, String NombPadre);
+       public abstract String altaDeCategoria(String nombre, String NombPadre);
        public abstract List<DtServicio> listarServicios();
        public abstract void actualizarUnServicio();
        public abstract List<String> listarCategorias();

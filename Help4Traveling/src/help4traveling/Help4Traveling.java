@@ -18,6 +18,11 @@ public class Help4Traveling {
        Fabrica fab = Fabrica.getInstance();
        Reserva r = fab.getIControladorReserva().nuevaRserva("santiago", 0);
        fab.getIControladorUsuario().listarClientes();
+       
+       fab.getIControladorServicio().altaDeCategoria("ariel1", null);
+       fab.getIControladorServicio().altaDeCategoria("msrtin1", "ariel1");
+       fab.getIControladorServicio().listarCategorias();
+       
        ///Date a = new Date(12,12,2016);
        //Date b = new Date(12,12,2017);     
        //Servicio s = new Servicio();

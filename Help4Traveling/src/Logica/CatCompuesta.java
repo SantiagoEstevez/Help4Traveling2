@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class CatCompuesta extends Categoria {
+/*public class CatCompuesta extends Categoria {
     
     //atributo lista de categorias "hijas"
     List<Categoria> categorias = new ArrayList<Categoria>();
@@ -22,7 +22,7 @@ public class CatCompuesta extends Categoria {
 
   
     
-    public CatCompuesta(String nombre, CatCompuesta catPadre){
+  /*  public CatCompuesta(String nombre, /*CatCompuesta*//*String catPadre){
         super(nombre,catPadre);
         this.categorias.clear();
         
@@ -32,14 +32,14 @@ public class CatCompuesta extends Categoria {
             
     }
     
-    public CatCompuesta(String nombre, String NombrePadre){
+   /* public CatCompuesta(String nombre, String NombrePadre){
        
-        super(nombre,(CatCompuesta)(ManejadorCategoria.getInstance().obtenerCategoria(NombrePadre)));
+       /* super(nombre,/*(CatCompuesta)*//*(ManejadorCategoria.getInstance().obtenerCategoria(NombrePadre)));
         this.categorias.clear();
         
-     //   this.setTipoCategoria(Categoria.COMPUESTA);
-    //        this.setNombre(nombre);  
-    //         this.setCategoriaPadre(categoríaPadre);
+     /*  this.setTipoCategoria(Categoria.COMPUESTA);
+            this.setNombre(nombre);  
+             this.setCategoriaPadre(categoríaPadre);
             
     }
     
@@ -60,5 +60,5 @@ public class CatCompuesta extends Categoria {
        return categorias.get(posición);
    }
    */
-}
+//}
 

@@ -11,7 +11,7 @@ package Logica;
  */
 public class CatHoja extends Categoria {
     
-    public CatHoja(String nombre, CatCompuesta categoriaPadre){
+    public CatHoja(String nombre, /*CatCompuesta*/String categoriaPadre){
         super(nombre,categoriaPadre);
     }
     

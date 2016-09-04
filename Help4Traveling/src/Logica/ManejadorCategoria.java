@@ -34,13 +34,42 @@ public class ManejadorCategoria {
         return instancia;
     }
     
-    public void agregarCategoria(Categoria cat){
-        String nombre = cat.getNombre();
-        categoriasNom.put(nombre,cat);
+    public boolean agregarCategoria(Categoria cat){
+        //String nombre = cat.getNombre();
+        //categoriasNom.put(nombre,cat);
+        if(PersistirCategoria(cat)=="Se dio de alta la nueva categoria.")
+            return true;
+        else 
+            return false;
     }
     
-    public boolean existeCategoria(String nombre){
+  /*  public boolean existeCategoria(String nombre){
         return categoriasNom.containsKey(nombre);        
+    }*/
+    
+     public boolean existeCategoria(String nombreCat){
+        boolean existe = false;
+        ResultSet rs;
+        Conexion conex = new Conexion();
+        Connection con = conex.getConnection();
+        Statement st;
+        String sql1 = "SELECT * FROM help4traveling.categorias WHERE nombre='" + nombreCat + "'"; 
+        try {
+            st = con.createStatement();
+            rs = st.executeQuery(sql1);
+            if (rs.next())
+                existe = true;
+            rs.close();
+            con.close();
+            st.close();           
+        } catch (SQLException e){
+            System.out.println("error :(");
+        }
+        if (existe)
+            System.out.println("Existe la Categoria: "+nombreCat);
+        else System.out.println("NO Existe la Categoria: "+nombreCat);
+        return existe;
+        //return clientesNK.containsKey(nickname);        
     }
     
      public boolean existeCategoria(Categoria cat){
@@ -62,6 +91,40 @@ public class ManejadorCategoria {
         categoriasNom.replace(nombre, cat);
   }
     
+    
+    public String PersistirCategoria(Categoria cat){
+        
+       Conexion conexion = new Conexion();
+       Connection con = conexion.getConnection();
+       Statement st;
+       String mensaje = "Se dio de alta la nueva categoria.";  
+        
+           if (!(existeCategoria(cat.getNombre()))) {
+       
+       String sqlau = "INSERT INTO help4traveling.categorias " + 
+             "(nombre,padre) " +
+             "VALUES ('" + cat.getNombre()+ "','" + cat.getNomPadre()+ "')";
+       System.out.println(sqlau);
+       
+       try{
+           st = con.createStatement();
+           System.out.println("antes de insertar");
+           st.executeUpdate(sqlau);
+           
+           con.close();
+           st.close();
+           System.out.println("YA INSERTE :)");
+       }
+	   catch(SQLException e){
+           System.out.println("No pude INSERTAR :(");
+       }       
+    }
+    else mensaje = "ERROR: El Nombre de categoria ingresado ya existe.";
+    return mensaje; 
+    }
+    
+    
+    
     public List<String> getNombresCategorias() {
         List<String> listaCat = new LinkedList<String>();
         /*Iterator<Categoria> iter = this.categoriasNom.values().iterator();
@@ -72,12 +135,12 @@ public class ManejadorCategoria {
         Conexion conexion;
         conexion = new Conexion();
         Connection con = conexion.getConnection();
-		String sql = "SELECT * FROM mydb.categorias";
+		String sql = "SELECT * FROM help4traveling.categorias";
         try{
-			Statement st = con.createStatement();
+            Statement st = con.createStatement();
             ResultSet rs = st.executeQuery(sql);
             while (rs.next())
-                listaCat.add(rs.getString("Nombre"));	
+                listaCat.add(rs.getString("nombre"));	
             rs.close();
             st.close();
             con.close();

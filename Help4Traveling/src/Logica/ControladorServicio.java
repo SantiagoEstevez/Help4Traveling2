@@ -106,15 +106,18 @@ public class ControladorServicio implements IControladorServicio  {
     
     }
     
-    public boolean altaDeCategoria(String nombre, String NombPadre) {
+    public String altaDeCategoria(String nombre, String NombPadre) {
         
-        
+        //String retorno="";
         if(!(ManejadorCategoria.getInstance().existeCategoria(nombre))) {
             
             if(NombPadre==null){
-                CatHoja nueva =new CatHoja(nombre,null);
-                ManejadorCategoria.getInstance().agregarCategoria(nueva);
-                return true;
+                Categoria nueva =new CatHoja(nombre,null);
+                if (ManejadorCategoria.getInstance().agregarCategoria(nueva))
+                    
+                    return "Categroria base " +nombre+ " creada correctamente)";
+                else
+                    return ("La categroria base " +nombre+ " no pudo ser  creada");
             }
             else{
                 if((ManejadorCategoria.getInstance().existeCategoria(NombPadre))) {
@@ -122,27 +125,27 @@ public class ControladorServicio implements IControladorServicio  {
                    debo cambiarlo por una categoria compuesta ya que va a pasar a ser padre de otra categoria
                     n*/
                     
-                    if(ManejadorCategoria.getInstance().obtenerCategoria(NombPadre) instanceof CatHoja){
+                   /* if(ManejadorCategoria.getInstance().obtenerCategoria(NombPadre) instanceof CatHoja){
                         Categoria papa=ManejadorCategoria.getInstance().obtenerCategoria(NombPadre);
                         //creo la nueva compuesta con los datos de la simple
                         Categoria papaCompuesto =new CatCompuesta(NombPadre,papa.getPadre());
                         //luego la sustituyo
                         ManejadorCategoria.getInstance().sustituirCategoria(NombPadre, papaCompuesto);
-                    }
-                    CatCompuesta instPadre=(CatCompuesta)ManejadorCategoria.getInstance().obtenerCategoria(NombPadre);
-                 
-                    Categoria nueva1 =new CatHoja(nombre,instPadre);
-                    ((CatCompuesta)instPadre).insertarCategoria(nueva1);
+                    }*/
+                   /* CatCompuesta instPadre=(CatCompuesta)ManejadorCategoria.getInstance().obtenerCategoria(NombPadre);
+                 */
+                    Categoria nueva1 =new CatHoja(nombre,NombPadre);
+                    /*((CatCompuesta)instPadre).insertarCategoria(nueva1);*/
                     ManejadorCategoria.getInstance().agregarCategoria(nueva1);
-                    return true;
+                    return  "Categroria  " +nombre +" hija de "+NombPadre+" fue creada correctamente";
                 }
                 else{
-                    return false;
+                    return  "Categroria  " +nombre +" No fue creada correctamente ya que " +NombPadre+" no existe ";
                 }
             }
         }
         else{ 
-                return false;
+                return "Categroria  " +nombre +" No fue creada correctamente ya que esa categoria ya existe ";
                 
         }
     }   
