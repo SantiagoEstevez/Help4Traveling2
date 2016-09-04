@@ -133,11 +133,15 @@ public class verInfoReserva extends javax.swing.JInternalFrame {
         setResizable(true);
         setTitle("Ver Info Reserva");
         setFrameIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/info-icon.png"))); // NOI18N
-        setMinimumSize(new java.awt.Dimension(400, 240));
+        setMinimumSize(new java.awt.Dimension(440, 240));
+        setPreferredSize(new java.awt.Dimension(600, 336));
 
         jTableItems.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
             },
             new String [] {
                 "Nombre", "Cantidad", "Inicio", "Fin"
@@ -160,7 +164,10 @@ public class verInfoReserva extends javax.swing.JInternalFrame {
 
         jTableRes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
                 "Número", "Fecha", "Estado", "Total", "Cliente"
@@ -225,11 +232,11 @@ public class verInfoReserva extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addComponent(jLabelRes)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 95, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabelItems)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 95, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButtonActual)

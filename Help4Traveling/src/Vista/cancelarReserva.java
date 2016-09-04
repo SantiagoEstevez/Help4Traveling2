@@ -96,9 +96,9 @@ public class cancelarReserva extends javax.swing.JInternalFrame {
         setResizable(true);
         setTitle("Cancelar Reserva");
         setFrameIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/delete-icon.png"))); // NOI18N
-        setMinimumSize(new java.awt.Dimension(400, 220));
+        setMinimumSize(new java.awt.Dimension(400, 210));
         setName(""); // NOI18N
-        setPreferredSize(new java.awt.Dimension(600, 220));
+        setPreferredSize(new java.awt.Dimension(600, 210));
 
         jButtonEliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/delete-icon.png"))); // NOI18N
         jButtonEliminar.setText("Eliminar");
@@ -112,7 +112,10 @@ public class cancelarReserva extends javax.swing.JInternalFrame {
 
         jTableRes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
                 "Número", "Fecha", "Estado", "Total", "Cliente"
@@ -164,7 +167,7 @@ public class cancelarReserva extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 98, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButtonEliminar)
