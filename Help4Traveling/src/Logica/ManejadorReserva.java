@@ -59,8 +59,8 @@ public class ManejadorReserva {
        Connection con = conexion.getConnection();
        Statement st;
        
-       sql = "DELETE FROM `reservas y cantidades` " + 
-             "WHERE Ref=\"R" + id + "\"";
+       sql = "DELETE FROM ReservasItems " + 
+             "WHERE reserva=" + id;
        System.out.println(sql);
        
        try{
@@ -72,8 +72,8 @@ public class ManejadorReserva {
            System.out.println("OK");
            
            reservasId.remove(id);
-           sql = "DELETE FROM mydb.reservas " + 
-             "WHERE Número=" + id;
+           sql = "DELETE FROM Reservas " + 
+             "WHERE numero=" + id;
            
            System.out.println(sql);
        
@@ -170,7 +170,7 @@ public class ManejadorReserva {
         Connection con = conexion.getConnection();
         Statement st;
        
-        sql = "SELECT * FROM mydb.reservas";
+        sql = "SELECT * FROM Reservas";
        
         try{
             st = con.createStatement();
@@ -181,15 +181,17 @@ public class ManejadorReserva {
             while (rsReservas.next()) {
                 System.out.println("Cargando nueva Reserva");
                 
-                Date creada = new Date(rsReservas.getString("Fecha de Creación"));
+                Date creada = new Date(rsReservas.getString("fecha"));
                 //Date creada = new Date(rsReservas.getDate("Fecha de Creación"));
                 //System.out.println(creada.getFecha("-"));
-                Long num = rsReservas.getLong("Número");
-                String estado = rsReservas.getString("Estado");
+                Long num = rsReservas.getLong("numero");
+                String estado = rsReservas.getString("estado");
                 
-                double total = rsReservas.getDouble("Precio (USD)");
-                String cliente = rsReservas.getString("Cliente");
+                double total = rsReservas.getDouble("total");
+                String cliente = rsReservas.getString("cliente");
                 Map<Integer,ItemReserva> mapa = new HashMap();
+                
+                //CARGAR RESERVASITEMS!
                 
                 Reserva nueva = new Reserva(creada,Reserva.eEstado.REGISTRADA,total,cliente,mapa);
                 nueva.setId(num);

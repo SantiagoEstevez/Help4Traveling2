@@ -21,7 +21,7 @@ public class verInfoReserva extends javax.swing.JInternalFrame {
     private IControladorReserva IControlador;
     private List<DtReserva> listaReservas;
     //private List<DtItems> listaItems;
-    String [] colReservas = {"ID","Creación","Estado","Total","Cliente"};
+    String [] colReservas = {"Número","Fecha","Estado","Total","Cliente"};
     String [] colItems = {"Nombre","Cantidad","Inicio","Fin"};
     private DefaultTableModel tableModelRes = new DefaultTableModel(colReservas,0);
     private DefaultTableModel tableModelItems = new DefaultTableModel(colItems,0);
@@ -54,7 +54,7 @@ public class verInfoReserva extends javax.swing.JInternalFrame {
         Integer index = jTableRes.getSelectedRow();
         if (index!=-1) {
             DtReserva res = listaReservas.get(index);
-            //System.out.println(jTableRes.getSelectedRow());
+            System.out.println(res.getCliente());
             Iterator<ItemReserva> it = res.getItems().values().iterator();
             tableModelItems.getDataVector().removeAllElements();
 
@@ -134,7 +134,7 @@ public class verInfoReserva extends javax.swing.JInternalFrame {
 
             },
             new String [] {
-                "ID", "Creación", "Estado", "Total", "Cliente"
+                "Número", "Fecha", "Estado", "Total", "Cliente"
             }
         ));
         jTableRes.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
