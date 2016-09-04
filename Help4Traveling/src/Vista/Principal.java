@@ -5,17 +5,20 @@
  */
 package Vista;
 
-
 import Logica.Fabrica;
 import Logica.IControladorUsuario;
+import java.awt.Dimension;
+import javax.swing.JInternalFrame;
 
 /**
  *
  * @author yaman
  */
 public class Principal extends javax.swing.JFrame {
+
     private IControladorUsuario IControlador;
     private String tipo;
+
     /**
      * Creates new form Principal
      */
@@ -23,14 +26,22 @@ public class Principal extends javax.swing.JFrame {
         initComponents();
         this.setLocationRelativeTo(null);
         this.fc_seleccionar_archivo.setVisible(false);
-        
+
     }
-    
-    public Principal(IControladorUsuario IControlador){
+
+    public Principal(IControladorUsuario IControlador) {
         initComponents();
         Fabrica fabrica = Fabrica.getInstance();
-        this.IControlador= fabrica.getIControladorUsuario();
+        this.IControlador = fabrica.getIControladorUsuario();
         this.tipo = "Cliente";
+    }
+
+    public void centrarVentana(JInternalFrame jif) {
+        Dimension tamEscritorio = escritorio.getSize();
+        Dimension tamVentana = jif.getSize();
+        int width = (tamEscritorio.width - tamVentana.width) / 2;
+        int height = (tamEscritorio.height - tamVentana.height) / 2;
+        jif.setLocation(width, height);
     }
 
     /**
@@ -203,15 +214,15 @@ public class Principal extends javax.swing.JFrame {
 
     private void jMenu2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu2ActionPerformed
         // TODO add your handling code here:
-        
+
     }//GEN-LAST:event_jMenu2ActionPerformed
 
     private void bm_registrar_servicioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bm_registrar_servicioActionPerformed
         // TODO add your handling code here:
-        altaServicio fAltaServicio = new  altaServicio();
+        altaServicio fAltaServicio = new altaServicio();
         escritorio.add(fAltaServicio);
         fAltaServicio.setVisible(true);
-       
+
     }//GEN-LAST:event_bm_registrar_servicioActionPerformed
 
     private void bm_registrar_reservaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bm_registrar_reservaActionPerformed
@@ -236,12 +247,14 @@ public class Principal extends javax.swing.JFrame {
     private void jMenuItemCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemCancelarActionPerformed
         cancelarReserva cr = new cancelarReserva();
         escritorio.add(cr);
+        centrarVentana(cr);
         cr.setVisible(true);
     }//GEN-LAST:event_jMenuItemCancelarActionPerformed
 
     private void jMenuItemVerResActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemVerResActionPerformed
         verInfoReserva vir = new verInfoReserva();
         escritorio.add(vir);
+        //centrarVentana(vir);
         vir.setVisible(true);
     }//GEN-LAST:event_jMenuItemVerResActionPerformed
 
@@ -262,7 +275,7 @@ public class Principal extends javax.swing.JFrame {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
