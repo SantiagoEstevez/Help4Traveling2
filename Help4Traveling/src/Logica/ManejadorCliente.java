@@ -134,19 +134,16 @@ public class ManejadorCliente {
         Connection con = conexion.getConnection();
         Statement st;
        
-        sql = "SELECT * FROM mydb.usuarios";
+        sql = "SELECT * FROM help4traveling.usuarios";
        
         try{
             st = con.createStatement();
             rsClientes = st.executeQuery(sql);
             
-            System.out.println("llegue");
-            
             while (rsClientes.next()) {
-                System.out.println("llegue2");
                 String nombre = rsClientes.getString("Nombre");
                 String apellido = rsClientes.getString("Apellido");
-                String nickname = rsClientes.getString("Nick");
+                String nickname = rsClientes.getString("nickname");
                 String correo = rsClientes.getString("Email");
                 Date nacimiento = new Date(12,12,1994);
                 String imagen = "";

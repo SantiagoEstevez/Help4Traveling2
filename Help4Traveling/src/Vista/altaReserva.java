@@ -50,6 +50,9 @@ public class altaReserva extends javax.swing.JInternalFrame {
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
 
+        setClosable(true);
+        setIconifiable(true);
+        setMaximizable(true);
         setTitle("Nueva reserva");
 
         jLabel1.setText("Usuario:");
