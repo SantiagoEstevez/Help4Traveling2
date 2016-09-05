@@ -19,7 +19,7 @@ package Vista;
 public class altaReserva extends javax.swing.JInternalFrame {
     private IControladorUsuario IControlador;
     private ArrayList<DtUsuario> listaClientes;
-    private DefaultTableModel modelo;
+    public static DefaultTableModel modelo;
     
     public altaReserva() {
         initComponents();
@@ -37,10 +37,7 @@ public class altaReserva extends javax.swing.JInternalFrame {
         
         //Setear tabla
         modelo = (DefaultTableModel) items.getModel();
-        modelo.addRow(new Object[]{true,5,"hola"});
-        //modelo.setRowCount(0);
-        //modelo.setRowCount(1);
-        
+        modelo.setRowCount(0);
     }
 
     /**
