@@ -118,7 +118,7 @@ public class ActualizarReserva extends javax.swing.JInternalFrame {
         setResizable(true);
         setTitle("Actualizar Reserva");
         setFrameIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/edit-icon.png"))); // NOI18N
-        setMinimumSize(new java.awt.Dimension(440, 200));
+        setMinimumSize(new java.awt.Dimension(440, 204));
         setPreferredSize(new java.awt.Dimension(600, 204));
 
         jTableRes.setModel(new javax.swing.table.DefaultTableModel(
