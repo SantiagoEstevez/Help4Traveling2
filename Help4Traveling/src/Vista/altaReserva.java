@@ -49,6 +49,10 @@ public class altaReserva extends javax.swing.JInternalFrame {
         //Setear tabla
         modelo = (DefaultTableModel) items.getModel();
         modelo.setRowCount(0);
+        
+        //Seteo otros
+        total.setText("");
+        clientes.setSelectedIndex(1);
     }
     
     public static void agregarItem(Object[] item){
@@ -228,6 +232,7 @@ public class altaReserva extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void crearMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_crearMouseClicked
+        
         Reserva nReserva = IReservas.nuevaRserva(String.valueOf(clientes.getSelectedItem()), Double.parseDouble(total.getText()));
         
         for(int i=0;i<modelo.getRowCount();i++){

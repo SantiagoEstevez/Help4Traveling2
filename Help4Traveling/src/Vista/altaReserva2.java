@@ -42,6 +42,9 @@ public class altaReserva2 extends javax.swing.JInternalFrame {
             modelo.addElement(servicio.getNombre() + "~" + servicio.getNkProveedor());
         }
         this.Ofertas.setModel(modelo);
+        
+        //Setear
+        buscar.setText("");
     }
 
     /**

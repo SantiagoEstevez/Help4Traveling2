@@ -53,7 +53,7 @@ public class ManejadorReserva {
             st.executeUpdate(sql);
             
             try {
-                sql = "SELECT LAST_INSERT_ID() as id";
+                sql = "SELECT max(id) as id help4traveling.reservas";
                 rsId = st.executeQuery(sql);
                 sid = rsId.getString("id");
                 
@@ -69,18 +69,17 @@ public class ManejadorReserva {
                         sql = "INSERT INTO help4traveling.reservasitems (reserva, oferta, proveedorOferta, cantidad, inicio, fin) " 
                             + "VALUES (" + sid + ",'" + oferta + "','" + proveedor + "'," + cantidad + ",'" + inicio + "','" + fin + "')";
                         st.executeUpdate(sql);
+                        
+                        con.close();
+                        st.close();
+                        System.out.println("Reserva creada con exito :)");
                     }   
                 } catch (SQLException e) {
                     System.out.println("No se pudo insertar item reserva :(");
-                }
-                             
+                }  
             } catch (SQLException e) {
                 System.out.println("No se pudo obtener id :(");
-            }            
-            
-            con.close();
-            st.close();
-            System.out.println("Reserva creada con exito :)");
+            }          
         } catch (SQLException e) {
             System.out.println("No se pudo crear reserva :(");
         }
