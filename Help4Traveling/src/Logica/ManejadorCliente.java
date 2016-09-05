@@ -134,7 +134,7 @@ public class ManejadorCliente {
         Connection con = conexion.getConnection();
         Statement st;
        
-        sql = "SELECT * FROM help4traveling.usuarios";
+        sql = "SELECT * FROM help4traveling.usuarios WHERE nickname in (SELECT nickname FROM help4traveling.clientes)";
        
         try{
             st = con.createStatement();
