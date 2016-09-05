@@ -136,8 +136,8 @@ public class ManejadorReserva {
         Connection con = conexion.getConnection();
         Statement st;
         ResultSet rsReservasCliente;
-        sql = "SELECT * FROM help4traveling.reservas WHERE cliente='" + user.getNickname() +"'";
-        
+        sql = "SELECT * FROM help4traveling.reservas WHERE cliente='" + user.getNickname() + "'";
+
         try {
             st = con.createStatement();
             rsReservasCliente = st.executeQuery(sql);
@@ -183,7 +183,7 @@ public class ManejadorReserva {
         Connection con = conexion.getConnection();
         Statement st;
 
-        sql = "SELECT * FROM hel4traveling.reservas";
+        sql = "SELECT * FROM help4traveling.reservas";
 
         try {
             st = con.createStatement();
