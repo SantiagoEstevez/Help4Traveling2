@@ -5,6 +5,7 @@
  */
 package Vista;
 
+import java.util.Date;
 import Logica.DtServicio;
 import Logica.DtUsuario;
 import Logica.Fabrica;
@@ -56,17 +57,17 @@ public class altaReserva2 extends javax.swing.JInternalFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         cantidad = new javax.swing.JTextField();
-        inicio = new javax.swing.JTextField();
-        fin = new javax.swing.JTextField();
-        jLabel5 = new javax.swing.JLabel();
-        agregar = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
         nombreItem = new javax.swing.JTextField();
+        inicio = new com.toedter.calendar.JDateChooser();
+        fin = new com.toedter.calendar.JDateChooser();
+        agregar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         Ofertas = new javax.swing.JList<>();
         buscar = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         confirmar = new javax.swing.JButton();
+        bBuscar = new javax.swing.JButton();
 
         infoItem.setTitle("Datos item reserva");
         infoItem.setResizable(false);
@@ -77,7 +78,9 @@ public class altaReserva2 extends javax.swing.JInternalFrame {
 
         jLabel4.setText("Fecha fin:");
 
-        jLabel5.setText("Ejemplo: 2001-12-12");
+        jLabel6.setText("Item:");
+
+        nombreItem.setEditable(false);
 
         agregar.setText("Agregar");
         agregar.addActionListener(new java.awt.event.ActionListener() {
@@ -86,64 +89,52 @@ public class altaReserva2 extends javax.swing.JInternalFrame {
             }
         });
 
-        jLabel6.setText("Item:");
-
-        nombreItem.setEditable(false);
-
         javax.swing.GroupLayout infoItemLayout = new javax.swing.GroupLayout(infoItem.getContentPane());
         infoItem.getContentPane().setLayout(infoItemLayout);
         infoItemLayout.setHorizontalGroup(
             infoItemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(infoItemLayout.createSequentialGroup()
-                .addGap(40, 40, 40)
-                .addGroup(infoItemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel5)
-                    .addComponent(agregar)
-                    .addGroup(infoItemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addGroup(infoItemLayout.createSequentialGroup()
-                            .addComponent(jLabel1)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 44, Short.MAX_VALUE)
-                            .addComponent(cantidad, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(infoItemLayout.createSequentialGroup()
+                .addGap(4, 4, 4)
+                .addGroup(infoItemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel6)
+                    .addGroup(infoItemLayout.createSequentialGroup()
+                        .addGroup(infoItemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel4)
+                            .addComponent(jLabel1))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(infoItemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(cantidad, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(infoItemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(agregar)
+                                .addComponent(fin, javax.swing.GroupLayout.PREFERRED_SIZE, 256, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(infoItemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addGroup(infoItemLayout.createSequentialGroup()
-                                    .addGroup(infoItemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jLabel3)
-                                        .addComponent(jLabel4))
-                                    .addGap(20, 20, 20))
-                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, infoItemLayout.createSequentialGroup()
-                                    .addComponent(jLabel6)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                            .addGroup(infoItemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(fin, javax.swing.GroupLayout.DEFAULT_SIZE, 123, Short.MAX_VALUE)
-                                .addComponent(inicio)
-                                .addComponent(nombreItem)))))
-                .addContainerGap(39, Short.MAX_VALUE))
+                                .addComponent(nombreItem, javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(inicio, javax.swing.GroupLayout.DEFAULT_SIZE, 256, Short.MAX_VALUE)))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         infoItemLayout.setVerticalGroup(
             infoItemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(infoItemLayout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(26, 26, 26)
                 .addGroup(infoItemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(nombreItem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel6))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(infoItemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1)
+                    .addComponent(cantidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(infoItemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(cantidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel5)
+                .addGroup(infoItemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel3)
+                    .addComponent(inicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(infoItemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(inicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3))
-                .addGap(18, 18, 18)
-                .addGroup(infoItemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(fin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4))
-                .addGap(6, 6, 6)
+                .addGroup(infoItemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel4)
+                    .addComponent(fin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(agregar)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(4, 4, 4))
         );
 
         setClosable(true);
@@ -164,6 +155,9 @@ public class altaReserva2 extends javax.swing.JInternalFrame {
             }
         });
         buscar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                buscarKeyPressed(evt);
+            }
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 buscarKeyTyped(evt);
             }
@@ -178,29 +172,39 @@ public class altaReserva2 extends javax.swing.JInternalFrame {
             }
         });
 
+        bBuscar.setText("Buscar");
+        bBuscar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                bBuscarMouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(confirmar, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 445, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(jLabel2)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(buscar, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(confirmar, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 445, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(buscar, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(26, 26, 26)
+                        .addComponent(bBuscar)))
                 .addContainerGap(24, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(24, 24, 24)
+                .addGap(23, 23, 23)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(buscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2))
+                    .addComponent(jLabel2)
+                    .addComponent(bBuscar))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 288, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -212,18 +216,14 @@ public class altaReserva2 extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void OfertasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_OfertasMouseClicked
-        this.infoItem.setSize(300, 250);
+        this.infoItem.setSize(360, 250);
         this.infoItem.setLocationRelativeTo(this);
         this.nombreItem.setText(Ofertas.getSelectedValue());
-        this.inicio.setText("");
-        this.fin.setText("");
+        this.inicio.setDate(new Date(5,9,2016));
+        this.fin.setDate(new Date(5,9,2016));
+        this.cantidad.setText("1");
         this.infoItem.setVisible(true);
     }//GEN-LAST:event_OfertasMouseClicked
-
-    private void agregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_agregarActionPerformed
-        altaReserva.agregarItem(new Object[]{true,Integer.parseInt(cantidad.getText()), nombreItem.getText(),inicio.getText(),fin.getText()});
-        infoItem.dispose();
-    }//GEN-LAST:event_agregarActionPerformed
 
     private void confirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmarActionPerformed
         this.dispose();
@@ -234,30 +234,75 @@ public class altaReserva2 extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_buscarActionPerformed
 
     private void buscarKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_buscarKeyTyped
-        Iterator<DtServicio> i = listaServicios.iterator();
-        modelo = new DefaultListModel();
-        while (i.hasNext()) {
-            DtServicio servicio = i.next();
-            modelo.addElement(servicio.getNombre());
-        }
-        this.Ofertas.setModel(modelo);
+        
     }//GEN-LAST:event_buscarKeyTyped
 
+    private void buscarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_buscarKeyPressed
+        
+    }//GEN-LAST:event_buscarKeyPressed
+
+    private void bBuscarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bBuscarMouseClicked
+        DefaultListModel modeloBuscar = new DefaultListModel();
+        String texto = buscar.getText();
+        
+        if (texto != "") {
+            this.Ofertas.setModel(modeloBuscar);
+            
+            Iterator<DtServicio> i = listaServicios.iterator();
+            while (i.hasNext()) {
+                String servicio = i.next().getNombre();
+                if (servicio.indexOf(texto) != -1){
+                    modeloBuscar.addElement(servicio);
+                }
+            }
+            this.Ofertas.setModel(modeloBuscar);
+                
+        } else {
+            this.Ofertas.setModel(modelo);
+        }
+    }//GEN-LAST:event_bBuscarMouseClicked
+
+    private void agregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_agregarActionPerformed
+        altaReserva.agregarItem(new Object[]{true,Integer.parseInt(cantidad.getText()),nombreItem.getText(), dateToString(inicio.getDate()), dateToString(fin.getDate())});
+        infoItem.dispose();
+    }//GEN-LAST:event_agregarActionPerformed
+
+    private static String dateToString(Date date){
+        String fecha, dia, mes, ano;
+        dia = String.valueOf(date.getDay());
+        mes = String.valueOf(date.getMonth());
+        ano = String.valueOf(date.getYear());
+        
+        fecha = ano;
+        fecha += "-";
+        if (mes.length() == 1){
+            fecha += "0" + mes;
+        } else {
+            fecha += mes;
+        }
+        fecha += "-";
+        if (dia.length() == 1){
+            fecha += "0" + dia;
+        } else {
+            fecha += dia;
+        }
+        return fecha;
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JList<String> Ofertas;
     private javax.swing.JButton agregar;
+    private javax.swing.JButton bBuscar;
     private javax.swing.JTextField buscar;
     private javax.swing.JTextField cantidad;
     private javax.swing.JButton confirmar;
-    private javax.swing.JTextField fin;
+    private com.toedter.calendar.JDateChooser fin;
     private javax.swing.JDialog infoItem;
-    private javax.swing.JTextField inicio;
+    private com.toedter.calendar.JDateChooser inicio;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField nombreItem;

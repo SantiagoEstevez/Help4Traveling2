@@ -227,8 +227,10 @@ public class Principal extends javax.swing.JFrame {
 
     private void bm_registrar_reservaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bm_registrar_reservaActionPerformed
         altaReserva fAltaReserva = new altaReserva();
-        //fAltaReserva.setLocationRelativeTo(null);
         escritorio.add(fAltaReserva);
+        Dimension desktopSize = Principal.escritorio.getSize();
+        Dimension FrameSize = fAltaReserva.getSize();
+        fAltaReserva.setLocation((desktopSize.width - FrameSize.width)/2, (desktopSize.height- FrameSize.height)/2);
         fAltaReserva.setVisible(true);
     }//GEN-LAST:event_bm_registrar_reservaActionPerformed
 

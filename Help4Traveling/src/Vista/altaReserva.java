@@ -10,6 +10,7 @@ package Vista;
     import Logica.ControladorUsuario;
     import Logica.DtUsuario;
     import Logica.ManejadorCliente;
+import java.awt.Dimension;
     import java.util.ArrayList;
     import java.util.HashSet;
     import java.util.Iterator;
@@ -186,6 +187,9 @@ public class altaReserva extends javax.swing.JInternalFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
        altaReserva2 listaOfertas = new altaReserva2();
        Principal.escritorio.add(listaOfertas);
+       Dimension desktopSize = Principal.escritorio.getSize();
+       Dimension FrameSize = listaOfertas.getSize();
+       listaOfertas.setLocation((desktopSize.width - FrameSize.width)/2, (desktopSize.height- FrameSize.height)/2);
        listaOfertas.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
 
