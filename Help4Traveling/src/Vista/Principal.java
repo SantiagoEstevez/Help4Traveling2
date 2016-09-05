@@ -110,7 +110,6 @@ public class Principal extends javax.swing.JFrame {
         jMenu3 = new javax.swing.JMenu();
         bm_verInfoCliente = new javax.swing.JMenuItem();
         bm_verInfoProveedor = new javax.swing.JMenuItem();
-        Ver_Info_Promo = new javax.swing.JMenuItem();
         jMenuItemVerRes = new javax.swing.JMenuItem();
 
         fc_seleccionar_archivo.setOpaque(true);
@@ -302,7 +301,7 @@ public class Principal extends javax.swing.JFrame {
         escritorio.add(fAltaReserva);
         Dimension desktopSize = Principal.escritorio.getSize();
         Dimension FrameSize = fAltaReserva.getSize();
-        fAltaReserva.setLocation((desktopSize.width - FrameSize.width)/2, (desktopSize.height- FrameSize.height)/2);
+        fAltaReserva.setLocation((desktopSize.width - FrameSize.width) / 2, (desktopSize.height - FrameSize.height) / 2);
         fAltaReserva.setVisible(true);
     }//GEN-LAST:event_bm_registrar_reservaActionPerformed
 
@@ -394,7 +393,7 @@ public class Principal extends javax.swing.JFrame {
             System.out.println(e);
         }
     }
-    
+
     /**
      * @param args the command line arguments
      */
@@ -431,7 +430,6 @@ public class Principal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JMenuItem Ver_Info_Promo;
     private javax.swing.JMenuItem bm_registrar_cliente;
     private javax.swing.JMenuItem bm_registrar_reserva;
     private javax.swing.JMenuItem bm_registrar_servicio;
