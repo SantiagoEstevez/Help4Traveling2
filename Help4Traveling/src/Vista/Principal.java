@@ -109,6 +109,7 @@ public class Principal extends javax.swing.JFrame {
         jMenuItemCancelar = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
         bm_verInfoCliente = new javax.swing.JMenuItem();
+        VerInfo_promo = new javax.swing.JMenuItem();
         bm_verInfoProveedor = new javax.swing.JMenuItem();
         jMenuItemVerRes = new javax.swing.JMenuItem();
 
@@ -238,6 +239,16 @@ public class Principal extends javax.swing.JFrame {
             }
         });
         jMenu3.add(bm_verInfoCliente);
+
+        VerInfo_promo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/info-icon.png"))); // NOI18N
+        VerInfo_promo.setText("VerInfo Promocion");
+        VerInfo_promo.setToolTipText("");
+        VerInfo_promo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                VerInfo_promoActionPerformed(evt);
+            }
+        });
+        jMenu3.add(VerInfo_promo);
 
         bm_verInfoProveedor.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/info-icon.png"))); // NOI18N
         bm_verInfoProveedor.setText("VerInfo Proveedor");
@@ -373,6 +384,11 @@ public class Principal extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jMenuItemCargarActionPerformed
 
+    private void VerInfo_promoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_VerInfo_promoActionPerformed
+  VerInfoPromo altacat = new VerInfoPromo();
+        escritorio.add(altacat);
+        altacat.setVisible(true);    }//GEN-LAST:event_VerInfo_promoActionPerformed
+
     public void cargarDatos(String camino) {
         Conexion conexion = new Conexion();
         Connection con = conexion.getConnection();
@@ -430,6 +446,7 @@ public class Principal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuItem VerInfo_promo;
     private javax.swing.JMenuItem bm_registrar_cliente;
     private javax.swing.JMenuItem bm_registrar_reserva;
     private javax.swing.JMenuItem bm_registrar_servicio;
