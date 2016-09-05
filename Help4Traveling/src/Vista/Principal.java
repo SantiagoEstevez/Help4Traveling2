@@ -9,6 +9,7 @@ import Logica.Conexion;
 import Logica.Fabrica;
 import Logica.IControladorUsuario;
 import Logica.ScriptRunner;
+import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
@@ -24,6 +25,7 @@ import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JInternalFrame;
+import javax.swing.JOptionPane;
 import javax.swing.event.InternalFrameEvent;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
@@ -415,18 +417,27 @@ public class Principal extends javax.swing.JFrame {
             System.out.println(camino);
             //cargarDatos(camino);
         }
+        System.out.print("Cargando Datos... ");
+
         Conexion conexion = new Conexion();
         Connection con = conexion.getConnection();
         ScriptRunner runner = new ScriptRunner(con, false, true);
         try {
+            this.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
             runner.runScript(new BufferedReader(new FileReader(camino)));
-
+            this.setCursor(Cursor.getDefaultCursor());
+            JOptionPane.showMessageDialog(this, "El script fue ejecutado correctamente.", "Aviso", JOptionPane.INFORMATION_MESSAGE);
+            System.out.println("OK");
         } catch (IOException ex) {
+            System.out.println("ERROR");
             Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(this, "El script no pudo cargarse.", "Error", JOptionPane.ERROR_MESSAGE);
         } catch (SQLException ex) {
+            System.out.println("ERROR");
             Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(this, "El script no pudo ejecutarse.", "Error", JOptionPane.ERROR_MESSAGE);
         }
-
+        this.setCursor(Cursor.getDefaultCursor());
     }//GEN-LAST:event_jMenuItemCargarActionPerformed
 
     private void VerInfo_promoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_VerInfo_promoActionPerformed
@@ -447,7 +458,6 @@ public class Principal extends javax.swing.JFrame {
 
         String sql = "mysql help4traveling < `" + camino + "`";
         //String sql = "SOURCE `" + camino + "`";
-        System.out.print("Cargando Datos... ");
 
         try {
             st = con.createStatement();

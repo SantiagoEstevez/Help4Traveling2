@@ -287,7 +287,7 @@ public class ScriptRunner {
 
     private void flush() {
         if (logWriter != null) {
-            logWriter.flush();
+            //logWriter.flush();
         }
         if (errorLogWriter != null) {
             errorLogWriter.flush();
