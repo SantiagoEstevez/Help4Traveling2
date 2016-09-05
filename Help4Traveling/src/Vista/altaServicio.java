@@ -179,7 +179,7 @@ public class altaServicio extends javax.swing.JInternalFrame {
         jTextArea1.setRows(5);
         jScrollPane2.setViewportView(jTextArea1);
 
-        jButton1.setText("jButton1");
+        jButton1.setText("Seleccionar Imagen");
 
         jScrollPane3.setViewportView(jList1);
 
