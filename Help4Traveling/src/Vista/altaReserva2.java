@@ -39,7 +39,7 @@ public class altaReserva2 extends javax.swing.JInternalFrame {
         modelo = new DefaultListModel();
         while (i.hasNext()) {
             DtServicio servicio = i.next();
-            modelo.addElement(servicio.getNombre() + " || " + servicio.getNkProveedor());
+            modelo.addElement(servicio.getNombre() + "~" + servicio.getNkProveedor());
         }
         this.Ofertas.setModel(modelo);
     }
@@ -235,14 +235,10 @@ public class altaReserva2 extends javax.swing.JInternalFrame {
         this.infoItem.setSize(357, 260);
         this.infoItem.setLocationRelativeTo(this);
         
-        StringTokenizer st = new StringTokenizer(Ofertas.getSelectedValue()," || ",true);
-        //this.nombreItem.setText(st.nextToken());
-        //this.proveedorItem.setText(st.nextToken());
-        while(st.hasMoreTokens()){
-            System.out.println("saassasaasasas");
-            System.out.println(st.nextToken());
-        }
-        
+        StringTokenizer st = new StringTokenizer(Ofertas.getSelectedValue(),"~",true);
+        this.nombreItem.setText(st.nextToken());
+        st.nextToken();
+        this.proveedorItem.setText(st.nextToken());
         this.inicio.setDate(new Date(5,9,2016));
         this.fin.setDate(new Date(5,9,2016));
         this.cantidad.setText("1");
@@ -275,7 +271,7 @@ public class altaReserva2 extends javax.swing.JInternalFrame {
             Iterator<DtServicio> i = listaServicios.iterator();
             while (i.hasNext()) {
                 DtServicio oServicio = i.next();
-                String servicio = oServicio.getNombre() + " || " + oServicio.getNkProveedor();
+                String servicio = oServicio.getNombre() + "~" + oServicio.getNkProveedor();
                 if (servicio.indexOf(texto) != -1){
                     modeloBuscar.addElement(servicio);
                 }
