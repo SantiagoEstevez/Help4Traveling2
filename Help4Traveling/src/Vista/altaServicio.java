@@ -4,39 +4,80 @@
  * and open the template in the editor.
  */
 package Vista;
-    import Logica.DtUsuario;
-    import Logica.Fabrica;
-    import Logica.ControladorUsuario;
-    import Logica.Date;
+import Logica.DtUsuario;
+import Logica.Fabrica;
+import Logica.ControladorUsuario;
+import Logica.Date;
 import Logica.IControladorServicio;
-    import javax.swing.JOptionPane;
-    import Logica.IControladorUsuario;
+import javax.swing.JOptionPane;
+import Logica.IControladorUsuario;
 import Logica.ManejadorCiudad;
+import Logica.ManejadorProveedor;
+import java.io.File;
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
+import javax.swing.DefaultListModel;
+import javax.swing.JFileChooser;
 /**
  *
  * @author Santiago
  */
 public class altaServicio extends javax.swing.JInternalFrame {
     List<String> listaPaises = null;
+    List<String> listaCiudades = null;
+    List<DtUsuario> listaProveedores = new ArrayList<DtUsuario>();
+    List<String> imagenes = new LinkedList<String>();
     private IControladorServicio IControlador;
+    DefaultListModel modeloListaImagenes = new DefaultListModel();
+    DefaultListModel modeloListaCategorias = new DefaultListModel();
+    String nkproveedor;
+    
     /**
      * Creates new form altaServicio
      */
+    private void cargarPaisesOrigen() {
+        this.listaPaises = ManejadorCiudad.getInstance().listarPaises();
+        Iterator<String> iter = this.listaPaises.iterator();
+        while (iter.hasNext()) {
+            String nompais = iter.next();
+            this.cb_paises_origen.addItem(nompais);
+        }   
+    }
+    
+    private void cargarCiudadesPaisOrigen(String pais) {
+        cb_ciudades_origen.removeAllItems();
+        this.listaCiudades = ManejadorCiudad.getInstance().listarCiudadesPorPais(pais);
+        Iterator<String> iter = this.listaCiudades.iterator();
+        while (iter.hasNext()) {
+            String nomciudad = iter.next();
+            this.cb_ciudades_origen.addItem(nomciudad);
+        }   
+    }
+    
+    private void cargarProveedores() {
+        cb_proveedores.removeAllItems();
+        this.listaProveedores = ManejadorProveedor.getInstance().listarProveedores();
+        Iterator<DtUsuario> iter = this.listaProveedores.iterator();
+        while (iter.hasNext()) {
+            String nkprov = iter.next().getNickname();
+            this.cb_proveedores.addItem(nkprov);
+        }   
+    }
+    
+    
+    
     public altaServicio() {
         //this.tr_categoria.setVisible(false);
         initComponents();
         Fabrica fabrica = Fabrica.getInstance();
         this.IControlador = fabrica.getIControladorServicio();
-        this.listaPaises = ManejadorCiudad.getInstance().listarPaises();
-        Iterator<String> iter = this.listaPaises.iterator();
-        while (iter.hasNext()) {
-            String nompais = iter.next();
-            this.cmbPaises.addItem(nompais);
-        }           
-        
-        
+        cargarPaisesOrigen(); 
+        cargarProveedores();
+        this.pn_destinos.setVisible(false);    
+        this.lst_imagenes.setModel(modeloListaImagenes);
+        this.lst_categorias.setModel(modeloListaCategorias);
     }
 
     /**
@@ -56,26 +97,26 @@ public class altaServicio extends javax.swing.JInternalFrame {
         bt_categoria = new javax.swing.JButton();
         bt_aceptar_s = new javax.swing.JButton();
         bt_cancelar_s = new javax.swing.JButton();
-        cmbPaises = new javax.swing.JComboBox<>();
+        cb_paises_origen = new javax.swing.JComboBox<>();
         jLabel1 = new javax.swing.JLabel();
-        cmbCiudades = new javax.swing.JComboBox<>();
-        pn_proveedor = new javax.swing.JPanel();
+        cb_ciudades_origen = new javax.swing.JComboBox<>();
+        pn_destinos = new javax.swing.JPanel();
         l_empresa = new javax.swing.JLabel();
         l_direccion = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
-        jComboBox2 = new javax.swing.JComboBox<>();
+        cb_paises_destino = new javax.swing.JComboBox<>();
+        cb_ciudades_destino = new javax.swing.JComboBox<>();
         lb_origen1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         lb_origen2 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
-        jButton1 = new javax.swing.JButton();
+        ta_descripcion = new javax.swing.JTextArea();
+        btn_seleccionar_imagen = new javax.swing.JButton();
         jScrollPane3 = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList<>();
+        lst_imagenes = new javax.swing.JList<>();
         jScrollPane4 = new javax.swing.JScrollPane();
-        jList2 = new javax.swing.JList<>();
-        jComboBox3 = new javax.swing.JComboBox<>();
-        jTextField1 = new javax.swing.JTextField();
+        lst_categorias = new javax.swing.JList<>();
+        cb_proveedores = new javax.swing.JComboBox<>();
+        tf_precio = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
 
         setClosable(true);
@@ -130,9 +171,9 @@ public class altaServicio extends javax.swing.JInternalFrame {
             }
         });
 
-        cmbPaises.addActionListener(new java.awt.event.ActionListener() {
+        cb_paises_origen.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cmbPaisesActionPerformed(evt);
+                cb_paises_origenActionPerformed(evt);
             }
         });
 
@@ -142,30 +183,30 @@ public class altaServicio extends javax.swing.JInternalFrame {
 
         l_direccion.setText("Ciudad Destino:");
 
-        javax.swing.GroupLayout pn_proveedorLayout = new javax.swing.GroupLayout(pn_proveedor);
-        pn_proveedor.setLayout(pn_proveedorLayout);
-        pn_proveedorLayout.setHorizontalGroup(
-            pn_proveedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pn_proveedorLayout.createSequentialGroup()
+        javax.swing.GroupLayout pn_destinosLayout = new javax.swing.GroupLayout(pn_destinos);
+        pn_destinos.setLayout(pn_destinosLayout);
+        pn_destinosLayout.setHorizontalGroup(
+            pn_destinosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pn_destinosLayout.createSequentialGroup()
                 .addGap(21, 21, 21)
                 .addComponent(l_empresa)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(cb_paises_destino, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(l_direccion)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(cb_ciudades_destino, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(20, Short.MAX_VALUE))
         );
-        pn_proveedorLayout.setVerticalGroup(
-            pn_proveedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pn_proveedorLayout.createSequentialGroup()
+        pn_destinosLayout.setVerticalGroup(
+            pn_destinosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pn_destinosLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(pn_proveedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(pn_destinosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(l_direccion)
                     .addComponent(l_empresa)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cb_paises_destino, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cb_ciudades_destino, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
@@ -175,15 +216,26 @@ public class altaServicio extends javax.swing.JInternalFrame {
 
         lb_origen2.setText("Descripción:");
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane2.setViewportView(jTextArea1);
+        ta_descripcion.setColumns(20);
+        ta_descripcion.setRows(5);
+        jScrollPane2.setViewportView(ta_descripcion);
 
-        jButton1.setText("Seleccionar Imagen");
+        btn_seleccionar_imagen.setText("Seleccionar Imagen");
+        btn_seleccionar_imagen.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_seleccionar_imagenActionPerformed(evt);
+            }
+        });
 
-        jScrollPane3.setViewportView(jList1);
+        jScrollPane3.setViewportView(lst_imagenes);
 
-        jScrollPane4.setViewportView(jList2);
+        jScrollPane4.setViewportView(lst_categorias);
+
+        cb_proveedores.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cb_proveedoresActionPerformed(evt);
+            }
+        });
 
         jLabel3.setText("(USD)");
 
@@ -197,11 +249,11 @@ public class altaServicio extends javax.swing.JInternalFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(lb_origen1)
                         .addGap(18, 18, 18)
-                        .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(cb_proveedores, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(tf_precio, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel3)
                         .addGap(55, 55, 55))
@@ -219,19 +271,19 @@ public class altaServicio extends javax.swing.JInternalFrame {
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(lb_origen)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(cmbPaises, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(cb_paises_origen, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(18, 18, 18)
                                         .addComponent(jLabel2)
                                         .addGap(10, 10, 10)
-                                        .addComponent(cmbCiudades, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                        .addComponent(cb_ciudades_origen, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addComponent(btn_seleccionar_imagen)
+                                .addGap(18, 18, 18)
+                                .addComponent(jScrollPane3))
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                                 .addComponent(bt_categoria)
                                 .addGap(18, 18, 18)
-                                .addComponent(jScrollPane4))
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                .addComponent(jButton1)
-                                .addGap(18, 18, 18)
-                                .addComponent(jScrollPane3)))
+                                .addComponent(jScrollPane4)))
                         .addGap(27, 27, 27))))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -242,7 +294,7 @@ public class altaServicio extends javax.swing.JInternalFrame {
                         .addComponent(bt_cancelar_s)
                         .addGap(23, 23, 23))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(pn_proveedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(pn_destinos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap())))
         );
         layout.setVerticalGroup(
@@ -256,8 +308,8 @@ public class altaServicio extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lb_origen1)
                     .addComponent(jLabel1)
-                    .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cb_proveedores, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(tf_precio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -266,22 +318,21 @@ public class altaServicio extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lb_origen)
-                    .addComponent(cmbPaises, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cmbCiudades, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cb_paises_origen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cb_ciudades_origen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(bt_categoria)
-                            .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(jButton1))
-                .addGap(18, 18, 18)
-                .addComponent(pn_proveedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_seleccionar_imagen)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(bt_categoria))
+                .addGap(3, 3, 3)
+                .addComponent(pn_destinos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(bt_aceptar_s)
@@ -321,40 +372,61 @@ public class altaServicio extends javax.swing.JInternalFrame {
 
     }//GEN-LAST:event_bt_cancelar_sActionPerformed
 
-    private void cmbPaisesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbPaisesActionPerformed
+    private void cb_paises_origenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cb_paises_origenActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_cmbPaisesActionPerformed
+        cargarCiudadesPaisOrigen((String) cb_paises_origen.getSelectedItem());
+    }//GEN-LAST:event_cb_paises_origenActionPerformed
+
+    private void cb_proveedoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cb_proveedoresActionPerformed
+        // TODO add your handling code here:
+        nkproveedor = (String) cb_paises_origen.getSelectedItem();
+    }//GEN-LAST:event_cb_proveedoresActionPerformed
+
+    private void btn_seleccionar_imagenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_seleccionar_imagenActionPerformed
+        // TODO add your handling code here:
+        JFileChooser fc_seleccionar_archivo = new javax.swing.JFileChooser();
+        fc_seleccionar_archivo.setVisible(true);
+        int eleccion = fc_seleccionar_archivo.showOpenDialog(null);
+        //Seleccionamos el fichero
+        if (eleccion == JFileChooser.APPROVE_OPTION){
+            File fichero=fc_seleccionar_archivo.getSelectedFile();
+            String pathimg = fichero.getAbsolutePath();
+            this.imagenes.add(pathimg);
+            modeloListaImagenes.addElement(pathimg);
+            
+        }
+    }//GEN-LAST:event_btn_seleccionar_imagenActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bt_aceptar_s;
     private javax.swing.JButton bt_cancelar_s;
     private javax.swing.JButton bt_categoria;
-    private javax.swing.JComboBox<String> cmbCiudades;
-    private javax.swing.JComboBox<String> cmbPaises;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JComboBox<String> jComboBox2;
-    private javax.swing.JComboBox<String> jComboBox3;
+    private javax.swing.JButton btn_seleccionar_imagen;
+    private javax.swing.JComboBox<String> cb_ciudades_destino;
+    private javax.swing.JComboBox<String> cb_ciudades_origen;
+    private javax.swing.JComboBox<String> cb_paises_destino;
+    private javax.swing.JComboBox<String> cb_paises_origen;
+    private javax.swing.JComboBox<String> cb_proveedores;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JList<String> jList1;
-    private javax.swing.JList<String> jList2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
-    private javax.swing.JTextArea jTextArea1;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JLabel l_direccion;
     private javax.swing.JLabel l_empresa;
     private javax.swing.JLabel lb_nombre_s;
     private javax.swing.JLabel lb_origen;
     private javax.swing.JLabel lb_origen1;
     private javax.swing.JLabel lb_origen2;
-    private javax.swing.JPanel pn_proveedor;
+    private javax.swing.JList<String> lst_categorias;
+    private javax.swing.JList<String> lst_imagenes;
+    private javax.swing.JPanel pn_destinos;
+    private javax.swing.JTextArea ta_descripcion;
     private javax.swing.JTextField tf_nombre_s;
+    private javax.swing.JTextField tf_precio;
     private javax.swing.JTree tr_categoria;
     // End of variables declaration//GEN-END:variables
 }
