@@ -30,16 +30,17 @@ public class ActualizarReserva extends javax.swing.JInternalFrame {
 
     private void modificarReserva(Integer index) {
         String estado = this.listaReservas.get(index).getEstado().toString();
+        Integer reserva = (int) (long) this.listaReservas.get(index).getId();
         System.out.println(estado);
         if (!"REGISTRADA".equals(estado)) {
             JOptionPane.showMessageDialog(this, "El estado inicial debe ser REGISTRADA, pero es " + estado + ".", "Error", JOptionPane.ERROR_MESSAGE
             );
         } else {
+            String nuevo = jComboBoxEstado.getSelectedItem().toString();
             Object[] opciones = {"No", "Si"};
-            int respuesta = JOptionPane.showOptionDialog(null, "¿Está seguro de cambiar el estado de la reserva?", "Confirmar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, opciones, opciones[1]);
+            int respuesta = JOptionPane.showOptionDialog(null, "¿Está seguro de cambiar el estado de la reserva a " + nuevo + "?", "Confirmar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, opciones, opciones[1]);
             if (respuesta == 1) {
-                //this.IControlador.cancelarUnaReserva(Long.valueOf(jTableRes.getValueAt(jTableRes.getSelectedRow(), 0).toString()));
-                this.IControlador.actualizarEstadoDeReserva();
+                this.IControlador.actualizarEstadoDeReserva(reserva, nuevo);
             }
         }
         refrescarReservas();
@@ -116,7 +117,7 @@ public class ActualizarReserva extends javax.swing.JInternalFrame {
         setTitle("Actualizar Reserva");
         setFrameIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/edit-icon.png"))); // NOI18N
         setMinimumSize(new java.awt.Dimension(440, 200));
-        setPreferredSize(new java.awt.Dimension(600, 200));
+        setPreferredSize(new java.awt.Dimension(600, 204));
 
         jTableRes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -203,7 +204,7 @@ public class ActualizarReserva extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addComponent(jLabelRes)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 104, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButtonActual)

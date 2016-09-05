@@ -120,6 +120,32 @@ public class ManejadorReserva {
         return listaitems;
     }
 
+    public void modificarEstadoReserva(Integer reserva, String estado) {
+        //reservasId.get(reserva).setEstado(Logica.Reserva.eEstado.valueOf(estado));
+
+        conexion = new Conexion();
+        Connection con = conexion.getConnection();
+        Statement st;
+
+        sql = "UPDATE Reservas "
+                + "SET estado = '" + estado + "' "
+                + "WHERE numero = " + reserva;
+        System.out.println(sql);
+
+        try {
+            st = con.createStatement();
+            System.out.print("Modificando estado...");
+            st.executeUpdate(sql);
+            con.close();
+            st.close();
+            System.out.println("OK");
+
+        } catch (SQLException e) {
+            System.out.println("ERROR");
+            System.out.println(e.getMessage());
+        }
+    }
+
     public List<DtReserva> getDtReservas() {
         List<DtReserva> listaDtRes = new LinkedList<>();
         Iterator<Reserva> iter = this.reservasId.values().iterator();
