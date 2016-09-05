@@ -47,7 +47,7 @@ public class ManejadorReserva {
         
         sql = "INSERT INTO help4traveling.reservas (fecha,total,estado,cliente) "
             + "VALUES ('" + nueva.getCreada() + "'," + nueva.getTotal() + ",'" + nueva.getEstado() + "','" + nueva.getCliente()+ "')";
-        System.out.println(sql);
+        
         try {
             st = con.createStatement();
             st.executeUpdate(sql);
@@ -59,22 +59,24 @@ public class ManejadorReserva {
                 sid = rsId.getString("id");
                 
                 try {
-                    for(Map.Entry<Integer,ItemReserva> entry : nueva.getItems().entrySet()) {
-                        ItemReserva key = entry.getValue();
-                        String oferta = key.getOferta().getNombre();
-                        String proveedor = key.getOferta().getProveedor().getNombre();
-                        String cantidad = String.valueOf(key.getCantidad());
-                        String inicio = key.getInicio().getAno() + "-" + key.getInicio().getMes() + "-" + key.getInicio().getDia();
-                        String fin = key.getFin().getAno() + "-" + key.getFin().getMes() + "-" + key.getFin().getDia();
+                    if (nueva.getItems().size()>0) {
+                        for(Map.Entry<Integer,ItemReserva> entry : nueva.getItems().entrySet()) {
+                            ItemReserva key = entry.getValue();
+                            String oferta = key.getOferta().getNombre();
+                            String proveedor = key.getOferta().getProveedor().getNombre();
+                            String cantidad = String.valueOf(key.getCantidad());
+                            String inicio = key.getInicio().getAno() + "-" + key.getInicio().getMes() + "-" + key.getInicio().getDia();
+                            String fin = key.getFin().getAno() + "-" + key.getFin().getMes() + "-" + key.getFin().getDia();
 
-                        sql = "INSERT INTO help4traveling.reservasitems (reserva, oferta, proveedorOferta, cantidad, inicio, fin) " 
-                            + "VALUES (" + sid + ",'" + oferta + "','" + proveedor + "'," + cantidad + ",'" + inicio + "','" + fin + "')";
-                        st.executeUpdate(sql);
-                        
+                            sql = "INSERT INTO help4traveling.reservasitems (reserva, oferta, proveedorOferta, cantidad, inicio, fin) " 
+                                + "VALUES (" + sid + ",'" + oferta + "','" + proveedor + "'," + cantidad + ",'" + inicio + "','" + fin + "')";
+                            
+                            st.executeUpdate(sql);                            
+                        }   
                         con.close();
                         st.close();
                         System.out.println("Reserva creada con exito :)");
-                    }   
+                    }
                 } catch (SQLException e) {
                     System.out.println("No se pudo insertar item reserva :(");
                 }  
