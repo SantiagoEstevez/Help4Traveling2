@@ -324,6 +324,7 @@ public class Principal extends javax.swing.JFrame {
         // TODO add your handling code here:
         altaUsuario fAltaUsuario = new altaUsuario();
         escritorio.add(fAltaUsuario);
+        centrarVentana(fAltaUsuario);
         fAltaUsuario.setVisible(true);
     }//GEN-LAST:event_bm_registrar_clienteActionPerformed
 
@@ -336,6 +337,7 @@ public class Principal extends javax.swing.JFrame {
         // TODO add your handling code here:
         altaServicio fAltaServicio = new altaServicio();
         escritorio.add(fAltaServicio);
+        centrarVentana(fAltaServicio);
         fAltaServicio.setVisible(true);
 
     }//GEN-LAST:event_bm_registrar_servicioActionPerformed
@@ -353,12 +355,14 @@ public class Principal extends javax.swing.JFrame {
     private void bm_verInfoClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bm_verInfoClienteActionPerformed
         verInfoCliente fverInfoCliente = new verInfoCliente();
         escritorio.add(fverInfoCliente);
+        centrarVentana(fverInfoCliente);
         fverInfoCliente.setVisible(true);
     }//GEN-LAST:event_bm_verInfoClienteActionPerformed
 
     private void bm_verInfoProveedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bm_verInfoProveedorActionPerformed
         verInfoProveedor fverInfoProveedor = new verInfoProveedor();
         escritorio.add(fverInfoProveedor);
+        centrarVentana(fverInfoProveedor);
         fverInfoProveedor.setVisible(true);
     }//GEN-LAST:event_bm_verInfoProveedorActionPerformed
 
@@ -372,7 +376,7 @@ public class Principal extends javax.swing.JFrame {
     private void jMenuItemVerResActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemVerResActionPerformed
         verInfoReserva vir = new verInfoReserva();
         escritorio.add(vir);
-        //centrarVentana(vir);
+        centrarVentana(vir);
         vir.setVisible(true);
     }//GEN-LAST:event_jMenuItemVerResActionPerformed
 
@@ -383,6 +387,7 @@ public class Principal extends javax.swing.JFrame {
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
         altaCategoria altacat = new altaCategoria();
         escritorio.add(altacat);
+        centrarVentana(altacat);
         altacat.setVisible(true);
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
@@ -421,11 +426,13 @@ public class Principal extends javax.swing.JFrame {
     private void VerInfo_promoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_VerInfo_promoActionPerformed
         VerInfoPromo altacat = new VerInfoPromo();
         escritorio.add(altacat);
+        centrarVentana(altacat);
         altacat.setVisible(true);    }//GEN-LAST:event_VerInfo_promoActionPerformed
 
     private void jMenuItemEstadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemEstadoActionPerformed
         ActualizarReserva ar = new ActualizarReserva();
         escritorio.add(ar);
+        centrarVentana(ar);
         ar.setVisible(true);
     }//GEN-LAST:event_jMenuItemEstadoActionPerformed
 
