@@ -123,7 +123,53 @@ public class ManejadorCategoria {
     return mensaje; 
     }
     
+    public List<String> obtenerCategoriasPadre(){
+        List<String> listaCat = new LinkedList<String>();
+        ResultSet rsCategorias;
+        Conexion conexion = new Conexion();
+        Connection con = conexion.getConnection();
+        Statement st;
+        String sql;
+        
+        sql = "SELECT * FROM help4traveling.categorias WHERE nombre = padre";
+        try{
+            st = con.createStatement();
+            rsCategorias = st.executeQuery(sql);
+            while (rsCategorias.next())
+                listaCat.add(rsCategorias.getString("nombre"));	
+            rsCategorias.close();
+            st.close();
+            con.close();
+        }
+        catch(SQLException e){
+           System.out.println("No pude obtener categorias :(");
+        }
+	return listaCat;  
+    }
     
+    public List<String> obtenerCategoriasHijas(String padre){
+        List<String> listaCat = new LinkedList<String>();
+        ResultSet rsCategorias;
+        Conexion conexion = new Conexion();
+        Connection con = conexion.getConnection();
+        Statement st;
+        String sql;
+        
+        sql = "SELECT * FROM help4traveling.categorias WHERE padre = '" + padre + "'";
+        try{
+            st = con.createStatement();
+            rsCategorias = st.executeQuery(sql);
+            while (rsCategorias.next())
+                listaCat.add(rsCategorias.getString("nombre"));	
+            rsCategorias.close();
+            st.close();
+            con.close();
+        }
+        catch(SQLException e){
+           System.out.println("No pude obtener categorias :(");
+        }
+	return listaCat;  
+    }
     
     public List<String> getNombresCategorias() {
         List<String> listaCat = new LinkedList<String>();

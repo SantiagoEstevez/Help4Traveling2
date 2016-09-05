@@ -21,11 +21,11 @@ import javax.swing.DefaultListModel;
 public class altaReserva2 extends javax.swing.JInternalFrame {
     private IControladorServicio IControlador;
     private DefaultListModel modelo;
+    private List<DtServicio> listaServicios;
     /**
      * Creates new form altaReserva2
      */
     public altaReserva2() {
-        List<DtServicio> listaServicios; 
         initComponents();
         
         Fabrica fabrica = Fabrica.getInstance();
@@ -158,9 +158,25 @@ public class altaReserva2 extends javax.swing.JInternalFrame {
         });
         jScrollPane1.setViewportView(Ofertas);
 
+        buscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buscarActionPerformed(evt);
+            }
+        });
+        buscar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                buscarKeyTyped(evt);
+            }
+        });
+
         jLabel2.setText("Buscar:");
 
         confirmar.setText("Listo");
+        confirmar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                confirmarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -180,8 +196,8 @@ public class altaReserva2 extends javax.swing.JInternalFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(70, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(24, 24, 24)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(buscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2))
@@ -189,7 +205,7 @@ public class altaReserva2 extends javax.swing.JInternalFrame {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 288, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(confirmar)
-                .addGap(23, 23, 23))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -208,6 +224,24 @@ public class altaReserva2 extends javax.swing.JInternalFrame {
         altaReserva.agregarItem(new Object[]{true,Integer.parseInt(cantidad.getText()), nombreItem.getText(),inicio.getText(),fin.getText()});
         infoItem.dispose();
     }//GEN-LAST:event_agregarActionPerformed
+
+    private void confirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmarActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_confirmarActionPerformed
+
+    private void buscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_buscarActionPerformed
+
+    private void buscarKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_buscarKeyTyped
+        Iterator<DtServicio> i = listaServicios.iterator();
+        modelo = new DefaultListModel();
+        while (i.hasNext()) {
+            DtServicio servicio = i.next();
+            modelo.addElement(servicio.getNombre());
+        }
+        this.Ofertas.setModel(modelo);
+    }//GEN-LAST:event_buscarKeyTyped
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
