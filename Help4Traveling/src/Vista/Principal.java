@@ -8,13 +8,19 @@ package Vista;
 import Logica.Conexion;
 import Logica.Fabrica;
 import Logica.IControladorUsuario;
+import Logica.ScriptRunner;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JInternalFrame;
@@ -29,6 +35,7 @@ public class Principal extends javax.swing.JFrame {
 
     private IControladorUsuario IControlador;
     private String tipo;
+    private String camino;
 
     /**
      * Creates new form Principal
@@ -403,11 +410,23 @@ public class Principal extends javax.swing.JFrame {
         int eleccion = selector.showOpenDialog(null);
         if (eleccion == JFileChooser.APPROVE_OPTION) {
             File datos = selector.getSelectedFile();
-            String camino = datos.getAbsolutePath();
+            camino = datos.getAbsolutePath();
             System.out.print("Datos ubicados en: ");
             System.out.println(camino);
-            cargarDatos(camino);
+            //cargarDatos(camino);
         }
+        Conexion conexion = new Conexion();
+        Connection con = conexion.getConnection();
+        ScriptRunner runner = new ScriptRunner(con, false, true);
+        try {
+            runner.runScript(new BufferedReader(new FileReader(camino)));
+
+        } catch (IOException ex) {
+            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
     }//GEN-LAST:event_jMenuItemCargarActionPerformed
 
     private void VerInfo_promoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_VerInfo_promoActionPerformed
