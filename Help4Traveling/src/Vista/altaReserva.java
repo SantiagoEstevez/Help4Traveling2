@@ -8,20 +8,20 @@ package Vista;
     import Logica.Fabrica;
     import Logica.IControladorUsuario;
     import Logica.ControladorUsuario;
-import Logica.Date;
+    import Logica.Date;
     import Logica.DtUsuario;
-import Logica.IControladorReserva;
+    import Logica.IControladorReserva;
     import Logica.ManejadorCliente;
-import Logica.Proveedor;
-import Logica.Reserva;
-import Logica.Servicio;
-import java.awt.Dimension;
+    import Logica.Proveedor;
+    import Logica.Reserva;
+    import Logica.Servicio;
+    import java.awt.Dimension;
     import java.util.ArrayList;
     import java.util.HashSet;
     import java.util.Iterator;
-import java.util.List;
+    import java.util.List;
     import java.util.Set;
-import java.util.StringTokenizer;
+    import java.util.StringTokenizer;
     import javax.swing.table.DefaultTableModel;
 
 public class altaReserva extends javax.swing.JInternalFrame {
@@ -239,10 +239,15 @@ public class altaReserva extends javax.swing.JInternalFrame {
             Date fin = new Date(Integer.parseInt(fi.nextToken()),Integer.parseInt(fi.nextToken()),Integer.parseInt(fi.nextToken()));
             String servicio = String.valueOf(modelo.getValueAt(i, 2));
             String proveedor = String.valueOf(modelo.getValueAt(i, 3));
-            IReservas.agregarItem(nReserva, cantidad, inicio, fin, new Servicio(servicio, new Proveedor(proveedor)));
-            IReservas.altaReserva(nReserva);
 
+            IReservas.agregarItem(nReserva, cantidad, inicio, fin, new Servicio(servicio, new Proveedor(proveedor)));
         }
+        
+        nReserva.setEstado(Reserva.eEstado.REGISTRADA);
+        java.util.Date actual = new java.util.Date();
+        nReserva.setCreada(new Date(actual.getDay(),actual.getMonth(),actual.getYear()));
+        IReservas.altaReserva(nReserva);
+        this.dispose();
     }//GEN-LAST:event_crearMouseClicked
 
     private void crearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_crearActionPerformed

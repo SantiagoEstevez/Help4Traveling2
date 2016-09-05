@@ -239,8 +239,8 @@ public class altaReserva2 extends javax.swing.JInternalFrame {
         this.nombreItem.setText(st.nextToken());
         st.nextToken();
         this.proveedorItem.setText(st.nextToken());
-        this.inicio.setDate(new Date(5,9,2016));
-        this.fin.setDate(new Date(5,9,2016));
+        this.inicio.setDate(new Date());
+        this.fin.setDate(new Date());
         this.cantidad.setText("1");
         this.infoItem.setVisible(true);
     }//GEN-LAST:event_OfertasMouseClicked

@@ -10,6 +10,7 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 
 public class ManejadorReserva {
 
@@ -41,23 +42,47 @@ public class ManejadorReserva {
         conexion = new Conexion();
         Connection con = conexion.getConnection();
         Statement st;
-
-        sql = "INSERT INTO help4traveling.reservas "
-                + "(Ref,Número,`Fecha de Creación`,`Precio (USD)`,Estado,Cliente) "
-                + "VALUES ('R1'," + nueva.getId() + ",'" + nueva.getCreada() + "'," + nueva.getTotal()
-                + ",'" + nueva.getEstado() + "','SE')";
-        //",'" + nueva.getEstado() + "','" + nueva.getCliente() + "')";
-        System.out.println(sql);
+        ResultSet rsId;
+        String sid;
+        
+        sql = "INSERT INTO help4traveling.reservas (fecha,total,estado,cliente) "
+            + "VALUES ('" + nueva.getCreada() + "'," + nueva.getTotal() + ",'" + nueva.getEstado() + "','" + nueva.getCliente()+ "')";
 
         try {
             st = con.createStatement();
-            System.out.println("antes de insertar");
             st.executeUpdate(sql);
+            
+            try {
+                sql = "SELECT LAST_INSERT_ID() as id";
+                rsId = st.executeQuery(sql);
+                sid = rsId.getString("id");
+                
+                try {
+                    for(Map.Entry<Integer,ItemReserva> entry : nueva.getItems().entrySet()) {
+                        ItemReserva key = entry.getValue();
+                        String oferta = key.getOferta().getNombre();
+                        String proveedor = key.getOferta().getProveedor().getNombre();
+                        String cantidad = String.valueOf(key.getCantidad());
+                        String inicio = key.getInicio().getAno() + "-" + key.getInicio().getMes() + "-" + key.getInicio().getDia();
+                        String fin = key.getFin().getAno() + "-" + key.getFin().getMes() + "-" + key.getFin().getDia();
+
+                        sql = "INSERT INTO help4traveling.reservasitems (reserva, oferta, proveedorOferta, cantidad, inicio, fin) " 
+                            + "VALUES (" + sid + ",'" + oferta + "','" + proveedor + "'," + cantidad + ",'" + inicio + "','" + fin + "')";
+                        st.executeUpdate(sql);
+                    }   
+                } catch (SQLException e) {
+                    System.out.println("No se pudo insertar item reserva :(");
+                }
+                             
+            } catch (SQLException e) {
+                System.out.println("No se pudo obtener id :(");
+            }            
+            
             con.close();
             st.close();
-            System.out.println("INSERTE :)");
+            System.out.println("Reserva creada con exito :)");
         } catch (SQLException e) {
-            System.out.println("No pude INSERTAR :(");
+            System.out.println("No se pudo crear reserva :(");
         }
     }
 
