@@ -69,7 +69,51 @@ public class ManejadorServicio {
     }
     
     public Servicio obtenerServicio(String nk){
-        return ((Servicio) serviciosNom.get(nk));
+        
+        
+        ResultSet rsServicio;
+        Conexion conex = new Conexion();
+        Connection con = conex.getConnection();
+        Statement st;
+        String sql1 = "SELECT * FROM help4traveling.servicios S,help4traveling.serviciosimagenes SI, help4traveling.servicioscategorias SC WHERE S.nombre=SI.servicio AND S.nombre=SC.servicio AND S.nombre='" + nk + "'"; 
+        Servicio nuevo = new Servicio();
+        try {
+            st = con.createStatement();
+            rsServicio = st.executeQuery(sql1);
+            String nombre = rsServicio.getString("nombre");
+            String proveedor = rsServicio.getString("proveedor");
+            String descripcion = rsServicio.getString("descripcion");
+            String precio = rsServicio.getString("precio");
+            String origen = rsServicio.getString("origen");
+            String destino = rsServicio.getString("destino");
+            String imagen = rsServicio.getString("imagen");
+            String categoria = rsServicio.getString("categoria");
+            
+            
+            
+            nuevo.setDescripcion(descripcion);
+            nuevo.setNombre(nombre);
+            Ciudad ori =  ManejadorCiudad.getInstance().obtenerCiudad(origen);
+            Ciudad dest =  ManejadorCiudad.getInstance().obtenerCiudad(destino);
+            
+            nuevo.setDestino(dest);
+            nuevo.setOrigen(ori);
+            List<String> img = new LinkedList<String>();
+            img.add(imagen);
+            nuevo.setImagenes(img);
+            HashMap<String,Categoria> cat = new HashMap<String,Categoria>();
+            Categoria cate = new CatHoja(categoria,"sin padrepor ahora");
+            cat.put(categoria,cate);
+            float precioint = Float.parseFloat(precio);
+            nuevo.setPrecio(precioint);
+                 
+            rsServicio.close();
+            con.close();
+            st.close();           
+        } catch (SQLException e){
+            System.out.println("No exite servicio :(");
+        }    
+        return nuevo;
     }
     
     public List<DtServicio> listarServicios(){
