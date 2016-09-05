@@ -308,5 +308,46 @@ public String persistirServicio(DtServicio serv){
     return mensaje;           
   
    }
+   public List<DtPromocion> listarPromociones(){
+            
+        
+         List<DtPromocion> listaResult = new LinkedList<DtPromocion>();
+         
+         ResultSet rsPromociones;
     
+        conexion = new Conexion();
+        Connection con = conexion.getConnection();
+        Statement st;
+       
+        sql = "SELECT * FROM help4traveling.promociones";
+       
+        try{
+            st = con.createStatement();
+            rsPromociones = st.executeQuery(sql);
+            
+            while (rsPromociones.next()) {
+                String nombre = rsPromociones.getString("nombre");
+                String proveedor = rsPromociones.getString("proveedor");
+                String descuento = rsPromociones.getString("descuento");
+                String total = rsPromociones.getString("total");
+              //  Date nacimiento = new Date(12,12,1994);
+                //String imagen = "";
+                //
+                DtPromocion nuevo = new DtPromocion(nombre, proveedor, descuento,total);
+                listaResult.add(nuevo);
+            }
+            rsPromociones.close();
+            con.close();
+            st.close();
+            
+            System.out.println("promociones  cargadas :)");
+        }
+        catch(SQLException e){
+            System.out.println("No pude cargar promociones :(");
+        }
+        
+            return listaResult;
+    }
+
+
 }
