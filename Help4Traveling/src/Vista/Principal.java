@@ -5,10 +5,18 @@
  */
 package Vista;
 
+import Logica.Conexion;
 import Logica.Fabrica;
 import Logica.IControladorUsuario;
 import java.awt.Dimension;
+import java.io.File;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.Statement;
+import javax.swing.JFileChooser;
 import javax.swing.JInternalFrame;
+import javax.swing.event.InternalFrameEvent;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
  *
@@ -44,6 +52,34 @@ public class Principal extends javax.swing.JFrame {
         jif.setLocation(width, height);
     }
 
+    public void internalFrameClosing(InternalFrameEvent e) {
+
+    }
+
+    public void internalFrameClosed(InternalFrameEvent e) {
+
+    }
+
+    public void internalFrameOpened(InternalFrameEvent e) {
+        jMenuItemCerrarAll.setEnabled(true);
+    }
+
+    public void internalFrameIconified(InternalFrameEvent e) {
+
+    }
+
+    public void internalFrameDeiconified(InternalFrameEvent e) {
+
+    }
+
+    public void internalFrameActivated(InternalFrameEvent e) {
+        jMenuItemCerrar.setEnabled(true);
+    }
+
+    public void internalFrameDeactivated(InternalFrameEvent e) {
+        jMenuItemCerrar.setEnabled(false);
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -58,6 +94,11 @@ public class Principal extends javax.swing.JFrame {
         escritorio = new javax.swing.JDesktopPane();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
+        jMenuItemCargar = new javax.swing.JMenuItem();
+        jSeparator3 = new javax.swing.JPopupMenu.Separator();
+        jMenuItemCerrar = new javax.swing.JMenuItem();
+        jMenuItemCerrarAll = new javax.swing.JMenuItem();
+        jSeparator2 = new javax.swing.JPopupMenu.Separator();
         jMenuItemSalir = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         bm_registrar_cliente = new javax.swing.JMenuItem();
@@ -69,6 +110,7 @@ public class Principal extends javax.swing.JFrame {
         jMenu3 = new javax.swing.JMenu();
         bm_verInfoCliente = new javax.swing.JMenuItem();
         bm_verInfoProveedor = new javax.swing.JMenuItem();
+        Ver_Info_Promo = new javax.swing.JMenuItem();
         jMenuItemVerRes = new javax.swing.JMenuItem();
 
         fc_seleccionar_archivo.setOpaque(true);
@@ -89,6 +131,35 @@ public class Principal extends javax.swing.JFrame {
         );
 
         jMenu1.setText("Inicio");
+
+        jMenuItemCargar.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_O, java.awt.event.InputEvent.CTRL_MASK));
+        jMenuItemCargar.setText("Cargar Datos");
+        jMenuItemCargar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemCargarActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItemCargar);
+        jMenu1.add(jSeparator3);
+
+        jMenuItemCerrar.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_W, java.awt.event.InputEvent.CTRL_MASK));
+        jMenuItemCerrar.setText("Cerrar");
+        jMenuItemCerrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemCerrarActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItemCerrar);
+
+        jMenuItemCerrarAll.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_W, java.awt.event.InputEvent.SHIFT_MASK | java.awt.event.InputEvent.CTRL_MASK));
+        jMenuItemCerrarAll.setText("Cerrar Todas");
+        jMenuItemCerrarAll.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemCerrarAllActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItemCerrarAll);
+        jMenu1.add(jSeparator2);
 
         jMenuItemSalir.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_Q, java.awt.event.InputEvent.CTRL_MASK));
         jMenuItemSalir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/check-icon.png"))); // NOI18N
@@ -227,6 +298,7 @@ public class Principal extends javax.swing.JFrame {
 
     private void bm_registrar_reservaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bm_registrar_reservaActionPerformed
         altaReserva fAltaReserva = new altaReserva();
+        //fAltaReserva.setLocationRelativeTo(null);
         escritorio.add(fAltaReserva);
         Dimension desktopSize = Principal.escritorio.getSize();
         Dimension FrameSize = fAltaReserva.getSize();
@@ -270,6 +342,59 @@ public class Principal extends javax.swing.JFrame {
         altacat.setVisible(true);
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
+    private void jMenuItemCerrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemCerrarActionPerformed
+        JInternalFrame ventana = escritorio.getSelectedFrame();
+        if (ventana != null) {
+            ventana.dispose();
+        }
+    }//GEN-LAST:event_jMenuItemCerrarActionPerformed
+
+    private void jMenuItemCerrarAllActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemCerrarAllActionPerformed
+        JInternalFrame ventana = escritorio.getSelectedFrame();
+        while (ventana != null) {
+            ventana.dispose();
+            ventana = escritorio.selectFrame(true);
+        }
+        //jMenuItemCerrar.setEnabled(false);
+        //jMenuItemCerrarAll.setEnabled(false);
+    }//GEN-LAST:event_jMenuItemCerrarAllActionPerformed
+
+    private void jMenuItemCargarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemCargarActionPerformed
+        JFileChooser selector = new JFileChooser();
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("SQL Scripts", "sql");
+        selector.setFileFilter(filter);
+        selector.setVisible(true);
+        int eleccion = selector.showOpenDialog(null);
+        if (eleccion == JFileChooser.APPROVE_OPTION) {
+            File datos = selector.getSelectedFile();
+            String camino = datos.getAbsolutePath();
+            System.out.print("Datos ubicados en: ");
+            System.out.println(camino);
+            cargarDatos(camino);
+        }
+    }//GEN-LAST:event_jMenuItemCargarActionPerformed
+
+    public void cargarDatos(String camino) {
+        Conexion conexion = new Conexion();
+        Connection con = conexion.getConnection();
+        Statement st;
+
+        String sql = "mysql help4traveling < `" + camino + "`";
+        //String sql = "SOURCE `" + camino + "`";
+        System.out.print("Cargando Datos... ");
+
+        try {
+            st = con.createStatement();
+            st.executeUpdate(sql);
+            con.close();
+            st.close();
+            System.out.println("OK");
+        } catch (SQLException e) {
+            System.out.println("ERROR");
+            System.out.println(e);
+        }
+    }
+    
     /**
      * @param args the command line arguments
      */
@@ -306,6 +431,7 @@ public class Principal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuItem Ver_Info_Promo;
     private javax.swing.JMenuItem bm_registrar_cliente;
     private javax.swing.JMenuItem bm_registrar_reserva;
     private javax.swing.JMenuItem bm_registrar_servicio;
@@ -320,8 +446,13 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItemCancelar;
+    private javax.swing.JMenuItem jMenuItemCargar;
+    private javax.swing.JMenuItem jMenuItemCerrar;
+    private javax.swing.JMenuItem jMenuItemCerrarAll;
     private javax.swing.JMenuItem jMenuItemSalir;
     private javax.swing.JMenuItem jMenuItemVerRes;
     private javax.swing.JPopupMenu.Separator jSeparator1;
+    private javax.swing.JPopupMenu.Separator jSeparator2;
+    private javax.swing.JPopupMenu.Separator jSeparator3;
     // End of variables declaration//GEN-END:variables
 }

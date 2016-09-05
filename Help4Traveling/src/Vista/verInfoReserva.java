@@ -192,8 +192,8 @@ public class verInfoReserva extends javax.swing.JInternalFrame {
             }
         });
         jTableRes.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                jTableResKeyTyped(evt);
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTableResKeyReleased(evt);
             }
         });
         jScrollPane3.setViewportView(jTableRes);
@@ -263,11 +263,6 @@ public class verInfoReserva extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_jTableResMouseClicked
 
-    private void jTableResKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTableResKeyTyped
-        if (jTableRes.getSelectedRowCount() != -1) {
-            actualizarItems();
-        }
-    }//GEN-LAST:event_jTableResKeyTyped
 
     private void jButtonActualActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonActualActionPerformed
         this.IControlador.setReservasDB();
@@ -280,6 +275,11 @@ public class verInfoReserva extends javax.swing.JInternalFrame {
     private void jButtonCerrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCerrarActionPerformed
         this.setVisible(false);
     }//GEN-LAST:event_jButtonCerrarActionPerformed
+    private void jTableResKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTableResKeyReleased
+        if (jTableRes.getSelectedRowCount() != -1) {
+            actualizarItems();
+        }
+    }//GEN-LAST:event_jTableResKeyReleased
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonActual;

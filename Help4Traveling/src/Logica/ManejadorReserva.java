@@ -203,7 +203,6 @@ public class ManejadorReserva {
                 Reserva nueva = new Reserva(creada, Reserva.eEstado.valueOf(estado), total, cliente, mapa);
 
                 /* CARGAR RESERVASITEMS */
-                //nueva.agregarItem(cantidad, creada, creada, oferta);
                 nueva.setId(num);       //Temporal?
                 Long id = nueva.getId();
                 reservasId.put(id, nueva);
@@ -243,15 +242,14 @@ public class ManejadorReserva {
                 int reserva = rsItems.getInt("reserva");
                 int cantidad = rsItems.getInt("cantidad");
 
-                Date inicio = new Date();
-                Date fin = new Date();
-                //Date inicio = new Date(rsItems.getString("inicio"));
-                //Date fin = new Date(rsItems.getString("fin"));
+                Date inicio = new Date(rsItems.getString("inicio"));
+                Date fin = new Date(rsItems.getString("fin"));
 
-                //String nombre = rsItems.getString("proveedorOferta");
-                //Proveedor proveedor = ManejadorProveedor.getInstance().obtenerProveedor(nombre);
+                String nomoferta = rsItems.getString("oferta");
+                String nomprov = rsItems.getString("proveedorOferta");
+                //Proveedor proveedor = ManejadorProveedor.getInstance().obtenerProveedor(nomprov);
                 Oferta oferta = new Servicio();
-                oferta.setNombre("Prueba");
+                oferta.setNombre(nomoferta);
 
                 ItemReserva nuevo = new ItemReserva(reserva, cantidad, inicio, fin, oferta);
 
