@@ -12,6 +12,7 @@ package Vista;
 import Logica.IControladorReserva;
     import Logica.ManejadorCliente;
 import Logica.Reserva;
+import Logica.Servicio;
 import java.awt.Dimension;
     import java.util.ArrayList;
     import java.util.HashSet;
@@ -109,11 +110,11 @@ public class altaReserva extends javax.swing.JInternalFrame {
 
             },
             new String [] {
-                "", "Cantidad", "Item", "Inicio", "Fin"
+                "", "Cantidad", "Item", "Proveedor", "Inicio", "Fin"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Boolean.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.Boolean.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -126,10 +127,10 @@ public class altaReserva extends javax.swing.JInternalFrame {
             items.getColumnModel().getColumn(0).setMaxWidth(40);
             items.getColumnModel().getColumn(1).setMinWidth(50);
             items.getColumnModel().getColumn(1).setMaxWidth(50);
-            items.getColumnModel().getColumn(3).setMinWidth(100);
-            items.getColumnModel().getColumn(3).setMaxWidth(100);
             items.getColumnModel().getColumn(4).setMinWidth(100);
             items.getColumnModel().getColumn(4).setMaxWidth(100);
+            items.getColumnModel().getColumn(5).setMinWidth(100);
+            items.getColumnModel().getColumn(5).setMaxWidth(100);
         }
 
         crear.setText("Crear");
@@ -210,11 +211,20 @@ public class altaReserva extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        modelo.setRowCount(0);
+        for(int i=0;i<modelo.getRowCount();i++){
+            if (!Boolean.valueOf(String.valueOf(modelo.getValueAt(i, 0)))) {
+                modelo.removeRow(i);
+            }
+        }
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void crearMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_crearMouseClicked
         Reserva nReserva = IReservas.nuevaRserva(String.valueOf(clientes.getSelectedItem()), Double.parseDouble(total.getText()));
+        
+        /*for(int i=0;i<modelo.getRowCount();i++){
+            int cantidad =  Integer.vmodelo.getValueAt(i, 0);
+            IReservas.agregarItem(nReserva, modelo.getValueAt(i, 0), modelo.getValueAt(i, 0).toString(), modelo.getValueAt(i, 0).toString(), new Servicio());
+        }*/
     }//GEN-LAST:event_crearMouseClicked
 
 
