@@ -28,7 +28,7 @@ public interface IControladorReserva {
 
     public abstract void altaDeReserva();
 
-    public abstract void actualizarEstadoDeReserva();
+    public abstract void actualizarEstadoDeReserva(Integer reserva, String estado);
 
     public abstract void verInfoDeReserva();
 

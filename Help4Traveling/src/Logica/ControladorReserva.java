@@ -34,8 +34,9 @@ public class ControladorReserva implements IControladorReserva {
 
     }
 
-    public void actualizarEstadoDeReserva() {
-
+    public void actualizarEstadoDeReserva(Integer reserva, String estado) {
+        ManejadorReserva mr = ManejadorReserva.getInstance();
+        mr.modificarEstadoReserva(reserva, estado);
     }
 
     public void verInfoDeReserva() {

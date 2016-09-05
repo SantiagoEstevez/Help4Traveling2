@@ -130,6 +130,7 @@ public class Principal extends javax.swing.JFrame {
         jMenuItem1.setText("jMenuItem1");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Help4Traveling");
 
         javax.swing.GroupLayout escritorioLayout = new javax.swing.GroupLayout(escritorio);
         escritorio.setLayout(escritorioLayout);
@@ -145,6 +146,7 @@ public class Principal extends javax.swing.JFrame {
         jMenu1.setText("Inicio");
 
         jMenuItemCargar.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_O, java.awt.event.InputEvent.CTRL_MASK));
+        jMenuItemCargar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/db-icon.png"))); // NOI18N
         jMenuItemCargar.setText("Cargar Datos");
         jMenuItemCargar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -155,6 +157,7 @@ public class Principal extends javax.swing.JFrame {
         jMenu1.add(jSeparator3);
 
         jMenuItemCerrar.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_W, java.awt.event.InputEvent.CTRL_MASK));
+        jMenuItemCerrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/win-icon.png"))); // NOI18N
         jMenuItemCerrar.setText("Cerrar");
         jMenuItemCerrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -164,6 +167,7 @@ public class Principal extends javax.swing.JFrame {
         jMenu1.add(jMenuItemCerrar);
 
         jMenuItemCerrarAll.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_W, java.awt.event.InputEvent.SHIFT_MASK | java.awt.event.InputEvent.CTRL_MASK));
+        jMenuItemCerrarAll.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/win-icon.png"))); // NOI18N
         jMenuItemCerrarAll.setText("Cerrar Todas");
         jMenuItemCerrarAll.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -481,7 +485,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenuItem bm_verInfoCliente;
     private javax.swing.JMenuItem bm_verInfoProveedor;
     public static javax.swing.JDesktopPane escritorio;
-    ImageIcon icon = new ImageIcon(getClass().getResource("/help4traveling/no-mans-sky.jpg"));
+    ImageIcon icon = new ImageIcon(getClass().getResource("/help4traveling/fondo.jpg"));
     Image image = icon.getImage();
     private javax.swing.JFileChooser fc_seleccionar_archivo;
     private javax.swing.JMenu jMenu1;

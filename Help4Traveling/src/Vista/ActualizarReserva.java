@@ -8,6 +8,7 @@ package Vista;
 import Logica.DtReserva;
 import Logica.Fabrica;
 import Logica.IControladorReserva;
+import Logica.Reserva;
 import java.util.Iterator;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -30,19 +31,21 @@ public class ActualizarReserva extends javax.swing.JInternalFrame {
 
     private void modificarReserva(Integer index) {
         String estado = this.listaReservas.get(index).getEstado().toString();
+        Integer reserva = (int) (long) this.listaReservas.get(index).getId();
         System.out.println(estado);
-        if (!"REGISTRADA".equals(estado)) {
+        if (!Reserva.eEstado.REGISTRADA.toString().equals(estado)) {
             JOptionPane.showMessageDialog(this, "El estado inicial debe ser REGISTRADA, pero es " + estado + ".", "Error", JOptionPane.ERROR_MESSAGE
             );
         } else {
+            String nuevo = jComboBoxEstado.getSelectedItem().toString();
             Object[] opciones = {"No", "Si"};
-            int respuesta = JOptionPane.showOptionDialog(null, "¿Está seguro de cambiar el estado de la reserva?", "Confirmar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, opciones, opciones[1]);
+            int respuesta = JOptionPane.showOptionDialog(null, "¿Está seguro de cambiar el estado de la reserva a " + nuevo + "?", "Confirmar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, opciones, opciones[1]);
             if (respuesta == 1) {
-                //this.IControlador.cancelarUnaReserva(Long.valueOf(jTableRes.getValueAt(jTableRes.getSelectedRow(), 0).toString()));
-                this.IControlador.actualizarEstadoDeReserva();
+                this.IControlador.actualizarEstadoDeReserva(reserva, nuevo);
+                this.IControlador.setReservasDB();
+                refrescarReservas();
             }
         }
-        refrescarReservas();
     }
 
     /**
@@ -115,8 +118,8 @@ public class ActualizarReserva extends javax.swing.JInternalFrame {
         setResizable(true);
         setTitle("Actualizar Reserva");
         setFrameIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/edit-icon.png"))); // NOI18N
-        setMinimumSize(new java.awt.Dimension(440, 200));
-        setPreferredSize(new java.awt.Dimension(600, 200));
+        setMinimumSize(new java.awt.Dimension(440, 204));
+        setPreferredSize(new java.awt.Dimension(600, 204));
 
         jTableRes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -132,16 +135,6 @@ public class ActualizarReserva extends javax.swing.JInternalFrame {
         jTableRes.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jTableRes.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jTableRes.getTableHeader().setReorderingAllowed(false);
-        jTableRes.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jTableResMouseClicked(evt);
-            }
-        });
-        jTableRes.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                jTableResKeyReleased(evt);
-            }
-        });
         jScrollPane3.setViewportView(jTableRes);
 
         jLabelRes.setText("Seleccione la reserva para la cual desea modificar su estado:");
@@ -203,7 +196,7 @@ public class ActualizarReserva extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addComponent(jLabelRes)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 104, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButtonActual)
@@ -217,26 +210,15 @@ public class ActualizarReserva extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTableResMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableResMouseClicked
-        if (jTableRes.getSelectedRowCount() != -1) {
-
-        }
-    }//GEN-LAST:event_jTableResMouseClicked
-
     private void jButtonActualActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonActualActionPerformed
         this.IControlador.setReservasDB();
-        this.IControlador.setItemsDB();
+        //this.IControlador.setItemsDB();
         refrescarReservas();
     }//GEN-LAST:event_jButtonActualActionPerformed
 
     private void jButtonCerrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCerrarActionPerformed
         this.setVisible(false);
     }//GEN-LAST:event_jButtonCerrarActionPerformed
-    private void jTableResKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTableResKeyReleased
-        if (jTableRes.getSelectedRowCount() != -1) {
-
-        }
-    }//GEN-LAST:event_jTableResKeyReleased
 
     private void jButtonModActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonModActionPerformed
         if (jTableRes.getSelectedRowCount() > 0) {

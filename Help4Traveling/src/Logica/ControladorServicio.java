@@ -152,7 +152,8 @@ public class ControladorServicio implements IControladorServicio  {
         return listaServiciosCategoria;
     }
     
-    public void verInfodeServicio(){
+    public void verInfodeServicio(String nombre, String Proevedor){
+        
         
     }
     

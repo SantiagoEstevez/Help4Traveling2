@@ -24,6 +24,9 @@
                 <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
                   <KeyStroke key="Ctrl+O"/>
                 </Property>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/Iconos/db-icon.png"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Cargar Datos"/>
               </Properties>
               <Events>
@@ -37,6 +40,9 @@
                 <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
                   <KeyStroke key="Ctrl+W"/>
                 </Property>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/Iconos/win-icon.png"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Cerrar"/>
               </Properties>
               <Events>
@@ -47,6 +53,9 @@
               <Properties>
                 <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
                   <KeyStroke key="Shift+Ctrl+W"/>
+                </Property>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/Iconos/win-icon.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Cerrar Todas"/>
               </Properties>
@@ -212,6 +221,7 @@
   </NonVisualComponents>
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="3"/>
+    <Property name="title" type="java.lang.String" value="Help4Traveling"/>
   </Properties>
   <SyntheticProperties>
     <SyntheticProperty name="menuBar" type="java.lang.String" value="jMenuBar1"/>
@@ -246,7 +256,7 @@
     <Container class="javax.swing.JDesktopPane" name="escritorio">
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JDesktopPane() {&#xa;    @Override&#xa;    protected void paintComponent(Graphics g)&#xa;    {&#xa;        super.paintComponent(g);&#xa;        g.drawImage(image, 0, 0, getWidth(), getHeight(), null);&#xa;    }&#xa;}"/>
-        <AuxValue name="JavaCodeGenerator_DeclarationPost" type="java.lang.String" value="ImageIcon icon = new ImageIcon(getClass().getResource(&quot;/help4traveling/no-mans-sky.jpg&quot;));&#xa;Image image = icon.getImage();"/>
+        <AuxValue name="JavaCodeGenerator_DeclarationPost" type="java.lang.String" value="ImageIcon icon = new ImageIcon(getClass().getResource(&quot;/help4traveling/fondo.jpg&quot;));&#xa;Image image = icon.getImage();"/>
         <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
       </AuxValues>
 
