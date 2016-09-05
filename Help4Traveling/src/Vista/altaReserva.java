@@ -8,16 +8,20 @@ package Vista;
     import Logica.Fabrica;
     import Logica.IControladorUsuario;
     import Logica.ControladorUsuario;
+import Logica.Date;
     import Logica.DtUsuario;
 import Logica.IControladorReserva;
     import Logica.ManejadorCliente;
+import Logica.Proveedor;
 import Logica.Reserva;
 import Logica.Servicio;
 import java.awt.Dimension;
     import java.util.ArrayList;
     import java.util.HashSet;
     import java.util.Iterator;
+import java.util.List;
     import java.util.Set;
+import java.util.StringTokenizer;
     import javax.swing.table.DefaultTableModel;
 
 public class altaReserva extends javax.swing.JInternalFrame {
@@ -139,6 +143,11 @@ public class altaReserva extends javax.swing.JInternalFrame {
                 crearMouseClicked(evt);
             }
         });
+        crear.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                crearActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -221,11 +230,24 @@ public class altaReserva extends javax.swing.JInternalFrame {
     private void crearMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_crearMouseClicked
         Reserva nReserva = IReservas.nuevaRserva(String.valueOf(clientes.getSelectedItem()), Double.parseDouble(total.getText()));
         
-        /*for(int i=0;i<modelo.getRowCount();i++){
-            int cantidad =  Integer.vmodelo.getValueAt(i, 0);
-            IReservas.agregarItem(nReserva, modelo.getValueAt(i, 0), modelo.getValueAt(i, 0).toString(), modelo.getValueAt(i, 0).toString(), new Servicio());
-        }*/
+        for(int i=0;i<modelo.getRowCount();i++){
+            int cantidad =  Integer.parseInt(String.valueOf(modelo.getValueAt(i, 1)));
+            
+            StringTokenizer in = new StringTokenizer(String.valueOf(modelo.getValueAt(i, 4)),"-",false);
+            Date inicio = new Date(Integer.parseInt(in.nextToken()),Integer.parseInt(in.nextToken()),Integer.parseInt(in.nextToken()));
+            StringTokenizer fi = new StringTokenizer(String.valueOf(modelo.getValueAt(i, 5)),"-",false);
+            Date fin = new Date(Integer.parseInt(fi.nextToken()),Integer.parseInt(fi.nextToken()),Integer.parseInt(fi.nextToken()));
+            String servicio = String.valueOf(modelo.getValueAt(i, 2));
+            String proveedor = String.valueOf(modelo.getValueAt(i, 3));
+            IReservas.agregarItem(nReserva, cantidad, inicio, fin, new Servicio(servicio, new Proveedor(proveedor)));
+            IReservas.altaReserva(nReserva);
+
+        }
     }//GEN-LAST:event_crearMouseClicked
+
+    private void crearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_crearActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_crearActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

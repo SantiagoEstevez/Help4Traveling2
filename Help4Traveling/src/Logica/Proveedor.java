@@ -18,6 +18,10 @@ public class Proveedor extends Usuario {
     private String link;
     private Map<String, Servicio> serviciosNom;
     private Map<String, Promocion> promocionesNom;
+    
+    public Proveedor(String nombre){
+        super(nombre);
+    }
 
     //Constructor
     public Proveedor(String nombre, String apellido, String nickname, String correo, Date nacimiento, String imagen, String empresa, String link) {

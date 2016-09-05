@@ -32,6 +32,16 @@ public class Servicio extends Oferta {
         this.origen = null;
         this.destino = null;
     }
+    
+    public Servicio(String nombre, Proveedor proveedor) {
+        super(nombre,proveedor);
+        this.descripcion = "";
+        this.imagenes = new LinkedList<String>();;
+        this.categoriasNom = new HashMap<String,Categoria>();
+        this.precio = 0;
+        this.origen = null;
+        this.destino = null;
+    }
 
     public Servicio(String nombre, Proveedor prov, String descripcion, List<String> imagenes, float precio, Ciudad origen) {
         super(nombre, prov);

@@ -16,6 +16,10 @@ public abstract class Usuario {
     private String correo;
     private Date nacimiento;
     private String imagen;
+    
+    public Usuario(String nombre) {
+        this.nombre = nombre;
+    }
 
     public Usuario(String nombre, String apellido, String nickname, String correo, Date nacimiento, String imagen) {
         this.nombre = nombre;
