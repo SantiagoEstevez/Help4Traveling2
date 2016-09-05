@@ -19,7 +19,6 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
@@ -415,10 +414,23 @@ public class Principal extends javax.swing.JFrame {
             camino = datos.getAbsolutePath();
             System.out.print("Datos ubicados en: ");
             System.out.println(camino);
-            //cargarDatos(camino);
+            cargarDatos();
         }
-        System.out.print("Cargando Datos... ");
+    }//GEN-LAST:event_jMenuItemCargarActionPerformed
 
+    private void VerInfo_promoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_VerInfo_promoActionPerformed
+        VerInfoPromo altacat = new VerInfoPromo();
+        escritorio.add(altacat);
+        altacat.setVisible(true);    }//GEN-LAST:event_VerInfo_promoActionPerformed
+
+    private void jMenuItemEstadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemEstadoActionPerformed
+        ActualizarReserva ar = new ActualizarReserva();
+        escritorio.add(ar);
+        ar.setVisible(true);
+    }//GEN-LAST:event_jMenuItemEstadoActionPerformed
+
+    public void cargarDatos() {
+        System.out.print("Cargando Datos... ");
         Conexion conexion = new Conexion();
         Connection con = conexion.getConnection();
         ScriptRunner runner = new ScriptRunner(con, false, true);
@@ -438,37 +450,6 @@ public class Principal extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "El script no pudo ejecutarse.", "Error", JOptionPane.ERROR_MESSAGE);
         }
         this.setCursor(Cursor.getDefaultCursor());
-    }//GEN-LAST:event_jMenuItemCargarActionPerformed
-
-    private void VerInfo_promoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_VerInfo_promoActionPerformed
-        VerInfoPromo altacat = new VerInfoPromo();
-        escritorio.add(altacat);
-        altacat.setVisible(true);    }//GEN-LAST:event_VerInfo_promoActionPerformed
-
-    private void jMenuItemEstadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemEstadoActionPerformed
-        ActualizarReserva ar = new ActualizarReserva();
-        escritorio.add(ar);
-        ar.setVisible(true);
-    }//GEN-LAST:event_jMenuItemEstadoActionPerformed
-
-    public void cargarDatos(String camino) {
-        Conexion conexion = new Conexion();
-        Connection con = conexion.getConnection();
-        Statement st;
-
-        String sql = "mysql help4traveling < `" + camino + "`";
-        //String sql = "SOURCE `" + camino + "`";
-
-        try {
-            st = con.createStatement();
-            st.executeUpdate(sql);
-            con.close();
-            st.close();
-            System.out.println("OK");
-        } catch (SQLException e) {
-            System.out.println("ERROR");
-            System.out.println(e);
-        }
     }
 
     /**
