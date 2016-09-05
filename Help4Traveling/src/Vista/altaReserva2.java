@@ -273,7 +273,7 @@ public class altaReserva2 extends javax.swing.JInternalFrame {
         mes = String.valueOf(date.getMonth());
         ano = String.valueOf(date.getYear());
         
-        fecha = ano;
+        fecha = "20" + ano;
         fecha += "-";
         if (mes.length() == 1){
             fecha += "0" + mes;
