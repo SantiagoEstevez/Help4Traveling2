@@ -8,6 +8,8 @@ import Logica.DtUsuario;
 import Logica.Fabrica;
 import Logica.ControladorUsuario;
 import Logica.Date;
+import Logica.DtCategoria;
+import Logica.DtServicio;
 import Logica.IControladorServicio;
 import javax.swing.JOptionPane;
 import Logica.IControladorUsuario;
@@ -15,9 +17,11 @@ import Logica.ManejadorCiudad;
 import Logica.ManejadorProveedor;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import javax.swing.DefaultListModel;
 import javax.swing.JFileChooser;
 /**
@@ -29,11 +33,13 @@ public class altaServicio extends javax.swing.JInternalFrame {
     List<String> listaCiudades = null;
     List<DtUsuario> listaProveedores = new ArrayList<DtUsuario>();
     List<String> imagenes = new LinkedList<String>();
+    Map<String,DtCategoria> categorias = new HashMap<String,DtCategoria>();
     private IControladorServicio IControlador;
     DefaultListModel modeloListaImagenes = new DefaultListModel();
     DefaultListModel modeloListaCategorias = new DefaultListModel();
     String nkproveedor;
-    
+    String origen;
+    String destino;
     /**
      * Creates new form altaServicio
      */
@@ -43,16 +49,43 @@ public class altaServicio extends javax.swing.JInternalFrame {
         while (iter.hasNext()) {
             String nompais = iter.next();
             this.cb_paises_origen.addItem(nompais);
-        }   
+        }      
     }
     
     private void cargarCiudadesPaisOrigen(String pais) {
         cb_ciudades_origen.removeAllItems();
         this.listaCiudades = ManejadorCiudad.getInstance().listarCiudadesPorPais(pais);
         Iterator<String> iter = this.listaCiudades.iterator();
+        boolean primera = true;
         while (iter.hasNext()) {
             String nomciudad = iter.next();
             this.cb_ciudades_origen.addItem(nomciudad);
+            if (primera)
+                this.origen = nomciudad;
+            primera = false;
+        }   
+    }
+    
+    private void cargarPaisesDestino() {
+        this.listaPaises = ManejadorCiudad.getInstance().listarPaises();
+        Iterator<String> iter = this.listaPaises.iterator();
+        while (iter.hasNext()) {
+            String nompais = iter.next();
+            this.cb_paises_destino.addItem(nompais);
+        }      
+    }  
+    
+    private void cargarCiudadesPaisDestino(String pais) {
+        cb_ciudades_destino.removeAllItems();
+        this.listaCiudades = ManejadorCiudad.getInstance().listarCiudadesPorPais(pais);
+        Iterator<String> iter = this.listaCiudades.iterator();
+        boolean primera = true;
+        while (iter.hasNext()) {
+            String nomciudad = iter.next();
+            this.cb_ciudades_destino.addItem(nomciudad);
+            if (primera)
+                this.destino = nomciudad;
+            primera = false;
         }   
     }
     
@@ -60,22 +93,29 @@ public class altaServicio extends javax.swing.JInternalFrame {
         cb_proveedores.removeAllItems();
         this.listaProveedores = ManejadorProveedor.getInstance().listarProveedores();
         Iterator<DtUsuario> iter = this.listaProveedores.iterator();
+        boolean primero = true;
         while (iter.hasNext()) {
             String nkprov = iter.next().getNickname();
             this.cb_proveedores.addItem(nkprov);
+            if (primero)
+                this.nkproveedor = nkprov;
+            primero = false;
         }   
     }
-    
-    
+       
     
     public altaServicio() {
-        //this.tr_categoria.setVisible(false);
+        //this.tr_categoria.setVisible(true);
         initComponents();
         Fabrica fabrica = Fabrica.getInstance();
         this.IControlador = fabrica.getIControladorServicio();
-        cargarPaisesOrigen(); 
+        cargarPaisesOrigen();
+        cargarPaisesDestino();
         cargarProveedores();
-        this.pn_destinos.setVisible(false);    
+        this.pn_destinos.setVisible(true); 
+        this.tf_nombre_s.setText("");
+        this.tf_precio.setText("");
+        this.ta_descripcion.setText("");
         this.lst_imagenes.setModel(modeloListaImagenes);
         this.lst_categorias.setModel(modeloListaCategorias);
     }
@@ -179,9 +219,21 @@ public class altaServicio extends javax.swing.JInternalFrame {
 
         jLabel1.setText("Precio:");
 
+        cb_ciudades_origen.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cb_ciudades_origenActionPerformed(evt);
+            }
+        });
+
         l_empresa.setText("País Destino:");
 
         l_direccion.setText("Ciudad Destino:");
+
+        cb_ciudades_destino.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cb_ciudades_destinoActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout pn_destinosLayout = new javax.swing.GroupLayout(pn_destinos);
         pn_destinos.setLayout(pn_destinosLayout);
@@ -236,6 +288,9 @@ public class altaServicio extends javax.swing.JInternalFrame {
                 cb_proveedoresActionPerformed(evt);
             }
         });
+
+        tf_precio.setText("50");
+        tf_precio.setToolTipText("");
 
         jLabel3.setText("(USD)");
 
@@ -351,14 +406,31 @@ public class altaServicio extends javax.swing.JInternalFrame {
 
     private void bt_aceptar_sActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_aceptar_sActionPerformed
         // TODO add your handling code here:
-        String nombre_s = this.tf_nombre_s.getText();
+        String nombre = this.tf_nombre_s.getText();
+        String descripcion = this.ta_descripcion.getText();
+        float precio;
+        if (this.tf_precio.getText().equals(""))
+            precio = 0;
+        else precio = Float.parseFloat(this.tf_precio.getText());
         //String origen = this.tf_origen.getText();
-        String categoria = this.tr_categoria.getSelectionPath().toString();
-        JOptionPane.showMessageDialog(null,categoria );
-
-        this.setVisible(false);
-        this.tr_categoria.setVisible(false);
+        //String categoria = this.tr_categoria.getSelectionPath().toString();
+        //JOptionPane.showMessageDialog(null,categoria );
+        DtCategoria cat1 = new DtCategoria("Alojamiento","Alojamiento");
+        DtCategoria cat2 = new DtCategoria("Alaska","Crucero");
+        DtCategoria cat3 = new DtCategoria("Air France","Empresas");
+        this.categorias.put("Alojamiento",cat1);
+        this.categorias.put("Alaska",cat2);
+        this.categorias.put("Air France",cat3);
+        DtServicio dts = new DtServicio(nombre, this.nkproveedor, descripcion, this.imagenes, categorias, precio, this.origen, this.destino);
+        String mensaje = IControlador.altaDeServicio(dts);
+        JOptionPane.showMessageDialog(null, mensaje);
+        //this.setVisible(false);
+        //this.tr_categoria.setVisible(false);
         this.tf_nombre_s.setText("");
+        this.tf_precio.setText("");
+        this.ta_descripcion.setText("");
+        this.lst_imagenes.setModel(modeloListaImagenes);
+        this.lst_categorias.setModel(modeloListaCategorias);
         //this.tf_origen.setText("");
 
     }//GEN-LAST:event_bt_aceptar_sActionPerformed
@@ -379,7 +451,7 @@ public class altaServicio extends javax.swing.JInternalFrame {
 
     private void cb_proveedoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cb_proveedoresActionPerformed
         // TODO add your handling code here:
-        nkproveedor = (String) cb_paises_origen.getSelectedItem();
+        this.nkproveedor = (String) cb_proveedores.getSelectedItem();
     }//GEN-LAST:event_cb_proveedoresActionPerformed
 
     private void btn_seleccionar_imagenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_seleccionar_imagenActionPerformed
@@ -392,10 +464,21 @@ public class altaServicio extends javax.swing.JInternalFrame {
             File fichero=fc_seleccionar_archivo.getSelectedFile();
             String pathimg = fichero.getAbsolutePath();
             this.imagenes.add(pathimg);
-            modeloListaImagenes.addElement(pathimg);
-            
+            modeloListaImagenes.addElement(pathimg);            
         }
+        if (this.imagenes.size() == 3)
+            this.btn_seleccionar_imagen.setEnabled(false);
+            
     }//GEN-LAST:event_btn_seleccionar_imagenActionPerformed
+
+    private void cb_ciudades_origenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cb_ciudades_origenActionPerformed
+        // TODO add your handling code here:
+        this.origen = (String) cb_ciudades_origen.getSelectedItem();
+    }//GEN-LAST:event_cb_ciudades_origenActionPerformed
+
+    private void cb_ciudades_destinoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cb_ciudades_destinoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cb_ciudades_destinoActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
