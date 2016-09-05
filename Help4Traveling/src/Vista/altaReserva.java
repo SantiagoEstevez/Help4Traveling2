@@ -19,7 +19,7 @@ package Vista;
 public class altaReserva extends javax.swing.JInternalFrame {
     private IControladorUsuario IControlador;
     private ArrayList<DtUsuario> listaClientes;
-    public static DefaultTableModel modelo;
+    private static DefaultTableModel modelo;
     
     public altaReserva() {
         initComponents();
@@ -38,6 +38,10 @@ public class altaReserva extends javax.swing.JInternalFrame {
         //Setear tabla
         modelo = (DefaultTableModel) items.getModel();
         modelo.setRowCount(0);
+    }
+    
+    public static void agregarItem(Object[] item){
+        modelo.addRow(item);
     }
 
     /**
@@ -98,11 +102,11 @@ public class altaReserva extends javax.swing.JInternalFrame {
 
             },
             new String [] {
-                "", "Cantidad", "Item"
+                "", "Cantidad", "Item", "Inicio", "Fin"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Boolean.class, java.lang.Integer.class, java.lang.String.class
+                java.lang.Boolean.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -113,8 +117,12 @@ public class altaReserva extends javax.swing.JInternalFrame {
         if (items.getColumnModel().getColumnCount() > 0) {
             items.getColumnModel().getColumn(0).setMinWidth(40);
             items.getColumnModel().getColumn(0).setMaxWidth(40);
-            items.getColumnModel().getColumn(1).setMinWidth(100);
-            items.getColumnModel().getColumn(1).setMaxWidth(100);
+            items.getColumnModel().getColumn(1).setMinWidth(50);
+            items.getColumnModel().getColumn(1).setMaxWidth(50);
+            items.getColumnModel().getColumn(3).setMinWidth(150);
+            items.getColumnModel().getColumn(3).setMaxWidth(150);
+            items.getColumnModel().getColumn(4).setMinWidth(150);
+            items.getColumnModel().getColumn(4).setMaxWidth(150);
         }
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());

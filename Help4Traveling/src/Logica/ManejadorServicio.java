@@ -119,6 +119,7 @@ public class ManejadorServicio {
                 stc.close();
                 
                 DtServicio nuevo = new DtServicio(nombre, proveedor, descripcion, listaImagenes, listaCategorias, Float.parseFloat(precio), origen, destino);
+                listaServicios.add(nuevo);
             }
             rsServicios.close();
             con.close();
