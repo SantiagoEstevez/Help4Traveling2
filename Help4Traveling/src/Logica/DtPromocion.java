@@ -17,13 +17,13 @@ public class DtPromocion {
 
     private String nombre;
     private String proveedor;
-    private String Servicio;
+    private String Precio;
     private String descuento;
 
-    public DtPromocion(String nombre, String nkproveedor, String Servicio, String descuento) {
+    public DtPromocion(String nombre, String nkproveedor, String Precio, String descuento) {
         this.nombre = nombre;
         this.proveedor = nkproveedor;
-        this.Servicio = Servicio;
+        this.Precio = Precio;
         this.descuento = descuento;
     }
 
@@ -35,8 +35,8 @@ public class DtPromocion {
         return proveedor;
     }
 
-    public String getServicio() {
-        return Servicio;
+    public String getPrecio() {
+        return Precio;
     }
 
     public String getDescuento() {

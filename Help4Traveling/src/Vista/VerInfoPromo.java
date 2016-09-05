@@ -11,6 +11,8 @@ import Logica.DtPromocion;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Vector;
+import javax.swing.DefaultListModel;
 
 /**
  *
@@ -24,6 +26,7 @@ public class VerInfoPromo extends javax.swing.JInternalFrame {
     
      List<DtPromocion> listaPromociones;
      List<String> listaServicios;
+     DtPromocion elegida=null;
     private IControladorServicio IControlador;
     
     
@@ -33,7 +36,7 @@ public class VerInfoPromo extends javax.swing.JInternalFrame {
         Panel_Servicios_vinculados.setVisible(false);
         Fabrica fabrica = Fabrica.getInstance();
         this.IControlador = fabrica.getIControladorServicio();
-
+        DefaultListModel modelo = new DefaultListModel();
             }
 
     /**
@@ -106,9 +109,19 @@ public class VerInfoPromo extends javax.swing.JInternalFrame {
 
         Bn_Mostrar_Servicios.setText("mostrar servicios");
         Bn_Mostrar_Servicios.setPreferredSize(new java.awt.Dimension(149, 25));
+        Bn_Mostrar_Servicios.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Bn_Mostrar_ServiciosActionPerformed(evt);
+            }
+        });
 
         Bn_Cargar_Datos.setText("Cargar datos promo");
         Bn_Cargar_Datos.setPreferredSize(new java.awt.Dimension(149, 25));
+        Bn_Cargar_Datos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Bn_Cargar_DatosActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout Panel_Datos_PromoLayout = new javax.swing.GroupLayout(Panel_Datos_Promo);
         Panel_Datos_Promo.setLayout(Panel_Datos_PromoLayout);
@@ -155,11 +168,7 @@ public class VerInfoPromo extends javax.swing.JInternalFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jList1.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
+        jList1.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jScrollPane1.setViewportView(jList1);
 
         Bn_VerInfo_Servicio.setText("Ver info servicio");
@@ -250,9 +259,10 @@ public class VerInfoPromo extends javax.swing.JInternalFrame {
         this.listaPromociones =  ManejadorServicio.getInstance().listarPromociones();
         Iterator<DtPromocion> iter = this.listaPromociones.iterator();
         while (iter.hasNext()) {
-            String NomPro = iter.next().getNombre();
+            String NomPro = iter.next().getNombre()+","+iter.next().getProveedor();
             this.jComboBox1.addItem(NomPro);
             Panel_Datos_Promo.setVisible(true);
+            
 
         }    }//GEN-LAST:event_Bn_Cargar_PromocionesActionPerformed
 
@@ -262,6 +272,7 @@ public class VerInfoPromo extends javax.swing.JInternalFrame {
 
     private void Bn_VerInfo_ServicioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Bn_VerInfo_ServicioActionPerformed
         // TODO add your handling code here:
+      //  this.jList1.
     }//GEN-LAST:event_Bn_VerInfo_ServicioActionPerformed
 
     private void Bn_SalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Bn_SalirActionPerformed
@@ -274,6 +285,37 @@ public class VerInfoPromo extends javax.swing.JInternalFrame {
     private void texto_descuentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_texto_descuentoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_texto_descuentoActionPerformed
+
+    private void Bn_Cargar_DatosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Bn_Cargar_DatosActionPerformed
+        // TODO add your handling code here:
+      // /* 
+        
+        String  PromoSeleccionada= jComboBox1.getSelectedItem().toString() ;
+       String[] arr=PromoSeleccionada.split(",");
+       String proevedor= arr[1];
+       String Nombre=arr[0];
+       
+       this.elegida= ManejadorServicio.getInstance().getDTPromocion(Nombre,proevedor);
+       Texto_Proveedor.setText(proevedor);
+       texto_descuento.setText(this.elegida.getDescuento() );
+       texto_Precio.setText(this.elegida.getPrecio());
+       
+        //*/
+    }//GEN-LAST:event_Bn_Cargar_DatosActionPerformed
+
+    private void Bn_Mostrar_ServiciosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Bn_Mostrar_ServiciosActionPerformed
+        // TODO add your handling code here:
+        Panel_Servicios_vinculados.setVisible(true);
+       this.listaServicios= ManejadorServicio.getInstance().listarServiciosDePromociones(this.elegida.getNombre(),this.elegida.getProveedor());
+       DefaultListModel modelo = new DefaultListModel();
+        Iterator<String> iter = this.listaServicios.iterator();
+        while (iter.hasNext()) {
+        String NomPro = iter.next();
+        modelo.addElement(NomPro);
+        }
+        this.jList1.setModel(modelo);
+       // this.jList1.setSelectionMode(ListSelectionModel.SINGLE_SELECTION); ;
+    }//GEN-LAST:event_Bn_Mostrar_ServiciosActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
