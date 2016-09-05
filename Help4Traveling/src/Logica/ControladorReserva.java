@@ -18,8 +18,6 @@ public class ControladorReserva implements IControladorReserva {
     }
 
     public void agregarItem(Reserva nueva, int cantidad, Date fi, Date ff, Oferta oferta) {
-        System.out.println("llegue");
-        System.out.println(nueva.getTotal());
         nueva.agregarItem(cantidad, fi, ff, oferta);
     }
 

@@ -188,6 +188,9 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Crear"/>
       </Properties>
+      <Events>
+        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="crearMouseClicked"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>

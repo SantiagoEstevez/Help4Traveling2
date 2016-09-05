@@ -9,7 +9,9 @@ package Vista;
     import Logica.IControladorUsuario;
     import Logica.ControladorUsuario;
     import Logica.DtUsuario;
+import Logica.IControladorReserva;
     import Logica.ManejadorCliente;
+import Logica.Reserva;
 import java.awt.Dimension;
     import java.util.ArrayList;
     import java.util.HashSet;
@@ -19,14 +21,17 @@ import java.awt.Dimension;
 
 public class altaReserva extends javax.swing.JInternalFrame {
     private IControladorUsuario IControlador;
+    private IControladorReserva IReservas;
     private ArrayList<DtUsuario> listaClientes;
     private static DefaultTableModel modelo;
     
     public altaReserva() {
         initComponents();
         
+        //Obtengo interfaces
         Fabrica fabrica = Fabrica.getInstance();
         this.IControlador = fabrica.getIControladorUsuario();
+        this.IReservas = fabrica.getIControladorReserva();
         
         //Agregar los usuarios al combo box
         this.listaClientes = this.IControlador.listarClientes();
@@ -128,6 +133,11 @@ public class altaReserva extends javax.swing.JInternalFrame {
         }
 
         crear.setText("Crear");
+        crear.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                crearMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -202,6 +212,10 @@ public class altaReserva extends javax.swing.JInternalFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         modelo.setRowCount(0);
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void crearMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_crearMouseClicked
+        Reserva nReserva = IReservas.nuevaRserva(String.valueOf(clientes.getSelectedItem()), Double.parseDouble(total.getText()));
+    }//GEN-LAST:event_crearMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
