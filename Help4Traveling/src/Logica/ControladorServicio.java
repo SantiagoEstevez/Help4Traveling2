@@ -20,7 +20,7 @@ public class ControladorServicio implements IControladorServicio  {
         String mensaje = "CAMPOSOK";
         if (dts.getNombre().equals(""))
 	    mensaje = "ERROR: El Nombre no puede ser vacío...";
-        else if (dts.getPrecio() < 0)
+        else if (dts.getPrecio() <= 0)
                  mensaje = "ERROR: El Pecio debe ser mayor que 0...";
              else if (dts.getImagenes().size() > 3)
                       mensaje = "ERROR: Debe elegir como mucho 3 imagenes...";
