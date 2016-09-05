@@ -8,6 +8,7 @@ import Logica.IControladorServicio;
 import Logica.Fabrica;
 import Logica.ManejadorServicio;
 import Logica.DtPromocion;
+import Logica.DtServicio;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ArrayList;
@@ -272,7 +273,13 @@ public class VerInfoPromo extends javax.swing.JInternalFrame {
 
     private void Bn_VerInfo_ServicioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Bn_VerInfo_ServicioActionPerformed
         // TODO add your handling code here:
-      //  this.jList1.
+      String acortar = this.jList1.getSelectedValue();
+      
+      String[] arr=acortar.split(",");
+       String proevedor= arr[1];
+       String Nombre=arr[0];
+       DtServicio elegido=ManejadorServicio.getInstance().GetDataServicio(Nombre, proevedor);
+      // Ms
     }//GEN-LAST:event_Bn_VerInfo_ServicioActionPerformed
 
     private void Bn_SalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Bn_SalirActionPerformed

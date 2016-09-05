@@ -116,6 +116,43 @@ public class ManejadorServicio {
         return nuevo;
     }
     
+    public DtServicio GetDataServicio(String nombre, String Proveedor){
+               
+        ResultSet rsServicio;
+        
+        DtServicio nuevo=null;
+        conexion = new Conexion();
+        Connection con = conexion.getConnection();
+        Statement st;
+        
+        sql = "SELECT * FROM help4traveling.Servicios WHERE nombre='" + nombre + "' and proveedor='" + Proveedor + "'"; 
+        
+        try{
+            st = con.createStatement();
+            rsServicio = st.executeQuery(sql);   
+            
+          
+            while (rsServicio.next()) {
+                String nombre1 = rsServicio.getString("nombre");
+                String proveedor = rsServicio.getString("proveedor");
+                String descripcion = rsServicio.getString("descripcion");
+                String precio = rsServicio.getString("precio");
+                String origen = rsServicio.getString("origen");
+                String destino = rsServicio.getString("destino");    
+                Float valor=Float.parseFloat(precio);
+                 nuevo = new DtServicio(nombre1, proveedor,descripcion, null, null,valor, origen, destino);
+
+            }
+            rsServicio.close();
+            con.close();
+            st.close();
+           
+        } catch(SQLException e){
+            System.out.println("No pude cargar usuarios :(");
+        }
+        return nuevo; 
+    }
+    
     public List<DtServicio> listarServicios(){
         ResultSet rsServicios;
         ResultSet rsServImagenes;
@@ -394,6 +431,7 @@ public List<DtPromocion> listarPromociones(){
         
             return listaResult;
     }
+
 public DtPromocion getDTPromocion(String nombre, String Proevedor){
 
            
