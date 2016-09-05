@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.TreeMap;
 // Comentario para que me reconozca los cambios y pueda comitear...again
 /**
  *
@@ -60,7 +61,7 @@ public class ManejadorServicio {
         String sql,sqlImagenes,sqlCategorias;
         List<DtServicio> listaServicios = new LinkedList<DtServicio>();
         List<String> listaImagenes = new LinkedList<String>();
-        List<DtCategoria> listaCategorias = new LinkedList<DtCategoria>();
+        Map<String, DtCategoria> listaCategorias = new TreeMap<String, DtCategoria>();
        
         sql = "SELECT * FROM help4traveling.servicios";
       
@@ -70,11 +71,11 @@ public class ManejadorServicio {
             
             while (rsServicios.next()) {
                 String nombre = rsServicios.getString("nombre");
-                String apellido = rsServicios.getString("apellido");
-                String nickname = rsServicios.getString("nickname");
-                String correo = rsServicios.getString("email");
-                Date nacimiento = new Date(12,12,1994);
-                String imagen = "";
+                String proveedor = rsServicios.getString("proveedor");
+                String descripcion = rsServicios.getString("descripcion");
+                String precio = rsServicios.getString("precio");
+                String origen = rsServicios.getString("origen");
+                String destino = rsServicios.getString("destino");
                 
                 sqlImagenes = "SELECT * FROM help4traveling.serviciosImagenes WHERE servicio = '" + nombre + "'";
                 sti = con.createStatement();
@@ -89,23 +90,22 @@ public class ManejadorServicio {
                 stc = con.createStatement();
                 rsServCategorias = stc.executeQuery(sqlImagenes);
                 while (rsServCategorias.next()) {
-                    //DtCategoria categoria = new DtCategoria();
-                    //listaCategorias.add(e);
+                    String nomCat = rsServCategorias.getString("nombre");
+                    DtCategoria categoria = new DtCategoria(nomCat, rsServCategorias.getString("padre"));
+                    listaCategorias.put(nomCat, categoria);
                 }
                 rsServCategorias.close();
                 stc.close();
                 
-                //DtServicio nuevo = new DtServicio();
-                //String nombre, String nkproveedor, String descripcion, List<String> imagenes, Map<String, DtCategoria> categorias, float precio, String origen, String destino)
-                //listaServicios.add(nuevo);
+                DtServicio nuevo = new DtServicio(nombre, proveedor, descripcion, listaImagenes, listaCategorias, Float.parseFloat(precio), origen, destino);
             }
             rsServicios.close();
             con.close();
             st.close();
             
-            System.out.println("Usuarios cargados :)");
+            System.out.println("Servicios cargados :)");
         }catch(SQLException e){
-            System.out.println("No pude cargar usuarios :(");
+            System.out.println("No pude cargar servicios :(");
         }
         return listaServicios;
     }
