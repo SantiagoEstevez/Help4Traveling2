@@ -9,10 +9,13 @@ import Logica.Conexion;
 import Logica.Fabrica;
 import Logica.IControladorUsuario;
 import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.Image;
 import java.io.File;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
+import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JInternalFrame;
 import javax.swing.event.InternalFrameEvent;
@@ -91,7 +94,14 @@ public class Principal extends javax.swing.JFrame {
 
         fc_seleccionar_archivo = new javax.swing.JFileChooser();
         jMenuItem1 = new javax.swing.JMenuItem();
-        escritorio = new javax.swing.JDesktopPane();
+        escritorio = new javax.swing.JDesktopPane() {
+            @Override
+            protected void paintComponent(Graphics g)
+            {
+                super.paintComponent(g);
+                g.drawImage(image, 0, 0, getWidth(), getHeight(), null);
+            }
+        };
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItemCargar = new javax.swing.JMenuItem();
@@ -123,11 +133,11 @@ public class Principal extends javax.swing.JFrame {
         escritorio.setLayout(escritorioLayout);
         escritorioLayout.setHorizontalGroup(
             escritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 963, Short.MAX_VALUE)
+            .addGap(0, 900, Short.MAX_VALUE)
         );
         escritorioLayout.setVerticalGroup(
             escritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 547, Short.MAX_VALUE)
+            .addGap(0, 577, Short.MAX_VALUE)
         );
 
         jMenu1.setText("Inicio");
@@ -385,7 +395,7 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItemCargarActionPerformed
 
     private void VerInfo_promoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_VerInfo_promoActionPerformed
-  VerInfoPromo altacat = new VerInfoPromo();
+        VerInfoPromo altacat = new VerInfoPromo();
         escritorio.add(altacat);
         altacat.setVisible(true);    }//GEN-LAST:event_VerInfo_promoActionPerformed
 
@@ -453,6 +463,8 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenuItem bm_verInfoCliente;
     private javax.swing.JMenuItem bm_verInfoProveedor;
     public static javax.swing.JDesktopPane escritorio;
+    ImageIcon icon = new ImageIcon(getClass().getResource("/help4traveling/no-mans-sky.jpg"));
+    Image image = icon.getImage();
     private javax.swing.JFileChooser fc_seleccionar_archivo;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
