@@ -237,11 +237,21 @@ public class altaReserva extends javax.swing.JInternalFrame {
         
         for(int i=0;i<modelo.getRowCount();i++){
             int cantidad =  Integer.parseInt(String.valueOf(modelo.getValueAt(i, 1)));
+            int dia,mes,ano;
             
+            //Fecha inicio
             StringTokenizer in = new StringTokenizer(String.valueOf(modelo.getValueAt(i, 4)),"-",false);
-            Date inicio = new Date(Integer.parseInt(in.nextToken()),Integer.parseInt(in.nextToken()),Integer.parseInt(in.nextToken()));
+            ano = Integer.parseInt(in.nextToken());
+            mes = Integer.parseInt(in.nextToken());
+            dia = Integer.parseInt(in.nextToken());
+            Date inicio = new Date(dia,mes,ano);
+            
+            //Fecha fin
             StringTokenizer fi = new StringTokenizer(String.valueOf(modelo.getValueAt(i, 5)),"-",false);
-            Date fin = new Date(Integer.parseInt(fi.nextToken()),Integer.parseInt(fi.nextToken()),Integer.parseInt(fi.nextToken()));
+            ano = Integer.parseInt(fi.nextToken());
+            mes = Integer.parseInt(fi.nextToken());
+            dia = Integer.parseInt(fi.nextToken());
+            Date fin = new Date(dia,mes,ano);
             String servicio = String.valueOf(modelo.getValueAt(i, 2));
             String proveedor = String.valueOf(modelo.getValueAt(i, 3));
 
