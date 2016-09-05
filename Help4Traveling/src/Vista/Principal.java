@@ -372,7 +372,7 @@ public class Principal extends javax.swing.JFrame {
     private void jMenuItemVerResActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemVerResActionPerformed
         verInfoReserva vir = new verInfoReserva();
         escritorio.add(vir);
-        //centrarVentana(vir);
+        centrarVentana(vir);
         vir.setVisible(true);
     }//GEN-LAST:event_jMenuItemVerResActionPerformed
 
@@ -426,6 +426,7 @@ public class Principal extends javax.swing.JFrame {
     private void jMenuItemEstadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemEstadoActionPerformed
         ActualizarReserva ar = new ActualizarReserva();
         escritorio.add(ar);
+        centrarVentana(ar);
         ar.setVisible(true);
     }//GEN-LAST:event_jMenuItemEstadoActionPerformed
 
@@ -495,7 +496,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenuItem bm_verInfoCliente;
     private javax.swing.JMenuItem bm_verInfoProveedor;
     public static javax.swing.JDesktopPane escritorio;
-    ImageIcon icon = new ImageIcon(getClass().getResource("/help4traveling/fondo.jpg"));
+    ImageIcon icon = new ImageIcon(getClass().getResource("/help4traveling/fondo.png"));
     Image image = icon.getImage();
     private javax.swing.JFileChooser fc_seleccionar_archivo;
     private javax.swing.JMenu jMenu1;
