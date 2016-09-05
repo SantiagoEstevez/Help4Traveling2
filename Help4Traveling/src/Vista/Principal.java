@@ -115,6 +115,8 @@ public class Principal extends javax.swing.JFrame {
         bm_registrar_servicio = new javax.swing.JMenuItem();
         jMenuItem2 = new javax.swing.JMenuItem();
         bm_registrar_reserva = new javax.swing.JMenuItem();
+        jSeparator4 = new javax.swing.JPopupMenu.Separator();
+        jMenuItemEstado = new javax.swing.JMenuItem();
         jSeparator1 = new javax.swing.JPopupMenu.Separator();
         jMenuItemCancelar = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
@@ -225,6 +227,16 @@ public class Principal extends javax.swing.JFrame {
             }
         });
         jMenu2.add(bm_registrar_reserva);
+        jMenu2.add(jSeparator4);
+
+        jMenuItemEstado.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/edit-icon.png"))); // NOI18N
+        jMenuItemEstado.setText("Modificar Reserva");
+        jMenuItemEstado.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemEstadoActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuItemEstado);
         jMenu2.add(jSeparator1);
 
         jMenuItemCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/delete-icon.png"))); // NOI18N
@@ -399,6 +411,12 @@ public class Principal extends javax.swing.JFrame {
         escritorio.add(altacat);
         altacat.setVisible(true);    }//GEN-LAST:event_VerInfo_promoActionPerformed
 
+    private void jMenuItemEstadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemEstadoActionPerformed
+        ActualizarReserva ar = new ActualizarReserva();
+        escritorio.add(ar);
+        ar.setVisible(true);
+    }//GEN-LAST:event_jMenuItemEstadoActionPerformed
+
     public void cargarDatos(String camino) {
         Conexion conexion = new Conexion();
         Connection con = conexion.getConnection();
@@ -476,10 +494,12 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItemCargar;
     private javax.swing.JMenuItem jMenuItemCerrar;
     private javax.swing.JMenuItem jMenuItemCerrarAll;
+    private javax.swing.JMenuItem jMenuItemEstado;
     private javax.swing.JMenuItem jMenuItemSalir;
     private javax.swing.JMenuItem jMenuItemVerRes;
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JPopupMenu.Separator jSeparator2;
     private javax.swing.JPopupMenu.Separator jSeparator3;
+    private javax.swing.JPopupMenu.Separator jSeparator4;
     // End of variables declaration//GEN-END:variables
 }
