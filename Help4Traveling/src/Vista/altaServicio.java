@@ -71,7 +71,7 @@ public class altaServicio extends javax.swing.JInternalFrame {
         Iterator<String> iter = this.listaPaises.iterator();
         while (iter.hasNext()) {
             String nompais = iter.next();
-            this.cb_paises_destino.addItem(nompais);
+            this.cb_paises_destino.addItem(nompais);                
         }      
     }  
     
@@ -116,6 +116,7 @@ public class altaServicio extends javax.swing.JInternalFrame {
         this.tf_nombre_s.setText("");
         this.tf_precio.setText("");
         this.ta_descripcion.setText("");
+        this.btn_seleccionar_imagen.setEnabled(true);
         this.lst_imagenes.setModel(modeloListaImagenes);
         this.lst_categorias.setModel(modeloListaCategorias);
     }
@@ -228,6 +229,12 @@ public class altaServicio extends javax.swing.JInternalFrame {
         l_empresa.setText("País Destino:");
 
         l_direccion.setText("Ciudad Destino:");
+
+        cb_paises_destino.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cb_paises_destinoActionPerformed(evt);
+            }
+        });
 
         cb_ciudades_destino.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -415,8 +422,8 @@ public class altaServicio extends javax.swing.JInternalFrame {
         //String origen = this.tf_origen.getText();
         //String categoria = this.tr_categoria.getSelectionPath().toString();
         //JOptionPane.showMessageDialog(null,categoria );
-        DtCategoria cat1 = new DtCategoria("Alojamiento","Alojamiento");
-        DtCategoria cat2 = new DtCategoria("Alaska","Crucero");
+        DtCategoria cat1 = new DtCategoria("Alojamientos","Alojamientos");
+        DtCategoria cat2 = new DtCategoria("Alaska","Cruceros");
         DtCategoria cat3 = new DtCategoria("Air France","Empresas");
         this.categorias.put("Alojamiento",cat1);
         this.categorias.put("Alaska",cat2);
@@ -429,8 +436,12 @@ public class altaServicio extends javax.swing.JInternalFrame {
         this.tf_nombre_s.setText("");
         this.tf_precio.setText("");
         this.ta_descripcion.setText("");
-        this.lst_imagenes.setModel(modeloListaImagenes);
-        this.lst_categorias.setModel(modeloListaCategorias);
+        this.btn_seleccionar_imagen.setEnabled(true);
+        modeloListaImagenes.clear();
+        modeloListaCategorias.clear();
+        
+        //this.lst_imagenes.setModel(modeloListaImagenes);
+        //this.lst_categorias.setModel(modeloListaCategorias);
         //this.tf_origen.setText("");
 
     }//GEN-LAST:event_bt_aceptar_sActionPerformed
@@ -478,7 +489,13 @@ public class altaServicio extends javax.swing.JInternalFrame {
 
     private void cb_ciudades_destinoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cb_ciudades_destinoActionPerformed
         // TODO add your handling code here:
+        this.destino = (String) cb_ciudades_destino.getSelectedItem();
     }//GEN-LAST:event_cb_ciudades_destinoActionPerformed
+
+    private void cb_paises_destinoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cb_paises_destinoActionPerformed
+        // TODO add your handling code here:
+        cargarCiudadesPaisDestino((String) cb_paises_destino.getSelectedItem());
+    }//GEN-LAST:event_cb_paises_destinoActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
