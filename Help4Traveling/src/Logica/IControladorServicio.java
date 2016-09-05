@@ -11,7 +11,7 @@ import java.util.List;
  * @author Leonardo
  */
 public interface IControladorServicio {
-       public abstract void altaDeServicio(DtServicio dts);
+       public abstract String altaDeServicio(DtServicio dts);
        public abstract void altaDePromocion();
        public abstract String altaDeCategoria(String nombre, String NombPadre);
        public abstract List<DtServicio> listarServicios();

@@ -16,20 +16,19 @@ import java.util.ArrayList;
  */
 public class ControladorServicio implements IControladorServicio  {
     
-    private boolean comprobarCompletitudDatos(DtServicio dts) {
-        if (dts.getNkProveedor().equals(""))
-            return false;
-        else if (dts.getNombre().equals(""))
-		 return false;
-             else if (dts.getDescripcion().equals(""))
-                      return false;
-                  else if (dts.getPrecio() >= 0)
-                           return true;
-                       else if (dts.getNomCiuOrigen().equals(""))
-				return false;
-                            else if (dts.getDtCategorias().isEmpty())
-                                     return false; 
-                                 else return true;		
+    private String comprobarCompletitudDatos(DtServicio dts) {
+        String mensaje = "CAMPOSOK";
+        if (dts.getNombre().equals(""))
+	    mensaje = "ERROR: El Nombre no puede ser vacío...";
+        else if (dts.getPrecio() < 0)
+                 mensaje = "ERROR: El Pecio debe ser mayor que 0...";
+             else if (dts.getImagenes().size() > 3)
+                      mensaje = "ERROR: Debe elegir como mucho 3 imagenes...";
+                  else if (dts.getNomCiuOrigen().equals(""))
+                           mensaje = "ERROR: La ciudad de origen no puede ser vacía..."; 
+                       else if (dts.getDtCategorias().size() == 0)
+                                mensaje = "ERROR: Debe elegir al menos una categoria..."; 
+        return mensaje;		
     }
     
     private boolean existenCategorias(Map<String,DtCategoria> catServ, List<String> catSist) {
@@ -49,57 +48,31 @@ public class ControladorServicio implements IControladorServicio  {
         return categoriasok;
     }
     
-    public boolean altaServicio(DtServicio dts) {
-        boolean altaok, camposok, categoriasok, existeProv, existeCiuO, existeCiuD;
-        camposok = comprobarCompletitudDatos(dts);
+    public String altaServicio(DtServicio dts) {
+        String mensaje = comprobarCompletitudDatos(dts);
         Proveedor p;
-        altaok = true;
-	if (camposok) {
-            List<String> listaCat = ManejadorCategoria.getInstance().getNombresCategorias();
-            categoriasok = existenCategorias(dts.getDtCategorias(), listaCat);
-            if (categoriasok) {
-                existeProv = ManejadorProveedor.getInstance().existeNickname(dts.getNkProveedor());
-                if (existeProv) {
-                    existeCiuO = ManejadorCiudad.getInstance().existeCiudad(dts.getNomCiuOrigen());
-                    if (existeCiuO) {
-                        if (!dts.getNomCiuDestino().equals("")) {
-                            existeCiuD = ManejadorCiudad.getInstance().existeCiudad(dts.getNomCiuDestino());
-                            if (!existeCiuD)
-                                altaok = false;
-                        }                        
-                    }
-                    else altaok = false;
-                }
-                else altaok = false;
-            }
-            else altaok = false;
-        }
-        else altaok = false;
-        if (altaok) {
+        if (mensaje.equals("CAMPOSOK")) {
+            /*System.out.print("Origen: ");
+            System.out.println(dts.getNomCiuOrigen());
             Ciudad co = ManejadorCiudad.getInstance().obtenerCiudad(dts.getNomCiuOrigen());
             p = ManejadorProveedor.getInstance().obtenerProveedor(dts.getNkProveedor());
             Servicio s = new Servicio(dts.getNombre(), p, dts.getDescripcion(), dts.getImagenes(), dts.getPrecio(), co);
             if (!dts.getNomCiuDestino().equals("")) {
                 Ciudad cd = ManejadorCiudad.getInstance().obtenerCiudad(dts.getNomCiuDestino());
                 s.setDestino(cd);
-            }
-            p.agregarServicio(s);
+            }*/
+            //p.agregarServicio(s);
             //ManejadorServicio.getInstance().agregarServicio(s); 
             ManejadorServicio ms = ManejadorServicio.getInstance();
-            ms.persistirServicio(s);
+            mensaje = ms.persistirServicio(dts);
         }
-        return altaok;
+        return mensaje;
     }
     
-    public void altaDeServicio(DtServicio dts) {
-        boolean altaok;
-	altaok = altaServicio(dts);
-	if (!altaok) {
-            
-	}
-        else {
-        
-        }
+    public String altaDeServicio(DtServicio dts) {
+        String mensaje = "El servicio fue agregado con exito.";
+	mensaje = altaServicio(dts);
+	return mensaje;
     }
     
     public void altaDePromocion() {
