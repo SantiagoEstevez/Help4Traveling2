@@ -107,12 +107,12 @@ public class ManejadorServicio {
                 rsServImagenes.close();
                 sti.close();
                 
-                sqlCategorias = "SELECT * FROM help4traveling.serviciosImagenes WHERE servicio = '" + nombre + "'";
+                sqlCategorias = "SELECT * FROM help4traveling.serviciosCategorias WHERE servicio = '" + nombre + "'";
                 stc = con.createStatement();
-                rsServCategorias = stc.executeQuery(sqlImagenes);
+                rsServCategorias = stc.executeQuery(sqlCategorias);
                 while (rsServCategorias.next()) {
-                    String nomCat = rsServCategorias.getString("nombre");
-                    DtCategoria categoria = new DtCategoria(nomCat, rsServCategorias.getString("padre"));
+                    String nomCat = rsServCategorias.getString("categoria");
+                    DtCategoria categoria = new DtCategoria(nomCat, rsServCategorias.getString("categoriaPadre"));
                     listaCategorias.put(nomCat, categoria);
                 }
                 rsServCategorias.close();
