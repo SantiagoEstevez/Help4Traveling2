@@ -43,7 +43,28 @@ public class ManejadorServicio {
     }
     
     public boolean existeServicio(String nombre){
-        return serviciosNom.containsKey(nombre);        
+        boolean existe = false;
+        ResultSet rs;
+        Conexion conex = new Conexion();
+        Connection con = conex.getConnection();
+        Statement st;
+        String sql1 = "SELECT * FROM help4traveling.servicios WHERE nombre='" + nombre + "'"; 
+        try {
+            st = con.createStatement();
+            rs = st.executeQuery(sql1);
+            if (rs.next())
+                existe = true;
+            rs.close();
+            con.close();
+            st.close();           
+        } catch (SQLException e){
+            System.out.println("No exite servicio :(");
+        }
+        if (existe)
+            System.out.println("Existe Servicio");
+        else System.out.println("NO Existe Servico");
+        return existe;
+        //return serviciosNom.containsKey(nombre);        
     }
     
     public Servicio obtenerServicio(String nk){
@@ -166,43 +187,81 @@ public class ManejadorServicio {
 	return listaDtServ;        
     }
     
-    public void persistirServicio(Servicio serv){
-       Conexion conexion;
-       String sql;
+public String persistirServicio(DtServicio serv){
        conexion = new Conexion();
        Connection con = conexion.getConnection();
        Statement st;
-       String categorias = "";
-       List<String> imagserv = serv.getImagenes();
-       String imagenes = "";
-       Iterator<String> iteri = imagserv.iterator();
-       while (iteri.hasNext()) {
-            String img = iteri.next();
-            imagenes = imagenes + img + ", ";
-       }
-       Map<String,Categoria> catserv = serv.getCategorias();
-       Iterator<Categoria> iter = catserv.values().iterator();
-       while (iter.hasNext()) {
-            Categoria cat = iter.next();
-            categorias = categorias + cat.getNombre() + ", ";
-       }
-       sql = "INSERT INTO mydb.servicios " + 
-             "(Ref,Nombre,Categorias,Proveedor,`Ciudad Origen`,`Ciudad Destino`,Imágenes,`Precio (USD)`) " +
-             "VALUES ('S25','" + serv.getNombre() + "','" + categorias + "','TC"/* + serv.getProveedor().getNickname()*/
-             + "','" + serv.getOrigen().getNombre() + "','" + serv.getDestino().getNombre() + "','" + imagenes + "'," + serv.getPrecio() +")";
+       String mensaje = "Se dio de alta al Servicio.";      
+       System.out.println(serv.getNombre());
+    if (!existeServicio(serv.getNombre())) {
+       //sql = "INSERT INTO help4traveling.servicios (nombre,proveedor,descripcion,precio,origen,destino) VALUES ('" + serv.getNombre() + "','" + serv.getProveedor().getNickname() + "','" + serv.getDescripcion() + "'," + (double) serv.getPrecio() + ",'" + serv.getOrigen().getNombre() + "','" + serv.getDestino().getNombre() + "')";
+       sql = "INSERT INTO help4traveling.ofertas (nombre,proveedor) VALUES ('" + serv.getNombre() + "','" + serv.getNkProveedor() + "')";
        System.out.println(sql);
-       
-       try{
+       try {
            st = con.createStatement();
            System.out.println("antes de insertar");
            st.executeUpdate(sql);
-           con.close();
+           //con.close();
            st.close();
-           System.out.println("INSERTE :)");
+           System.out.println("INSERTE en oferta:)");
        }
        catch (SQLException e){
            System.out.println("No pude INSERTAR :(");
        }
+       sql = "INSERT INTO help4traveling.servicios (nombre,proveedor,descripcion,precio,origen,destino) " +
+             "VALUES ('" + serv.getNombre() + "','" + serv.getNkProveedor() + "','" + serv.getDescripcion() + "'," + (double) serv.getPrecio() + ",'" + serv.getNomCiuOrigen() + "','" + serv.getNomCiuDestino() + "')";
+       System.out.println(sql);
+       try {
+           st = con.createStatement();
+           System.out.println("antes de insertar");
+           st.executeUpdate(sql);
+           //con.close();
+           st.close();
+           System.out.println("INSERTE en servicio:)");
+       }
+       catch (SQLException e){
+           System.out.println("No pude INSERTAR :(");
+       }
+       List<String> imagserv = serv.getImagenes();
+       Iterator<String> iteri = imagserv.iterator();
+       while (iteri.hasNext()) {
+            sql = "INSERT INTO help4traveling.serviciosimagenes (servicio,imagen) VALUES ('" + serv.getNombre() + "','" + iteri.next() + "')";
+            try{
+                st = con.createStatement();
+                System.out.println("antes de imagen");
+                st.executeUpdate(sql);
+                st.close();
+                //con.close();                
+                System.out.println("INSERTE :)");
+            }
+            catch(SQLException e){
+                System.out.println("No pude INSERTAR :(");
+            }       
+       }
+       Map<String,DtCategoria> catserv = serv.getDtCategorias();
+       Iterator<DtCategoria> iterc = catserv.values().iterator();
+       while (iterc.hasNext()) {
+           DtCategoria cat = iterc.next();
+            //sql = "INSERT INTO help4traveling.servicioscategorias (servicio,proveedorServicio,categoria) VALUES ('" + serv.getNombre() + "','" + serv.getProveedor().getNickname() + "','" + iterc.next().getNombre() + "')";
+            sql = "INSERT INTO help4traveling.servicioscategorias (servicio,proveedorServicio,categoria,categoriaPadre) VALUES ('" + serv.getNombre() + "','" + serv.getNkProveedor() + "','" + cat.getNombre() + "','" + cat.getPadre() + "')";
+            System.out.println(sql);
+            try{
+                st = con.createStatement();
+                System.out.println("antes de categoria");
+                st.executeUpdate(sql);
+                st.close();
+                //con.close();                
+                System.out.println("INSERTE :)");
+            }
+            catch(SQLException e){
+                System.out.println("No pude INSERTAR :(");
+            }       
+       }
+       
+    }
+    else mensaje = "ERROR: El Servicio ingresado ya existe...";
+    return mensaje;           
+  
    }
     
 }

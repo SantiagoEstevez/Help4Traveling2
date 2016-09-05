@@ -90,8 +90,7 @@ public class ManejadorCiudad {
         return lista;
     }
     
-    
-    
+       
     public boolean existeCiudad(String nombre/*, String pais*/){
         boolean existe;
         ResultSet rs;
@@ -100,12 +99,12 @@ public class ManejadorCiudad {
         Connection con = conexion.getConnection();
         Statement st;
         //String sql = "SELECT * FROM mydb.ciudades, mydb.paises WHERE Pais='" + pais + "' AND Nombre='" + nombre + "')"; 
-        String sql = "SELECT * FROM mydb.ciudades WHERE Nombre='" + nombre + "'"; 
+        String sql = "SELECT * FROM help4traveling.ciudades WHERE nombre='" + nombre + "'"; 
         try {
             st = con.createStatement();
             rs = st.executeQuery(sql); 
-            Pais p = new Pais(rs.getString("Pais"),null);
-            ciu = new Ciudad(rs.getString("Nombre"),p);
+            Pais p = new Pais(rs.getString("pais"),null);
+            ciu = new Ciudad(rs.getString("nombre"),p);
             rs.close();
             con.close();
             st.close();           
@@ -125,17 +124,24 @@ public class ManejadorCiudad {
         Conexion conexion = new Conexion();
         Connection con = conexion.getConnection();
         Statement st;
-        //String sql = "SELECT * FROM mydb.ciudades, mydb.paises WHERE Pais='" + pais + "' AND Nombre='" + nombre + "')"; 
-        String sql = "SELECT * FROM mydb.ciudades WHERE Nombre='" + nombre + "'"; 
+        String sql = "SELECT * FROM help4traveling.ciudades WHERE nombre='" + nombre + "'"; 
+        System.out.println(sql);
         try {
-            st = con.createStatement();
+            st = con.createStatement();  
+            System.out.println("Llego aca");
             rs = st.executeQuery(sql); 
-            //Pais p = new Pais(rs.getString("Pais"),null);
-            ciu = new Ciudad(rs.getString("Nombre"),null/*,p*/);
+            System.out.println("Llego aca1");
+            System.out.println(rs.getString("ciudad"));
+            System.out.println("Llego aca2");
+            System.out.println(rs.getString("pais"));
+            System.out.println("Llego aca2");
+            Pais p = new Pais(rs.getString("pais"),null);
+            System.out.println("Llego aca2");
+            ciu = new Ciudad(rs.getString("nombre"),p);
             rs.close();
             con.close();
             st.close();           
-        } catch (SQLException e){
+        } catch (SQLException e) {
             System.out.println("No obtuve ciudad :(");
         }
         return ciu; 
