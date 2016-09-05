@@ -47,7 +47,7 @@ public class ManejadorReserva {
         
         sql = "INSERT INTO help4traveling.reservas (fecha,total,estado,cliente) "
             + "VALUES ('" + nueva.getCreada() + "'," + nueva.getTotal() + ",'" + nueva.getEstado() + "','" + nueva.getCliente()+ "')";
-        System.out.println(sql);
+        
         try {
             st = con.createStatement();
             st.executeUpdate(sql);
@@ -71,13 +71,11 @@ public class ManejadorReserva {
                             sql = "INSERT INTO help4traveling.reservasitems (reserva, oferta, proveedorOferta, cantidad, inicio, fin) " 
                                 + "VALUES (" + sid + ",'" + oferta + "','" + proveedor + "'," + cantidad + ",'" + inicio + "','" + fin + "')";
                             
-                            System.out.println(sql);
-                            st.executeUpdate(sql);
-
-                            con.close();
-                            st.close();
-                            System.out.println("Reserva creada con exito :)");
+                            st.executeUpdate(sql);                            
                         }   
+                        con.close();
+                        st.close();
+                        System.out.println("Reserva creada con exito :)");
                     }
                 } catch (SQLException e) {
                     System.out.println("No se pudo insertar item reserva :(");
