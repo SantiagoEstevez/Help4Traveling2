@@ -47,14 +47,15 @@ public class ManejadorReserva {
         
         sql = "INSERT INTO help4traveling.reservas (fecha,total,estado,cliente) "
             + "VALUES ('" + nueva.getCreada() + "'," + nueva.getTotal() + ",'" + nueva.getEstado() + "','" + nueva.getCliente()+ "')";
-
+        System.out.println(sql);
         try {
             st = con.createStatement();
             st.executeUpdate(sql);
             
             try {
-                sql = "SELECT max(id) as id help4traveling.reservas";
+                sql = "SELECT MAX(numero) AS id FROM help4traveling.reservas";
                 rsId = st.executeQuery(sql);
+                rsId.next();
                 sid = rsId.getString("id");
                 
                 try {

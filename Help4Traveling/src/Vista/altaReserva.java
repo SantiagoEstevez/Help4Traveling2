@@ -247,10 +247,27 @@ public class altaReserva extends javax.swing.JInternalFrame {
 
             IReservas.agregarItem(nReserva, cantidad, inicio, fin, new Servicio(servicio, new Proveedor(proveedor)));
         }
+       
         
         nReserva.setEstado(Reserva.eEstado.REGISTRADA);
         java.util.Date actual = new java.util.Date();
-        nReserva.setCreada(new Date(actual.getDay(),actual.getMonth(),actual.getYear()));
+        String fecha, dia, mes, ano;
+        dia = String.valueOf(actual.getDay());
+        mes = String.valueOf(actual.getMonth());
+        ano = String.valueOf(actual.getYear()-100);
+        
+        System.out.println(ano);
+        
+        ano = "20" + ano;
+        if (mes.length() == 1){
+            mes = "0" + mes;
+        }
+        if (dia.length() == 1){
+            dia = "0" + dia;
+        }
+        
+        
+        nReserva.setCreada(new Date(Integer.parseInt(dia),Integer.parseInt(mes),Integer.parseInt(ano)));
         IReservas.altaReserva(nReserva);
         this.dispose();
     }//GEN-LAST:event_crearMouseClicked

@@ -295,7 +295,7 @@ public class altaReserva2 extends javax.swing.JInternalFrame {
         String fecha, dia, mes, ano;
         dia = String.valueOf(date.getDay());
         mes = String.valueOf(date.getMonth());
-        ano = String.valueOf(date.getYear());
+        ano = String.valueOf(date.getYear()-100);
         
         fecha = "20" + ano;
         fecha += "-";
