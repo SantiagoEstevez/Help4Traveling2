@@ -11,13 +11,19 @@ package Logica;
  */
 public class DtCategoria {
     private String nombre;
+    private String padre;
 
-    public DtCategoria(String nombre) {
+    public DtCategoria(String nombre, String padre) {
         this.nombre = nombre;
+        this.padre = padre;
     }
 
     public String getNombre() {
         return nombre;
-    }    
+    }
+
+    public String getPadre() {
+        return padre;
+    }     
     
 }

@@ -107,7 +107,8 @@ public class Servicio extends Oferta {
         Iterator<Categoria> itercat = this.categoriasNom.values().iterator();
         while (itercat.hasNext()) {
             String nomcat = itercat.next().getNombre();
-            DtCategoria dtCat = new DtCategoria(nomcat); 
+            String padrecat = itercat.next().getNomPadre();
+            DtCategoria dtCat = new DtCategoria(nomcat,padrecat); 
             listaCat.put(nomcat, dtCat);
         }
         return new DtServicio(this.getNombre(), this.getProveedor().getNickname(), this.getDescripcion(), this.getImagenes(), listaCat, this.getPrecio(), this.getOrigen().getNombre(), this.getDestino().getNombre());
