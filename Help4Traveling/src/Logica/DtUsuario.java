@@ -71,7 +71,8 @@ public class DtUsuario {
     }
 
     public Date getNacimiento() {
-       conexion = new Conexion();
+        return nacimiento;
+       /*conexion = new Conexion();
        Connection con = conexion.getConnection();
        Statement st;
        ResultSet rsFecha;
@@ -94,7 +95,7 @@ public class DtUsuario {
           }
        Date fechan = new Date(fechanac);
        return fechan;
-       
+       */
     }    
 
     public String getImagen() {
