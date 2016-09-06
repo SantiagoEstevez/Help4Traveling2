@@ -16,6 +16,7 @@ import java.sql.Statement;
  * @author Leonardo
  */
 public class DtUsuario {
+
     private String nombre;
     private String apellido;
     private String nickname;
@@ -27,7 +28,7 @@ public class DtUsuario {
     private String link;
     private Conexion conexion;
     private String sql;
-    
+
     public DtUsuario(String nombre, String apellido, String nickname, String correo, Date nacimiento, String imagen, String tipo, String empresa, String link) {
         this.nombre = nombre;
         this.apellido = apellido;
@@ -39,7 +40,7 @@ public class DtUsuario {
         this.empresa = empresa;
         this.link = link;
     }
-    
+
     public DtUsuario(String nombre, String apellido, String nickname, String correo, Date nacimiento, String imagen, String tipo) {
         this.nombre = nombre;
         this.apellido = apellido;
@@ -49,9 +50,9 @@ public class DtUsuario {
         this.imagen = imagen;
         this.tipo = tipo;
     }
-        
-    public DtUsuario(){
-        
+
+    public DtUsuario() {
+
     }
 
     public String getNombre() {
@@ -72,7 +73,7 @@ public class DtUsuario {
 
     public Date getNacimiento() {
         return nacimiento;
-       /*conexion = new Conexion();
+        /*conexion = new Conexion();
        Connection con = conexion.getConnection();
        Statement st;
        ResultSet rsFecha;
@@ -95,19 +96,20 @@ public class DtUsuario {
           }
        Date fechan = new Date(fechanac);
        return fechan;
-       */
-    }    
+         */
+    }
 
     public String getImagen() {
         return imagen;
     }
-    
+
     public String getTipo() {
         return tipo;
     }
 
     public String getEmpresa() {
-       conexion = new Conexion();
+        return empresa;
+        /*conexion = new Conexion();
        Connection con = conexion.getConnection();
        Statement st;
        ResultSet rsEmpresa;
@@ -130,11 +132,12 @@ public class DtUsuario {
           }
        
        return empresaprov;
-       
+         */
     }
 
     public String getLink() {
-  conexion = new Conexion();
+        return link;
+        /*conexion = new Conexion();
        Connection con = conexion.getConnection();
        Statement st;
        ResultSet rsLink;
@@ -157,5 +160,7 @@ public class DtUsuario {
           }
        
        return empresalink;    }   
-    
+         */
+    }
 }
+

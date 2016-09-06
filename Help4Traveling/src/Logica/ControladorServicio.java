@@ -137,7 +137,7 @@ public class ControladorServicio implements IControladorServicio  {
         return mac.getNombresCategorias();
     }
     
-    public List<String> listarServiciosCategoria(String cat){
+    public List<String>  listarServiciosCategoria(String categoria){
         /*ManejadorServicio mas = ManejadorServicio.getInstance();
         List<String> listaserv = mas.listarServicios();
         List<String> listaServiciosCategoria = new ArrayList<String>();
@@ -148,8 +148,10 @@ public class ControladorServicio implements IControladorServicio  {
                 listaServiciosCategoria.add(serv);
             }    
         }*/
-        List<String> listaServiciosCategoria = new ArrayList<String>();
+        /*List<String> listaServiciosCategoria = new ArrayList<String>();
         return listaServiciosCategoria;
+        */
+        return ManejadorServicio.getInstance().listarServiciosCategoria(categoria);
     }
     
     public void verInfodeServicio(String nombre, String Proevedor){

@@ -18,6 +18,7 @@ public interface IControladorUsuario {
        public abstract ArrayList<DtReserva> listarReservasCliente(DtUsuario dtu);
        public abstract ArrayList<DtUsuario> listarProveedores();
        public abstract ArrayList<DtServicio> listarServicioProveedor(DtUsuario dtu);
+       //public abstract Cliente obtenerCliente(String nick);
       // public abstract void verInfoDeProveedor();
        //public abstract ArrayList<DtUsuario> setClientesDB();
        //public abstract ArrayList<DtUsuario> setProveedoresDB();
