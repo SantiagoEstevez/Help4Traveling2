@@ -209,7 +209,6 @@ public class ManejadorReserva {
                 nueva.setEstado(Reserva.eEstado.REGISTRADA);
                 nueva.setTotal(precioint);
                 this.reservasId.put(idint, nueva);
-                System.out.println("Agregué una");
 
             }
             rsReservasCliente.close();
@@ -226,7 +225,11 @@ public class ManejadorReserva {
             Reserva res = iter.next();
             listaReservasCliente.add(res.getDtReserva());
         }
+        
+        reservasId.values().clear();
         return listaReservasCliente;
+        
+        
     }
 
     public void setReservasDB() {

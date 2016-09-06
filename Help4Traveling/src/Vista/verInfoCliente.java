@@ -15,36 +15,39 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
  * @author yaman
  */
 public class verInfoCliente extends javax.swing.JInternalFrame {
+
     private IControladorUsuario IControlador;
     private ArrayList<DtUsuario> listaClientes;
+    private DefaultTableModel modeloTablaRs;
+    private DefaultTableModel modeloTablaCl;
+
     /**
      * Creates new form verInfoCliente
      */
     public verInfoCliente() {
         initComponents();
-        
+
         Fabrica fabrica = Fabrica.getInstance();
-        this.IControlador = fabrica.getIControladorUsuario();        
-        
+        this.IControlador = fabrica.getIControladorUsuario();
+
         DefaultListModel modelo = new DefaultListModel();
-       
-        
-         this.listaClientes = this.IControlador.listarClientes();
+
+        this.listaClientes = this.IControlador.listarClientes();
         Iterator<DtUsuario> i = this.listaClientes.iterator();
         while (i.hasNext()) {
             DtUsuario user = i.next();
             modelo.addElement(user.getNombre()/*()+"   "+user.getApellido()+"   "+user.getNickname()*/);
         }
-        
+
         jListaClientes.setModel(modelo);
-        
-    
+
     }
 
     /**
@@ -88,7 +91,7 @@ public class verInfoCliente extends javax.swing.JInternalFrame {
 
         jTablaClientes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null}
+
             },
             new String [] {
                 "Nickname", "Nombre", "Apellido", "Nacimiento"
@@ -175,36 +178,55 @@ public class verInfoCliente extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jListaClientesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jListaClientesMouseClicked
-        
-        String nombre = jListaClientes.getSelectedValue();              
-         
+
+        String nombre = jListaClientes.getSelectedValue();
+
+        String[] columnasClientes = {"nickname", "nombre", "apellido", "nacimiento"};
+
+        String[] registrosClientes = new String[4];
+
+        String[] columnasReservas = {"id", "estado", "total"};
+
+        String[] registrosReservas = new String[3];
+
+        modeloTablaCl = new DefaultTableModel(null, columnasClientes);
+        modeloTablaRs = new DefaultTableModel(null, columnasReservas);
+
         Iterator<DtUsuario> i = this.listaClientes.iterator();
         boolean es = false;
-        DtUsuario dtu = new DtUsuario();
         while (i.hasNext() & !es) {
             DtUsuario user = i.next();
-            if (nombre.equals(user.getNombre())){
-                dtu = user;
+            if (nombre.equals(user.getNombre())) {
                 es = true;
-                jTablaClientes.setValueAt(dtu.getNombre(),0,0);
-                jTablaClientes.setValueAt(dtu.getApellido(),0,1);
-                jTablaClientes.setValueAt(dtu.getNickname(),0,2);
-                jTablaClientes.setValueAt("aca va la fecha",0,3);
-                
-                Fabrica fabrica = Fabrica.getInstance(); 
-                
-                ArrayList<DtReserva> listaReservas = new ArrayList<>();
-                listaReservas = fabrica.getIControladorUsuario().listarReservasCliente(dtu);
+
+                registrosClientes[0] = user.getNombre();
+                registrosClientes[1] = user.getApellido();
+                registrosClientes[2] = user.getNickname();
+                registrosClientes[3] = "nacimiento"/*user.getNacimiento();*/;
+
+                modeloTablaCl.addRow(registrosClientes);
+                jTablaClientes.setModel(modeloTablaCl);
+
+                Fabrica fabrica = Fabrica.getInstance();
+
+                ArrayList<DtReserva> listaReservas = fabrica.getIControladorUsuario().listarReservasCliente(user);
+
                 Iterator<DtReserva> iter = listaReservas.iterator();
-                int count = 0;
-                while (iter.hasNext()){
-                    DtReserva res =iter.next();
-                    jTablaReservas.setValueAt(res.getId(),count,0);
-                    jTablaReservas.setValueAt(res.getEstado(),count,1);
-                    jTablaReservas.setValueAt(res.getTotal(),count,2);
-                    count++;
+                modeloTablaRs.setRowCount(0);
+                DtReserva res;
+                while (iter.hasNext()) {
+                    res = iter.next();
+                    registrosReservas[0] = Integer.toString((int) res.getId());
+                    System.out.println(registrosReservas[0]);
+                    registrosReservas[1] = "REGISTRADA";
+                    registrosReservas[2] = Double.toString(res.getTotal());
+
+                    modeloTablaRs.addRow(registrosReservas);
+
                 }
-            } 
+            }
+            jTablaReservas.setModel(modeloTablaRs);
+
     }//GEN-LAST:event_jListaClientesMouseClicked
     }
 

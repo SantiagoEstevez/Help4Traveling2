@@ -139,6 +139,7 @@ public class ManejadorProveedor {
             System.out.println("llegue");
             
             while (rsProveedores.next()) {
+                
                 String nombre = rsProveedores.getString("nombre");
 
                 String apellido = rsProveedores.getString("apellido");
@@ -146,7 +147,7 @@ public class ManejadorProveedor {
                 String correo = rsProveedores.getString("email");
 
                 Date nacimiento = new Date(12,12,1994);
-                String imagen = "";
+                String imagen = "imagen";
                 //String empresa = rsProveedores.getString("Empresa");
                 //String direccion = rsProveedores.getString("Direccion");
                 Proveedor nuevo = new Proveedor(nombre, apellido, nickname, correo, nacimiento, imagen,"empresa","direccion");

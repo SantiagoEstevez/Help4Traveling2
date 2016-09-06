@@ -218,27 +218,27 @@ public class ManejadorServicio {
        Connection con = conexion.getConnection();
        Statement st;
        ResultSet rsServiciosProveedor;
-       sql = "SELECT * FROM help4traveling.servicios WHERE proveedor='" + user.getNickname()+"'"; 
+       sql = "SELECT * FROM help4traveling.servicios WHERE proveedor= '" + user.getNickname()+"'"; 
        try{
             st = con.createStatement();
             rsServiciosProveedor = st.executeQuery(sql);
             
             while (rsServiciosProveedor.next()) {
                 System.out.println("llegue2");
-                String nombre = rsServiciosProveedor.getString("Nombre");
-                String nkproveedor = rsServiciosProveedor.getString("Proveedor");
-                String descripcion = rsServiciosProveedor.getString("");
-                String precio = rsServiciosProveedor.getString("Precio");
-                String ciuorigen = rsServiciosProveedor.getString("Ciudad Origen");
-                String ciuodestino = rsServiciosProveedor.getString("Ciudad Destino");
+                String nombre = rsServiciosProveedor.getString("nombre");
+                String nkproveedor = rsServiciosProveedor.getString("proveedor");
+                String descripcion = rsServiciosProveedor.getString("descripcion");
+                String precio = rsServiciosProveedor.getString("precio");
+                String ciuorigen = rsServiciosProveedor.getString("origen");
+                String ciuodestino = rsServiciosProveedor.getString("destino");
                 
                 long precioint = Integer.parseInt(precio);
                 
-                Servicio nuevo = new Servicio(/*idint,"REGISTRADA", cliente,null*/);
-                nuevo.setNombre(nombre);
-                nuevo.setPrecio(precioint);
+                Servicio nuevo;
+                //nuevo = this.GetDataServicio(nombre,nkproveedor);
+                //nuevo.setPrecio(precioint);
                 //nuevo.setOrigen(origen);
-                this.serviciosNom.put(nombre, nuevo);
+                //this.serviciosNom.put(nombre, nuevo);
                 
             } 
             rsServiciosProveedor.close();
@@ -247,6 +247,7 @@ public class ManejadorServicio {
             
             }catch(SQLException e){
            System.out.println("No hubo resultado");
+           System.out.println(e.getMessage());
        }
        
         ArrayList<DtServicio> listaServiciosProveedor = new ArrayList<>();
