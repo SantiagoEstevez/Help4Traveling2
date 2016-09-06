@@ -218,28 +218,19 @@ public class ManejadorServicio {
        Connection con = conexion.getConnection();
        Statement st;
        ResultSet rsServiciosProveedor;
-       sql = "SELECT * FROM help4traveling.servicios WHERE proveedor= '" + user.getNickname()+"'"; 
+       sql = "SELECT * FROM help4traveling.servicios WHERE proveedor= '" + user.getNickname()+"'";
+       ArrayList<DtServicio> listaServicios = new ArrayList<DtServicio>();
        try{
             st = con.createStatement();
             rsServiciosProveedor = st.executeQuery(sql);
             
+            DtServicio ser;
             while (rsServiciosProveedor.next()) {
                 System.out.println("llegue2");
                 String nombre = rsServiciosProveedor.getString("nombre");
                 String nkproveedor = rsServiciosProveedor.getString("proveedor");
-                String descripcion = rsServiciosProveedor.getString("descripcion");
-                String precio = rsServiciosProveedor.getString("precio");
-                String ciuorigen = rsServiciosProveedor.getString("origen");
-                String ciuodestino = rsServiciosProveedor.getString("destino");
-                
-                long precioint = Integer.parseInt(precio);
-                
-                Servicio nuevo;
-                //nuevo = this.GetDataServicio(nombre,nkproveedor);
-                //nuevo.setPrecio(precioint);
-                //nuevo.setOrigen(origen);
-                //this.serviciosNom.put(nombre, nuevo);
-                
+                ser = GetDataServicio(nombre,nkproveedor);
+                listaServicios.add(ser);
             } 
             rsServiciosProveedor.close();
             con.close();
@@ -248,62 +239,10 @@ public class ManejadorServicio {
             }catch(SQLException e){
            System.out.println("No hubo resultado");
            System.out.println(e.getMessage());
-       }
-       
-        ArrayList<DtServicio> listaServiciosProveedor = new ArrayList<>();
-        Iterator<Servicio> iter = this.serviciosNom.values().iterator();
-        while (iter.hasNext()){
-            Servicio res =iter.next();
-            listaServiciosProveedor.add(res.getDtServicio());
-        }
-            return listaServiciosProveedor;
+            }
+            return listaServicios;
     }
-    
-    /*    public ArrayList<DtServicio> listarServiciosProveedor(DtUsuario user){
-        conexion = new Conexion();
-       Connection con = conexion.getConnection();
-       Statement st;
-       ResultSet rsServiciosProveedor;
-       sql = "SELECT * FROM help4traveling.servicios WHERE proveedor='" + user.getNickname()+"'"; 
-       try{
-            st = con.createStatement();
-            rsServiciosProveedor = st.executeQuery(sql);
-            
-            while (rsServiciosProveedor.next()) {
-                System.out.println("llegue2");
-                String nombre = rsServiciosProveedor.getString("Nombre");
-                String nkproveedor = rsServiciosProveedor.getString("Proveedor");
-                String descripcion = rsServiciosProveedor.getString("");
-                String precio = rsServiciosProveedor.getString("Precio");
-                String ciuorigen = rsServiciosProveedor.getString("Ciudad Origen");
-                String ciuodestino = rsServiciosProveedor.getString("Ciudad Destino");
-                
-                long precioint = Integer.parseInt(precio);
-                
-                Servicio nuevo = new Servicio(/*idint,"REGISTRADA", cliente,null*///);
-               /* nuevo.setNombre(nombre);
-                nuevo.setPrecio(precioint);
-                //nuevo.setOrigen(origen);
-                this.serviciosNom.put(nombre, nuevo);
-                
-            } 
-            rsServiciosProveedor.close();
-            con.close();
-            st.close();
-            
-            }catch(SQLException e){
-           System.out.println("No hubo resultado");
-       }
-       
-        ArrayList<DtServicio> listaServiciosProveedor = new ArrayList<>();
-        Iterator<Servicio> iter = this.serviciosNom.values().iterator();
-        while (iter.hasNext()){
-            Servicio res =iter.next();
-            listaServiciosProveedor.add(res.getDtServicio());
-        }
-            return listaServiciosProveedor;
-    }*/
-    
+   
     public List<DtServicio> getDtServicios() {
         List<DtServicio> listaDtServ = new LinkedList<DtServicio>();
         Iterator<Servicio> iter = this.serviciosNom.values().iterator();

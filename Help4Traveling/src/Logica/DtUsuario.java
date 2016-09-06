@@ -5,6 +5,12 @@
  */
 package Logica;
 // Comentario para que me reconozca los cambios y pueda comitear...
+
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
 /**
  *
  * @author Leonardo
@@ -19,6 +25,8 @@ public class DtUsuario {
     private String tipo;
     private String empresa;
     private String link;
+    private Conexion conexion;
+    private String sql;
     
     public DtUsuario(String nombre, String apellido, String nickname, String correo, Date nacimiento, String imagen, String tipo, String empresa, String link) {
         this.nombre = nombre;
@@ -63,8 +71,31 @@ public class DtUsuario {
     }
 
     public Date getNacimiento() {
-        return nacimiento;
-    }
+       conexion = new Conexion();
+       Connection con = conexion.getConnection();
+       Statement st;
+       ResultSet rsFecha;
+       String fechanac = null;
+       
+       String sql1 = "SELECT * FROM usuarios WHERE nickname='" + this.nickname + "'";
+       try {
+            st = con.createStatement();
+            
+            rsFecha = st.executeQuery(sql1);
+            rsFecha.next();
+            fechanac = rsFecha.getString("fechaNac");
+            
+            rsFecha.close();
+            con.close();
+            st.close();           
+        } catch (SQLException e){
+            System.out.println("No tiene Fecha :(");
+            System.err.println(e.getMessage());
+          }
+       Date fechan = new Date(fechanac);
+       return fechan;
+       
+    }    
 
     public String getImagen() {
         return imagen;
@@ -75,11 +106,55 @@ public class DtUsuario {
     }
 
     public String getEmpresa() {
-        return empresa;
+       conexion = new Conexion();
+       Connection con = conexion.getConnection();
+       Statement st;
+       ResultSet rsEmpresa;
+       String empresaprov = null;
+       
+       String sql1 = "SELECT * FROM proveedores WHERE nickname='" + this.nickname + "'";
+       try {
+            st = con.createStatement();
+            
+            rsEmpresa = st.executeQuery(sql1);
+            rsEmpresa.next();
+            empresaprov = rsEmpresa.getString("empresa");
+            
+            rsEmpresa.close();
+            con.close();
+            st.close();           
+        } catch (SQLException e){
+            System.out.println("No tiene Empresa :(");
+            System.err.println(e.getMessage());
+          }
+       
+       return empresaprov;
+       
     }
 
     public String getLink() {
-        return link;
-    }   
+  conexion = new Conexion();
+       Connection con = conexion.getConnection();
+       Statement st;
+       ResultSet rsLink;
+       String empresalink = null;
+       
+       String sql1 = "SELECT * FROM proveedores WHERE nickname='" + this.nickname + "'";
+       try {
+            st = con.createStatement();
+            
+            rsLink = st.executeQuery(sql1);
+            rsLink.next();
+            empresalink = rsLink.getString("link");
+            
+            rsLink.close();
+            con.close();
+            st.close();           
+        } catch (SQLException e){
+            System.out.println("No tiene Link :(");
+            System.err.println(e.getMessage());
+          }
+       
+       return empresalink;    }   
     
 }

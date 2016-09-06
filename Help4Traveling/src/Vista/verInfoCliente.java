@@ -94,7 +94,7 @@ public class verInfoCliente extends javax.swing.JInternalFrame {
 
             },
             new String [] {
-                "Nickname", "Nombre", "Apellido", "Nacimiento"
+                "nickname", "nombre", "apellido", "nacimiento"
             }
         ) {
             Class[] types = new Class [] {
@@ -118,11 +118,11 @@ public class verInfoCliente extends javax.swing.JInternalFrame {
 
             },
             new String [] {
-                "id", "Estado", "Total", "Title 4"
+                "id", "estado", "total"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.Integer.class, java.lang.Object.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.Integer.class
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -202,7 +202,7 @@ public class verInfoCliente extends javax.swing.JInternalFrame {
                 registrosClientes[0] = user.getNombre();
                 registrosClientes[1] = user.getApellido();
                 registrosClientes[2] = user.getNickname();
-                registrosClientes[3] = "nacimiento"/*user.getNacimiento();*/;
+                registrosClientes[3] = user.getNacimiento().getFecha("-");
 
                 modeloTablaCl.addRow(registrosClientes);
                 jTablaClientes.setModel(modeloTablaCl);
