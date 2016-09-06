@@ -10,6 +10,7 @@ import Logica.DtReserva;
 import Logica.DtUsuario;
 import Logica.Fabrica;
 import Logica.IControladorUsuario;
+import static Logica.Reserva.eEstado.REGISTRADA;
 import java.awt.event.MouseAdapter;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -217,8 +218,20 @@ public class verInfoCliente extends javax.swing.JInternalFrame {
                 while (iter.hasNext()) {
                     res = iter.next();
                     registrosReservas[0] = Integer.toString((int) res.getId());
-                    System.out.println(registrosReservas[0]);
-                    registrosReservas[1] = "REGISTRADA";
+                    String estado="";
+                    switch (res.getEstado()) {
+                    case REGISTRADA: estado = "REGISTRADA";
+                     break;
+                    case CANCELADA:  estado = "CANCELADA";
+                     break;
+                    case FACTURADA:  estado = "FACTURADA";
+                     break;
+                    case PAGADA:  estado = "PAGADA";
+                     break;
+                    }
+                             
+                    
+                    registrosReservas[1] = estado;
                     registrosReservas[2] = Double.toString(res.getTotal());
 
                     modeloTablaRs.addRow(registrosReservas);

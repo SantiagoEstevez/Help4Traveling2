@@ -5,6 +5,14 @@
  */
 package Logica;
 
+import static Logica.Reserva.eEstado.CANCELADA;
+import static Logica.Reserva.eEstado.FACTURADA;
+import static Logica.Reserva.eEstado.PAGADA;
+import static Logica.Reserva.eEstado.REGISTRADA;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -13,6 +21,7 @@ import java.util.TreeMap;
  * @author Santiago
  */
 public class DtReserva {
+
     //Atributos
     private long id;
     private Reserva.eEstado estado;
@@ -20,9 +29,11 @@ public class DtReserva {
     private double total;
     private String cliente;
     private Map<Integer, ItemReserva> items;
-    
+    private Conexion conexion;
+    private String sql;
+
     //Creadores    
-    public DtReserva(long id, Date creada, Reserva.eEstado estado, double total, String cliente, Map<Integer, ItemReserva> items){
+    public DtReserva(long id, Date creada, Reserva.eEstado estado, double total, String cliente, Map<Integer, ItemReserva> items) {
         this.id = id;
         this.estado = estado;
         this.creada = creada;
@@ -30,25 +41,62 @@ public class DtReserva {
         this.cliente = cliente;
         this.items = items;
     }
-    
+
     //Geters
-    public long getId(){
+    public long getId() {
         return this.id;
     }
-    
-    public Reserva.eEstado getEstado(){
-        return this.estado;
+
+    public Reserva.eEstado getEstado() {
+        conexion = new Conexion();
+        Connection con = conexion.getConnection();
+        Statement st;
+        ResultSet rsEstado;
+        String estado = null;
+        Reserva.eEstado estadoret = null;
+
+        String sql1 = "SELECT * FROM reservas WHERE numero='" + this.id + "'";
+        try {
+            st = con.createStatement();
+
+            rsEstado = st.executeQuery(sql1);
+            rsEstado.next();
+            estado = rsEstado.getString("estado");
+
+            rsEstado.close();
+            con.close();
+            st.close();
+        } catch (SQLException e) {
+            System.out.println("No tiene Estado :(");
+            System.err.println(e.getMessage());
+        }
+
+        switch (estado) {
+            case "REGISTRADA":
+                estadoret = REGISTRADA;
+                break;
+            case "CANCELADA":
+                estadoret = CANCELADA;
+                break;
+            case "FACTURADA":
+                estadoret = FACTURADA;
+                break;
+            case "PAGADA":
+                estadoret = PAGADA;
+                break;
+        }
+        return estadoret;
     }
-    
-    public Date getCreada(){
+
+    public Date getCreada() {
         return this.creada;
     }
-    
-    public String getCliente(){
+
+    public String getCliente() {
         return this.cliente;
     }
-    
-    public double getTotal(){
+
+    public double getTotal() {
         return this.total;
     }
 
