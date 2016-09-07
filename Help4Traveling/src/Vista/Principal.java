@@ -134,6 +134,7 @@ public class Principal extends javax.swing.JFrame {
         VerInfo_promo = new javax.swing.JMenuItem();
         bm_verInfoProveedor = new javax.swing.JMenuItem();
         jMenuItemVerRes = new javax.swing.JMenuItem();
+        jMenuItem3 = new javax.swing.JMenuItem();
 
         fc_seleccionar_archivo.setOpaque(true);
 
@@ -309,6 +310,15 @@ public class Principal extends javax.swing.JFrame {
         });
         jMenu3.add(jMenuItemVerRes);
 
+        jMenuItem3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/info-icon.png"))); // NOI18N
+        jMenuItem3.setText("VerInfo Servicio");
+        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem3ActionPerformed(evt);
+            }
+        });
+        jMenu3.add(jMenuItem3);
+
         jMenuBar1.add(jMenu3);
 
         setJMenuBar(jMenuBar1);
@@ -443,6 +453,15 @@ public class Principal extends javax.swing.JFrame {
         ar.setVisible(true);
     }//GEN-LAST:event_jMenuItemEstadoActionPerformed
 
+    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+        // TODO add your handling code here:
+        verInfoServicio infoServicio = new verInfoServicio();
+        escritorio.add(infoServicio);
+        centrarVentana(infoServicio);
+        infoServicio.setVisible(true);
+        
+    }//GEN-LAST:event_jMenuItem3ActionPerformed
+
     public void cargarDatos() {
         System.out.print("Cargando Datos... ");
         Conexion conexion = new Conexion();
@@ -519,6 +538,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItemCancelar;
     private javax.swing.JMenuItem jMenuItemCargar;
     private javax.swing.JMenuItem jMenuItemCerrar;

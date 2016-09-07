@@ -154,5 +154,10 @@ public class ControladorUsuario implements IControladorUsuario {
     public void verInfoDeProveedor(){
         
     }    
+    
+    /*public Cliente obtenerCliente(String nick){
+        ManejadorCliente mc = ManejadorCliente.getInstance();
+        return mc.obtenerCliente(nick);
+    }*/
 }
 

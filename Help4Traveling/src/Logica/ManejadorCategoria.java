@@ -131,12 +131,16 @@ public class ManejadorCategoria {
         Statement st;
         String sql;
         
-        sql = "SELECT * FROM help4traveling.categorias WHERE nombre = padre";
+        sql = "SELECT * FROM help4traveling.categorias ";
         try{
             st = con.createStatement();
             rsCategorias = st.executeQuery(sql);
-            while (rsCategorias.next())
-                listaCat.add(rsCategorias.getString("nombre"));	
+            while (rsCategorias.next()){
+                String padre = (rsCategorias.getString("padre"));
+                if(!listaCat.contains(padre))
+                listaCat.add(padre);	
+                
+            }
             rsCategorias.close();
             st.close();
             con.close();
