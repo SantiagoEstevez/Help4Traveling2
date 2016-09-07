@@ -43,6 +43,8 @@ public class ManejadorCategoria {
             return false;
     }
     
+    
+    
   /*  public boolean existeCategoria(String nombre){
         return categoriasNom.containsKey(nombre);        
     }*/
@@ -123,6 +125,32 @@ public class ManejadorCategoria {
     return mensaje; 
     }
     
+    public String obtenerPadre(String hijo){
+        String padre = null;
+        ResultSet rs;
+        Conexion conexion = new Conexion();
+        Connection con = conexion.getConnection();
+        Statement st;
+        String sql;
+        
+        sql = "SELECT padre FROM help4traveling.categorias WHERE nombre='" + hijo + "'";
+        
+        try{
+            st = con.createStatement();
+            rs = st.executeQuery(sql);
+            while (rs.next())
+                padre = rs.getString("padre");
+            rs.close();
+            st.close();
+            con.close();
+        }
+        catch(SQLException e){
+           System.out.println("No pude obtener categorias :(");
+        }
+	return padre;  
+    }    
+    
+    
     public List<String> obtenerCategoriasPadre(){
         List<String> listaCat = new LinkedList<String>();
         ResultSet rsCategorias;
@@ -142,6 +170,31 @@ public class ManejadorCategoria {
                 
             }
             rsCategorias.close();
+            st.close();
+            con.close();
+        }
+        catch(SQLException e){
+           System.out.println("No pude obtener categorias :(");
+        }
+	return listaCat;  
+    }
+    
+    public List<DtCategoria> listarCategorias(){
+        LinkedList<DtCategoria> listaCat = new LinkedList<DtCategoria>();
+        ResultSet rs;
+        Conexion conexion = new Conexion();
+        Connection con = conexion.getConnection();
+        Statement st;
+        String sql;
+        sql = "SELECT * FROM help4traveling.categorias";
+        try{
+            st = con.createStatement();
+            rs = st.executeQuery(sql);
+            while (rs.next()){
+                DtCategoria cat = new DtCategoria(rs.getString("nombre"),rs.getString("padre"));
+                listaCat.addLast(cat);                
+            }
+            rs.close();
             st.close();
             con.close();
         }
