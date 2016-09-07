@@ -5,10 +5,10 @@
  */
 package Vista;
 
+import Logica.DtItemReserva;
 import Logica.DtReserva;
 import Logica.Fabrica;
 import Logica.IControladorReserva;
-import Logica.ItemReserva;
 import java.util.Iterator;
 import java.util.List;
 import javax.swing.SwingConstants;
@@ -23,7 +23,7 @@ public class verInfoReserva extends javax.swing.JInternalFrame {
 
     private IControladorReserva IControlador;
     private List<DtReserva> listaReservas;
-    private List<ItemReserva> listaItems;
+    private List<DtItemReserva> listaItems;
     //private List<DtItems> listaItems;
     String[] colReservas = {"Número", "Fecha", "Estado", "Total", "Cliente"};
     String[] colItems = {"Nombre", "Cantidad", "Inicio", "Fin"};
@@ -66,10 +66,10 @@ public class verInfoReserva extends javax.swing.JInternalFrame {
             tableModelItems.getDataVector().removeAllElements();
 
             if (listaItems != null) {
-                Iterator<ItemReserva> it = this.listaItems.iterator();
+                Iterator<DtItemReserva> it = this.listaItems.iterator();
 
                 while (it.hasNext()) {
-                    ItemReserva item = it.next();
+                    DtItemReserva item = it.next();
                     Object[] fila = {//item.getId(),
                         item.getOferta().getNombre(),
                         item.getCantidad(),
@@ -262,7 +262,6 @@ public class verInfoReserva extends javax.swing.JInternalFrame {
             actualizarItems();
         }
     }//GEN-LAST:event_jTableResMouseClicked
-
 
     private void jButtonActualActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonActualActionPerformed
         this.IControlador.setReservasDB();

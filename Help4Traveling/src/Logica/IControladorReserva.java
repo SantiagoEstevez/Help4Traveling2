@@ -24,7 +24,7 @@ public interface IControladorReserva {
 
     public abstract List<DtReserva> listarReservas();
 
-    public abstract List<ItemReserva> listarItems(Integer reserva);
+    public abstract List<DtItemReserva> listarItems(Integer reserva);
 
     public abstract void altaDeReserva();
 

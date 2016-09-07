@@ -10,7 +10,6 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.TreeMap;
 
 public class ManejadorReserva {
 
@@ -44,23 +43,23 @@ public class ManejadorReserva {
         Statement st;
         ResultSet rsId;
         String sid;
-        
+
         sql = "INSERT INTO help4traveling.reservas (fecha,total,estado,cliente) "
-            + "VALUES ('" + nueva.getCreada() + "'," + nueva.getTotal() + ",'" + nueva.getEstado() + "','" + nueva.getCliente()+ "')";
-        
+                + "VALUES ('" + nueva.getCreada() + "'," + nueva.getTotal() + ",'" + nueva.getEstado() + "','" + nueva.getCliente() + "')";
+
         try {
             st = con.createStatement();
             st.executeUpdate(sql);
-            
+
             try {
                 sql = "SELECT MAX(numero) AS id FROM help4traveling.reservas";
                 rsId = st.executeQuery(sql);
                 rsId.next();
                 sid = rsId.getString("id");
-                
+
                 try {
-                    if (nueva.getItems().size()>0) {
-                        for(Map.Entry<Integer,ItemReserva> entry : nueva.getItems().entrySet()) {
+                    if (nueva.getItems().size() > 0) {
+                        for (Map.Entry<Integer, ItemReserva> entry : nueva.getItems().entrySet()) {
                             ItemReserva key = entry.getValue();
                             String oferta = key.getOferta().getNombre();
                             String proveedor = key.getOferta().getProveedor().getNombre();
@@ -68,21 +67,21 @@ public class ManejadorReserva {
                             String inicio = key.getInicio().getAno() + "-" + key.getInicio().getMes() + "-" + key.getInicio().getDia();
                             String fin = key.getFin().getAno() + "-" + key.getFin().getMes() + "-" + key.getFin().getDia();
 
-                            sql = "INSERT INTO help4traveling.reservasitems (reserva, oferta, proveedorOferta, cantidad, inicio, fin) " 
-                                + "VALUES (" + sid + ",'" + oferta + "','" + proveedor + "'," + cantidad + ",'" + inicio + "','" + fin + "')";
-                            
-                            st.executeUpdate(sql);                            
-                        }   
+                            sql = "INSERT INTO help4traveling.reservasitems (reserva, oferta, proveedorOferta, cantidad, inicio, fin) "
+                                    + "VALUES (" + sid + ",'" + oferta + "','" + proveedor + "'," + cantidad + ",'" + inicio + "','" + fin + "')";
+
+                            st.executeUpdate(sql);
+                        }
                         con.close();
                         st.close();
                         System.out.println("Reserva creada con exito :)");
                     }
                 } catch (SQLException e) {
                     System.out.println("No se pudo insertar item reserva :(");
-                }  
+                }
             } catch (SQLException e) {
                 System.out.println("No se pudo obtener id :(");
-            }          
+            }
         } catch (SQLException e) {
             System.out.println("No se pudo crear reserva :(");
         }
@@ -141,10 +140,14 @@ public class ManejadorReserva {
         return listares;
     }
 
-    public List<ItemReserva> listarItems(Integer reserva) {
-        List<ItemReserva> listaitems = new ArrayList<>();
-        listaitems = itemsId.get(reserva);
-        return listaitems;
+    public List<DtItemReserva> listarItems(Integer reserva) {
+        List<DtItemReserva> listaItems = new ArrayList<>();
+        Iterator<ItemReserva> iter = this.itemsId.get(reserva).iterator();
+        while (iter.hasNext()) {
+            ItemReserva item = iter.next();
+            listaItems.add(item.getDtItem());
+        }
+        return listaItems;
     }
 
     public void modificarEstadoReserva(Integer reserva, String estado) {
@@ -182,6 +185,33 @@ public class ManejadorReserva {
             listaDtRes.add(dtRes);
         }
         return listaDtRes;
+    }
+
+    /*
+    public List<DtItemReserva> getDtItems() {
+        List<DtItemReserva> listaDtItems = new LinkedList<>();
+        Iterator<ItemReserva> iterador = this.itemsId.values().iterator();
+        while (iterador.hasNext()) {
+            ItemReserva item = iterador.next();
+            DtItemReserva dtItem = item.getDtItem();
+            listaDtItems.add(dtItem);
+        }
+        return listaDtItems;
+    }
+     */
+    public List<DtItemReserva> getDtItems() {
+        List<DtItemReserva> listaDtItems = new LinkedList<>();
+        Iterator<List<ItemReserva>> iterlista = this.itemsId.values().iterator();
+        while (iterlista.hasNext()) {
+            List<ItemReserva> items = iterlista.next();
+            Iterator<ItemReserva> iteritem = items.iterator();
+            while (iteritem.hasNext()) {
+                ItemReserva item = iteritem.next();
+                DtItemReserva dtItem = item.getDtItem();
+                listaDtItems.add(dtItem);
+            }
+        }
+        return listaDtItems;
     }
 
     public ArrayList<DtReserva> listarReservasCliente(DtUsuario user) {
@@ -225,11 +255,10 @@ public class ManejadorReserva {
             Reserva res = iter.next();
             listaReservasCliente.add(res.getDtReserva());
         }
-        
+
         reservasId.values().clear();
         return listaReservasCliente;
-        
-        
+
     }
 
     public void setReservasDB() {
@@ -291,7 +320,7 @@ public class ManejadorReserva {
             st = con.createStatement();
             rsItems = st.executeQuery(sql);
 
-            System.out.print("Cargando Items ");
+            System.out.print("Cargando Items: ");
 
             while (rsItems.next()) {
 

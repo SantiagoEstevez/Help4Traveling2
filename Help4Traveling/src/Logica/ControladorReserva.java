@@ -53,7 +53,7 @@ public class ControladorReserva implements IControladorReserva {
         return mr.listarReservas();
     }
 
-    public List<ItemReserva> listarItems(Integer reserva) {
+    public List<DtItemReserva> listarItems(Integer reserva) {
         ManejadorReserva mr = ManejadorReserva.getInstance();
         return mr.listarItems(reserva);
     }

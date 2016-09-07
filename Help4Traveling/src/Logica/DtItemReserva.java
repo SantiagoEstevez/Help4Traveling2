@@ -9,7 +9,7 @@ package Logica;
  *
  * @author Leonardo
  */
-public class ItemReserva {
+public class DtItemReserva {
 
     private int id;
     private int cantidad;
@@ -17,11 +17,11 @@ public class ItemReserva {
     private Date fin;
     private Oferta oferta;
 
-    public ItemReserva() {
+    public DtItemReserva() {
 
     }
 
-    public ItemReserva(int id, int cantidad, Date inicio, Date fin, Oferta oferta) {
+    public DtItemReserva(int id, int cantidad, Date inicio, Date fin, Oferta oferta) {
         this.id = id;
         this.cantidad = cantidad;
         this.inicio = inicio;
@@ -50,30 +50,4 @@ public class ItemReserva {
         return this.oferta;
     }
 
-    //Seters
-    public void setCantidad(int cantidad) {
-        this.cantidad = cantidad;
-    }
-
-    public void setInicio(Date inicio) {
-        this.inicio = inicio;
-    }
-
-    public void setFin(Date fin) {
-        this.fin = fin;
-    }
-
-    public void setOferta(Oferta oferta) {
-        this.oferta = oferta;
-    }
-
-    public DtItemReserva getDtItem() {
-        DtItemReserva dti = new DtItemReserva(
-                this.id,
-                this.cantidad,
-                this.inicio,
-                this.fin,
-                this.oferta);
-        return dti;
-    }
 }
