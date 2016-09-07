@@ -31,7 +31,6 @@ import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JInternalFrame;
 import javax.swing.JOptionPane;
-import javax.swing.LookAndFeel;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.event.InternalFrameEvent;
@@ -54,12 +53,12 @@ public class Principal extends javax.swing.JFrame {
         initComponents();
         this.setLocationRelativeTo(null);
         this.fc_seleccionar_archivo.setVisible(false);
-        LookAndFeel laf = UIManager.getLookAndFeel();
         try {
             UIManager.setLookAndFeel(new javax.swing.plaf.nimbus.NimbusLookAndFeel());
         } catch (UnsupportedLookAndFeelException e) {
         }
         escritorio.updateUI();
+        jMenuBar1.updateUI();
     }
 
     public Principal(IControladorUsuario IControlador) {
