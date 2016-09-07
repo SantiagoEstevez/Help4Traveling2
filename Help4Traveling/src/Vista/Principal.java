@@ -9,10 +9,14 @@ import Logica.Conexion;
 import Logica.Fabrica;
 import Logica.IControladorUsuario;
 import Logica.ScriptRunner;
+import java.awt.AlphaComposite;
 import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.RenderingHints;
+import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -103,13 +107,28 @@ public class Principal extends javax.swing.JFrame {
         fc_seleccionar_archivo = new javax.swing.JFileChooser();
         jMenuItem1 = new javax.swing.JMenuItem();
         escritorio = new javax.swing.JDesktopPane() {
+            private Image resize(Image originalImage, int newWidth, int newHeight) {
+                int type = BufferedImage.TYPE_INT_ARGB;
+
+                BufferedImage resizedImage = new BufferedImage(newWidth, newHeight, type);
+                Graphics2D g = resizedImage.createGraphics();
+
+                g.setComposite(AlphaComposite.Src);
+                g.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+                g.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
+                g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+
+                g.drawImage(originalImage, 0, 0, newWidth, newHeight, this);
+                g.dispose();
+                return resizedImage;
+            }
+
             @Override
             protected void paintComponent(Graphics g)
             {
-                //scaled = image.getScaledInstance(getWidth(),getHeight(), Image.SCALE_FAST);
-                //icon = new ImageIcon(image);
+                scaled = resize(image, getWidth(), getHeight());
                 super.paintComponent(g);
-                g.drawImage(image, 0, 0, getWidth(), getHeight(), java.awt.Color.BLACK, null);
+                g.drawImage(scaled, 0, 0, getWidth(), getHeight(), java.awt.Color.BLACK, null);
             }
         };
         jMenuBar1 = new javax.swing.JMenuBar();
@@ -475,11 +494,15 @@ public class Principal extends javax.swing.JFrame {
             System.out.println("OK");
         } catch (IOException ex) {
             System.out.println("ERROR");
-            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+            Logger
+                    .getLogger(Principal.class
+                            .getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(this, "El script no pudo cargarse.", "Error", JOptionPane.ERROR_MESSAGE);
         } catch (SQLException ex) {
             System.out.println("ERROR");
-            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+            Logger
+                    .getLogger(Principal.class
+                            .getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(this, "El script no pudo ejecutarse.", "Error", JOptionPane.ERROR_MESSAGE);
         }
         this.setCursor(Cursor.getDefaultCursor());
@@ -499,16 +522,24 @@ public class Principal extends javax.swing.JFrame {
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
+
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Principal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Principal.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Principal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Principal.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Principal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Principal.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Principal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Principal.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
