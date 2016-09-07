@@ -163,4 +163,9 @@ public class ControladorServicio implements IControladorServicio  {
         
     }
     
+    public Servicio obtenerServicio(String nk){ 
+        return ManejadorServicio.getInstance().obtenerServicio(nk);
+    }
+            
+    
 }

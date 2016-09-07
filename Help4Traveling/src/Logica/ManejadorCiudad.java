@@ -14,32 +14,33 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-
 /**
  *
  * @author Leonardo
  */
 public class ManejadorCiudad {
+
     //Clase que conserva la colección global de las Ciudads del Sistema
-    private Map<String,Ciudad> ciudadesNom;
-    
+    private Map<String, Ciudad> ciudadesNom;
+
     private static ManejadorCiudad instancia = null;
-    
-    private ManejadorCiudad(){
-        ciudadesNom = new HashMap<String,Ciudad>();
+
+    private ManejadorCiudad() {
+        ciudadesNom = new HashMap<String, Ciudad>();
     }
-    
-    public static ManejadorCiudad getInstance(){
-        if (instancia == null)
+
+    public static ManejadorCiudad getInstance() {
+        if (instancia == null) {
             instancia = new ManejadorCiudad();
+        }
         return instancia;
     }
-    
-    public void agregarCiudad(Ciudad ciu){
+
+    public void agregarCiudad(Ciudad ciu) {
         String nombre = ciu.getNombre();
-        ciudadesNom.put(nombre,ciu);
+        ciudadesNom.put(nombre, ciu);
     }
-    
+
     public List<String> listarPaises() {
         ResultSet rs;
         List<String> lista = new LinkedList<String>();
@@ -47,7 +48,7 @@ public class ManejadorCiudad {
         Connection con = conexion.getConnection();
         Statement st;
         String sql = "SELECT * FROM help4traveling.paises ORDER BY nombre";
-        try{
+        try {
             st = con.createStatement();
             rs = st.executeQuery(sql);
             while (rs.next()) {
@@ -58,13 +59,12 @@ public class ManejadorCiudad {
             st.close();
             con.close();
             System.out.println("Paises cargados :)");
-        } 
-        catch (SQLException e){
+        } catch (SQLException e) {
             System.out.println("No pude cargar Paises :(");
         }
         return lista;
     }
-    
+
     public List<String> listarCiudadesPorPais(String nombre) {
         ResultSet rs;
         List<String> lista = new LinkedList<String>();
@@ -72,7 +72,7 @@ public class ManejadorCiudad {
         Connection con = conexion.getConnection();
         Statement st;
         String sql = "SELECT * FROM help4traveling.ciudades WHERE pais='" + nombre + "' ORDER BY nombre";
-        try{
+        try {
             st = con.createStatement();
             rs = st.executeQuery(sql);
             while (rs.next()) {
@@ -83,15 +83,13 @@ public class ManejadorCiudad {
             st.close();
             con.close();
             System.out.println("Paises cargados :)");
-        } 
-        catch (SQLException e){
+        } catch (SQLException e) {
             System.out.println("No pude cargar Paises :(");
         }
         return lista;
     }
-    
-       
-    public boolean existeCiudad(String nombre/*, String pais*/){
+
+    public boolean existeCiudad(String nombre/*, String pais*/) {
         boolean existe;
         ResultSet rs;
         Ciudad ciu = null;
@@ -99,53 +97,54 @@ public class ManejadorCiudad {
         Connection con = conexion.getConnection();
         Statement st;
         //String sql = "SELECT * FROM mydb.ciudades, mydb.paises WHERE Pais='" + pais + "' AND Nombre='" + nombre + "')"; 
-        String sql = "SELECT * FROM help4traveling.ciudades WHERE nombre='" + nombre + "'"; 
+        String sql = "SELECT * FROM help4traveling.ciudades WHERE nombre='" + nombre + "'";
         try {
             st = con.createStatement();
-            rs = st.executeQuery(sql); 
-            Pais p = new Pais(rs.getString("pais"),null);
-            ciu = new Ciudad(rs.getString("nombre"),p);
+            rs = st.executeQuery(sql);
+            Pais p = new Pais(rs.getString("pais"), null);
+            ciu = new Ciudad(rs.getString("nombre"), p);
             rs.close();
             con.close();
-            st.close();           
-        } catch (SQLException e){
+            st.close();
+        } catch (SQLException e) {
             System.out.println("No obtuve ciudad :(");
         }
-        if (ciu == null)
+        if (ciu == null) {
             existe = false;
-        else existe = true;
-        return existe; 
+        } else {
+            existe = true;
+        }
+        return existe;
         //return ciudadesNom.containsKey(nombre);        
     }
-    
-    public Ciudad obtenerCiudad(String nombre/*, String pais*/){
+
+    public Ciudad obtenerCiudad(String nombre/*, String pais*/) {
         ResultSet rs;
         Ciudad ciu = null;
         Conexion conexion = new Conexion();
         Connection con = conexion.getConnection();
         Statement st;
-        String sql = "SELECT * FROM help4traveling.ciudades WHERE nombre='" + nombre + "'"; 
+        String sql = "SELECT * FROM help4traveling.ciudades WHERE nombre='" + nombre + "'";
         System.out.println(sql);
         try {
-            st = con.createStatement();  
+            st = con.createStatement();
             System.out.println("Llego aca");
-            rs = st.executeQuery(sql); 
-            System.out.println("Llego aca1");
-            System.out.println(rs.getString("ciudad"));
-            System.out.println("Llego aca2");
-            System.out.println(rs.getString("pais"));
-            System.out.println("Llego aca2");
-            Pais p = new Pais(rs.getString("pais"),null);
-            System.out.println("Llego aca2");
-            ciu = new Ciudad(rs.getString("nombre"),p);
+            rs = st.executeQuery(sql);
+            rs.next();
+            String pais = rs.getString("pais");
+            String ciudad = rs.getString("nombre");
+            Pais p = new Pais(rs.getString("pais"), null);
+            ciu = new Ciudad(ciudad, p);
             rs.close();
             con.close();
-            st.close();           
+            st.close();
+
         } catch (SQLException e) {
             System.out.println("No obtuve ciudad :(");
+            System.err.println(e.getMessage());
         }
-        return ciu; 
+        return ciu;
         //return ((Ciudad) ciudadesNom.get(nombre));
     }
-    
+
 }

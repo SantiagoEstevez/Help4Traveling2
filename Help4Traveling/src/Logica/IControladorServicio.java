@@ -20,5 +20,6 @@ public interface IControladorServicio {
        public abstract List<String> listarServiciosCategoria(String cat);
        public abstract void verInfodeServicio(String nombre, String Proevedor);
        public abstract void verInfoDePromocion();
+       public abstract Servicio obtenerServicio(String nk);
     
 }

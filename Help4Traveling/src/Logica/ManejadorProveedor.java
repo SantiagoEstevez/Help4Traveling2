@@ -97,19 +97,20 @@ public class ManejadorProveedor {
         Connection con = conex.getConnection();
         Statement st;
         //String sql1 = "SELECT * FROM mydb.usuarios WHERE Nickname='" + nickname + "' AND Empresa <> NULL AND Link <> NULL)"; 
-        String sql1 = "SELECT * FROM help4traveling.usuarios WHERE nickname=" + nickname  ;  
+        String sql1 = "SELECT * FROM help4traveling.usuarios WHERE nickname='" + nickname +"'" ;  
         try {
             st = con.createStatement();
             rs = st.executeQuery(sql1);
             if (rs.next()) {
                 Date fecha = new Date();
-                p = new Proveedor(rs.getString("nombre"),rs.getString("apellido"),rs.getString("nickname"),rs.getString("correo"),fecha,"imagen","empresa","link");
+                p = new Proveedor(rs.getString("nombre"),rs.getString("apellido"),rs.getString("nickname"),rs.getString("email"),fecha,"imagen","empresa","link");
             }            
             rs.close();
             con.close();
             st.close();           
         } catch (SQLException e){
             System.out.println("No obtuve proveedor :(");
+            System.err.println(e.getMessage());
         }
         return p;
         //return ((Proveedor) proveedoresNK.get(nickname));

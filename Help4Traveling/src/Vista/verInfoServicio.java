@@ -112,11 +112,11 @@ public class verInfoServicio extends javax.swing.JInternalFrame {
 
             },
             new String [] {
-                "servicio"
+                "servicio", "proveedor", "precio", "origen"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -137,7 +137,9 @@ public class verInfoServicio extends javax.swing.JInternalFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(52, 52, 52)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 221, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 398, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
@@ -177,20 +179,24 @@ public class verInfoServicio extends javax.swing.JInternalFrame {
             List<String> listaServicios = fabrica.getIControladorServicio().listarServiciosCategoria(node.toString());
             Iterator<String> iter = listaServicios.iterator();
 
-            String[] columnasServicios = {"servicio"};
+            String[] columnasServicios = {"servicio","proveedor","precio","origen"};
             String[] registrosServicios = new String[4];
             modeloTablaSer = new DefaultTableModel(null, columnasServicios);
+          
 
             while (iter.hasNext()) {
                 String ser = iter.next();
-                System.out.println(ser.toString());
-                registrosServicios[0] = ser.toString();
-                /*
-                System.out.println(registrosServicios[0]);
-                registrosServicios[1] = Float.toString(ser.getPrecio());
-                registrosServicios[2] = ser.getNomCiuOrigen().toString();
-                registrosServicios[3] = ser.getNomCiuDestino().toString();
-                */
+                Servicio servicio = fabrica.getIControladorServicio().obtenerServicio(ser);
+                System.out.println(servicio.getNombre());
+                registrosServicios[0] = servicio.getNombre();
+                System.out.println(servicio.getProveedor().getNickname());
+                registrosServicios[1] = servicio.getProveedor().getNickname();
+                
+                //System.out.println(registrosServicios[0]);
+                registrosServicios[2] = Float.toString(servicio.getPrecio());
+                registrosServicios[3] = servicio.getOrigen().getNombre();
+                //registrosServicios[3] = servicio.getDestino().toString();
+                
                 modeloTablaSer.addRow(registrosServicios);
             }
         }

@@ -80,29 +80,40 @@ public class ManejadorServicio {
         Conexion conex = new Conexion();
         Connection con = conex.getConnection();
         Statement st;
-        String sql1 = "SELECT * FROM help4traveling.servicios S,help4traveling.serviciosimagenes SI, help4traveling.servicioscategorias SC WHERE S.nombre=SI.servicio AND S.nombre=SC.servicio AND S.nombre='" + nk + "'";
+        String sql1 = "SELECT * FROM help4traveling.servicios S inner join help4traveling.servicioscategorias SC on S.nombre = SC.servicio WHERE S.nombre ='" + nk + "'";
         Servicio nuevo = new Servicio();
         try {
             st = con.createStatement();
             rsServicio = st.executeQuery(sql1);
+            rsServicio.next();
             String nombre = rsServicio.getString("nombre");
             String proveedor = rsServicio.getString("proveedor");
             String descripcion = rsServicio.getString("descripcion");
             String precio = rsServicio.getString("precio");
             String origen = rsServicio.getString("origen");
             String destino = rsServicio.getString("destino");
-            String imagen = rsServicio.getString("imagen");
+            //String imagen = rsServicio.getString("imagen");
             String categoria = rsServicio.getString("categoria");
 
             nuevo.setDescripcion(descripcion);
             nuevo.setNombre(nombre);
-            Ciudad ori = ManejadorCiudad.getInstance().obtenerCiudad(origen);
-            Ciudad dest = ManejadorCiudad.getInstance().obtenerCiudad(destino);
+            Proveedor prov = ManejadorProveedor.getInstance().obtenerProveedor(proveedor);
+            nuevo.setProveedor(prov);
+            System.out.println(prov.getNickname());
 
-            nuevo.setDestino(dest);
+            Ciudad ori = ManejadorCiudad.getInstance().obtenerCiudad(origen);
+
+            Ciudad dest = null;
+            if (!(destino == null)) {
+
+                dest = ManejadorCiudad.getInstance().obtenerCiudad(destino);
+                nuevo.setDestino(dest);
+            }
+
             nuevo.setOrigen(ori);
+
             List<String> img = new LinkedList<String>();
-            img.add(imagen);
+            img.add("");
             nuevo.setImagenes(img);
             HashMap<String, Categoria> cat = new HashMap<String, Categoria>();
             Categoria cate = new CatHoja(categoria, "sin padrepor ahora");
@@ -114,7 +125,8 @@ public class ManejadorServicio {
             con.close();
             st.close();
         } catch (SQLException e) {
-            System.out.println("No exite servicio :(");
+            System.out.println("No existe servicio :(");
+            System.err.println(e.getMessage());
         }
         return nuevo;
     }
@@ -128,7 +140,7 @@ public class ManejadorServicio {
         Connection con = conexion.getConnection();
         Statement st;
 
-        sql = "SELECT * FROM help4traveling.Servicios WHERE nombre='" + nombre + "' and proveedor='" + Proveedor + "'";
+        sql = "SELECT * FROM help4traveling.servicios WHERE nombre='" + nombre + "' and proveedor='" + Proveedor + "'";
 
         try {
             st = con.createStatement();
@@ -215,34 +227,32 @@ public class ManejadorServicio {
         return listaServicios;
     }
 
-    public List<String> listarServiciosCategoria(String categoria){
+    public List<String> listarServiciosCategoria(String categoria) {
         ResultSet rsServicios;
         conexion = new Conexion();
         Connection con = conexion.getConnection();
         Statement st;
         String sql;
-        
+
         List<String> listaServicios = new LinkedList<String>();
-        sql = "SELECT * FROM help4traveling.servicioscategorias WHERE categoria='" + categoria +"'";
+        sql = "SELECT * FROM help4traveling.servicioscategorias WHERE categoria='" + categoria + "'";
         System.out.println("entre al listar servicios");
-        try{
-             
+        try {
+
             st = con.createStatement();
             rsServicios = st.executeQuery(sql);
-            
-            while (rsServicios.next()){
-                listaServicios.add(rsServicios.getString("servicio"));
-                System.out.println("liste un servicio");
-            }
-            
-        }catch(SQLException e){
-           System.out.println("No pude cargar servicios");
-           System.err.println(e.getMessage()); 
-        }
-        
-        return listaServicios;
-    }   
 
+            while (rsServicios.next()) {
+                listaServicios.add(rsServicios.getString("servicio"));
+            }
+
+        } catch (SQLException e) {
+            System.out.println("No pude cargar servicios");
+            System.err.println(e.getMessage());
+        }
+
+        return listaServicios;
+    }
 
     public ArrayList<DtServicio> listarServiciosProveedor(DtUsuario user) {
         conexion = new Conexion();
@@ -324,7 +334,6 @@ public class ManejadorServicio {
                 sql = "INSERT INTO help4traveling.serviciosimagenes (servicio,imagen) VALUES ('" + serv.getNombre() + "','" + iteri.next() + "')";
                 try {
                     st = con.createStatement();
-                    System.out.println("antes de imagen");
                     st.executeUpdate(sql);
                     st.close();
                     //con.close();                
