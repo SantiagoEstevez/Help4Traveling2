@@ -280,7 +280,7 @@
         </Property>
       </Properties>
       <AuxValues>
-        <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JDesktopPane() {&#xa;    @Override&#xa;    protected void paintComponent(Graphics g)&#xa;    {&#xa;        scaled = image.getScaledInstance(getWidth(),getHeight(), Image.SCALE_AREA_AVERAGING);&#xa;        icon = new ImageIcon(scaled);&#xa;        //super.paintComponent(g);&#xa;        g.drawImage(icon.getImage(), 0, 0, getWidth(), getHeight(), null);&#xa;    }&#xa;}"/>
+        <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JDesktopPane() {&#xa;    @Override&#xa;    protected void paintComponent(Graphics g)&#xa;    {&#xa;        //scaled = image.getScaledInstance(getWidth(),getHeight(), Image.SCALE_FAST);&#xa;        //icon = new ImageIcon(image);&#xa;        super.paintComponent(g);&#xa;        g.drawImage(image, 0, 0, getWidth(), getHeight(), java.awt.Color.BLACK, null);&#xa;    }&#xa;}"/>
         <AuxValue name="JavaCodeGenerator_DeclarationPost" type="java.lang.String" value="private ImageIcon icon = new ImageIcon(getClass().getResource(&quot;/help4traveling/fondo.png&quot;));&#xa;private Image image = icon.getImage();&#xa;private Image scaled;"/>
         <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
       </AuxValues>

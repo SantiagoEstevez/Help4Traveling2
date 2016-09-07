@@ -106,10 +106,10 @@ public class Principal extends javax.swing.JFrame {
             @Override
             protected void paintComponent(Graphics g)
             {
-                scaled = image.getScaledInstance(getWidth(),getHeight(), Image.SCALE_AREA_AVERAGING);
-                icon = new ImageIcon(scaled);
-                //super.paintComponent(g);
-                g.drawImage(icon.getImage(), 0, 0, getWidth(), getHeight(), null);
+                //scaled = image.getScaledInstance(getWidth(),getHeight(), Image.SCALE_FAST);
+                //icon = new ImageIcon(image);
+                super.paintComponent(g);
+                g.drawImage(image, 0, 0, getWidth(), getHeight(), java.awt.Color.BLACK, null);
             }
         };
         jMenuBar1 = new javax.swing.JMenuBar();
@@ -459,7 +459,7 @@ public class Principal extends javax.swing.JFrame {
         escritorio.add(infoServicio);
         centrarVentana(infoServicio);
         infoServicio.setVisible(true);
-        
+
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     public void cargarDatos() {
