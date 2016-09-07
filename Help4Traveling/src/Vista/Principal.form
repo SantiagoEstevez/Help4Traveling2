@@ -14,7 +14,7 @@
     </Component>
     <Menu class="javax.swing.JMenuBar" name="jMenuBar1">
       <SubComponents>
-        <Menu class="javax.swing.JMenu" name="jMenu1">
+        <Menu class="javax.swing.JMenu" name="jMenuInicio">
           <Properties>
             <Property name="text" type="java.lang.String" value="Inicio"/>
           </Properties>
@@ -81,7 +81,7 @@
             </MenuItem>
           </SubComponents>
         </Menu>
-        <Menu class="javax.swing.JMenu" name="jMenu2">
+        <Menu class="javax.swing.JMenu" name="jMenuRegistros">
           <Properties>
             <Property name="text" type="java.lang.String" value="Registros"/>
           </Properties>
@@ -89,7 +89,7 @@
             <Property name="AccessibleContext.accessibleDescription" type="java.lang.String" value=""/>
           </AccessibilityProperties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenu2ActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuRegistrosActionPerformed"/>
           </Events>
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="bm_registrar_cliente">
@@ -164,7 +164,7 @@
             </MenuItem>
           </SubComponents>
         </Menu>
-        <Menu class="javax.swing.JMenu" name="jMenu3">
+        <Menu class="javax.swing.JMenu" name="jMenuConsultas">
           <Properties>
             <Property name="text" type="java.lang.String" value="Consultas"/>
           </Properties>
@@ -280,8 +280,7 @@
         </Property>
       </Properties>
       <AuxValues>
-        <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JDesktopPane() {&#xa;    private Image resize(Image originalImage, int newWidth, int newHeight) {&#xa;        int type = BufferedImage.TYPE_INT_ARGB;&#xa;&#xa;        BufferedImage resizedImage = new BufferedImage(newWidth, newHeight, type);&#xa;        Graphics2D g = resizedImage.createGraphics();&#xa;&#xa;        g.setComposite(AlphaComposite.Src);&#xa;        g.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);&#xa;        g.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);&#xa;        g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);&#xa;&#xa;        g.drawImage(originalImage, 0, 0, newWidth, newHeight, this);&#xa;        g.dispose();&#xa;        return resizedImage;&#xa;    }&#xa;&#xa;    @Override&#xa;    protected void paintComponent(Graphics g)&#xa;    {&#xa;        scaled = resize(image, getWidth(), getHeight());&#xa;        super.paintComponent(g);&#xa;        g.drawImage(scaled, 0, 0, getWidth(), getHeight(), java.awt.Color.BLACK, null);&#xa;    }&#xa;}"/>
-        <AuxValue name="JavaCodeGenerator_DeclarationPost" type="java.lang.String" value="private ImageIcon icon = new ImageIcon(getClass().getResource(&quot;/help4traveling/fondo.png&quot;));&#xa;private Image image = icon.getImage();&#xa;private Image scaled;"/>
+        <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JDesktopPane() {&#xa;    private BufferedImage toBufferedImage(Image img)&#xa;    {&#xa;        if (img instanceof BufferedImage)&#xa;        {&#xa;            return (BufferedImage) img;&#xa;        }&#xa;&#xa;        // Create a buffered image with transparency&#xa;        BufferedImage bimage = new BufferedImage(img.getWidth(null), img.getHeight(null), BufferedImage.TYPE_INT_ARGB);&#xa;&#xa;        // Draw the image on to the buffered image&#xa;        Graphics2D bGr = bimage.createGraphics();&#xa;        bGr.drawImage(img, 0, 0, null);&#xa;        bGr.dispose();&#xa;&#xa;        // Return the buffered image&#xa;        return bimage;&#xa;    }&#xa;    private BufferedImage getScaledImage(BufferedImage image, int width, int height) {&#xa;        int imageWidth  = image.getWidth();&#xa;        int imageHeight = image.getHeight();&#xa;&#xa;        double scaleX = (double)width/imageWidth;&#xa;        double scaleY = (double)height/imageHeight;&#xa;        AffineTransform scaleTransform = AffineTransform.getScaleInstance(scaleX, scaleY);&#xa;        AffineTransformOp bilinearScaleOp = new AffineTransformOp(scaleTransform, AffineTransformOp.TYPE_BILINEAR);&#xa;&#xa;        return bilinearScaleOp.filter(&#xa;            image,&#xa;            new BufferedImage(width, height, image.getType()));&#xa;    }&#xa;    private Image resize(Image originalImage, int newWidth, int newHeight) {&#xa;        int type = BufferedImage.TYPE_INT_ARGB;&#xa;&#xa;        BufferedImage resizedImage = new BufferedImage(newWidth, newHeight, type);&#xa;        Graphics2D g = resizedImage.createGraphics();&#xa;&#xa;        g.setComposite(AlphaComposite.Src);&#xa;        g.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);&#xa;        g.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);&#xa;        g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);&#xa;&#xa;        g.drawImage(originalImage, 0, 0, newWidth, newHeight, this);&#xa;        g.dispose();&#xa;        return resizedImage;&#xa;    }&#xa;&#xa;    @Override&#xa;    protected void paintComponent(Graphics g)&#xa;    {&#xa;        Image image = new ImageIcon(getClass().getResource(&quot;/help4traveling/fondo.png&quot;)).getImage();&#xa;        //BufferedImage bimage = toBufferedImage(image);&#xa;        //g.drawImage((Image)getScaledImage(bimage,getWidth(),getHeight()), 0, 0, java.awt.Color.BLACK, null);&#xa;        g.drawImage(resize(image,getWidth(),getHeight()), 0, 0, java.awt.Color.BLACK, null);&#xa;    }&#xa;}"/>
         <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
       </AuxValues>
 

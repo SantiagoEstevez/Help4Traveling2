@@ -16,6 +16,8 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.RenderingHints;
+import java.awt.geom.AffineTransform;
+import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.File;
@@ -29,6 +31,9 @@ import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JInternalFrame;
 import javax.swing.JOptionPane;
+import javax.swing.LookAndFeel;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.event.InternalFrameEvent;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
@@ -49,7 +54,12 @@ public class Principal extends javax.swing.JFrame {
         initComponents();
         this.setLocationRelativeTo(null);
         this.fc_seleccionar_archivo.setVisible(false);
-
+        LookAndFeel laf = UIManager.getLookAndFeel();
+        try {
+            UIManager.setLookAndFeel(new javax.swing.plaf.nimbus.NimbusLookAndFeel());
+        } catch (UnsupportedLookAndFeelException e) {
+        }
+        escritorio.updateUI();
     }
 
     public Principal(IControladorUsuario IControlador) {
@@ -107,6 +117,37 @@ public class Principal extends javax.swing.JFrame {
         fc_seleccionar_archivo = new javax.swing.JFileChooser();
         jMenuItem1 = new javax.swing.JMenuItem();
         escritorio = new javax.swing.JDesktopPane() {
+            private BufferedImage toBufferedImage(Image img)
+            {
+                if (img instanceof BufferedImage)
+                {
+                    return (BufferedImage) img;
+                }
+
+                // Create a buffered image with transparency
+                BufferedImage bimage = new BufferedImage(img.getWidth(null), img.getHeight(null), BufferedImage.TYPE_INT_ARGB);
+
+                // Draw the image on to the buffered image
+                Graphics2D bGr = bimage.createGraphics();
+                bGr.drawImage(img, 0, 0, null);
+                bGr.dispose();
+
+                // Return the buffered image
+                return bimage;
+            }
+            private BufferedImage getScaledImage(BufferedImage image, int width, int height) {
+                int imageWidth  = image.getWidth();
+                int imageHeight = image.getHeight();
+
+                double scaleX = (double)width/imageWidth;
+                double scaleY = (double)height/imageHeight;
+                AffineTransform scaleTransform = AffineTransform.getScaleInstance(scaleX, scaleY);
+                AffineTransformOp bilinearScaleOp = new AffineTransformOp(scaleTransform, AffineTransformOp.TYPE_BILINEAR);
+
+                return bilinearScaleOp.filter(
+                    image,
+                    new BufferedImage(width, height, image.getType()));
+            }
             private Image resize(Image originalImage, int newWidth, int newHeight) {
                 int type = BufferedImage.TYPE_INT_ARGB;
 
@@ -126,20 +167,21 @@ public class Principal extends javax.swing.JFrame {
             @Override
             protected void paintComponent(Graphics g)
             {
-                scaled = resize(image, getWidth(), getHeight());
-                super.paintComponent(g);
-                g.drawImage(scaled, 0, 0, getWidth(), getHeight(), java.awt.Color.BLACK, null);
+                Image image = new ImageIcon(getClass().getResource("/help4traveling/fondo.png")).getImage();
+                //BufferedImage bimage = toBufferedImage(image);
+                //g.drawImage((Image)getScaledImage(bimage,getWidth(),getHeight()), 0, 0, java.awt.Color.BLACK, null);
+                g.drawImage(resize(image,getWidth(),getHeight()), 0, 0, java.awt.Color.BLACK, null);
             }
         };
         jMenuBar1 = new javax.swing.JMenuBar();
-        jMenu1 = new javax.swing.JMenu();
+        jMenuInicio = new javax.swing.JMenu();
         jMenuItemCargar = new javax.swing.JMenuItem();
         jSeparator3 = new javax.swing.JPopupMenu.Separator();
         jMenuItemCerrar = new javax.swing.JMenuItem();
         jMenuItemCerrarAll = new javax.swing.JMenuItem();
         jSeparator2 = new javax.swing.JPopupMenu.Separator();
         jMenuItemSalir = new javax.swing.JMenuItem();
-        jMenu2 = new javax.swing.JMenu();
+        jMenuRegistros = new javax.swing.JMenu();
         bm_registrar_cliente = new javax.swing.JMenuItem();
         bm_registrar_servicio = new javax.swing.JMenuItem();
         jMenuItem2 = new javax.swing.JMenuItem();
@@ -148,7 +190,7 @@ public class Principal extends javax.swing.JFrame {
         jMenuItemEstado = new javax.swing.JMenuItem();
         jSeparator1 = new javax.swing.JPopupMenu.Separator();
         jMenuItemCancelar = new javax.swing.JMenuItem();
-        jMenu3 = new javax.swing.JMenu();
+        jMenuConsultas = new javax.swing.JMenu();
         bm_verInfoCliente = new javax.swing.JMenuItem();
         VerInfo_promo = new javax.swing.JMenuItem();
         bm_verInfoProveedor = new javax.swing.JMenuItem();
@@ -178,7 +220,7 @@ public class Principal extends javax.swing.JFrame {
             .addGap(0, 540, Short.MAX_VALUE)
         );
 
-        jMenu1.setText("Inicio");
+        jMenuInicio.setText("Inicio");
 
         jMenuItemCargar.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_O, java.awt.event.InputEvent.CTRL_MASK));
         jMenuItemCargar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/db-icon.png"))); // NOI18N
@@ -188,8 +230,8 @@ public class Principal extends javax.swing.JFrame {
                 jMenuItemCargarActionPerformed(evt);
             }
         });
-        jMenu1.add(jMenuItemCargar);
-        jMenu1.add(jSeparator3);
+        jMenuInicio.add(jMenuItemCargar);
+        jMenuInicio.add(jSeparator3);
 
         jMenuItemCerrar.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_W, java.awt.event.InputEvent.CTRL_MASK));
         jMenuItemCerrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/win-icon.png"))); // NOI18N
@@ -199,7 +241,7 @@ public class Principal extends javax.swing.JFrame {
                 jMenuItemCerrarActionPerformed(evt);
             }
         });
-        jMenu1.add(jMenuItemCerrar);
+        jMenuInicio.add(jMenuItemCerrar);
 
         jMenuItemCerrarAll.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_W, java.awt.event.InputEvent.SHIFT_MASK | java.awt.event.InputEvent.CTRL_MASK));
         jMenuItemCerrarAll.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/win-icon.png"))); // NOI18N
@@ -209,8 +251,8 @@ public class Principal extends javax.swing.JFrame {
                 jMenuItemCerrarAllActionPerformed(evt);
             }
         });
-        jMenu1.add(jMenuItemCerrarAll);
-        jMenu1.add(jSeparator2);
+        jMenuInicio.add(jMenuItemCerrarAll);
+        jMenuInicio.add(jSeparator2);
 
         jMenuItemSalir.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_Q, java.awt.event.InputEvent.CTRL_MASK));
         jMenuItemSalir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/check-icon.png"))); // NOI18N
@@ -220,14 +262,14 @@ public class Principal extends javax.swing.JFrame {
                 jMenuItemSalirActionPerformed(evt);
             }
         });
-        jMenu1.add(jMenuItemSalir);
+        jMenuInicio.add(jMenuItemSalir);
 
-        jMenuBar1.add(jMenu1);
+        jMenuBar1.add(jMenuInicio);
 
-        jMenu2.setText("Registros");
-        jMenu2.addActionListener(new java.awt.event.ActionListener() {
+        jMenuRegistros.setText("Registros");
+        jMenuRegistros.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenu2ActionPerformed(evt);
+                jMenuRegistrosActionPerformed(evt);
             }
         });
 
@@ -238,7 +280,7 @@ public class Principal extends javax.swing.JFrame {
                 bm_registrar_clienteActionPerformed(evt);
             }
         });
-        jMenu2.add(bm_registrar_cliente);
+        jMenuRegistros.add(bm_registrar_cliente);
 
         bm_registrar_servicio.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/add-icon.png"))); // NOI18N
         bm_registrar_servicio.setText("Registrar Servicio");
@@ -247,7 +289,7 @@ public class Principal extends javax.swing.JFrame {
                 bm_registrar_servicioActionPerformed(evt);
             }
         });
-        jMenu2.add(bm_registrar_servicio);
+        jMenuRegistros.add(bm_registrar_servicio);
 
         jMenuItem2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/add-icon.png"))); // NOI18N
         jMenuItem2.setText("Alta Categoria");
@@ -256,7 +298,7 @@ public class Principal extends javax.swing.JFrame {
                 jMenuItem2ActionPerformed(evt);
             }
         });
-        jMenu2.add(jMenuItem2);
+        jMenuRegistros.add(jMenuItem2);
 
         bm_registrar_reserva.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/add-icon.png"))); // NOI18N
         bm_registrar_reserva.setText("Registrar Reserva");
@@ -265,8 +307,8 @@ public class Principal extends javax.swing.JFrame {
                 bm_registrar_reservaActionPerformed(evt);
             }
         });
-        jMenu2.add(bm_registrar_reserva);
-        jMenu2.add(jSeparator4);
+        jMenuRegistros.add(bm_registrar_reserva);
+        jMenuRegistros.add(jSeparator4);
 
         jMenuItemEstado.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/edit-icon.png"))); // NOI18N
         jMenuItemEstado.setText("Modificar Reserva");
@@ -275,8 +317,8 @@ public class Principal extends javax.swing.JFrame {
                 jMenuItemEstadoActionPerformed(evt);
             }
         });
-        jMenu2.add(jMenuItemEstado);
-        jMenu2.add(jSeparator1);
+        jMenuRegistros.add(jMenuItemEstado);
+        jMenuRegistros.add(jSeparator1);
 
         jMenuItemCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/delete-icon.png"))); // NOI18N
         jMenuItemCancelar.setText("Cancelar Reserva");
@@ -285,12 +327,12 @@ public class Principal extends javax.swing.JFrame {
                 jMenuItemCancelarActionPerformed(evt);
             }
         });
-        jMenu2.add(jMenuItemCancelar);
+        jMenuRegistros.add(jMenuItemCancelar);
 
-        jMenuBar1.add(jMenu2);
-        jMenu2.getAccessibleContext().setAccessibleDescription("");
+        jMenuBar1.add(jMenuRegistros);
+        jMenuRegistros.getAccessibleContext().setAccessibleDescription("");
 
-        jMenu3.setText("Consultas");
+        jMenuConsultas.setText("Consultas");
 
         bm_verInfoCliente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/info-icon.png"))); // NOI18N
         bm_verInfoCliente.setText("VerInfo Cliente");
@@ -299,7 +341,7 @@ public class Principal extends javax.swing.JFrame {
                 bm_verInfoClienteActionPerformed(evt);
             }
         });
-        jMenu3.add(bm_verInfoCliente);
+        jMenuConsultas.add(bm_verInfoCliente);
 
         VerInfo_promo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/info-icon.png"))); // NOI18N
         VerInfo_promo.setText("VerInfo Promocion");
@@ -309,7 +351,7 @@ public class Principal extends javax.swing.JFrame {
                 VerInfo_promoActionPerformed(evt);
             }
         });
-        jMenu3.add(VerInfo_promo);
+        jMenuConsultas.add(VerInfo_promo);
 
         bm_verInfoProveedor.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/info-icon.png"))); // NOI18N
         bm_verInfoProveedor.setText("VerInfo Proveedor");
@@ -318,7 +360,7 @@ public class Principal extends javax.swing.JFrame {
                 bm_verInfoProveedorActionPerformed(evt);
             }
         });
-        jMenu3.add(bm_verInfoProveedor);
+        jMenuConsultas.add(bm_verInfoProveedor);
 
         jMenuItemVerRes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/info-icon.png"))); // NOI18N
         jMenuItemVerRes.setText("VerInfo Reserva");
@@ -327,7 +369,7 @@ public class Principal extends javax.swing.JFrame {
                 jMenuItemVerResActionPerformed(evt);
             }
         });
-        jMenu3.add(jMenuItemVerRes);
+        jMenuConsultas.add(jMenuItemVerRes);
 
         jMenuItem3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/info-icon.png"))); // NOI18N
         jMenuItem3.setText("VerInfo Servicio");
@@ -336,9 +378,9 @@ public class Principal extends javax.swing.JFrame {
                 jMenuItem3ActionPerformed(evt);
             }
         });
-        jMenu3.add(jMenuItem3);
+        jMenuConsultas.add(jMenuItem3);
 
-        jMenuBar1.add(jMenu3);
+        jMenuBar1.add(jMenuConsultas);
 
         setJMenuBar(jMenuBar1);
 
@@ -364,10 +406,10 @@ public class Principal extends javax.swing.JFrame {
         fAltaUsuario.setVisible(true);
     }//GEN-LAST:event_bm_registrar_clienteActionPerformed
 
-    private void jMenu2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu2ActionPerformed
+    private void jMenuRegistrosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuRegistrosActionPerformed
         // TODO add your handling code here:
 
-    }//GEN-LAST:event_jMenu2ActionPerformed
+    }//GEN-LAST:event_jMenuRegistrosActionPerformed
 
     private void bm_registrar_servicioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bm_registrar_servicioActionPerformed
         // TODO add your handling code here:
@@ -559,14 +601,10 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenuItem bm_verInfoCliente;
     private javax.swing.JMenuItem bm_verInfoProveedor;
     public static javax.swing.JDesktopPane escritorio;
-    private ImageIcon icon = new ImageIcon(getClass().getResource("/help4traveling/fondo.png"));
-    private Image image = icon.getImage();
-    private Image scaled;
     private javax.swing.JFileChooser fc_seleccionar_archivo;
-    private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu2;
-    private javax.swing.JMenu jMenu3;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenu jMenuConsultas;
+    private javax.swing.JMenu jMenuInicio;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
@@ -577,6 +615,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItemEstado;
     private javax.swing.JMenuItem jMenuItemSalir;
     private javax.swing.JMenuItem jMenuItemVerRes;
+    private javax.swing.JMenu jMenuRegistros;
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JPopupMenu.Separator jSeparator2;
     private javax.swing.JPopupMenu.Separator jSeparator3;
