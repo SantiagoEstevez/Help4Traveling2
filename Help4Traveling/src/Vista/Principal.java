@@ -106,8 +106,10 @@ public class Principal extends javax.swing.JFrame {
             @Override
             protected void paintComponent(Graphics g)
             {
-                super.paintComponent(g);
-                g.drawImage(image, 0, 0, getWidth(), getHeight(), null);
+                scaled = image.getScaledInstance(getWidth(),getHeight(), Image.SCALE_AREA_AVERAGING);
+                icon = new ImageIcon(scaled);
+                //super.paintComponent(g);
+                g.drawImage(icon.getImage(), 0, 0, getWidth(), getHeight(), null);
             }
         };
         jMenuBar1 = new javax.swing.JMenuBar();
@@ -139,16 +141,21 @@ public class Principal extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Help4Traveling");
+        setIconImage(new javax.swing.ImageIcon(getClass().getResource("/Iconos/logo-icon.png")).getImage());
+        setMinimumSize(new java.awt.Dimension(640, 360));
+
+        escritorio.setMinimumSize(new java.awt.Dimension(640, 360));
+        escritorio.setPreferredSize(new java.awt.Dimension(960, 540));
 
         javax.swing.GroupLayout escritorioLayout = new javax.swing.GroupLayout(escritorio);
         escritorio.setLayout(escritorioLayout);
         escritorioLayout.setHorizontalGroup(
             escritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 900, Short.MAX_VALUE)
+            .addGap(0, 960, Short.MAX_VALUE)
         );
         escritorioLayout.setVerticalGroup(
             escritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 577, Short.MAX_VALUE)
+            .addGap(0, 540, Short.MAX_VALUE)
         );
 
         jMenu1.setText("Inicio");
@@ -310,11 +317,11 @@ public class Principal extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(escritorio)
+            .addComponent(escritorio, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(escritorio)
+            .addComponent(escritorio, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -502,8 +509,9 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenuItem bm_verInfoCliente;
     private javax.swing.JMenuItem bm_verInfoProveedor;
     public static javax.swing.JDesktopPane escritorio;
-    ImageIcon icon = new ImageIcon(getClass().getResource("/help4traveling/fondo.png"));
-    Image image = icon.getImage();
+    private ImageIcon icon = new ImageIcon(getClass().getResource("/help4traveling/fondo.png"));
+    private Image image = icon.getImage();
+    private Image scaled;
     private javax.swing.JFileChooser fc_seleccionar_archivo;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
