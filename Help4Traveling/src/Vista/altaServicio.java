@@ -284,6 +284,7 @@ public class altaServicio extends javax.swing.JInternalFrame {
 
         lb_origen.setText("País Origen:");
 
+        bt_aceptar_s.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/check-icon.png"))); // NOI18N
         bt_aceptar_s.setText("Aceptar");
         bt_aceptar_s.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -291,6 +292,7 @@ public class altaServicio extends javax.swing.JInternalFrame {
             }
         });
 
+        bt_cancelar_s.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/delete-icon.png"))); // NOI18N
         bt_cancelar_s.setText("Cancelar");
         bt_cancelar_s.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -365,6 +367,7 @@ public class altaServicio extends javax.swing.JInternalFrame {
         ta_descripcion.setRows(5);
         jScrollPane2.setViewportView(ta_descripcion);
 
+        btn_seleccionar_imagen.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/buscar.png"))); // NOI18N
         btn_seleccionar_imagen.setText("Seleccionar Imagen");
         btn_seleccionar_imagen.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -398,6 +401,7 @@ public class altaServicio extends javax.swing.JInternalFrame {
 
         jLabel5.setText("Categorías Seleccionadas:");
 
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/add-icon.png"))); // NOI18N
         jButton1.setText("Agregar");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
