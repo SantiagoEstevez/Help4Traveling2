@@ -131,8 +131,9 @@ public class AltaPromocion extends javax.swing.JInternalFrame {
         setResizable(true);
         setTitle("Alta Promoción");
         setFrameIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/add-icon.png"))); // NOI18N
+        setMinimumSize(new java.awt.Dimension(600, 300));
 
-        jLabelPromo.setText("Ingrese el nombre de la nueva promoción:");
+        jLabelPromo.setText("[1] Ingrese el nombre de la nueva promoción:");
 
         jTextFieldPromo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -176,16 +177,13 @@ public class AltaPromocion extends javax.swing.JInternalFrame {
             }
         ));
         jTableOfertas.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                jTableOfertasKeyReleased(evt);
-            }
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 jTableOfertasKeyTyped(evt);
             }
         });
         jScrollPane1.setViewportView(jTableOfertas);
 
-        jLabelServ.setText("Ingrese la cantidad de cada uno de los servicios asociados a la promoción:");
+        jLabelServ.setText("[3] Ingrese en la primera columna la cantidad de cada uno de los servicios asociados a la promoción:");
 
         jLabelTotal.setText("Precio total ($):");
 
@@ -201,7 +199,7 @@ public class AltaPromocion extends javax.swing.JInternalFrame {
         jTextFieldTotal.setEditable(false);
         jTextFieldTotal.setText("0.0");
 
-        jLabelDesc.setText("Ingresar el descuento aplicado (%):");
+        jLabelDesc.setText("[2] Ingrese el descuento aplicado (%):");
 
         jTextFieldDesc.setEditable(false);
         jTextFieldDesc.setText("0.0");
@@ -209,9 +207,10 @@ public class AltaPromocion extends javax.swing.JInternalFrame {
         jLabelTotal1.setText("Descuento total ($):");
 
         jTextFieldFinal.setEditable(false);
+        jTextFieldFinal.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         jTextFieldFinal.setText("0.0");
 
-        jLabelTotal2.setText("Precio final:");
+        jLabelTotal2.setText("Precio final (S):");
 
         jSpinnerPor100.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
@@ -226,10 +225,10 @@ public class AltaPromocion extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 586, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabelServ)
-                        .addGap(0, 0, Short.MAX_VALUE))
+                        .addGap(0, 14, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabelTotal)
@@ -272,7 +271,7 @@ public class AltaPromocion extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabelServ)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 93, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 94, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabelTotal)
@@ -321,17 +320,13 @@ public class AltaPromocion extends javax.swing.JInternalFrame {
         calcularTotal();
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void jTableOfertasKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTableOfertasKeyTyped
-        calcularTotal();
-    }//GEN-LAST:event_jTableOfertasKeyTyped
-
-    private void jTableOfertasKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTableOfertasKeyReleased
-        calcularTotal();
-    }//GEN-LAST:event_jTableOfertasKeyReleased
-
     private void jSpinnerPor100StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jSpinnerPor100StateChanged
         calcularTotal();
     }//GEN-LAST:event_jSpinnerPor100StateChanged
+
+    private void jTableOfertasKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTableOfertasKeyTyped
+        calcularTotal();
+    }//GEN-LAST:event_jTableOfertasKeyTyped
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
