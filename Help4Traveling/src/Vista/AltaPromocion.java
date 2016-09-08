@@ -37,7 +37,10 @@ public class AltaPromocion extends javax.swing.JInternalFrame {
         Fabrica fabrica = Fabrica.getInstance();
         this.IControlador = fabrica.getIControladorServicio();
 
-        //Agregar los servicios a la lista
+        jTextFieldTotal.setHorizontalAlignment(SwingConstants.RIGHT);
+        jTextFieldDesc.setHorizontalAlignment(SwingConstants.RIGHT);
+        jTextFieldFinal.setHorizontalAlignment(SwingConstants.RIGHT);
+
         listaServicios = this.IControlador.listarServicios();
         Iterator<DtServicio> i = listaServicios.iterator();
 
@@ -78,15 +81,22 @@ public class AltaPromocion extends javax.swing.JInternalFrame {
     }
 
     public void calcularTotal() {
-        Double total = 0.0;
+        Double subtotal = 0.0;
         int filas = modelo.getRowCount();
         for (int i = 0; i < filas; i++) {
-            System.out.println(modelo.getValueAt(i, 3));
             Integer cantidad = Integer.valueOf(modelo.getValueAt(i, 0).toString());
             Float precio = Float.valueOf(modelo.getValueAt(i, 3).toString());
-            total += cantidad * precio;
+            subtotal += cantidad * precio;
         }
-        jTextFieldTotal.setText(total.toString());
+        jTextFieldTotal.setText(subtotal.toString());
+        System.out.println(subtotal);
+        Integer porcentaje = Integer.valueOf(jSpinnerPor100.getValue().toString());
+        System.out.println(porcentaje);
+        Double descuento = subtotal * porcentaje / 100;
+        System.out.println(porcentaje);
+        jTextFieldDesc.setText(descuento.toString());
+        Double total = subtotal - descuento;
+        jTextFieldFinal.setText(total.toString());
     }
 
     /**
@@ -108,9 +118,17 @@ public class AltaPromocion extends javax.swing.JInternalFrame {
         jLabelTotal = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jTextFieldTotal = new javax.swing.JTextField();
+        jLabelDesc = new javax.swing.JLabel();
+        jTextFieldDesc = new javax.swing.JTextField();
+        jLabelTotal1 = new javax.swing.JLabel();
+        jTextFieldFinal = new javax.swing.JTextField();
+        jLabelTotal2 = new javax.swing.JLabel();
+        jSpinnerPor100 = new javax.swing.JSpinner();
 
         setClosable(true);
         setIconifiable(true);
+        setMaximizable(true);
+        setResizable(true);
         setTitle("Alta Promoción");
         setFrameIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/add-icon.png"))); // NOI18N
 
@@ -169,7 +187,7 @@ public class AltaPromocion extends javax.swing.JInternalFrame {
 
         jLabelServ.setText("Ingrese la cantidad de cada uno de los servicios asociados a la promoción:");
 
-        jLabelTotal.setText("Precio total calculado:");
+        jLabelTotal.setText("Precio total ($):");
 
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/refresh-icon.png"))); // NOI18N
         jButton1.setText("Calcular");
@@ -183,6 +201,24 @@ public class AltaPromocion extends javax.swing.JInternalFrame {
         jTextFieldTotal.setEditable(false);
         jTextFieldTotal.setText("0.0");
 
+        jLabelDesc.setText("Ingresar el descuento aplicado (%):");
+
+        jTextFieldDesc.setEditable(false);
+        jTextFieldDesc.setText("0.0");
+
+        jLabelTotal1.setText("Descuento total ($):");
+
+        jTextFieldFinal.setEditable(false);
+        jTextFieldFinal.setText("0.0");
+
+        jLabelTotal2.setText("Precio final:");
+
+        jSpinnerPor100.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                jSpinnerPor100StateChanged(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -190,47 +226,73 @@ public class AltaPromocion extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jButtonCancelar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButtonAceptar))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 586, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabelServ)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jTextFieldPromo, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabelPromo)
-                            .addComponent(jLabelServ))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 17, Short.MAX_VALUE)
+                            .addComponent(jLabelTotal)
+                            .addComponent(jTextFieldTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButtonCancelar))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabelTotal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jTextFieldTotal))
-                        .addGap(19, 19, 19)))
+                            .addComponent(jLabelTotal1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jTextFieldDesc)
+                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabelTotal2)
+                            .addComponent(jButtonAceptar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jTextFieldFinal, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabelPromo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jTextFieldPromo))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabelDesc)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(106, 106, 106)
+                                .addComponent(jSpinnerPor100)))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabelPromo)
-                    .addComponent(jLabelTotal))
-                .addGap(7, 7, 7)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextFieldPromo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextFieldTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabelPromo)
+                        .addGap(6, 6, 6)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jTextFieldPromo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jSpinnerPor100, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jLabelDesc))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabelServ)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 93, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabelTotal)
+                    .addComponent(jLabelTotal1)
+                    .addComponent(jLabelTotal2))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jTextFieldTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextFieldDesc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextFieldFinal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButtonAceptar)
                     .addComponent(jButtonCancelar)
                     .addComponent(jButton1))
                 .addContainerGap())
         );
+
+        jTextFieldTotal.setHorizontalAlignment(SwingConstants.RIGHT);
+        jTextFieldTotal.setHorizontalAlignment(SwingConstants.RIGHT);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -267,15 +329,25 @@ public class AltaPromocion extends javax.swing.JInternalFrame {
         calcularTotal();
     }//GEN-LAST:event_jTableOfertasKeyReleased
 
+    private void jSpinnerPor100StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jSpinnerPor100StateChanged
+        calcularTotal();
+    }//GEN-LAST:event_jSpinnerPor100StateChanged
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButtonAceptar;
     private javax.swing.JButton jButtonCancelar;
+    private javax.swing.JLabel jLabelDesc;
     private javax.swing.JLabel jLabelPromo;
     private javax.swing.JLabel jLabelServ;
     private javax.swing.JLabel jLabelTotal;
+    private javax.swing.JLabel jLabelTotal1;
+    private javax.swing.JLabel jLabelTotal2;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JSpinner jSpinnerPor100;
     private javax.swing.JTable jTableOfertas;
+    private javax.swing.JTextField jTextFieldDesc;
+    private javax.swing.JTextField jTextFieldFinal;
     private javax.swing.JTextField jTextFieldPromo;
     private javax.swing.JTextField jTextFieldTotal;
     // End of variables declaration//GEN-END:variables
