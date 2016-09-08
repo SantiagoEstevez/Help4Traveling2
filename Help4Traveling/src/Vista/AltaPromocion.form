@@ -10,6 +10,9 @@
     <Property name="frameIcon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
       <Image iconType="3" name="/Iconos/add-icon.png"/>
     </Property>
+    <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+      <Dimension value="[600, 300]"/>
+    </Property>
   </Properties>
   <SyntheticProperties>
     <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
@@ -32,10 +35,10 @@
           <Group type="102" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="jScrollPane1" alignment="1" pref="586" max="32767" attributes="0"/>
+                  <Component id="jScrollPane1" alignment="1" max="32767" attributes="0"/>
                   <Group type="102" attributes="0">
                       <Component id="jLabelServ" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                      <EmptySpace min="0" pref="14" max="32767" attributes="0"/>
                   </Group>
                   <Group type="102" attributes="0">
                       <Group type="103" groupAlignment="0" attributes="0">
@@ -93,7 +96,7 @@
               <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
               <Component id="jLabelServ" min="-2" max="-2" attributes="0"/>
               <EmptySpace min="-2" max="-2" attributes="0"/>
-              <Component id="jScrollPane1" pref="93" max="32767" attributes="0"/>
+              <Component id="jScrollPane1" pref="94" max="32767" attributes="0"/>
               <EmptySpace min="-2" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="jLabelTotal" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -120,7 +123,7 @@
   <SubComponents>
     <Component class="javax.swing.JLabel" name="jLabelPromo">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Ingrese el nombre de la nueva promoci&#xf3;n:"/>
+        <Property name="text" type="java.lang.String" value="[1] Ingrese el nombre de la nueva promoci&#xf3;n:"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="jTextFieldPromo">
@@ -200,7 +203,6 @@
             </Property>
           </Properties>
           <Events>
-            <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jTableOfertasKeyReleased"/>
             <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jTableOfertasKeyTyped"/>
           </Events>
         </Component>
@@ -208,7 +210,7 @@
     </Container>
     <Component class="javax.swing.JLabel" name="jLabelServ">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Ingrese la cantidad de cada uno de los servicios asociados a la promoci&#xf3;n:"/>
+        <Property name="text" type="java.lang.String" value="[3] Ingrese en la primera columna la cantidad de cada uno de los servicios asociados a la promoci&#xf3;n:"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabelTotal">
@@ -236,7 +238,7 @@
     </Component>
     <Component class="javax.swing.JLabel" name="jLabelDesc">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Ingresar el descuento aplicado (%):"/>
+        <Property name="text" type="java.lang.String" value="[2] Ingrese el descuento aplicado (%):"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="jTextFieldDesc">
@@ -256,6 +258,9 @@
     <Component class="javax.swing.JTextField" name="jTextFieldFinal">
       <Properties>
         <Property name="editable" type="boolean" value="false"/>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Dialog" size="12" style="1"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="0.0"/>
       </Properties>
       <AuxValues>
@@ -264,7 +269,7 @@
     </Component>
     <Component class="javax.swing.JLabel" name="jLabelTotal2">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Precio final:"/>
+        <Property name="text" type="java.lang.String" value="Precio final (S):"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JSpinner" name="jSpinnerPor100">
