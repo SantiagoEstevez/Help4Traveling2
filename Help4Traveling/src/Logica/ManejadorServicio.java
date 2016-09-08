@@ -9,14 +9,13 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.List;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 import java.util.TreeMap;
-// Comentario para que me reconozca los cambios y pueda comitear...again
 
 /**
  *
@@ -26,6 +25,7 @@ public class ManejadorServicio {
 
     //Clase que conserva la colección global de las Ofertas Servicios del Sistema
     private Map<String, Servicio> serviciosNom;
+    private Map<String, Promocion> promosNom;
     private static ManejadorServicio instancia = null;
     private Conexion conexion;
     private String sql;
@@ -71,7 +71,7 @@ public class ManejadorServicio {
             System.out.println("NO Existe Servico");
         }
         return existe;
-        //return serviciosNom.containsKey(nombre);        
+        //return serviciosNom.containsKey(nombre);
     }
 
     public Servicio obtenerServicio(String nk) {
@@ -336,7 +336,7 @@ public class ManejadorServicio {
                     st = con.createStatement();
                     st.executeUpdate(sql);
                     st.close();
-                    //con.close();                
+                    //con.close();
                     System.out.println("INSERTE :)");
                 } catch (SQLException e) {
                     System.out.println("No pude INSERTAR :(");
@@ -354,7 +354,7 @@ public class ManejadorServicio {
                     System.out.println("antes de categoria");
                     st.executeUpdate(sql);
                     st.close();
-                    //con.close();                
+                    //con.close();
                     System.out.println("INSERTE :)");
                 } catch (SQLException e) {
                     System.out.println("No pude INSERTAR :(");
@@ -363,6 +363,65 @@ public class ManejadorServicio {
 
         } else {
             mensaje = "ERROR: El Servicio ingresado ya existe...";
+        }
+        return mensaje;
+
+    }
+
+    public String persistirPromo(DtPromocion promo) {
+        conexion = new Conexion();
+        Connection con = conexion.getConnection();
+        Statement st;
+        String mensaje = "Se dio de alta la oferta.";
+        System.out.println(promo.getNombre());
+        if (!existeServicio(promo.getNombre())) {
+            //sql = "INSERT INTO help4traveling.servicios (nombre,proveedor,descripcion,precio,origen,destino) VALUES ('" + serv.getNombre() + "','" + serv.getProveedor().getNickname() + "','" + serv.getDescripcion() + "'," + (double) serv.getPrecio() + ",'" + serv.getOrigen().getNombre() + "','" + serv.getDestino().getNombre() + "')";
+            sql = "INSERT INTO help4traveling.ofertas (nombre,proveedor) VALUES ('" + promo.getNombre() + "','" + promo.getProveedor() + "')";
+            System.out.println(sql);
+            try {
+                st = con.createStatement();
+                System.out.println("antes de insertar");
+                st.executeUpdate(sql);
+                //con.close();
+                st.close();
+                System.out.println("INSERTE en oferta:)");
+            } catch (SQLException e) {
+                System.out.println("No pude INSERTAR :(");
+            }
+            sql = "INSERT INTO help4traveling.promociones (nombre,proveedor,descuento,total) "
+                    + "VALUES ('" + promo.getNombre() + "','" + promo.getProveedor() + "','" + promo.getDescuento() + ",'" + promo.getPrecio() + "')";
+            System.out.println(sql);
+            try {
+                st = con.createStatement();
+                System.out.println("antes de insertar");
+                st.executeUpdate(sql);
+                //con.close();
+                st.close();
+                System.out.println("INSERTE en promocion:)");
+            } catch (SQLException e) {
+                System.out.println("No pude INSERTAR :(");
+            }
+
+            /*
+            List<DtServicio> servicios = promo.getServicios();
+            Iterator<DtServicio> it = servicios.iterator();
+            while (it.hasNext()) {
+                sql = "INSERT INTO help4traveling.promocionesservicios" +
+                      " (promocion,proveedorPromocion,servicio,proveedorServicio) VALUES ('" +
+                      promo.getNombre() + "','" + promo.getProveedor()+ "','" + it.next() + "')";
+                try {
+                    st = con.createStatement();
+                    st.executeUpdate(sql);
+                    st.close();
+                    //con.close();
+                    System.out.println("INSERTE :)");
+                } catch (SQLException e) {
+                    System.out.println("No pude INSERTAR :(");
+                }
+            }
+             */
+        } else {
+            mensaje = "ERROR: La promo ingresada ya existe...";
         }
         return mensaje;
 
