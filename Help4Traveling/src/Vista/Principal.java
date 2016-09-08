@@ -45,6 +45,7 @@ public class Principal extends javax.swing.JFrame {
     private IControladorUsuario IControlador;
     private String tipo;
     private String camino;
+    private Boolean shift = false;
 
     /**
      * Creates new form Principal
@@ -74,6 +75,8 @@ public class Principal extends javax.swing.JFrame {
         int width = (tamEscritorio.width - tamVentana.width) / 2;
         int height = (tamEscritorio.height - tamVentana.height) / 2;
         jif.setLocation(width, height);
+        jMenuItemCerrar.setEnabled(true);
+        jMenuItemCerrarAll.setEnabled(true);
     }
 
     public void internalFrameClosing(InternalFrameEvent e) {
@@ -183,6 +186,7 @@ public class Principal extends javax.swing.JFrame {
         jMenuRegistros = new javax.swing.JMenu();
         bm_registrar_cliente = new javax.swing.JMenuItem();
         bm_registrar_servicio = new javax.swing.JMenuItem();
+        jMenuItemPromo = new javax.swing.JMenuItem();
         jMenuItem2 = new javax.swing.JMenuItem();
         bm_registrar_reserva = new javax.swing.JMenuItem();
         jSeparator4 = new javax.swing.JPopupMenu.Separator();
@@ -207,6 +211,11 @@ public class Principal extends javax.swing.JFrame {
 
         escritorio.setMinimumSize(new java.awt.Dimension(640, 360));
         escritorio.setPreferredSize(new java.awt.Dimension(960, 540));
+        escritorio.addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentHidden(java.awt.event.ComponentEvent evt) {
+                escritorioComponentHidden(evt);
+            }
+        });
 
         javax.swing.GroupLayout escritorioLayout = new javax.swing.GroupLayout(escritorio);
         escritorio.setLayout(escritorioLayout);
@@ -233,8 +242,9 @@ public class Principal extends javax.swing.JFrame {
         jMenuInicio.add(jSeparator3);
 
         jMenuItemCerrar.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_W, java.awt.event.InputEvent.CTRL_MASK));
-        jMenuItemCerrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/win-icon.png"))); // NOI18N
+        jMenuItemCerrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/cancel-icon.png"))); // NOI18N
         jMenuItemCerrar.setText("Cerrar");
+        jMenuItemCerrar.setEnabled(false);
         jMenuItemCerrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItemCerrarActionPerformed(evt);
@@ -243,8 +253,9 @@ public class Principal extends javax.swing.JFrame {
         jMenuInicio.add(jMenuItemCerrar);
 
         jMenuItemCerrarAll.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_W, java.awt.event.InputEvent.SHIFT_MASK | java.awt.event.InputEvent.CTRL_MASK));
-        jMenuItemCerrarAll.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/win-icon.png"))); // NOI18N
+        jMenuItemCerrarAll.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/cancel-icon.png"))); // NOI18N
         jMenuItemCerrarAll.setText("Cerrar Todas");
+        jMenuItemCerrarAll.setEnabled(false);
         jMenuItemCerrarAll.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItemCerrarAllActionPerformed(evt);
@@ -290,11 +301,25 @@ public class Principal extends javax.swing.JFrame {
         });
         jMenuRegistros.add(bm_registrar_servicio);
 
+        jMenuItemPromo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/add-icon.png"))); // NOI18N
+        jMenuItemPromo.setText("Alta Promoción");
+        jMenuItemPromo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemPromoActionPerformed(evt);
+            }
+        });
+        jMenuRegistros.add(jMenuItemPromo);
+
         jMenuItem2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/add-icon.png"))); // NOI18N
         jMenuItem2.setText("Alta Categoria");
         jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem2ActionPerformed(evt);
+            }
+        });
+        jMenuItem2.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jMenuItem2KeyPressed(evt);
             }
         });
         jMenuRegistros.add(jMenuItem2);
@@ -461,17 +486,15 @@ public class Principal extends javax.swing.JFrame {
         System.exit(0);
     }//GEN-LAST:event_jMenuItemSalirActionPerformed
 
-    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
-        altaCategoria altacat = new altaCategoria();
-        escritorio.add(altacat);
-        centrarVentana(altacat);
-        altacat.setVisible(true);
-    }//GEN-LAST:event_jMenuItem2ActionPerformed
-
     private void jMenuItemCerrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemCerrarActionPerformed
         JInternalFrame ventana = escritorio.getSelectedFrame();
         if (ventana != null) {
             ventana.dispose();
+        }
+        System.out.println(escritorio.getAllFrames());
+        if (escritorio.getAllFrames() == null) {
+            jMenuItemCerrar.setEnabled(false);
+            jMenuItemCerrarAll.setEnabled(false);
         }
     }//GEN-LAST:event_jMenuItemCerrarActionPerformed
 
@@ -481,13 +504,13 @@ public class Principal extends javax.swing.JFrame {
             ventana.dispose();
             ventana = escritorio.selectFrame(true);
         }
-        //jMenuItemCerrar.setEnabled(false);
-        //jMenuItemCerrarAll.setEnabled(false);
+        jMenuItemCerrar.setEnabled(false);
+        jMenuItemCerrarAll.setEnabled(false);
     }//GEN-LAST:event_jMenuItemCerrarAllActionPerformed
 
     private void jMenuItemCargarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemCargarActionPerformed
         JFileChooser selector = new JFileChooser();
-        FileNameExtensionFilter filter = new FileNameExtensionFilter("SQL Scripts", "sql");
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("SQL Scripts (.sql)", "sql");
         selector.setFileFilter(filter);
         selector.setVisible(true);
         int eleccion = selector.showOpenDialog(null);
@@ -521,6 +544,38 @@ public class Principal extends javax.swing.JFrame {
         infoServicio.setVisible(true);
 
     }//GEN-LAST:event_jMenuItem3ActionPerformed
+
+    private void jMenuItem2KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jMenuItem2KeyPressed
+        if (evt.isShiftDown()) {
+            shift = true;
+        }
+    }//GEN-LAST:event_jMenuItem2KeyPressed
+
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        //AltaCategoria ac = new AltaCategoria();
+        JInternalFrame ac;
+        if (shift) {
+            ac = new altaCategoria();
+        } else {
+            ac = new AltaCategoria2();
+        }
+        escritorio.add(ac);
+        centrarVentana(ac);
+        ac.setVisible(true);
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
+
+    private void escritorioComponentHidden(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_escritorioComponentHidden
+        if (escritorio.getSelectedFrame() == null) {
+            jMenuItemCerrar.setEnabled(false);
+        }
+    }//GEN-LAST:event_escritorioComponentHidden
+
+    private void jMenuItemPromoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemPromoActionPerformed
+        AltaPromocion ap = new AltaPromocion();
+        escritorio.add(ap);
+        centrarVentana(ap);
+        ap.setVisible(true);
+    }//GEN-LAST:event_jMenuItemPromoActionPerformed
 
     public void cargarDatos() {
         System.out.print("Cargando Datos... ");
@@ -612,6 +667,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItemCerrar;
     private javax.swing.JMenuItem jMenuItemCerrarAll;
     private javax.swing.JMenuItem jMenuItemEstado;
+    private javax.swing.JMenuItem jMenuItemPromo;
     private javax.swing.JMenuItem jMenuItemSalir;
     private javax.swing.JMenuItem jMenuItemVerRes;
     private javax.swing.JMenu jMenuRegistros;

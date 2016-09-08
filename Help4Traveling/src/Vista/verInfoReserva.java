@@ -35,7 +35,7 @@ public class verInfoReserva extends javax.swing.JInternalFrame {
     /**
      * Creates new form verInfoReserva
      */
-    private void actualizarReservas() {
+    private void refrescarReservas() {
         this.listaReservas = this.IControlador.listarReservas();
         Iterator<DtReserva> i = this.listaReservas.iterator();
         tableModelRes.getDataVector().removeAllElements();
@@ -57,7 +57,7 @@ public class verInfoReserva extends javax.swing.JInternalFrame {
         jTableRes.getColumnModel().getColumn(4).setCellRenderer(centerRenderer);
     }
 
-    private void actualizarItems() {
+    private void refrescarItems() {
         Integer index = jTableRes.getSelectedRow();
         if (index != -1) {
             DtReserva res = listaReservas.get(index);
@@ -112,10 +112,10 @@ public class verInfoReserva extends javax.swing.JInternalFrame {
 
         fabrica.getIControladorReserva().setReservasDB();
         fabrica.getIControladorReserva().setItemsDB();
-        actualizarReservas();
-        jTableRes.setRowSelectionInterval(0, 0);
-        if (jTableRes.getSelectedRowCount() != -1) {
-            actualizarItems();
+        refrescarReservas();
+        if (jTableRes.getRowCount() > 0) {
+            jTableRes.setRowSelectionInterval(0, 0);
+            refrescarItems();
         }
     }
 
@@ -202,6 +202,7 @@ public class verInfoReserva extends javax.swing.JInternalFrame {
 
         jButtonActual.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/refresh-icon.png"))); // NOI18N
         jButtonActual.setText("Actualizar");
+        jButtonActual.setFocusable(false);
         jButtonActual.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonActualActionPerformed(evt);
@@ -209,7 +210,8 @@ public class verInfoReserva extends javax.swing.JInternalFrame {
         });
 
         jButtonCerrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/check-icon.png"))); // NOI18N
-        jButtonCerrar.setText("Cerrar");
+        jButtonCerrar.setText("Aceptar");
+        jButtonCerrar.setFocusable(false);
         jButtonCerrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonCerrarActionPerformed(evt);
@@ -231,9 +233,9 @@ public class verInfoReserva extends javax.swing.JInternalFrame {
                             .addComponent(jLabelItems))
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jButtonCerrar)
+                        .addComponent(jButtonActual)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButtonActual)))
+                        .addComponent(jButtonCerrar)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -259,24 +261,31 @@ public class verInfoReserva extends javax.swing.JInternalFrame {
 
     private void jTableResMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableResMouseClicked
         if (jTableRes.getSelectedRowCount() != -1) {
-            actualizarItems();
+            refrescarItems();
         }
     }//GEN-LAST:event_jTableResMouseClicked
 
     private void jButtonActualActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonActualActionPerformed
+        int fila = 0;
+        if (jTableRes.getSelectedRowCount() > 0) {
+            fila = jTableRes.getSelectedRow();
+        }
         this.IControlador.setReservasDB();
         this.IControlador.setItemsDB();
-        actualizarReservas();
+        refrescarReservas();
         tableModelItems.getDataVector().removeAllElements();
         jTableItems.setModel(tableModelItems);
+        if (jTableRes.getRowCount() > fila) {
+            jTableRes.setRowSelectionInterval(fila, fila);
+        }
     }//GEN-LAST:event_jButtonActualActionPerformed
 
     private void jButtonCerrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCerrarActionPerformed
-        this.setVisible(false);
+        this.dispose();
     }//GEN-LAST:event_jButtonCerrarActionPerformed
     private void jTableResKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTableResKeyReleased
-        if (jTableRes.getSelectedRowCount() != -1) {
-            actualizarItems();
+        if (jTableRes.getSelectedRowCount() > 0) {
+            refrescarItems();
         }
     }//GEN-LAST:event_jTableResKeyReleased
 

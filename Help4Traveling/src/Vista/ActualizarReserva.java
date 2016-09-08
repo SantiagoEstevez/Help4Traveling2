@@ -92,6 +92,9 @@ public class ActualizarReserva extends javax.swing.JInternalFrame {
 
         fabrica.getIControladorReserva().setReservasDB();
         refrescarReservas();
+        if (jTableRes.getRowCount() > 0) {
+            jTableRes.setRowSelectionInterval(0, 0);
+        }
     }
 
     /**
@@ -141,14 +144,16 @@ public class ActualizarReserva extends javax.swing.JInternalFrame {
 
         jButtonActual.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/refresh-icon.png"))); // NOI18N
         jButtonActual.setText("Actualizar");
+        jButtonActual.setFocusable(false);
         jButtonActual.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonActualActionPerformed(evt);
             }
         });
 
-        jButtonCerrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/check-icon.png"))); // NOI18N
+        jButtonCerrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/cancel-icon.png"))); // NOI18N
         jButtonCerrar.setText("Cerrar");
+        jButtonCerrar.setFocusable(false);
         jButtonCerrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonCerrarActionPerformed(evt);
@@ -157,6 +162,7 @@ public class ActualizarReserva extends javax.swing.JInternalFrame {
 
         jButtonMod.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/edit-icon.png"))); // NOI18N
         jButtonMod.setText("Modificar");
+        jButtonMod.setFocusable(false);
         jButtonMod.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonModActionPerformed(evt);
@@ -211,9 +217,15 @@ public class ActualizarReserva extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonActualActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonActualActionPerformed
+        int fila = 0;
+        if (jTableRes.getSelectedRowCount() > 0) {
+            fila = jTableRes.getSelectedRow();
+        }
         this.IControlador.setReservasDB();
-        //this.IControlador.setItemsDB();
         refrescarReservas();
+        if (jTableRes.getRowCount() > fila) {
+            jTableRes.setRowSelectionInterval(fila, fila);
+        }
     }//GEN-LAST:event_jButtonActualActionPerformed
 
     private void jButtonCerrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCerrarActionPerformed
@@ -222,7 +234,9 @@ public class ActualizarReserva extends javax.swing.JInternalFrame {
 
     private void jButtonModActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonModActionPerformed
         if (jTableRes.getSelectedRowCount() > 0) {
+            int fila = jTableRes.getSelectedRow();
             modificarReserva(jTableRes.getSelectedRow());
+            jTableRes.setRowSelectionInterval(fila, fila);
         }
     }//GEN-LAST:event_jButtonModActionPerformed
 

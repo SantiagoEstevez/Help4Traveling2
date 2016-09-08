@@ -31,7 +31,7 @@ public class cancelarReserva extends javax.swing.JInternalFrame {
     /**
      * Creates new form cancelarReserva
      */
-    private void actualizarReservas() {
+    private void refrescarReservas() {
         this.listaReservas = this.IControlador.listarReservas();
         Iterator<DtReserva> i = this.listaReservas.iterator();
         tableModel.getDataVector().removeAllElements();
@@ -71,7 +71,11 @@ public class cancelarReserva extends javax.swing.JInternalFrame {
         this.IControlador = fabrica.getIControladorReserva();
 
         this.IControlador.setReservasDB();
-        actualizarReservas();
+        refrescarReservas();
+        if (jTableRes.getRowCount() > 0) {
+            jTableRes.setRowSelectionInterval(0, 0);
+        }
+
     }
 
     /**
@@ -102,6 +106,7 @@ public class cancelarReserva extends javax.swing.JInternalFrame {
 
         jButtonEliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/delete-icon.png"))); // NOI18N
         jButtonEliminar.setText("Eliminar");
+        jButtonEliminar.setFocusable(false);
         jButtonEliminar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonEliminarActionPerformed(evt);
@@ -128,14 +133,16 @@ public class cancelarReserva extends javax.swing.JInternalFrame {
 
         jButtonActual.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/refresh-icon.png"))); // NOI18N
         jButtonActual.setText("Actualizar");
+        jButtonActual.setFocusable(false);
         jButtonActual.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonActualActionPerformed(evt);
             }
         });
 
-        jButtonCerrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/check-icon.png"))); // NOI18N
+        jButtonCerrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/cancel-icon.png"))); // NOI18N
         jButtonCerrar.setText("Cerrar");
+        jButtonCerrar.setFocusable(false);
         jButtonCerrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonCerrarActionPerformed(evt);
@@ -180,25 +187,37 @@ public class cancelarReserva extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEliminarActionPerformed
-        if ((tableModel.getRowCount() != 0) && (jTableRes.getSelectedRowCount() != 0)) {
+        int fila = 0;
+        if (jTableRes.getSelectedRowCount() > 0) {
+            fila = jTableRes.getSelectedRow();
             Object[] opciones = {"No", "Si"};
             int respuesta = JOptionPane.showOptionDialog(null, "¿Está seguro de cancelar la reserva?", "Confirmar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, opciones, opciones[1]);
 
             if (respuesta == 1) {
                 this.IControlador.cancelarUnaReserva(Long.valueOf(jTableRes.getValueAt(jTableRes.getSelectedRow(), 0).toString()));
-
+                fila = 0;
             }
         }
-        actualizarReservas();
+        refrescarReservas();
+        if ((fila >= 0) && (jTableRes.getRowCount() > fila)) {
+            jTableRes.setRowSelectionInterval(fila, fila);
+        }
     }//GEN-LAST:event_jButtonEliminarActionPerformed
 
     private void jButtonActualActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonActualActionPerformed
+        int fila = 0;
+        if (jTableRes.getSelectedRowCount() > 0) {
+            fila = jTableRes.getSelectedRow();
+        }
         this.IControlador.setReservasDB();
-        actualizarReservas();
+        refrescarReservas();
+        if (jTableRes.getRowCount() > fila) {
+            jTableRes.setRowSelectionInterval(fila, fila);
+        }
     }//GEN-LAST:event_jButtonActualActionPerformed
 
     private void jButtonCerrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCerrarActionPerformed
-        this.setVisible(false);
+        this.dispose();
     }//GEN-LAST:event_jButtonCerrarActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
