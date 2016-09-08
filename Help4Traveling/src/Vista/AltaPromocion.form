@@ -203,7 +203,7 @@
             </Property>
           </Properties>
           <Events>
-            <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jTableOfertasKeyTyped"/>
+            <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jTableOfertasKeyReleased"/>
           </Events>
         </Component>
       </SubComponents>
@@ -216,6 +216,7 @@
     <Component class="javax.swing.JLabel" name="jLabelTotal">
       <Properties>
         <Property name="text" type="java.lang.String" value="Precio total ($):"/>
+        <Property name="enabled" type="boolean" value="false"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JButton" name="jButton1">
@@ -253,6 +254,7 @@
     <Component class="javax.swing.JLabel" name="jLabelTotal1">
       <Properties>
         <Property name="text" type="java.lang.String" value="Descuento total ($):"/>
+        <Property name="enabled" type="boolean" value="false"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="jTextFieldFinal">
@@ -270,6 +272,7 @@
     <Component class="javax.swing.JLabel" name="jLabelTotal2">
       <Properties>
         <Property name="text" type="java.lang.String" value="Precio final (S):"/>
+        <Property name="enabled" type="boolean" value="false"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JSpinner" name="jSpinnerPor100">

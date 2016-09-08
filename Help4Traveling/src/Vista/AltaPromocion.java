@@ -89,11 +89,8 @@ public class AltaPromocion extends javax.swing.JInternalFrame {
             subtotal += cantidad * precio;
         }
         jTextFieldTotal.setText(subtotal.toString());
-        System.out.println(subtotal);
         Integer porcentaje = Integer.valueOf(jSpinnerPor100.getValue().toString());
-        System.out.println(porcentaje);
         Double descuento = subtotal * porcentaje / 100;
-        System.out.println(porcentaje);
         jTextFieldDesc.setText(descuento.toString());
         Double total = subtotal - descuento;
         jTextFieldFinal.setText(total.toString());
@@ -177,8 +174,8 @@ public class AltaPromocion extends javax.swing.JInternalFrame {
             }
         ));
         jTableOfertas.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                jTableOfertasKeyTyped(evt);
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTableOfertasKeyReleased(evt);
             }
         });
         jScrollPane1.setViewportView(jTableOfertas);
@@ -186,6 +183,7 @@ public class AltaPromocion extends javax.swing.JInternalFrame {
         jLabelServ.setText("[3] Ingrese en la primera columna la cantidad de cada uno de los servicios asociados a la promoción:");
 
         jLabelTotal.setText("Precio total ($):");
+        jLabelTotal.setEnabled(false);
 
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/refresh-icon.png"))); // NOI18N
         jButton1.setText("Calcular");
@@ -205,12 +203,14 @@ public class AltaPromocion extends javax.swing.JInternalFrame {
         jTextFieldDesc.setText("0.0");
 
         jLabelTotal1.setText("Descuento total ($):");
+        jLabelTotal1.setEnabled(false);
 
         jTextFieldFinal.setEditable(false);
         jTextFieldFinal.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         jTextFieldFinal.setText("0.0");
 
         jLabelTotal2.setText("Precio final (S):");
+        jLabelTotal2.setEnabled(false);
 
         jSpinnerPor100.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
@@ -324,9 +324,9 @@ public class AltaPromocion extends javax.swing.JInternalFrame {
         calcularTotal();
     }//GEN-LAST:event_jSpinnerPor100StateChanged
 
-    private void jTableOfertasKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTableOfertasKeyTyped
+    private void jTableOfertasKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTableOfertasKeyReleased
         calcularTotal();
-    }//GEN-LAST:event_jTableOfertasKeyTyped
+    }//GEN-LAST:event_jTableOfertasKeyReleased
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
