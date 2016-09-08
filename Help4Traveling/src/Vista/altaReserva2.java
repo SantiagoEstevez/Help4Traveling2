@@ -193,6 +193,7 @@ public class altaReserva2 extends javax.swing.JInternalFrame {
             }
         });
 
+        bBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/buscar.png"))); // NOI18N
         bBuscar.setText("Buscar");
         bBuscar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
