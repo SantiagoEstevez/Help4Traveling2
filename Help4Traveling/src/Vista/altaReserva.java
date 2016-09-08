@@ -53,6 +53,7 @@ public class altaReserva extends javax.swing.JInternalFrame {
         //Seteo otros
         total.setText("");
         clientes.setSelectedIndex(1);
+        total.setText("0");
     }
     
     public static void agregarItem(Object[] item){
