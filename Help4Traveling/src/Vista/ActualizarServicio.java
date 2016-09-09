@@ -5,17 +5,98 @@
  */
 package Vista;
 
+import Logica.DtServicio;
+import Logica.IControladorServicio;
+import Logica.ManejadorCiudad;
+import Logica.ManejadorServicio;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
 /**
  *
  * @author Hekutoru
  */
 public class ActualizarServicio extends javax.swing.JInternalFrame {
 
+    private IControladorServicio IControlador;
+    private List<DtServicio> listaServicios = new ArrayList<DtServicio>();
+    private List<String> listaPaises = new ArrayList<String>();
+    private List<String> listaCiudades = new ArrayList<String>();
+
     /**
      * Creates new form ActualizarServicio
      */
     public ActualizarServicio() {
         initComponents();
+        bajarServicios();
+        bajarPaisesOrigen();
+        bajarPaisesDestino();
+        bajarServicio();
+        //bajarCiudadesOrigen();
+        //bajarCiudadesDestino();
+    }
+
+    private void bajarServicios() {
+        jComNom.removeAllItems();
+        this.listaServicios = ManejadorServicio.getInstance().listarServicios();
+        Iterator<DtServicio> iter = listaServicios.iterator();
+        while (iter.hasNext()) {
+            String servicio = iter.next().getNombre();
+            this.jComNom.addItem(servicio);
+        }
+    }
+
+    private void bajarServicio() {
+        DtServicio servicio = listaServicios.get(jComNom.getSelectedIndex());
+        jTextDesc.setText(servicio.getDescripcion());
+        //jTextPrecio.setText(servicio.getPrecio());
+        String ciudadOrigen = servicio.getNomCiuOrigen();
+        String ciudadDestino = servicio.getNomCiuDestino();
+        String paisOrigen = ManejadorCiudad.getInstance().obtenerCiudad(ciudadOrigen).getPais().toString();
+        String paisDestino = ManejadorCiudad.getInstance().obtenerCiudad(ciudadDestino).getPais().toString();
+        PaisOrigen.setSelectedItem(paisOrigen);
+        PaisDestino.setSelectedItem(paisDestino);
+        CiudadDestino.setSelectedItem(ciudadDestino);
+        CiudadOrigen.setSelectedItem(ciudadOrigen);
+    }
+
+    private void bajarPaisesOrigen() {
+        this.listaPaises = ManejadorCiudad.getInstance().listarPaises();
+        Iterator<String> iter = this.listaPaises.iterator();
+        while (iter.hasNext()) {
+            String pais = iter.next();
+            this.PaisOrigen.addItem(pais);
+        }
+    }
+
+    private void bajarCiudadesOrigen(String pais) {
+        this.CiudadOrigen.removeAllItems();
+        this.listaCiudades = ManejadorCiudad.getInstance().listarCiudadesPorPais(pais);
+        Iterator<String> iter = this.listaCiudades.iterator();
+        while (iter.hasNext()) {
+            String nomciudad = iter.next();
+            this.CiudadOrigen.addItem(nomciudad);
+        }
+    }
+
+    private void bajarPaisesDestino() {
+        this.listaPaises = ManejadorCiudad.getInstance().listarPaises();
+        Iterator<String> iter = this.listaPaises.iterator();
+        while (iter.hasNext()) {
+            String pais = iter.next();
+            this.PaisDestino.addItem(pais);
+        }
+    }
+
+    private void bajarCiudadesDestino(String pais) {
+        this.CiudadDestino.removeAllItems();
+        this.listaCiudades = ManejadorCiudad.getInstance().listarCiudadesPorPais(pais);
+        Iterator<String> iter = this.listaCiudades.iterator();
+        while (iter.hasNext()) {
+            String nomciudad = iter.next();
+            this.CiudadDestino.addItem(nomciudad);
+        }
     }
 
     /**
@@ -29,11 +110,25 @@ public class ActualizarServicio extends javax.swing.JInternalFrame {
 
         Aceptar = new javax.swing.JButton();
         Cancelar = new javax.swing.JButton();
+        jLabNom = new javax.swing.JLabel();
+        jComNom = new javax.swing.JComboBox<>();
+        jLabelServ = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTextDesc = new javax.swing.JTextPane();
+        jLabDesc = new javax.swing.JLabel();
+        jSeparator1 = new javax.swing.JSeparator();
+        jLabelPrecio = new javax.swing.JLabel();
+        jTextPrecio = new javax.swing.JTextField();
+        jLabOrig = new javax.swing.JLabel();
+        jLabDest = new javax.swing.JLabel();
+        PaisOrigen = new javax.swing.JComboBox<>();
+        PaisDestino = new javax.swing.JComboBox<>();
+        CiudadDestino = new javax.swing.JComboBox<>();
+        CiudadOrigen = new javax.swing.JComboBox<>();
+        jSeparator2 = new javax.swing.JSeparator();
 
         setClosable(true);
         setIconifiable(true);
-        setMaximizable(true);
-        setResizable(true);
         setTitle("Actualizar Servicio");
         setFrameIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/edit-icon.png"))); // NOI18N
 
@@ -55,21 +150,117 @@ public class ActualizarServicio extends javax.swing.JInternalFrame {
             }
         });
 
+        jLabNom.setText("Nombre:");
+
+        jComNom.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComNomActionPerformed(evt);
+            }
+        });
+
+        jLabelServ.setText("Seleccione el nombre del Servicio que desea modificar:");
+
+        jScrollPane1.setViewportView(jTextDesc);
+
+        jLabDesc.setText("Descripción:");
+
+        jLabelPrecio.setText("Precio:");
+
+        jLabOrig.setText("Origen:");
+
+        jLabDest.setText("Destino:");
+
+        PaisOrigen.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                PaisOrigenActionPerformed(evt);
+            }
+        });
+
+        PaisDestino.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                PaisDestinoActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(Cancelar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 186, Short.MAX_VALUE)
-                .addComponent(Aceptar)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jSeparator2)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(Cancelar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(Aceptar))
+                    .addComponent(jSeparator1)
+                    .addComponent(jScrollPane1)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabDest)
+                                .addGap(13, 13, 13)
+                                .addComponent(PaisDestino, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addComponent(jLabOrig)
+                                .addGap(18, 18, 18)
+                                .addComponent(PaisOrigen, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(CiudadOrigen, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(CiudadDestino, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabelPrecio)
+                                .addGap(18, 18, 18)
+                                .addComponent(jTextPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, 256, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabDesc)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabNom)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jComNom, javax.swing.GroupLayout.PREFERRED_SIZE, 254, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabelServ))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(236, Short.MAX_VALUE)
+                .addContainerGap()
+                .addComponent(jLabelServ)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jComNom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabNom))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabDesc)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabelPrecio)
+                    .addComponent(jTextPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabOrig)
+                            .addComponent(PaisOrigen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(PaisDestino, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabDest)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(CiudadOrigen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(CiudadDestino, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(Aceptar)
                     .addComponent(Cancelar))
@@ -87,8 +278,36 @@ public class ActualizarServicio extends javax.swing.JInternalFrame {
         this.dispose();
     }//GEN-LAST:event_CancelarActionPerformed
 
+    private void PaisOrigenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PaisOrigenActionPerformed
+        bajarCiudadesOrigen(PaisOrigen.getSelectedItem().toString());
+    }//GEN-LAST:event_PaisOrigenActionPerformed
+
+    private void PaisDestinoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PaisDestinoActionPerformed
+        bajarCiudadesDestino(PaisDestino.getSelectedItem().toString());
+    }//GEN-LAST:event_PaisDestinoActionPerformed
+
+    private void jComNomActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComNomActionPerformed
+        bajarServicio();
+    }//GEN-LAST:event_jComNomActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Aceptar;
     private javax.swing.JButton Cancelar;
+    private javax.swing.JComboBox<String> CiudadDestino;
+    private javax.swing.JComboBox<String> CiudadOrigen;
+    private javax.swing.JComboBox<String> PaisDestino;
+    private javax.swing.JComboBox<String> PaisOrigen;
+    private javax.swing.JComboBox<String> jComNom;
+    private javax.swing.JLabel jLabDesc;
+    private javax.swing.JLabel jLabDest;
+    private javax.swing.JLabel jLabNom;
+    private javax.swing.JLabel jLabOrig;
+    private javax.swing.JLabel jLabelPrecio;
+    private javax.swing.JLabel jLabelServ;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JSeparator jSeparator2;
+    private javax.swing.JTextPane jTextDesc;
+    private javax.swing.JTextField jTextPrecio;
     // End of variables declaration//GEN-END:variables
 }
