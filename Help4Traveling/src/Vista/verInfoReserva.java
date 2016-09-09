@@ -116,7 +116,10 @@ public class verInfoReserva extends javax.swing.JInternalFrame {
         if (jTableRes.getRowCount() > 0) {
             jTableRes.setRowSelectionInterval(0, 0);
             refrescarItems();
+        } else {
+            jTableItems.setModel(tableModelItems);
         }
+
     }
 
     /**

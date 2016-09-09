@@ -5,9 +5,12 @@
  */
 package Vista;
 
+import Logica.DtPromocion;
 import Logica.DtServicio;
+import Logica.DtUsuario;
 import Logica.Fabrica;
 import Logica.IControladorServicio;
+import Logica.ManejadorProveedor;
 import java.util.Iterator;
 import java.util.List;
 import javax.swing.SwingConstants;
@@ -24,7 +27,9 @@ public class AltaPromocion extends javax.swing.JInternalFrame {
     private IControladorServicio IControlador;
     private DefaultTableModel modelo;
     private List<DtServicio> listaServicios;
-    String[] columnas = {"Cantidad", "Nombre", "Proveedor", "Precio"};
+    private List<DtUsuario> listaProveedores;
+
+    private String[] columnas = {"Cantidad", "Nombre", "Proveedor", "Precio"};
     private DefaultTableCellRenderer centerRenderer;
     private DefaultTableCellRenderer rightRenderer;
 
@@ -33,6 +38,8 @@ public class AltaPromocion extends javax.swing.JInternalFrame {
      */
     public AltaPromocion() {
         initComponents();
+
+        cargarProveedores();
 
         Fabrica fabrica = Fabrica.getInstance();
         this.IControlador = fabrica.getIControladorServicio();
@@ -96,6 +103,26 @@ public class AltaPromocion extends javax.swing.JInternalFrame {
         jTextFieldFinal.setText(total.toString());
     }
 
+    public DtPromocion armarDtPromo() {
+        DtPromocion dtp = new DtPromocion(
+                jTextFieldPromo.getText(),
+                jComboBoxProv.getSelectedItem().toString(),
+                jTextFieldDesc.getText(),
+                jTextFieldFinal.getText());
+        System.out.println(dtp);
+        return dtp;
+    }
+
+    private void cargarProveedores() {
+        jComboBoxProv.removeAllItems();
+        this.listaProveedores = ManejadorProveedor.getInstance().listarProveedores();
+        Iterator<DtUsuario> iter = listaProveedores.iterator();
+        while (iter.hasNext()) {
+            String proveedor = iter.next().getNickname();
+            this.jComboBoxProv.addItem(proveedor);
+        }
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -121,6 +148,11 @@ public class AltaPromocion extends javax.swing.JInternalFrame {
         jTextFieldFinal = new javax.swing.JTextField();
         jLabelTotal2 = new javax.swing.JLabel();
         jSpinnerPor100 = new javax.swing.JSpinner();
+        jComboBoxProv = new javax.swing.JComboBox<>();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabelPromo1 = new javax.swing.JLabel();
 
         setClosable(true);
         setIconifiable(true);
@@ -180,7 +212,7 @@ public class AltaPromocion extends javax.swing.JInternalFrame {
         });
         jScrollPane1.setViewportView(jTableOfertas);
 
-        jLabelServ.setText("[3] Ingrese en la primera columna la cantidad de cada uno de los servicios asociados a la promoción:");
+        jLabelServ.setText("[4] Ingrese en la primera columna la cantidad de cada uno de los servicios asociados a la promoción:");
 
         jLabelTotal.setText("Precio total ($):");
         jLabelTotal.setEnabled(false);
@@ -197,7 +229,7 @@ public class AltaPromocion extends javax.swing.JInternalFrame {
         jTextFieldTotal.setEditable(false);
         jTextFieldTotal.setText("0.0");
 
-        jLabelDesc.setText("[2] Ingrese el descuento aplicado (%):");
+        jLabelDesc.setText("[3] Ingrese el descuento aplicado (%):");
 
         jTextFieldDesc.setEditable(false);
         jTextFieldDesc.setText("0.0");
@@ -209,7 +241,7 @@ public class AltaPromocion extends javax.swing.JInternalFrame {
         jTextFieldFinal.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         jTextFieldFinal.setText("0.0");
 
-        jLabelTotal2.setText("Precio final (S):");
+        jLabelTotal2.setText("Precio final ($):");
         jLabelTotal2.setEnabled(false);
 
         jSpinnerPor100.addChangeListener(new javax.swing.event.ChangeListener() {
@@ -217,6 +249,14 @@ public class AltaPromocion extends javax.swing.JInternalFrame {
                 jSpinnerPor100StateChanged(evt);
             }
         });
+
+        jLabel1.setText("Nombre:");
+
+        jLabel2.setText("Proveedor:");
+
+        jLabel3.setText("Descuento:");
+
+        jLabelPromo1.setText("[2] Seleccione el proveedor de la promoción:");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -226,9 +266,6 @@ public class AltaPromocion extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabelServ)
-                        .addGap(0, 14, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabelTotal)
@@ -244,34 +281,54 @@ public class AltaPromocion extends javax.swing.JInternalFrame {
                             .addComponent(jLabelTotal2)
                             .addComponent(jButtonAceptar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jTextFieldFinal, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabelPromo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jTextFieldPromo))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabelServ)
+                        .addGap(0, 14, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(jLabelPromo)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jLabel2)
+                                        .addComponent(jLabel1))
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(jTextFieldPromo)))
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(jComboBoxProv, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabelPromo1)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabelDesc)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(106, 106, 106)
-                                .addComponent(jSpinnerPor100)))))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabelDesc, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(jLabel3)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jSpinnerPor100, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabelPromo)
-                        .addGap(6, 6, 6)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jTextFieldPromo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jSpinnerPor100, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addComponent(jLabelPromo)
+                .addGap(7, 7, 7)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jTextFieldPromo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabelPromo1)
                     .addComponent(jLabelDesc))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 7, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jComboBoxProv, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel3)
+                    .addComponent(jSpinnerPor100, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabelServ)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 94, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 156, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabelTotal)
@@ -305,7 +362,7 @@ public class AltaPromocion extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jButtonCancelarActionPerformed
 
     private void jButtonAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAceptarActionPerformed
-        this.dispose();
+        IControlador.altaDePromocion(armarDtPromo());
     }//GEN-LAST:event_jButtonAceptarActionPerformed
 
     private void jTextFieldPromoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldPromoKeyReleased
@@ -332,8 +389,13 @@ public class AltaPromocion extends javax.swing.JInternalFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButtonAceptar;
     private javax.swing.JButton jButtonCancelar;
+    private javax.swing.JComboBox<String> jComboBoxProv;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabelDesc;
     private javax.swing.JLabel jLabelPromo;
+    private javax.swing.JLabel jLabelPromo1;
     private javax.swing.JLabel jLabelServ;
     private javax.swing.JLabel jLabelTotal;
     private javax.swing.JLabel jLabelTotal1;

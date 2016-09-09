@@ -176,13 +176,14 @@ public class Principal extends javax.swing.JFrame {
         jSeparator5 = new javax.swing.JPopupMenu.Separator();
         jMenuItemSalir = new javax.swing.JMenuItem();
         jMenuRegistros = new javax.swing.JMenu();
-        bm_registrar_cliente = new javax.swing.JMenuItem();
-        bm_registrar_servicio = new javax.swing.JMenuItem();
-        jMenuItemPromo = new javax.swing.JMenuItem();
         jMenuItem2 = new javax.swing.JMenuItem();
+        jMenuItemPromo = new javax.swing.JMenuItem();
         bm_registrar_reserva = new javax.swing.JMenuItem();
+        bm_registrar_servicio = new javax.swing.JMenuItem();
+        bm_registrar_cliente = new javax.swing.JMenuItem();
         jSeparator4 = new javax.swing.JPopupMenu.Separator();
         jMenuItemEstado = new javax.swing.JMenuItem();
+        jMenuItem5 = new javax.swing.JMenuItem();
         jSeparator1 = new javax.swing.JPopupMenu.Separator();
         jMenuItemCancelar = new javax.swing.JMenuItem();
         jMenuConsultas = new javax.swing.JMenu();
@@ -256,7 +257,7 @@ public class Principal extends javax.swing.JFrame {
         jMenuInicio.add(jMenuItemCerrarAll);
         jMenuInicio.add(jSeparator2);
 
-        jMenuItem4.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_SEMICOLON, java.awt.event.InputEvent.CTRL_MASK));
+        jMenuItem4.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_COMMA, java.awt.event.InputEvent.CTRL_MASK));
         jMenuItem4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/options-icon.png"))); // NOI18N
         jMenuItem4.setText("Opciones");
         jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
@@ -286,35 +287,8 @@ public class Principal extends javax.swing.JFrame {
             }
         });
 
-        bm_registrar_cliente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/add-icon.png"))); // NOI18N
-        bm_registrar_cliente.setText("Registrar Usuario");
-        bm_registrar_cliente.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                bm_registrar_clienteActionPerformed(evt);
-            }
-        });
-        jMenuRegistros.add(bm_registrar_cliente);
-
-        bm_registrar_servicio.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/add-icon.png"))); // NOI18N
-        bm_registrar_servicio.setText("Registrar Servicio");
-        bm_registrar_servicio.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                bm_registrar_servicioActionPerformed(evt);
-            }
-        });
-        jMenuRegistros.add(bm_registrar_servicio);
-
-        jMenuItemPromo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/add-icon.png"))); // NOI18N
-        jMenuItemPromo.setText("Alta Promoción");
-        jMenuItemPromo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItemPromoActionPerformed(evt);
-            }
-        });
-        jMenuRegistros.add(jMenuItemPromo);
-
         jMenuItem2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/add-icon.png"))); // NOI18N
-        jMenuItem2.setText("Alta Categoria");
+        jMenuItem2.setText("Registrar Categoria");
         jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem2ActionPerformed(evt);
@@ -327,6 +301,15 @@ public class Principal extends javax.swing.JFrame {
         });
         jMenuRegistros.add(jMenuItem2);
 
+        jMenuItemPromo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/add-icon.png"))); // NOI18N
+        jMenuItemPromo.setText("Registrar Promoción");
+        jMenuItemPromo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemPromoActionPerformed(evt);
+            }
+        });
+        jMenuRegistros.add(jMenuItemPromo);
+
         bm_registrar_reserva.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/add-icon.png"))); // NOI18N
         bm_registrar_reserva.setText("Registrar Reserva");
         bm_registrar_reserva.addActionListener(new java.awt.event.ActionListener() {
@@ -335,6 +318,24 @@ public class Principal extends javax.swing.JFrame {
             }
         });
         jMenuRegistros.add(bm_registrar_reserva);
+
+        bm_registrar_servicio.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/add-icon.png"))); // NOI18N
+        bm_registrar_servicio.setText("Registrar Servicio");
+        bm_registrar_servicio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bm_registrar_servicioActionPerformed(evt);
+            }
+        });
+        jMenuRegistros.add(bm_registrar_servicio);
+
+        bm_registrar_cliente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/add-icon.png"))); // NOI18N
+        bm_registrar_cliente.setText("Registrar Usuario");
+        bm_registrar_cliente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bm_registrar_clienteActionPerformed(evt);
+            }
+        });
+        jMenuRegistros.add(bm_registrar_cliente);
         jMenuRegistros.add(jSeparator4);
 
         jMenuItemEstado.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/edit-icon.png"))); // NOI18N
@@ -345,10 +346,19 @@ public class Principal extends javax.swing.JFrame {
             }
         });
         jMenuRegistros.add(jMenuItemEstado);
+
+        jMenuItem5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/edit-icon.png"))); // NOI18N
+        jMenuItem5.setText("Modificar Servicio");
+        jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem5ActionPerformed(evt);
+            }
+        });
+        jMenuRegistros.add(jMenuItem5);
         jMenuRegistros.add(jSeparator1);
 
         jMenuItemCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/delete-icon.png"))); // NOI18N
-        jMenuItemCancelar.setText("Cancelar Reserva");
+        jMenuItemCancelar.setText("Eliminar Reserva");
         jMenuItemCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItemCancelarActionPerformed(evt);
@@ -362,7 +372,7 @@ public class Principal extends javax.swing.JFrame {
         jMenuConsultas.setText("Consultas");
 
         bm_verInfoCliente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/info-icon.png"))); // NOI18N
-        bm_verInfoCliente.setText("VerInfo Cliente");
+        bm_verInfoCliente.setText("Ver Info Cliente");
         bm_verInfoCliente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 bm_verInfoClienteActionPerformed(evt);
@@ -371,7 +381,7 @@ public class Principal extends javax.swing.JFrame {
         jMenuConsultas.add(bm_verInfoCliente);
 
         VerInfo_promo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/info-icon.png"))); // NOI18N
-        VerInfo_promo.setText("VerInfo Promocion");
+        VerInfo_promo.setText("Ver Info Promocion");
         VerInfo_promo.setToolTipText("");
         VerInfo_promo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -381,7 +391,7 @@ public class Principal extends javax.swing.JFrame {
         jMenuConsultas.add(VerInfo_promo);
 
         bm_verInfoProveedor.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/info-icon.png"))); // NOI18N
-        bm_verInfoProveedor.setText("VerInfo Proveedor");
+        bm_verInfoProveedor.setText("Ver Info Proveedor");
         bm_verInfoProveedor.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 bm_verInfoProveedorActionPerformed(evt);
@@ -390,7 +400,7 @@ public class Principal extends javax.swing.JFrame {
         jMenuConsultas.add(bm_verInfoProveedor);
 
         jMenuItemVerRes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/info-icon.png"))); // NOI18N
-        jMenuItemVerRes.setText("VerInfo Reserva");
+        jMenuItemVerRes.setText("Ver Info Reserva");
         jMenuItemVerRes.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItemVerResActionPerformed(evt);
@@ -399,7 +409,7 @@ public class Principal extends javax.swing.JFrame {
         jMenuConsultas.add(jMenuItemVerRes);
 
         jMenuItem3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/info-icon.png"))); // NOI18N
-        jMenuItem3.setText("VerInfo Servicio");
+        jMenuItem3.setText("Ver Info Servicio");
         jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem3ActionPerformed(evt);
@@ -585,6 +595,11 @@ public class Principal extends javax.swing.JFrame {
         abrirVentana(o);
     }//GEN-LAST:event_jMenuItem4ActionPerformed
 
+    private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
+        ActualizarServicio as = new ActualizarServicio();
+        abrirVentana(as);
+    }//GEN-LAST:event_jMenuItem5ActionPerformed
+
     public void abrirVentana(JInternalFrame jif) {
         escritorio.add(jif);
         centrarVentana(jif);
@@ -687,6 +702,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
+    private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItemCancelar;
     private javax.swing.JMenuItem jMenuItemCargar;
     private javax.swing.JMenuItem jMenuItemCerrar;

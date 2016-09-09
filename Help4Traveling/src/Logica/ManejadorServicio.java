@@ -284,6 +284,36 @@ public class ManejadorServicio {
         return listaServicios;
     }
 
+    public List<DtServicio> listarServiciosPromocion(DtPromocion promo) {
+        conexion = new Conexion();
+        Connection con = conexion.getConnection();
+        Statement st;
+        ResultSet rsServiciosProveedor;
+        sql = "SELECT * FROM help4traveling.servicios WHERE proveedor= '" + promo.getNombre() + "'";
+
+        List<DtServicio> listaServicios = new ArrayList<DtServicio>();
+        try {
+            st = con.createStatement();
+            rsServiciosProveedor = st.executeQuery(sql);
+
+            DtServicio ser;
+            while (rsServiciosProveedor.next()) {
+                String nombre = rsServiciosProveedor.getString("nombre");
+                String nkproveedor = rsServiciosProveedor.getString("proveedor");
+                ser = GetDataServicio(nombre, nkproveedor);
+                listaServicios.add(ser);
+            }
+            rsServiciosProveedor.close();
+            con.close();
+            st.close();
+
+        } catch (SQLException e) {
+            System.out.println("No hubo resultado");
+            System.out.println(e.getMessage());
+        }
+        return listaServicios;
+    }
+
     public List<DtServicio> getDtServicios() {
         List<DtServicio> listaDtServ = new LinkedList<DtServicio>();
         Iterator<Servicio> iter = this.serviciosNom.values().iterator();
@@ -372,7 +402,7 @@ public class ManejadorServicio {
         conexion = new Conexion();
         Connection con = conexion.getConnection();
         Statement st;
-        String mensaje = "Se dio de alta la oferta.";
+        String mensaje = "Almacenando Promo: OK";
         System.out.println(promo.getNombre());
         if (!existeServicio(promo.getNombre())) {
             //sql = "INSERT INTO help4traveling.servicios (nombre,proveedor,descripcion,precio,origen,destino) VALUES ('" + serv.getNombre() + "','" + serv.getProveedor().getNickname() + "','" + serv.getDescripcion() + "'," + (double) serv.getPrecio() + ",'" + serv.getOrigen().getNombre() + "','" + serv.getDestino().getNombre() + "')";
@@ -380,7 +410,6 @@ public class ManejadorServicio {
             System.out.println(sql);
             try {
                 st = con.createStatement();
-                System.out.println("antes de insertar");
                 st.executeUpdate(sql);
                 //con.close();
                 st.close();
@@ -393,7 +422,6 @@ public class ManejadorServicio {
             System.out.println(sql);
             try {
                 st = con.createStatement();
-                System.out.println("antes de insertar");
                 st.executeUpdate(sql);
                 //con.close();
                 st.close();
@@ -402,13 +430,12 @@ public class ManejadorServicio {
                 System.out.println("No pude INSERTAR :(");
             }
 
-            /*
-            List<DtServicio> servicios = promo.getServicios();
-            Iterator<DtServicio> it = servicios.iterator();
+            List<String> servicios = listarServiciosDePromociones(promo.getNombre(), promo.getProveedor());
+            Iterator<String> it = servicios.iterator();
             while (it.hasNext()) {
-                sql = "INSERT INTO help4traveling.promocionesservicios" +
-                      " (promocion,proveedorPromocion,servicio,proveedorServicio) VALUES ('" +
-                      promo.getNombre() + "','" + promo.getProveedor()+ "','" + it.next() + "')";
+                sql = "INSERT INTO help4traveling.promocionesservicios"
+                        + " (promocion,proveedorPromocion,servicio,proveedorServicio) VALUES ('"
+                        + promo.getNombre() + "','" + promo.getProveedor() + "','" + it.next() + "')";
                 try {
                     st = con.createStatement();
                     st.executeUpdate(sql);
@@ -419,7 +446,7 @@ public class ManejadorServicio {
                     System.out.println("No pude INSERTAR :(");
                 }
             }
-             */
+
         } else {
             mensaje = "ERROR: La promo ingresada ya existe...";
         }
@@ -451,6 +478,9 @@ public class ManejadorServicio {
                 //  Date nacimiento = new Date(12,12,1994);
                 //String imagen = "";
                 //
+
+                List<String> servicios = listarServiciosDePromociones(nombre, total);
+
                 DtPromocion nuevo = new DtPromocion(nombre, proveedor, descuento, total);
                 listaResult.add(nuevo);
             }
@@ -488,7 +518,7 @@ public class ManejadorServicio {
                 String descuento = rsPromociones.getString("descuento");
                 String total = rsPromociones.getString("total");
 
-                nuevo = new DtPromocion(nombre1, proveedor, descuento, total);
+                nuevo = new DtPromocion(nombre1, proveedor, descuento, total/*, servicios*/);
 
             }
             rsPromociones.close();

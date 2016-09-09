@@ -14,7 +14,9 @@ public class Help4Traveling {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        System.out.println("Iniciando......");
+        System.out.println("********* HELP 4 TRAVELING *********");
+        System.out.println("Bienvenido a la Estación de Trabajo!");
+        System.out.println("************************************");
 
         Fabrica fab = Fabrica.getInstance();
         Principal p = new Principal();
