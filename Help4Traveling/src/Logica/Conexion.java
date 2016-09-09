@@ -1,33 +1,39 @@
 package Logica;
 
-import java.sql.*;
-//import java.sql.Connection;
-//import java.sql.DriverManager;
-//import java.sql.SQLException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 
 public class Conexion {
 
-    private static String servidor = "jdbc:mysql://localhost:3306/help4traveling?autoReconnect=true&useSSL=false";
-    private static String user = "root";
-    private static String pass = "santiagopako";
-    private static String driver = "com.mysql.jdbc.Driver";
+    Conector conector = Conector.getInstance();
+
+    private String servidor = conector.getServidor();
+    private String usuario = conector.getUsuario();
+    private String clave = conector.getClave();
+    private String driver = conector.getDriver();
+
     private static Connection conexion;
 
     public Conexion() {
         try {
+            System.out.print("Conectando al servidor: ");
             Class.forName(driver).newInstance();
             try {
-                conexion = DriverManager.getConnection(servidor, user, pass);
+                conexion = DriverManager.getConnection(servidor, usuario, clave);
+                System.out.println("OK");
             } catch (SQLException ex) {
-                System.out.println("Error al conectar con el servidor de base de datos.");
+                System.out.println("ERROR.");
+                System.out.println(ex);
             }
-            System.out.println("Conecte");
         } catch (Exception e) {
-            System.out.println("Error al cargar los driver.");
+            System.out.println("ERROR.");
+            System.out.println(e);
         }
     }
 
     public Connection getConnection() {
+        System.out.println(conexion);
         return conexion;
     }
 }

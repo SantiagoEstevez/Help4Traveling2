@@ -5,14 +5,12 @@
  */
 package Vista;
 
-import java.util.Date;
 import Logica.DtServicio;
-import Logica.DtUsuario;
 import Logica.Fabrica;
 import Logica.IControladorServicio;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Date;
 import java.util.Iterator;
+import java.util.List;
 import java.util.StringTokenizer;
 import javax.swing.DefaultListModel;
 
@@ -21,18 +19,20 @@ import javax.swing.DefaultListModel;
  * @author Santiago
  */
 public class altaReserva2 extends javax.swing.JInternalFrame {
+
     private IControladorServicio IControlador;
     private DefaultListModel modelo;
     private List<DtServicio> listaServicios;
+
     /**
      * Creates new form altaReserva2
      */
     public altaReserva2() {
         initComponents();
-        
+
         Fabrica fabrica = Fabrica.getInstance();
         this.IControlador = fabrica.getIControladorServicio();
-        
+
         //Agregar los servicios a la lista
         listaServicios = this.IControlador.listarServicios();
         Iterator<DtServicio> i = listaServicios.iterator();
@@ -42,7 +42,7 @@ public class altaReserva2 extends javax.swing.JInternalFrame {
             modelo.addElement(servicio.getNombre() + "~" + servicio.getNkProveedor());
         }
         this.Ofertas.setModel(modelo);
-        
+
         //Setear
         buscar.setText("");
     }
@@ -193,7 +193,7 @@ public class altaReserva2 extends javax.swing.JInternalFrame {
             }
         });
 
-        bBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/buscar.png"))); // NOI18N
+        bBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/search-icon.png"))); // NOI18N
         bBuscar.setText("Buscar");
         bBuscar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -240,8 +240,8 @@ public class altaReserva2 extends javax.swing.JInternalFrame {
     private void OfertasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_OfertasMouseClicked
         this.infoItem.setSize(357, 260);
         this.infoItem.setLocationRelativeTo(this);
-        
-        StringTokenizer st = new StringTokenizer(Ofertas.getSelectedValue(),"~",true);
+
+        StringTokenizer st = new StringTokenizer(Ofertas.getSelectedValue(), "~", true);
         this.nombreItem.setText(st.nextToken());
         st.nextToken();
         this.proveedorItem.setText(st.nextToken());
@@ -260,55 +260,55 @@ public class altaReserva2 extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_buscarActionPerformed
 
     private void buscarKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_buscarKeyTyped
-        
+
     }//GEN-LAST:event_buscarKeyTyped
 
     private void buscarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_buscarKeyPressed
-        
+
     }//GEN-LAST:event_buscarKeyPressed
 
     private void bBuscarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bBuscarMouseClicked
         DefaultListModel modeloBuscar = new DefaultListModel();
         String texto = buscar.getText();
-        
+
         if (texto != "") {
             this.Ofertas.setModel(modeloBuscar);
-            
+
             Iterator<DtServicio> i = listaServicios.iterator();
             while (i.hasNext()) {
                 DtServicio oServicio = i.next();
                 String servicio = oServicio.getNombre() + "~" + oServicio.getNkProveedor();
-                if (servicio.indexOf(texto) != -1){
+                if (servicio.indexOf(texto) != -1) {
                     modeloBuscar.addElement(servicio);
                 }
             }
             this.Ofertas.setModel(modeloBuscar);
-                
+
         } else {
             this.Ofertas.setModel(modelo);
         }
     }//GEN-LAST:event_bBuscarMouseClicked
 
     private void agregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_agregarActionPerformed
-        altaReserva.agregarItem(new Object[]{true,Integer.parseInt(cantidad.getText()),nombreItem.getText(), proveedorItem.getText(), dateToString(inicio.getDate()), dateToString(fin.getDate())});
+        altaReserva.agregarItem(new Object[]{true, Integer.parseInt(cantidad.getText()), nombreItem.getText(), proveedorItem.getText(), dateToString(inicio.getDate()), dateToString(fin.getDate())});
         infoItem.dispose();
     }//GEN-LAST:event_agregarActionPerformed
 
-    private static String dateToString(Date date){
+    private static String dateToString(Date date) {
         String fecha, dia, mes, ano;
         dia = String.valueOf(date.getDay());
         mes = String.valueOf(date.getMonth());
-        ano = String.valueOf(date.getYear()-100);
-        
+        ano = String.valueOf(date.getYear() - 100);
+
         fecha = "20" + ano;
         fecha += "-";
-        if (mes.length() == 1){
+        if (mes.length() == 1) {
             fecha += "0" + mes;
         } else {
             fecha += mes;
         }
         fecha += "-";
-        if (dia.length() == 1){
+        if (dia.length() == 1) {
             fecha += "0" + dia;
         } else {
             fecha += dia;

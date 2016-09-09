@@ -245,7 +245,7 @@
     <Component class="javax.swing.JButton" name="bBuscar">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/Iconos/buscar.png"/>
+          <Image iconType="3" name="/Iconos/search-icon.png"/>
         </Property>
         <Property name="text" type="java.lang.String" value="Buscar"/>
       </Properties>

@@ -17,31 +17,36 @@ public class Help4Traveling {
         System.out.println("Iniciando......");
 
         Fabrica fab = Fabrica.getInstance();
-        Reserva r = fab.getIControladorReserva().nuevaRserva("santiago", 0);
-        fab.getIControladorUsuario().listarClientes();
+        Principal p = new Principal();
+        p.setLocationRelativeTo(null);
+        p.setVisible(true);
 
+        pruebas();
+    }
+
+    public static void pruebas() {
+        /*
+        //Reserva r = fab.getIControladorReserva().nuevaRserva("santiago", 0);
+        //fab.getIControladorUsuario().listarClientes();
         //fab.getIControladorServicio().altaDeCategoria("ariel1", null);
         //fab.getIControladorServicio().altaDeCategoria("msrtin1", "ariel1");
-        fab.getIControladorServicio().listarCategorias();
-
+        //fab.getIControladorServicio().listarCategorias();
         ///Date a = new Date(12,12,2016);
         //Date b = new Date(12,12,2017);
         //Servicio s = new Servicio();
         //System.out.println("C ......");
         //fab.getIControladorReserva().agregarItem(r,1,a,b,s);
         //fab.getIControladorReserva().verReserva();
-        //System.out.println("Antes de guardar a la base de datos ......");
         //fab.getIControladorReserva().altaReserva(r);
-        Principal p = new Principal();
-        p.setLocationRelativeTo(null);
-        p.setVisible(true);
-
+        //System.out.println("Antes de guardar a la base de datos ......");
         //fab.getIControladorUsuario().listarReservasCliente();
         //ManejadorReserva a;
         //a = new ManejadorReserva();
         //a.altaReserva();
         //private date a;
         //a = new ManejadorReserva();
+         */
+
     }
 
 }

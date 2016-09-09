@@ -268,42 +268,44 @@ public class ManejadorReserva {
         Connection con = conexion.getConnection();
         Statement st;
 
-        sql = "SELECT * FROM help4traveling.reservas";
+        if (con != null) {
+            sql = "SELECT * FROM help4traveling.reservas";
 
-        try {
-            st = con.createStatement();
-            rsReservas = st.executeQuery(sql);
+            try {
+                st = con.createStatement();
+                rsReservas = st.executeQuery(sql);
 
-            System.out.print("Cargando Reservas: ");
+                System.out.print("Cargando Reservas: ");
 
-            while (rsReservas.next()) {
+                while (rsReservas.next()) {
 
-                Long num = rsReservas.getLong("numero");
-                Date creada = new Date(rsReservas.getString("fecha"));
-                double total = rsReservas.getDouble("total");
-                String estado = rsReservas.getString("estado");
-                String cliente = rsReservas.getString("cliente");
-                Map<Integer, ItemReserva> mapa = new HashMap();
+                    Long num = rsReservas.getLong("numero");
+                    Date creada = new Date(rsReservas.getString("fecha"));
+                    double total = rsReservas.getDouble("total");
+                    String estado = rsReservas.getString("estado");
+                    String cliente = rsReservas.getString("cliente");
+                    Map<Integer, ItemReserva> mapa = new HashMap();
 
-                Reserva nueva = new Reserva(creada, Reserva.eEstado.valueOf(estado), total, cliente, mapa);
+                    Reserva nueva = new Reserva(creada, Reserva.eEstado.valueOf(estado), total, cliente, mapa);
 
-                /* CARGAR RESERVASITEMS */
-                nueva.setId(num);       //Temporal?
-                Long id = nueva.getId();
-                reservasId.put(id, nueva);
-                System.out.print(nueva.getId() + " ");
+                    /* CARGAR RESERVASITEMS */
+                    nueva.setId(num);       //Temporal?
+                    Long id = nueva.getId();
+                    reservasId.put(id, nueva);
+                    System.out.print(nueva.getId() + " ");
+                }
+                System.out.println();
+                rsReservas.close();
+                con.close();
+                st.close();
+
+                System.out.println("Reservas cargadas!");
+            } catch (SQLException e) {
+                System.out.println("Reservas no cargadas!");
+                System.out.println(e.getMessage());
             }
-            System.out.println();
-            rsReservas.close();
-            con.close();
-            st.close();
 
-            System.out.println("Reservas cargadas!");
-        } catch (SQLException e) {
-            System.out.println("Reservas no cargadas!");
-            System.out.println(e.getMessage());
         }
-
     }
 
     public void setItemsDB() {
@@ -314,49 +316,51 @@ public class ManejadorReserva {
         Connection con = conexion.getConnection();
         Statement st;
 
-        sql = "SELECT * FROM help4traveling.reservasitems";
+        if (con != null) {
+            sql = "SELECT * FROM help4traveling.reservasitems";
 
-        try {
-            st = con.createStatement();
-            rsItems = st.executeQuery(sql);
+            try {
+                st = con.createStatement();
+                rsItems = st.executeQuery(sql);
 
-            System.out.print("Cargando Items: ");
+                System.out.print("Cargando Items: ");
 
-            while (rsItems.next()) {
+                while (rsItems.next()) {
 
-                int reserva = rsItems.getInt("reserva");
-                int cantidad = rsItems.getInt("cantidad");
+                    int reserva = rsItems.getInt("reserva");
+                    int cantidad = rsItems.getInt("cantidad");
 
-                Date inicio = new Date(rsItems.getString("inicio"));
-                Date fin = new Date(rsItems.getString("fin"));
+                    Date inicio = new Date(rsItems.getString("inicio"));
+                    Date fin = new Date(rsItems.getString("fin"));
 
-                String nomoferta = rsItems.getString("oferta");
-                String nomprov = rsItems.getString("proveedorOferta");
-                //Proveedor proveedor = ManejadorProveedor.getInstance().obtenerProveedor(nomprov);
-                Oferta oferta = new Servicio();
-                oferta.setNombre(nomoferta);
+                    String nomoferta = rsItems.getString("oferta");
+                    String nomprov = rsItems.getString("proveedorOferta");
+                    //Proveedor proveedor = ManejadorProveedor.getInstance().obtenerProveedor(nomprov);
+                    Oferta oferta = new Servicio();
+                    oferta.setNombre(nomoferta);
 
-                ItemReserva nuevo = new ItemReserva(reserva, cantidad, inicio, fin, oferta);
+                    ItemReserva nuevo = new ItemReserva(reserva, cantidad, inicio, fin, oferta);
 
-                if (itemsId.containsKey(reserva)) {
-                    itemsId.get(reserva).add(nuevo);
-                } else {
-                    List<ItemReserva> item = new ArrayList();
-                    item.add(nuevo);
-                    itemsId.put(reserva, item);
+                    if (itemsId.containsKey(reserva)) {
+                        itemsId.get(reserva).add(nuevo);
+                    } else {
+                        List<ItemReserva> item = new ArrayList();
+                        item.add(nuevo);
+                        itemsId.put(reserva, item);
+                    }
+                    System.out.print(nuevo.getId() + " ");
+
                 }
-                System.out.print(nuevo.getId() + " ");
+                System.out.println();
+                rsItems.close();
+                con.close();
+                st.close();
 
+                System.out.println("Items cargados!");
+            } catch (SQLException e) {
+                System.out.println("Items no cargados!");
+                System.out.println(e.getMessage());
             }
-            System.out.println();
-            rsItems.close();
-            con.close();
-            st.close();
-
-            System.out.println("Items cargados!");
-        } catch (SQLException e) {
-            System.out.println("Items no cargados!");
-            System.out.println(e.getMessage());
         }
 
     }
