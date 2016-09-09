@@ -188,18 +188,21 @@ public class cancelarReserva extends javax.swing.JInternalFrame {
 
     private void jButtonEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEliminarActionPerformed
         int fila = 0;
-        if (jTableRes.getSelectedRowCount() > 0) {
+        if ((jTableRes.getRowCount() > 0) && (jTableRes.getSelectedRowCount() > 0)) {
             fila = jTableRes.getSelectedRow();
             Object[] opciones = {"No", "Si"};
             int respuesta = JOptionPane.showOptionDialog(null, "¿Está seguro de cancelar la reserva?", "Confirmar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, opciones, opciones[1]);
 
+            Long reserva = Long.valueOf(jTableRes.getValueAt(jTableRes.getSelectedRow(), 0).toString());
+            System.out.println("ID: " + reserva);
+
             if (respuesta == 1) {
-                this.IControlador.cancelarUnaReserva(Long.valueOf(jTableRes.getValueAt(jTableRes.getSelectedRow(), 0).toString()));
+                this.IControlador.cancelarUnaReserva(reserva);
                 fila = 0;
             }
         }
         refrescarReservas();
-        if ((fila >= 0) && (jTableRes.getRowCount() > fila)) {
+        if ((jTableRes.getRowCount() > 0) && (jTableRes.getSelectedRowCount() > 0)) {
             jTableRes.setRowSelectionInterval(fila, fila);
         }
     }//GEN-LAST:event_jButtonEliminarActionPerformed
