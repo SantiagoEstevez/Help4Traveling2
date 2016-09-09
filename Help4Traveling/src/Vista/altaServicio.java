@@ -211,28 +211,33 @@ public class altaServicio extends javax.swing.JInternalFrame {
     }
 
     
-    private void MostrarArbol(DefaultMutableTreeNode modeloCategorias) {
-        DefaultMutableTreeNode categoria = null;
-        DefaultMutableTreeNode hoja = null;
+public void VerArbol() {
+        initComponents();
+        Fabrica fabrica = Fabrica.getInstance();
+        DefaultMutableTreeNode raiz = new DefaultMutableTreeNode("Categorias");
+        DefaultTreeModel modelo = new DefaultTreeModel(raiz);
+
+        MostrarArbol(raiz);
+        tr_categorias.setModel(modelo);
+
+    }
+
+    public void MostrarArbol(DefaultMutableTreeNode nodo) {
         ManejadorCategoria mc = ManejadorCategoria.getInstance();
-        List<String> padres = mc.obtenerCategoriasPadre();
-        Iterator<String> iter = padres.iterator();
-        //DefaultMutableTreeNode categoria=null; 
+        List<String> listaHijos = mc.obtenerCategoriasHijas(nodo.toString());
+        Iterator<String> iter = listaHijos.iterator();
         while (iter.hasNext()) {
-            String padre = iter.next();
-            categoria = new DefaultMutableTreeNode(padre.toString());
-
-            modeloCategorias.add(categoria);
-
-            List<String> hijas = mc.obtenerCategoriasHijas(padre);
-            Iterator<String> iter2 = hijas.iterator();
-            //DefaultMutableTreeNode hoja=null;
-            while (iter2.hasNext()) {
-                String hij = iter2.next();
-                hoja = new DefaultMutableTreeNode(hij.toString());
-                categoria.add(hoja);
-            }
+            String hijo = iter.next();
+            System.out.println(hijo);
+            DefaultMutableTreeNode nuevoNodo = new DefaultMutableTreeNode(hijo);
+            nodo.add(nuevoNodo);
+            System.out.println("Agregue el nodo " + hijo);
         }
+
+        for (int j = 0; j < nodo.getChildCount(); j++) {
+            MostrarArbol((DefaultMutableTreeNode) nodo.getChildAt(j));
+        }
+
     }
     /**
      * This method is called from within the constructor to initialize the form.
