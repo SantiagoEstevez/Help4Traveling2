@@ -63,8 +63,8 @@ public class verInfoReserva extends javax.swing.JInternalFrame {
             DtReserva res = listaReservas.get(index);
             Integer reserva = (int) (long) listaReservas.get(index).getId();
             this.listaItems = this.IControlador.listarItems(reserva);
-            tableModelItems.getDataVector().removeAllElements();
-
+            tableModelItems.setRowCount(0);
+            
             if (listaItems != null) {
                 Iterator<DtItemReserva> it = this.listaItems.iterator();
 
@@ -79,6 +79,7 @@ public class verInfoReserva extends javax.swing.JInternalFrame {
                     tableModelItems.addRow(fila);
                 }
             }
+            
             jTableItems.setModel(tableModelItems);
             jTableItems.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
             jTableItems.getColumnModel().getColumn(1).setCellRenderer(centerRenderer);

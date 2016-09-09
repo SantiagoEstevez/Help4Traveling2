@@ -16,13 +16,9 @@ public class ManejadorReserva {
     private static ManejadorReserva instancia = null;
     private Conexion conexion;
     private String sql;
-
-    public static enum eEstado {
-        REGISTRADA, CANCELADA, PAGADA, FACTURADA
-    };
-
     private Map<Long, Reserva> reservasId;
     private Map<Integer, List<ItemReserva>> itemsId;
+    public static enum eEstado {REGISTRADA, CANCELADA, PAGADA, FACTURADA};    
 
     private ManejadorReserva() {
         reservasId = new HashMap<>();
@@ -37,6 +33,7 @@ public class ManejadorReserva {
         return instancia;
     }
 
+    //Funciones agregadas
     public void altaReserva(Reserva nueva) {
         conexion = new Conexion();
         Connection con = conexion.getConnection();
@@ -123,7 +120,6 @@ public class ManejadorReserva {
             System.out.println("ERROR");
             System.out.println(e.getMessage());
         }
-
     }
 
     public boolean existeReserva(long id) {
@@ -142,11 +138,16 @@ public class ManejadorReserva {
 
     public List<DtItemReserva> listarItems(Integer reserva) {
         List<DtItemReserva> listaItems = new ArrayList<>();
-        Iterator<ItemReserva> iter = this.itemsId.get(reserva).iterator();
-        while (iter.hasNext()) {
-            ItemReserva item = iter.next();
-            listaItems.add(item.getDtItem());
+        List<ItemReserva> itemsReserva = this.itemsId.get(reserva);
+        
+        if (itemsReserva != null) {
+            Iterator<ItemReserva> iter = itemsReserva.iterator();
+            while (iter.hasNext()) {
+                ItemReserva item = iter.next();
+                listaItems.add(item.getDtItem());
+            }
         }
+        
         return listaItems;
     }
 
