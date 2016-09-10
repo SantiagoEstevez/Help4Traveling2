@@ -290,13 +290,17 @@ public class ActualizarServicio extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_CancelarActionPerformed
 
     private void PaisOrigenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PaisOrigenActionPerformed
-        //if (PaisOrigen.get) {
+        /*
+        if (PaisOrigen.get) {
         bajarCiudadesOrigen(PaisOrigen.getSelectedItem().toString());
-        //}
+        }
+         */
     }//GEN-LAST:event_PaisOrigenActionPerformed
 
     private void PaisDestinoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PaisDestinoActionPerformed
+        /*
         bajarCiudadesDestino(PaisDestino.getSelectedItem().toString());
+         */
     }//GEN-LAST:event_PaisDestinoActionPerformed
 
     private void jComNomActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComNomActionPerformed
