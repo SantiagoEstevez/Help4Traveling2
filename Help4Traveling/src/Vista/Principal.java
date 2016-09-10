@@ -23,6 +23,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -44,7 +45,7 @@ public class Principal extends javax.swing.JFrame {
 
     private IControladorUsuario IControlador;
     private String tipo;
-    private String camino;
+    //private String camino;
     private Boolean shift = false;
 
     /**
@@ -219,10 +220,12 @@ public class Principal extends javax.swing.JFrame {
         );
 
         jMenuInicio.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/win-icon.png"))); // NOI18N
+        jMenuInicio.setMnemonic('i');
         jMenuInicio.setText("Inicio");
 
         externoMenu.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_E, java.awt.event.InputEvent.CTRL_MASK));
         externoMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/db-icon.png"))); // NOI18N
+        externoMenu.setMnemonic('e');
         externoMenu.setText("Ejecutar Script Externo");
         externoMenu.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -266,6 +269,7 @@ public class Principal extends javax.swing.JFrame {
 
         opcionesMenu.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_O, java.awt.event.InputEvent.CTRL_MASK));
         opcionesMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/options-icon.png"))); // NOI18N
+        opcionesMenu.setMnemonic('o');
         opcionesMenu.setText("Opciones");
         opcionesMenu.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -277,6 +281,7 @@ public class Principal extends javax.swing.JFrame {
 
         salirMenu.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_Q, java.awt.event.InputEvent.CTRL_MASK));
         salirMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/check-icon.png"))); // NOI18N
+        salirMenu.setMnemonic('s');
         salirMenu.setText("Salir");
         salirMenu.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -288,6 +293,7 @@ public class Principal extends javax.swing.JFrame {
         jMenuBar1.add(jMenuInicio);
 
         jMenuRegistros.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/add-icon.png"))); // NOI18N
+        jMenuRegistros.setMnemonic('r');
         jMenuRegistros.setText("Registros");
         jMenuRegistros.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -349,6 +355,7 @@ public class Principal extends javax.swing.JFrame {
         jMenuRegistros.getAccessibleContext().setAccessibleDescription("");
 
         jMenuConsultas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/info-icon.png"))); // NOI18N
+        jMenuConsultas.setMnemonic('c');
         jMenuConsultas.setText("Consultas");
 
         bm_verInfoCliente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/info-icon.png"))); // NOI18N
@@ -400,6 +407,7 @@ public class Principal extends javax.swing.JFrame {
         jMenuBar1.add(jMenuConsultas);
 
         jMenuModificaciones.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/edit-icon.png"))); // NOI18N
+        jMenuModificaciones.setMnemonic('m');
         jMenuModificaciones.setText("Modificaciones");
 
         modResMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/edit-icon.png"))); // NOI18N
@@ -535,16 +543,17 @@ public class Principal extends javax.swing.JFrame {
 
     private void externoMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_externoMenuActionPerformed
         JFileChooser selector = new JFileChooser();
+        selector.setDialogTitle("Elegir Script");
         FileNameExtensionFilter filter = new FileNameExtensionFilter("SQL Scripts (.sql)", "sql");
         selector.setFileFilter(filter);
         selector.setVisible(true);
         int eleccion = selector.showOpenDialog(null);
         if (eleccion == JFileChooser.APPROVE_OPTION) {
             File datos = selector.getSelectedFile();
-            camino = datos.getAbsolutePath();
+            String camino = datos.getAbsolutePath();
             System.out.print("Datos ubicados en: ");
             System.out.println(camino);
-            cargarDatos();
+            cargarDatos(camino, false);
         }
     }//GEN-LAST:event_externoMenuActionPerformed
 
@@ -613,7 +622,9 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_modServMenuActionPerformed
 
     private void internoMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_internoMenuActionPerformed
-
+        String script = "Script-DB2.sql";
+        String camino = "/Datos/" + script;
+        cargarDatos(camino, true);
     }//GEN-LAST:event_internoMenuActionPerformed
 
     //==========================================================================
@@ -633,14 +644,18 @@ public class Principal extends javax.swing.JFrame {
         cerrarMenu2.setEnabled(true);
     }
 
-    public void cargarDatos() {
+    public void cargarDatos(String camino, Boolean interno) {
         System.out.print("Cargando Datos... ");
         Conexion conexion = new Conexion();
         Connection con = conexion.getConnection();
         ScriptRunner runner = new ScriptRunner(con, false, true);
         try {
             this.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
-            runner.runScript(new BufferedReader(new FileReader(camino)));
+            if (interno) {
+                runner.runScript(new BufferedReader(new InputStreamReader(this.getClass().getResourceAsStream(camino))));
+            } else {
+                runner.runScript(new BufferedReader(new FileReader(camino)));
+            }
             this.setCursor(Cursor.getDefaultCursor());
             JOptionPane.showMessageDialog(this, "El script fue ejecutado correctamente.", "Aviso", JOptionPane.INFORMATION_MESSAGE);
             System.out.println("OK");

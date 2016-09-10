@@ -14,6 +14,7 @@
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
               <Image iconType="3" name="/Iconos/win-icon.png"/>
             </Property>
+            <Property name="mnemonic" type="int" value="105"/>
             <Property name="text" type="java.lang.String" value="Inicio"/>
           </Properties>
           <SubComponents>
@@ -25,6 +26,7 @@
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/Iconos/db-icon.png"/>
                 </Property>
+                <Property name="mnemonic" type="int" value="101"/>
                 <Property name="text" type="java.lang.String" value="Ejecutar Script Externo"/>
               </Properties>
               <Events>
@@ -84,6 +86,7 @@
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/Iconos/options-icon.png"/>
                 </Property>
+                <Property name="mnemonic" type="int" value="111"/>
                 <Property name="text" type="java.lang.String" value="Opciones"/>
               </Properties>
               <Events>
@@ -100,6 +103,7 @@
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/Iconos/check-icon.png"/>
                 </Property>
+                <Property name="mnemonic" type="int" value="115"/>
                 <Property name="text" type="java.lang.String" value="Salir"/>
               </Properties>
               <Events>
@@ -113,6 +117,7 @@
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
               <Image iconType="3" name="/Iconos/add-icon.png"/>
             </Property>
+            <Property name="mnemonic" type="int" value="114"/>
             <Property name="text" type="java.lang.String" value="Registros"/>
           </Properties>
           <AccessibilityProperties>
@@ -185,6 +190,7 @@
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
               <Image iconType="3" name="/Iconos/info-icon.png"/>
             </Property>
+            <Property name="mnemonic" type="int" value="99"/>
             <Property name="text" type="java.lang.String" value="Consultas"/>
           </Properties>
           <SubComponents>
@@ -251,6 +257,7 @@
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
               <Image iconType="3" name="/Iconos/edit-icon.png"/>
             </Property>
+            <Property name="mnemonic" type="int" value="109"/>
             <Property name="text" type="java.lang.String" value="Modificaciones"/>
           </Properties>
           <SubComponents>
