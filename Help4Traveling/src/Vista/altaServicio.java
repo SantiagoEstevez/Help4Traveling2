@@ -4,21 +4,17 @@
  * and open the template in the editor.
  */
 package Vista;
-import Logica.DtUsuario;
-import Logica.Fabrica;
-import Logica.ControladorUsuario;
-import Logica.Date;
+
 import Logica.DtCategoria;
 import Logica.DtServicio;
+import Logica.DtUsuario;
+import Logica.Fabrica;
 import Logica.IControladorServicio;
-import javax.swing.JOptionPane;
-import Logica.IControladorUsuario;
 import Logica.ManejadorCategoria;
 import Logica.ManejadorCiudad;
 import Logica.ManejadorProveedor;
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -26,20 +22,23 @@ import java.util.List;
 import java.util.Map;
 import javax.swing.DefaultListModel;
 import javax.swing.JFileChooser;
-import javax.swing.JTree;
+import javax.swing.JOptionPane;
+import javax.swing.UIManager;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
+
 /**
  *
  * @author Santiago
  */
 public class altaServicio extends javax.swing.JInternalFrame {
+
     List<String> listaPaises = null;
     List<String> listaCiudades = null;
     List<DtUsuario> listaProveedores = new ArrayList<DtUsuario>();
     List<String> imagenes = new LinkedList<String>();
-    Map<String,DtCategoria> categorias = new HashMap<String,DtCategoria>();
+    Map<String, DtCategoria> categorias = new HashMap<String, DtCategoria>();
     private IControladorServicio IControlador;
     DefaultListModel modeloListaImagenes = new DefaultListModel();
     DefaultListModel modeloListaCategorias = new DefaultListModel();
@@ -49,12 +48,11 @@ public class altaServicio extends javax.swing.JInternalFrame {
     String origen;
     String destino;
     boolean categoria_seleccionada;
-    
-    
+    private Boolean expandir = true;
+
     /**
      * Creates new form altaServicio
      */
-    
     /*private DefaultMutableTreeNode encontrarNodoCat(String nomcat, DefaultMutableTreeNode raiz) {
         DefaultMutableTreeNode nodoCat = null;
         Enumeration e = raiz.breadthFirstEnumeration();
@@ -75,11 +73,11 @@ public class altaServicio extends javax.swing.JInternalFrame {
 		DtCategoria cat = iter.next();
 		if (cat.equals(padre)) {
 		    listaHijos.addLast(cat.getNombre());
-		}	
+		}
 	}
         return listaHijos;
     }
-    
+
     private void crearArbolCategorias() {
         DefaultMutableTreeNode raiz = new DefaultMutableTreeNode("Categorias");
 	this.listaCat = ManejadorCategoria.getInstance().listarCategorias();
@@ -98,11 +96,11 @@ public class altaServicio extends javax.swing.JInternalFrame {
 		    raiz.add(nodoCat);
 		    //listaCat.remove(cat);
 		    listaTratados.addLast(cat.getNombre());
-		}	
+		}
 	}
 	while (!listaTratados.isEmpty()) {
 		Iterator<String> itertr = listaTratados.iterator();
-                
+
 		while (itertr.hasNext()) {
 			String nomcat = itertr.next();
                         System.out.println("Llego aca");
@@ -116,25 +114,22 @@ public class altaServicio extends javax.swing.JInternalFrame {
 				padre.add(nodoCat);
 				//listaCat.remove(cat.getNombre());
 				listaTratados.addLast(hijo);
-			}	
-			listaTratados.remove(nomcat);			
+			}
+			listaTratados.remove(nomcat);
 		}
 	}
-        DefaultTreeModel modeloArbol = new DefaultTreeModel(raiz); 
+        DefaultTreeModel modeloArbol = new DefaultTreeModel(raiz);
 	this.tr_categorias.setModel(modeloArbol);
     }*/
-    
-       
-    
     private void cargarPaisesOrigen() {
         this.listaPaises = ManejadorCiudad.getInstance().listarPaises();
         Iterator<String> iter = this.listaPaises.iterator();
         while (iter.hasNext()) {
             String nompais = iter.next();
             this.cb_paises_origen.addItem(nompais);
-        }      
+        }
     }
-    
+
     private void cargarCiudadesPaisOrigen(String pais) {
         this.cb_ciudades_origen.removeAllItems();
         this.listaCiudades = ManejadorCiudad.getInstance().listarCiudadesPorPais(pais);
@@ -143,21 +138,22 @@ public class altaServicio extends javax.swing.JInternalFrame {
         while (iter.hasNext()) {
             String nomciudad = iter.next();
             this.cb_ciudades_origen.addItem(nomciudad);
-            if (primera)
+            if (primera) {
                 this.origen = nomciudad;
+            }
             primera = false;
-        }   
+        }
     }
-    
+
     private void cargarPaisesDestino() {
         this.listaPaises = ManejadorCiudad.getInstance().listarPaises();
         Iterator<String> iter = this.listaPaises.iterator();
         while (iter.hasNext()) {
             String nompais = iter.next();
-            this.cb_paises_destino.addItem(nompais);                
-        }      
-    }  
-    
+            this.cb_paises_destino.addItem(nompais);
+        }
+    }
+
     private void cargarCiudadesPaisDestino(String pais) {
         cb_ciudades_destino.removeAllItems();
         this.listaCiudades = ManejadorCiudad.getInstance().listarCiudadesPorPais(pais);
@@ -166,12 +162,13 @@ public class altaServicio extends javax.swing.JInternalFrame {
         while (iter.hasNext()) {
             String nomciudad = iter.next();
             this.cb_ciudades_destino.addItem(nomciudad);
-            if (primera)
+            if (primera) {
                 this.destino = nomciudad;
+            }
             primera = false;
-        }   
+        }
     }
-    
+
     private void cargarProveedores() {
         cb_proveedores.removeAllItems();
         this.listaProveedores = ManejadorProveedor.getInstance().listarProveedores();
@@ -180,13 +177,13 @@ public class altaServicio extends javax.swing.JInternalFrame {
         while (iter.hasNext()) {
             String nkprov = iter.next().getNickname();
             this.cb_proveedores.addItem(nkprov);
-            if (primero)
+            if (primero) {
                 this.nkproveedor = nkprov;
+            }
             primero = false;
-        }   
+        }
     }
-       
-    
+
     public altaServicio() {
         //this.tr_categorias.setVisible(false);
         initComponents();
@@ -196,7 +193,7 @@ public class altaServicio extends javax.swing.JInternalFrame {
         cargarPaisesDestino();
         cargarProveedores();
         //crearArbolCategorias();
-        this.pn_destinos.setVisible(false); 
+        this.pn_destinos.setVisible(false);
         this.tf_nombre_s.setText("");
         this.tf_precio.setText("");
         this.ta_descripcion.setText("");
@@ -208,10 +205,11 @@ public class altaServicio extends javax.swing.JInternalFrame {
         MostrarArbol(modeloCategorias);
         this.tr_categorias.setModel(modelo);
         this.categoria_seleccionada = false;
+        jButtonExpandir.setIcon(UIManager.getIcon("Tree.openIcon"));
+
     }
 
-    
-public void VerArbol() {
+    public void VerArbol() {
         initComponents();
         Fabrica fabrica = Fabrica.getInstance();
         DefaultMutableTreeNode raiz = new DefaultMutableTreeNode("Categorias");
@@ -239,6 +237,7 @@ public void VerArbol() {
         }
 
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -279,6 +278,7 @@ public void VerArbol() {
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
+        jButtonExpandir = new javax.swing.JButton();
 
         setClosable(true);
         setIconifiable(true);
@@ -414,19 +414,27 @@ public void VerArbol() {
             }
         });
 
+        jButtonExpandir.setText("Expandir Todas");
+        jButtonExpandir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonExpandirActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(bt_aceptar_s)
-                .addGap(18, 18, 18)
-                .addComponent(bt_cancelar_s)
-                .addGap(23, 23, 23))
             .addGroup(layout.createSequentialGroup()
                 .addGap(21, 21, 21)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jButtonExpandir)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(bt_aceptar_s)
+                        .addGap(18, 18, 18)
+                        .addComponent(bt_cancelar_s)
+                        .addGap(23, 23, 23))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(lb_origen1)
                         .addGap(18, 18, 18)
@@ -526,7 +534,8 @@ public void VerArbol() {
                 .addGap(26, 26, 26)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(bt_aceptar_s)
-                    .addComponent(bt_cancelar_s))
+                    .addComponent(bt_cancelar_s)
+                    .addComponent(jButtonExpandir))
                 .addContainerGap())
         );
 
@@ -538,9 +547,11 @@ public void VerArbol() {
         String nombre = this.tf_nombre_s.getText();
         String descripcion = this.ta_descripcion.getText();
         float precio;
-        if (this.tf_precio.getText().equals(""))
+        if (this.tf_precio.getText().equals("")) {
             precio = 0;
-        else precio = Float.parseFloat(this.tf_precio.getText());
+        } else {
+            precio = Float.parseFloat(this.tf_precio.getText());
+        }
         //String origen = this.tf_origen.getText();
         //String categoria = this.tr_categoria.getSelectionPath().toString();
         //JOptionPane.showMessageDialog(null,categoria );
@@ -561,9 +572,9 @@ public void VerArbol() {
         this.btn_seleccionar_imagen.setEnabled(true);
         modeloListaImagenes.clear();
         modeloListaCategorias.clear();
-        pn_destinos.setVisible(false); 
+        pn_destinos.setVisible(false);
         this.imagenes = new LinkedList<String>();
-        this.categorias = new HashMap<String,DtCategoria>();
+        this.categorias = new HashMap<String, DtCategoria>();
         //this.lst_imagenes.setModel(modeloListaImagenes);
         //this.lst_categorias.setModel(modeloListaCategorias);
         //this.tf_origen.setText("");
@@ -592,7 +603,7 @@ public void VerArbol() {
     private void btn_seleccionar_imagenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_seleccionar_imagenActionPerformed
         // TODO add your handling code here:
         JFileChooser fc_seleccionar_archivo = new javax.swing.JFileChooser();
-        FileNameExtensionFilter filtroImagen = new FileNameExtensionFilter("JPG, PNG & GIF","jpg","png","gif");
+        FileNameExtensionFilter filtroImagen = new FileNameExtensionFilter("JPG, PNG & GIF", "jpg", "png", "gif");
         fc_seleccionar_archivo.setFileFilter(filtroImagen);
         fc_seleccionar_archivo.setVisible(true);
         int eleccion = fc_seleccionar_archivo.showOpenDialog(null);
@@ -601,10 +612,11 @@ public void VerArbol() {
             File fichero = fc_seleccionar_archivo.getSelectedFile();
             String pathimg = fichero.getAbsolutePath();
             this.imagenes.add(pathimg);
-            modeloListaImagenes.addElement(pathimg);            
+            modeloListaImagenes.addElement(pathimg);
         }
-        if (this.imagenes.size() == 3)
-            this.btn_seleccionar_imagen.setEnabled(false);        
+        if (this.imagenes.size() == 3) {
+            this.btn_seleccionar_imagen.setEnabled(false);
+        }
     }//GEN-LAST:event_btn_seleccionar_imagenActionPerformed
 
     private void cb_ciudades_origenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cb_ciudades_origenActionPerformed
@@ -624,7 +636,7 @@ public void VerArbol() {
 
     private void tr_categoriasValueChanged(javax.swing.event.TreeSelectionEvent evt) {//GEN-FIRST:event_tr_categoriasValueChanged
         // TODO add your handling code here:
-        this.categoria_seleccionada = true;             
+        this.categoria_seleccionada = true;
     }//GEN-LAST:event_tr_categoriasValueChanged
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -632,16 +644,36 @@ public void VerArbol() {
         if (this.categoria_seleccionada) {
             DefaultMutableTreeNode nodo = (DefaultMutableTreeNode) tr_categorias.getLastSelectedPathComponent();
             String padre = ManejadorCategoria.getInstance().obtenerPadre(nodo.toString());
-            DtCategoria cat = new DtCategoria(nodo.toString(),padre);
-            this.categorias.put(nodo.toString(),cat);
+            DtCategoria cat = new DtCategoria(nodo.toString(), padre);
+            this.categorias.put(nodo.toString(), cat);
             modeloListaCategorias.addElement(nodo.toString());
-            if (padre.equals("Vuelos") || padre.equals("Tipo vuelo"))
+            if (padre.equals("Vuelos") || padre.equals("Tipo vuelo")) {
                 pn_destinos.setVisible(true);
-            else pn_destinos.setVisible(false);
+            } else {
+                pn_destinos.setVisible(false);
+            }
         }
-        this.categoria_seleccionada = false;       
+        this.categoria_seleccionada = false;
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void jButtonExpandirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonExpandirActionPerformed
+        //jTree1.expandPath(jTree1.getSelectionPath());
+        if (expandir) {
+            for (int i = 0; i < tr_categorias.getRowCount(); i++) {
+                tr_categorias.expandRow(i);
+            }
+            jButtonExpandir.setText("Colapsar Todas");
+            expandir = false;
+            jButtonExpandir.setIcon(UIManager.getIcon("Tree.closedIcon"));
+        } else {
+            for (int i = tr_categorias.getRowCount(); i > 0; i--) {
+                tr_categorias.collapseRow(i);
+            }
+            jButtonExpandir.setText("Expandir Todas");
+            expandir = true;
+            jButtonExpandir.setIcon(UIManager.getIcon("Tree.openIcon"));
+        }
+    }//GEN-LAST:event_jButtonExpandirActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bt_aceptar_s;
@@ -653,6 +685,7 @@ public void VerArbol() {
     private javax.swing.JComboBox<String> cb_paises_origen;
     private javax.swing.JComboBox<String> cb_proveedores;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButtonExpandir;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

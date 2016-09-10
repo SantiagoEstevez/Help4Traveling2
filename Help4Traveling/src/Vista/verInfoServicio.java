@@ -5,20 +5,15 @@
  */
 package Vista;
 
-import Logica.DtServicio;
 import Logica.Fabrica;
 import Logica.ManejadorCategoria;
-import Logica.ManejadorServicio;
 import Logica.Servicio;
 import java.util.Iterator;
 import java.util.List;
-import javax.swing.JOptionPane;
-import javax.swing.JTree;
+import javax.swing.UIManager;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
-import javax.swing.tree.MutableTreeNode;
-import javax.swing.tree.TreeModel;
 
 /**
  *
@@ -29,6 +24,7 @@ public class verInfoServicio extends javax.swing.JInternalFrame {
     //private DefaultMutableTreeNode modelo;
     public Fabrica fabrica;
     private DefaultTableModel modeloTablaSer;
+    private Boolean expandir = true;
     //private DefaultMutableTreeNode modeloCategorias;
 
     /**
@@ -43,6 +39,7 @@ public class verInfoServicio extends javax.swing.JInternalFrame {
         MostrarArbol(raiz);
         jTreeCategorias.setModel(modelo);
 
+        jButtonExpandir.setIcon(UIManager.getIcon("Tree.openIcon"));
     }
 
     public void MostrarArbol(DefaultMutableTreeNode nodo) {
@@ -63,7 +60,6 @@ public class verInfoServicio extends javax.swing.JInternalFrame {
 
     }
 
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -79,6 +75,7 @@ public class verInfoServicio extends javax.swing.JInternalFrame {
         jVerServicios = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTablaServicios = new javax.swing.JTable();
+        jButtonExpandir = new javax.swing.JButton();
 
         setClosable(true);
         setIconifiable(true);
@@ -120,6 +117,13 @@ public class verInfoServicio extends javax.swing.JInternalFrame {
         });
         jScrollPane2.setViewportView(jTablaServicios);
 
+        jButtonExpandir.setText("Expandir Todas");
+        jButtonExpandir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonExpandirActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -133,18 +137,18 @@ public class verInfoServicio extends javax.swing.JInternalFrame {
                         .addGap(52, 52, 52)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 398, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addGroup(layout.createSequentialGroup()
                                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
-                                .addComponent(jVerServicios, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jVerServicios, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jButtonExpandir)))
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 398, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(22, 22, 22))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -152,7 +156,9 @@ public class verInfoServicio extends javax.swing.JInternalFrame {
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(158, 158, 158)
-                        .addComponent(jVerServicios, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jVerServicios, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButtonExpandir)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 41, Short.MAX_VALUE)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(93, 93, 93))
@@ -170,14 +176,13 @@ public class verInfoServicio extends javax.swing.JInternalFrame {
         if (node == null) {
             return;
         } else {
-           // JOptionPane.showMessageDialog(null, node.toString());
+            // JOptionPane.showMessageDialog(null, node.toString());
             List<String> listaServicios = fabrica.getIControladorServicio().listarServiciosCategoria(node.toString());
             Iterator<String> iter = listaServicios.iterator();
 
-            String[] columnasServicios = {"servicio","proveedor","precio","origen"};
+            String[] columnasServicios = {"servicio", "proveedor", "precio", "origen"};
             String[] registrosServicios = new String[4];
             modeloTablaSer = new DefaultTableModel(null, columnasServicios);
-          
 
             while (iter.hasNext()) {
                 String ser = iter.next();
@@ -186,22 +191,40 @@ public class verInfoServicio extends javax.swing.JInternalFrame {
                 registrosServicios[0] = servicio.getNombre();
                 System.out.println(servicio.getProveedor().getNickname());
                 registrosServicios[1] = servicio.getProveedor().getNickname();
-                
+
                 //System.out.println(registrosServicios[0]);
                 registrosServicios[2] = Float.toString(servicio.getPrecio());
                 registrosServicios[3] = servicio.getOrigen().getNombre();
                 //registrosServicios[3] = servicio.getDestino().toString();
-                
+
                 modeloTablaSer.addRow(registrosServicios);
             }
         }
         jTablaServicios.setModel(modeloTablaSer);
 
-
     }//GEN-LAST:event_jVerServiciosMouseClicked
 
+    private void jButtonExpandirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonExpandirActionPerformed
+        //jTree1.expandPath(jTree1.getSelectionPath());
+        if (expandir) {
+            for (int i = 0; i < jTreeCategorias.getRowCount(); i++) {
+                jTreeCategorias.expandRow(i);
+            }
+            jButtonExpandir.setText("Colapsar Todas");
+            expandir = false;
+            jButtonExpandir.setIcon(UIManager.getIcon("Tree.closedIcon"));
+        } else {
+            for (int i = jTreeCategorias.getRowCount(); i > 0; i--) {
+                jTreeCategorias.collapseRow(i);
+            }
+            jButtonExpandir.setText("Expandir Todas");
+            expandir = true;
+            jButtonExpandir.setIcon(UIManager.getIcon("Tree.openIcon"));
+        }
+    }//GEN-LAST:event_jButtonExpandirActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButtonExpandir;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
