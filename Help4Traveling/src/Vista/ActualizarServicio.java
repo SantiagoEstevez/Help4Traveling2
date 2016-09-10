@@ -22,7 +22,8 @@ public class ActualizarServicio extends javax.swing.JInternalFrame {
     private IControladorServicio IControlador;
     private List<DtServicio> listaServicios = new ArrayList<DtServicio>();
     private List<String> listaPaises = new ArrayList<String>();
-    private List<String> listaCiudades = new ArrayList<String>();
+    private List<String> listaCiudades1 = new ArrayList<String>();
+    private List<String> listaCiudades2 = new ArrayList<String>();
 
     /**
      * Creates new form ActualizarServicio
@@ -30,8 +31,6 @@ public class ActualizarServicio extends javax.swing.JInternalFrame {
     public ActualizarServicio() {
         initComponents();
         bajarServicios();
-        bajarPaisesOrigen();
-        bajarPaisesDestino();
         bajarServicio();
         //bajarCiudadesOrigen();
         //bajarCiudadesDestino();
@@ -48,20 +47,31 @@ public class ActualizarServicio extends javax.swing.JInternalFrame {
     }
 
     private void bajarServicio() {
-        DtServicio servicio = listaServicios.get(jComNom.getSelectedIndex());
+        Integer index = jComNom.getSelectedIndex();
+        DtServicio servicio = listaServicios.get(index);
+        System.out.println(servicio);
+
         jTextDesc.setText(servicio.getDescripcion());
         //jTextPrecio.setText(servicio.getPrecio());
+
+        bajarPaisesOrigen();
+        bajarPaisesDestino();
+
         String ciudadOrigen = servicio.getNomCiuOrigen();
-        String ciudadDestino = servicio.getNomCiuDestino();
         String paisOrigen = ManejadorCiudad.getInstance().obtenerCiudad(ciudadOrigen).getPais().toString();
-        String paisDestino = ManejadorCiudad.getInstance().obtenerCiudad(ciudadDestino).getPais().toString();
         PaisOrigen.setSelectedItem(paisOrigen);
-        PaisDestino.setSelectedItem(paisDestino);
-        CiudadDestino.setSelectedItem(ciudadDestino);
         CiudadOrigen.setSelectedItem(ciudadOrigen);
+
+        if (servicio.getNomCiuDestino() != null) {
+            String ciudadDestino = servicio.getNomCiuDestino();
+            String paisDestino = ManejadorCiudad.getInstance().obtenerCiudad(ciudadDestino).getPais().toString();
+            PaisDestino.setSelectedItem(paisDestino);
+            CiudadDestino.setSelectedItem(ciudadDestino);
+        }
     }
 
     private void bajarPaisesOrigen() {
+        this.PaisOrigen.removeAllItems();
         this.listaPaises = ManejadorCiudad.getInstance().listarPaises();
         Iterator<String> iter = this.listaPaises.iterator();
         while (iter.hasNext()) {
@@ -72,8 +82,8 @@ public class ActualizarServicio extends javax.swing.JInternalFrame {
 
     private void bajarCiudadesOrigen(String pais) {
         this.CiudadOrigen.removeAllItems();
-        this.listaCiudades = ManejadorCiudad.getInstance().listarCiudadesPorPais(pais);
-        Iterator<String> iter = this.listaCiudades.iterator();
+        this.listaCiudades1 = ManejadorCiudad.getInstance().listarCiudadesPorPais(pais);
+        Iterator<String> iter = this.listaCiudades1.iterator();
         while (iter.hasNext()) {
             String nomciudad = iter.next();
             this.CiudadOrigen.addItem(nomciudad);
@@ -81,6 +91,7 @@ public class ActualizarServicio extends javax.swing.JInternalFrame {
     }
 
     private void bajarPaisesDestino() {
+        this.PaisDestino.removeAllItems();
         this.listaPaises = ManejadorCiudad.getInstance().listarPaises();
         Iterator<String> iter = this.listaPaises.iterator();
         while (iter.hasNext()) {
@@ -91,8 +102,8 @@ public class ActualizarServicio extends javax.swing.JInternalFrame {
 
     private void bajarCiudadesDestino(String pais) {
         this.CiudadDestino.removeAllItems();
-        this.listaCiudades = ManejadorCiudad.getInstance().listarCiudadesPorPais(pais);
-        Iterator<String> iter = this.listaCiudades.iterator();
+        this.listaCiudades2 = ManejadorCiudad.getInstance().listarCiudadesPorPais(pais);
+        Iterator<String> iter = this.listaCiudades2.iterator();
         while (iter.hasNext()) {
             String nomciudad = iter.next();
             this.CiudadDestino.addItem(nomciudad);
@@ -279,7 +290,9 @@ public class ActualizarServicio extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_CancelarActionPerformed
 
     private void PaisOrigenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PaisOrigenActionPerformed
+        //if (PaisOrigen.get) {
         bajarCiudadesOrigen(PaisOrigen.getSelectedItem().toString());
+        //}
     }//GEN-LAST:event_PaisOrigenActionPerformed
 
     private void PaisDestinoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PaisDestinoActionPerformed
