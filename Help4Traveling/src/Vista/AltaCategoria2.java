@@ -11,6 +11,8 @@ import Logica.ManejadorCategoria;
 import java.util.Iterator;
 import java.util.List;
 import javax.swing.JOptionPane;
+import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeModel;
 
 /**
  *
@@ -33,10 +35,35 @@ public class AltaCategoria2 extends javax.swing.JInternalFrame {
         Iterator<String> iter = this.listaCategorias.iterator();
         while (iter.hasNext()) {
             String nomCat = iter.next();
-            this.jComboBoxPadre.addItem(nomCat);
         }
+        
+        DefaultMutableTreeNode raiz = new DefaultMutableTreeNode("Categorias");
+        DefaultTreeModel modelo = new DefaultTreeModel(raiz);
+
+        MostrarArbol(raiz);
+        jTree1.setModel(modelo);
         //jPanel1.setVisible(false);
     }
+    
+       public void MostrarArbol(DefaultMutableTreeNode nodo) {
+        ManejadorCategoria mc = ManejadorCategoria.getInstance();
+        List<String> listaHijos = mc.obtenerCategoriasHijas(nodo.toString());
+        Iterator<String> iter = listaHijos.iterator();
+        while (iter.hasNext()) {
+            String hijo = iter.next();
+            System.out.println(hijo);
+            DefaultMutableTreeNode nuevoNodo = new DefaultMutableTreeNode(hijo);
+            nodo.add(nuevoNodo);
+            System.out.println("Agregue el nodo " + hijo);
+        }
+
+        for (int j = 0; j < nodo.getChildCount(); j++) {
+            MostrarArbol((DefaultMutableTreeNode) nodo.getChildAt(j));
+        }
+
+    }
+    
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -49,11 +76,10 @@ public class AltaCategoria2 extends javax.swing.JInternalFrame {
 
         jLabelCateg = new javax.swing.JLabel();
         jTextFieldCateg = new javax.swing.JTextField();
-        jLabelPadre = new javax.swing.JLabel();
-        jCheckBoxPadre = new javax.swing.JCheckBox();
-        jComboBoxPadre = new javax.swing.JComboBox<>();
         jButtonCancelar = new javax.swing.JButton();
         jButtonAceptar = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTree1 = new javax.swing.JTree();
 
         setClosable(true);
         setIconifiable(true);
@@ -77,22 +103,6 @@ public class AltaCategoria2 extends javax.swing.JInternalFrame {
             }
         });
 
-        jLabelPadre.setText("Si la categoría tiene padre, ingréselo aqui:");
-
-        jCheckBoxPadre.setText("Padre");
-        jCheckBoxPadre.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCheckBoxPadreActionPerformed(evt);
-            }
-        });
-
-        jComboBoxPadre.setEnabled(false);
-        jComboBoxPadre.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBoxPadreActionPerformed(evt);
-            }
-        });
-
         jButtonCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/cancel-icon.png"))); // NOI18N
         jButtonCancelar.setText("Cancelar");
         jButtonCancelar.addActionListener(new java.awt.event.ActionListener() {
@@ -111,6 +121,8 @@ public class AltaCategoria2 extends javax.swing.JInternalFrame {
             }
         });
 
+        jScrollPane1.setViewportView(jTree1);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -118,20 +130,20 @@ public class AltaCategoria2 extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTextFieldCateg)
-                    .addComponent(jLabelPadre, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jCheckBoxPadre)
-                        .addGap(18, 18, 18)
-                        .addComponent(jComboBoxPadre, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabelCateg)
-                        .addGap(0, 0, Short.MAX_VALUE))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jButtonCancelar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButtonAceptar)))
-                .addContainerGap())
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jButtonCancelar)
+                            .addComponent(jTextFieldCateg, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 48, Short.MAX_VALUE)
+                        .addComponent(jButtonAceptar)
+                        .addGap(28, 28, 28))))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(53, 53, 53)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 268, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -140,17 +152,13 @@ public class AltaCategoria2 extends javax.swing.JInternalFrame {
                 .addComponent(jLabelCateg)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jTextFieldCateg, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jLabelPadre)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(46, 46, 46)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 208, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jCheckBoxPadre)
-                    .addComponent(jComboBoxPadre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButtonAceptar)
-                    .addComponent(jButtonCancelar))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jButtonCancelar)
+                    .addComponent(jButtonAceptar))
+                .addGap(67, 67, 67))
         );
 
         pack();
@@ -162,32 +170,14 @@ public class AltaCategoria2 extends javax.swing.JInternalFrame {
 
     private void jButtonAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAceptarActionPerformed
         String respuesta;
-        if (this.jCheckBoxPadre.isSelected()) {
-            respuesta = IControlador.altaDeCategoria(jTextFieldCateg.getText(), jComboBoxPadre.getSelectedItem().toString());
-        } else {
-            respuesta = IControlador.altaDeCategoria(jTextFieldCateg.getText(), null);
-        }
+        respuesta = IControlador.altaDeCategoria(jTextFieldCateg.getText() ,jTree1.getLastSelectedPathComponent().toString());
         JOptionPane.showMessageDialog(null, respuesta);
         this.dispose();
-
     }//GEN-LAST:event_jButtonAceptarActionPerformed
 
     private void jButtonCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCancelarActionPerformed
         this.dispose();
     }//GEN-LAST:event_jButtonCancelarActionPerformed
-
-    private void jCheckBoxPadreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxPadreActionPerformed
-        // TODO add your handling code here:
-        if (jCheckBoxPadre.isSelected()) {
-            jComboBoxPadre.setEnabled(true);
-        } else {
-            jComboBoxPadre.setEnabled(false);
-        }
-    }//GEN-LAST:event_jCheckBoxPadreActionPerformed
-
-    private void jComboBoxPadreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxPadreActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBoxPadreActionPerformed
 
     private void jTextFieldCategKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldCategKeyTyped
 
@@ -204,10 +194,9 @@ public class AltaCategoria2 extends javax.swing.JInternalFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonAceptar;
     private javax.swing.JButton jButtonCancelar;
-    private javax.swing.JCheckBox jCheckBoxPadre;
-    private javax.swing.JComboBox<String> jComboBoxPadre;
     private javax.swing.JLabel jLabelCateg;
-    private javax.swing.JLabel jLabelPadre;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField jTextFieldCateg;
+    private javax.swing.JTree jTree1;
     // End of variables declaration//GEN-END:variables
 }
