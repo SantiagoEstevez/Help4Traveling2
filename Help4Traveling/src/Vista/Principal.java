@@ -26,11 +26,13 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.Enumeration;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JInternalFrame;
+import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
@@ -52,15 +54,17 @@ public class Principal extends javax.swing.JFrame {
      * Creates new form Principal
      */
     public Principal() {
-        initComponents();
-        this.setLocationRelativeTo(null);
-        this.fc_seleccionar_archivo.setVisible(false);
         try {
             UIManager.setLookAndFeel(new javax.swing.plaf.nimbus.NimbusLookAndFeel());
         } catch (UnsupportedLookAndFeelException e) {
         }
-        escritorio.updateUI();
-        jMenuBar1.updateUI();
+        initComponents();
+        this.setLocationRelativeTo(null);
+        this.fc_seleccionar_archivo.setVisible(false);
+
+        //agregarScripts("Datos/");
+        //escritorio.updateUI();
+        //jMenuBar1.updateUI();
     }
 
     public Principal(IControladorUsuario IControlador) {
@@ -166,9 +170,10 @@ public class Principal extends javax.swing.JFrame {
             }
         };
         jMenuBar1 = new javax.swing.JMenuBar();
-        jMenuInicio = new javax.swing.JMenu();
+        IniMenu = new javax.swing.JMenu();
         externoMenu = new javax.swing.JMenuItem();
-        internoMenu = new javax.swing.JMenuItem();
+        internoMenu = new javax.swing.JMenu();
+        scriptDB2Item = new javax.swing.JMenuItem();
         jSeparator1 = new javax.swing.JPopupMenu.Separator();
         cerrarMenu = new javax.swing.JMenuItem();
         cerrarMenu2 = new javax.swing.JMenuItem();
@@ -176,19 +181,19 @@ public class Principal extends javax.swing.JFrame {
         opcionesMenu = new javax.swing.JMenuItem();
         jSeparator3 = new javax.swing.JPopupMenu.Separator();
         salirMenu = new javax.swing.JMenuItem();
-        jMenuRegistros = new javax.swing.JMenu();
+        RegMenu = new javax.swing.JMenu();
         regCatMenu = new javax.swing.JMenuItem();
         regPromoMenu = new javax.swing.JMenuItem();
         refResMenu = new javax.swing.JMenuItem();
         regServMenu = new javax.swing.JMenuItem();
         regUsuMenu = new javax.swing.JMenuItem();
-        jMenuConsultas = new javax.swing.JMenu();
+        ConMenu = new javax.swing.JMenu();
         bm_verInfoCliente = new javax.swing.JMenuItem();
         VerInfo_promo = new javax.swing.JMenuItem();
         bm_verInfoProveedor = new javax.swing.JMenuItem();
         conResMenu = new javax.swing.JMenuItem();
         conServMenu = new javax.swing.JMenuItem();
-        jMenuModificaciones = new javax.swing.JMenu();
+        ModMenu = new javax.swing.JMenu();
         modResMenu = new javax.swing.JMenuItem();
         modServMenu = new javax.swing.JMenuItem();
         elimResMenu = new javax.swing.JMenuItem();
@@ -219,9 +224,9 @@ public class Principal extends javax.swing.JFrame {
             .addGap(0, 540, Short.MAX_VALUE)
         );
 
-        jMenuInicio.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/win-icon.png"))); // NOI18N
-        jMenuInicio.setMnemonic('i');
-        jMenuInicio.setText("Inicio");
+        IniMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/win-icon.png"))); // NOI18N
+        IniMenu.setMnemonic('i');
+        IniMenu.setText("Inicio");
 
         externoMenu.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_E, java.awt.event.InputEvent.CTRL_MASK));
         externoMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/db-icon.png"))); // NOI18N
@@ -232,17 +237,22 @@ public class Principal extends javax.swing.JFrame {
                 externoMenuActionPerformed(evt);
             }
         });
-        jMenuInicio.add(externoMenu);
+        IniMenu.add(externoMenu);
 
         internoMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/db-icon.png"))); // NOI18N
-        internoMenu.setText("Ejecutar Script  Interno");
-        internoMenu.addActionListener(new java.awt.event.ActionListener() {
+        internoMenu.setText("Ejecutar Script Interno");
+
+        scriptDB2Item.setIcon(UIManager.getIcon("Tree.leafIcon"));
+        scriptDB2Item.setText("Script-DB2");
+        scriptDB2Item.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                internoMenuActionPerformed(evt);
+                scriptDB2ItemActionPerformed(evt);
             }
         });
-        jMenuInicio.add(internoMenu);
-        jMenuInicio.add(jSeparator1);
+        internoMenu.add(scriptDB2Item);
+
+        IniMenu.add(internoMenu);
+        IniMenu.add(jSeparator1);
 
         cerrarMenu.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_W, java.awt.event.InputEvent.CTRL_MASK));
         cerrarMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/cancel-icon.png"))); // NOI18N
@@ -253,7 +263,7 @@ public class Principal extends javax.swing.JFrame {
                 cerrarMenuActionPerformed(evt);
             }
         });
-        jMenuInicio.add(cerrarMenu);
+        IniMenu.add(cerrarMenu);
 
         cerrarMenu2.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_W, java.awt.event.InputEvent.SHIFT_MASK | java.awt.event.InputEvent.CTRL_MASK));
         cerrarMenu2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/cancel-icon.png"))); // NOI18N
@@ -264,8 +274,8 @@ public class Principal extends javax.swing.JFrame {
                 cerrarMenu2ActionPerformed(evt);
             }
         });
-        jMenuInicio.add(cerrarMenu2);
-        jMenuInicio.add(jSeparator2);
+        IniMenu.add(cerrarMenu2);
+        IniMenu.add(jSeparator2);
 
         opcionesMenu.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_O, java.awt.event.InputEvent.CTRL_MASK));
         opcionesMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/options-icon.png"))); // NOI18N
@@ -276,8 +286,8 @@ public class Principal extends javax.swing.JFrame {
                 opcionesMenuActionPerformed(evt);
             }
         });
-        jMenuInicio.add(opcionesMenu);
-        jMenuInicio.add(jSeparator3);
+        IniMenu.add(opcionesMenu);
+        IniMenu.add(jSeparator3);
 
         salirMenu.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_Q, java.awt.event.InputEvent.CTRL_MASK));
         salirMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/check-icon.png"))); // NOI18N
@@ -288,16 +298,16 @@ public class Principal extends javax.swing.JFrame {
                 salirMenuActionPerformed(evt);
             }
         });
-        jMenuInicio.add(salirMenu);
+        IniMenu.add(salirMenu);
 
-        jMenuBar1.add(jMenuInicio);
+        jMenuBar1.add(IniMenu);
 
-        jMenuRegistros.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/add-icon.png"))); // NOI18N
-        jMenuRegistros.setMnemonic('r');
-        jMenuRegistros.setText("Registros");
-        jMenuRegistros.addActionListener(new java.awt.event.ActionListener() {
+        RegMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/add-icon.png"))); // NOI18N
+        RegMenu.setMnemonic('r');
+        RegMenu.setText("Registros");
+        RegMenu.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuRegistrosActionPerformed(evt);
+                RegMenuActionPerformed(evt);
             }
         });
 
@@ -313,7 +323,7 @@ public class Principal extends javax.swing.JFrame {
                 regCatMenuKeyPressed(evt);
             }
         });
-        jMenuRegistros.add(regCatMenu);
+        RegMenu.add(regCatMenu);
 
         regPromoMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/add-icon.png"))); // NOI18N
         regPromoMenu.setText("Registrar Promoción");
@@ -322,7 +332,7 @@ public class Principal extends javax.swing.JFrame {
                 regPromoMenuActionPerformed(evt);
             }
         });
-        jMenuRegistros.add(regPromoMenu);
+        RegMenu.add(regPromoMenu);
 
         refResMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/add-icon.png"))); // NOI18N
         refResMenu.setText("Registrar Reserva");
@@ -331,7 +341,7 @@ public class Principal extends javax.swing.JFrame {
                 refResMenuActionPerformed(evt);
             }
         });
-        jMenuRegistros.add(refResMenu);
+        RegMenu.add(refResMenu);
 
         regServMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/add-icon.png"))); // NOI18N
         regServMenu.setText("Registrar Servicio");
@@ -340,7 +350,7 @@ public class Principal extends javax.swing.JFrame {
                 regServMenuActionPerformed(evt);
             }
         });
-        jMenuRegistros.add(regServMenu);
+        RegMenu.add(regServMenu);
 
         regUsuMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/add-icon.png"))); // NOI18N
         regUsuMenu.setText("Registrar Usuario");
@@ -349,14 +359,14 @@ public class Principal extends javax.swing.JFrame {
                 regUsuMenuActionPerformed(evt);
             }
         });
-        jMenuRegistros.add(regUsuMenu);
+        RegMenu.add(regUsuMenu);
 
-        jMenuBar1.add(jMenuRegistros);
-        jMenuRegistros.getAccessibleContext().setAccessibleDescription("");
+        jMenuBar1.add(RegMenu);
+        RegMenu.getAccessibleContext().setAccessibleDescription("");
 
-        jMenuConsultas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/info-icon.png"))); // NOI18N
-        jMenuConsultas.setMnemonic('c');
-        jMenuConsultas.setText("Consultas");
+        ConMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/info-icon.png"))); // NOI18N
+        ConMenu.setMnemonic('c');
+        ConMenu.setText("Consultas");
 
         bm_verInfoCliente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/info-icon.png"))); // NOI18N
         bm_verInfoCliente.setText("Consultar Cliente");
@@ -365,7 +375,7 @@ public class Principal extends javax.swing.JFrame {
                 bm_verInfoClienteActionPerformed(evt);
             }
         });
-        jMenuConsultas.add(bm_verInfoCliente);
+        ConMenu.add(bm_verInfoCliente);
 
         VerInfo_promo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/info-icon.png"))); // NOI18N
         VerInfo_promo.setText("Consultar Promocion");
@@ -375,7 +385,7 @@ public class Principal extends javax.swing.JFrame {
                 VerInfo_promoActionPerformed(evt);
             }
         });
-        jMenuConsultas.add(VerInfo_promo);
+        ConMenu.add(VerInfo_promo);
 
         bm_verInfoProveedor.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/info-icon.png"))); // NOI18N
         bm_verInfoProveedor.setText("Consultar Proveedor");
@@ -384,7 +394,7 @@ public class Principal extends javax.swing.JFrame {
                 bm_verInfoProveedorActionPerformed(evt);
             }
         });
-        jMenuConsultas.add(bm_verInfoProveedor);
+        ConMenu.add(bm_verInfoProveedor);
 
         conResMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/info-icon.png"))); // NOI18N
         conResMenu.setText("Consultar Reserva");
@@ -393,7 +403,7 @@ public class Principal extends javax.swing.JFrame {
                 conResMenuActionPerformed(evt);
             }
         });
-        jMenuConsultas.add(conResMenu);
+        ConMenu.add(conResMenu);
 
         conServMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/info-icon.png"))); // NOI18N
         conServMenu.setText("Consultar Servicio");
@@ -402,13 +412,13 @@ public class Principal extends javax.swing.JFrame {
                 conServMenuActionPerformed(evt);
             }
         });
-        jMenuConsultas.add(conServMenu);
+        ConMenu.add(conServMenu);
 
-        jMenuBar1.add(jMenuConsultas);
+        jMenuBar1.add(ConMenu);
 
-        jMenuModificaciones.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/edit-icon.png"))); // NOI18N
-        jMenuModificaciones.setMnemonic('m');
-        jMenuModificaciones.setText("Modificaciones");
+        ModMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/edit-icon.png"))); // NOI18N
+        ModMenu.setMnemonic('m');
+        ModMenu.setText("Modificaciones");
 
         modResMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/edit-icon.png"))); // NOI18N
         modResMenu.setText("Modificar Reserva");
@@ -417,7 +427,7 @@ public class Principal extends javax.swing.JFrame {
                 modResMenuActionPerformed(evt);
             }
         });
-        jMenuModificaciones.add(modResMenu);
+        ModMenu.add(modResMenu);
 
         modServMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/edit-icon.png"))); // NOI18N
         modServMenu.setText("Modificar Servicio");
@@ -426,7 +436,7 @@ public class Principal extends javax.swing.JFrame {
                 modServMenuActionPerformed(evt);
             }
         });
-        jMenuModificaciones.add(modServMenu);
+        ModMenu.add(modServMenu);
 
         elimResMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/delete-icon.png"))); // NOI18N
         elimResMenu.setText("Eliminar Reserva");
@@ -435,9 +445,9 @@ public class Principal extends javax.swing.JFrame {
                 elimResMenuActionPerformed(evt);
             }
         });
-        jMenuModificaciones.add(elimResMenu);
+        ModMenu.add(elimResMenu);
 
-        jMenuBar1.add(jMenuModificaciones);
+        jMenuBar1.add(ModMenu);
 
         setJMenuBar(jMenuBar1);
 
@@ -463,10 +473,10 @@ public class Principal extends javax.swing.JFrame {
         fAltaUsuario.setVisible(true);
     }//GEN-LAST:event_regUsuMenuActionPerformed
 
-    private void jMenuRegistrosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuRegistrosActionPerformed
+    private void RegMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RegMenuActionPerformed
         // TODO add your handling code here:
 
-    }//GEN-LAST:event_jMenuRegistrosActionPerformed
+    }//GEN-LAST:event_RegMenuActionPerformed
 
     private void regServMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_regServMenuActionPerformed
         // TODO add your handling code here:
@@ -621,11 +631,13 @@ public class Principal extends javax.swing.JFrame {
         abrirVentana(as);
     }//GEN-LAST:event_modServMenuActionPerformed
 
-    private void internoMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_internoMenuActionPerformed
-        String script = "Script-DB2.sql";
-        String camino = "/Datos/" + script;
-        cargarDatos(camino, true);
-    }//GEN-LAST:event_internoMenuActionPerformed
+    private void scriptDB2ItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_scriptDB2ItemActionPerformed
+        cargarDatos("/Datos/Script-DB2.sql", true);
+    }//GEN-LAST:event_scriptDB2ItemActionPerformed
+
+    private void internalMenuActionPerformed(java.awt.event.ActionEvent evt) {
+        cargarDatos("/Datos/Script-DB2.sql", true);
+    }
 
     //==========================================================================
     public void abrirVentana(JInternalFrame jif) {
@@ -644,35 +656,54 @@ public class Principal extends javax.swing.JFrame {
         cerrarMenu2.setEnabled(true);
     }
 
-    public void cargarDatos(String camino, Boolean interno) {
-        System.out.print("Cargando Datos... ");
+    public void cargarDatos(String ruta, Boolean interno) {
+        System.out.println("Cargando Datos... ");
         Conexion conexion = new Conexion();
         Connection con = conexion.getConnection();
         ScriptRunner runner = new ScriptRunner(con, false, true);
         try {
             this.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
             if (interno) {
-                runner.runScript(new BufferedReader(new InputStreamReader(this.getClass().getResourceAsStream(camino))));
+                runner.runScript(new BufferedReader(new InputStreamReader(this.getClass().getResourceAsStream(ruta))));
             } else {
-                runner.runScript(new BufferedReader(new FileReader(camino)));
+                runner.runScript(new BufferedReader(new FileReader(ruta)));
             }
             this.setCursor(Cursor.getDefaultCursor());
             JOptionPane.showMessageDialog(this, "El script fue ejecutado correctamente.", "Aviso", JOptionPane.INFORMATION_MESSAGE);
-            System.out.println("OK");
+            System.out.println("Cargando Datos... OK");
         } catch (IOException ex) {
-            System.out.println("ERROR");
+            System.out.println("Cargando Datos... ERROR");
             Logger
                     .getLogger(Principal.class
                             .getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(this, "El script no pudo cargarse.", "Error", JOptionPane.ERROR_MESSAGE);
         } catch (SQLException ex) {
-            System.out.println("ERROR");
+            System.out.println("Cargando Datos... ERROR");
             Logger
                     .getLogger(Principal.class
                             .getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(this, "El script no pudo ejecutarse.", "Error", JOptionPane.ERROR_MESSAGE);
         }
         this.setCursor(Cursor.getDefaultCursor());
+    }
+
+    public void agregarScripts(String ruta) {
+        try {
+            Enumeration scripts = ClassLoader.getSystemResources("Datos/Script-DB2.sql");
+            while (scripts.hasMoreElements()) {
+                String script = scripts.nextElement().toString();
+                System.out.println(script);
+                JMenuItem internal = new JMenuItem(script, UIManager.getIcon("Tree.leafIcon"));
+                internal.addActionListener(this::internalMenuActionPerformed);
+                internoMenu.add(internal);
+            }
+        } catch (IOException ex) {
+            /*
+        String script = "Script-DB2.sql";
+        String ruta = "/Datos/" + script;
+        cargarDatos(ruta, true);
+             */
+        }
     }
 
     /**
@@ -719,6 +750,10 @@ public class Principal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenu ConMenu;
+    private javax.swing.JMenu IniMenu;
+    private javax.swing.JMenu ModMenu;
+    private javax.swing.JMenu RegMenu;
     private javax.swing.JMenuItem VerInfo_promo;
     private javax.swing.JMenuItem bm_verInfoCliente;
     private javax.swing.JMenuItem bm_verInfoProveedor;
@@ -730,12 +765,8 @@ public class Principal extends javax.swing.JFrame {
     public static javax.swing.JDesktopPane escritorio;
     private javax.swing.JMenuItem externoMenu;
     private javax.swing.JFileChooser fc_seleccionar_archivo;
-    private javax.swing.JMenuItem internoMenu;
+    private javax.swing.JMenu internoMenu;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenu jMenuConsultas;
-    private javax.swing.JMenu jMenuInicio;
-    private javax.swing.JMenu jMenuModificaciones;
-    private javax.swing.JMenu jMenuRegistros;
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JPopupMenu.Separator jSeparator2;
     private javax.swing.JPopupMenu.Separator jSeparator3;
@@ -748,5 +779,6 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenuItem regServMenu;
     private javax.swing.JMenuItem regUsuMenu;
     private javax.swing.JMenuItem salirMenu;
+    private javax.swing.JMenuItem scriptDB2Item;
     // End of variables declaration//GEN-END:variables
 }
