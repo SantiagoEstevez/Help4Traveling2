@@ -218,6 +218,7 @@ public class Principal extends javax.swing.JFrame {
             .addGap(0, 540, Short.MAX_VALUE)
         );
 
+        jMenuInicio.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/win-icon.png"))); // NOI18N
         jMenuInicio.setText("Inicio");
 
         externoMenu.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_E, java.awt.event.InputEvent.CTRL_MASK));
@@ -286,6 +287,7 @@ public class Principal extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenuInicio);
 
+        jMenuRegistros.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/add-icon.png"))); // NOI18N
         jMenuRegistros.setText("Registros");
         jMenuRegistros.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -346,6 +348,7 @@ public class Principal extends javax.swing.JFrame {
         jMenuBar1.add(jMenuRegistros);
         jMenuRegistros.getAccessibleContext().setAccessibleDescription("");
 
+        jMenuConsultas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/info-icon.png"))); // NOI18N
         jMenuConsultas.setText("Consultas");
 
         bm_verInfoCliente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/info-icon.png"))); // NOI18N
@@ -396,6 +399,7 @@ public class Principal extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenuConsultas);
 
+        jMenuModificaciones.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/edit-icon.png"))); // NOI18N
         jMenuModificaciones.setText("Modificaciones");
 
         modResMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/edit-icon.png"))); // NOI18N
