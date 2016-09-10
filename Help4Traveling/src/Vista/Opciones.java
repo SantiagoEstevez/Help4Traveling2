@@ -87,11 +87,11 @@ public class Opciones extends javax.swing.JInternalFrame {
         Usuario = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         Clave = new javax.swing.JPasswordField();
-        Probar = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
         Driver = new javax.swing.JTextField();
         Revertir = new javax.swing.JButton();
         Aplicar = new javax.swing.JButton();
+        Probar = new javax.swing.JButton();
 
         setTitle("Opciones");
         setFrameIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/options-icon.png"))); // NOI18N
@@ -124,14 +124,6 @@ public class Opciones extends javax.swing.JInternalFrame {
 
         Clave.setText("root");
 
-        Probar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/db-icon.png"))); // NOI18N
-        Probar.setText("Probar");
-        Probar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ProbarActionPerformed(evt);
-            }
-        });
-
         jLabel4.setText("Driver:");
 
         Driver.setText("com.mysql.jdbc.Driver");
@@ -150,6 +142,14 @@ public class Opciones extends javax.swing.JInternalFrame {
         Aplicar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 AplicarActionPerformed(evt);
+            }
+        });
+
+        Probar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/db-icon.png"))); // NOI18N
+        Probar.setText("Probar");
+        Probar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ProbarActionPerformed(evt);
             }
         });
 

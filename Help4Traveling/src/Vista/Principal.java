@@ -171,9 +171,9 @@ public class Principal extends javax.swing.JFrame {
         };
         jMenuBar1 = new javax.swing.JMenuBar();
         IniMenu = new javax.swing.JMenu();
-        externoMenu = new javax.swing.JMenuItem();
         internoMenu = new javax.swing.JMenu();
         scriptDB2Item = new javax.swing.JMenuItem();
+        externoMenu = new javax.swing.JMenuItem();
         jSeparator1 = new javax.swing.JPopupMenu.Separator();
         cerrarMenu = new javax.swing.JMenuItem();
         cerrarMenu2 = new javax.swing.JMenuItem();
@@ -228,19 +228,8 @@ public class Principal extends javax.swing.JFrame {
         IniMenu.setMnemonic('i');
         IniMenu.setText("Inicio");
 
-        externoMenu.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_E, java.awt.event.InputEvent.CTRL_MASK));
-        externoMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/db-icon.png"))); // NOI18N
-        externoMenu.setMnemonic('e');
-        externoMenu.setText("Ejecutar Script Externo");
-        externoMenu.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                externoMenuActionPerformed(evt);
-            }
-        });
-        IniMenu.add(externoMenu);
-
         internoMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/db-icon.png"))); // NOI18N
-        internoMenu.setText("Ejecutar Script Interno");
+        internoMenu.setText("Ejecutar Script");
 
         scriptDB2Item.setIcon(UIManager.getIcon("Tree.leafIcon"));
         scriptDB2Item.setText("Script-DB2");
@@ -252,6 +241,17 @@ public class Principal extends javax.swing.JFrame {
         internoMenu.add(scriptDB2Item);
 
         IniMenu.add(internoMenu);
+
+        externoMenu.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_I, java.awt.event.InputEvent.CTRL_MASK));
+        externoMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/db-icon.png"))); // NOI18N
+        externoMenu.setMnemonic('e');
+        externoMenu.setText("Importar Script");
+        externoMenu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                externoMenuActionPerformed(evt);
+            }
+        });
+        IniMenu.add(externoMenu);
         IniMenu.add(jSeparator1);
 
         cerrarMenu.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_W, java.awt.event.InputEvent.CTRL_MASK));
@@ -311,6 +311,7 @@ public class Principal extends javax.swing.JFrame {
             }
         });
 
+        regCatMenu.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_1, java.awt.event.InputEvent.CTRL_MASK));
         regCatMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/add-icon.png"))); // NOI18N
         regCatMenu.setText("Registrar Categoria");
         regCatMenu.addActionListener(new java.awt.event.ActionListener() {
@@ -325,6 +326,7 @@ public class Principal extends javax.swing.JFrame {
         });
         RegMenu.add(regCatMenu);
 
+        regPromoMenu.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_2, java.awt.event.InputEvent.CTRL_MASK));
         regPromoMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/add-icon.png"))); // NOI18N
         regPromoMenu.setText("Registrar Promoción");
         regPromoMenu.addActionListener(new java.awt.event.ActionListener() {
@@ -334,6 +336,7 @@ public class Principal extends javax.swing.JFrame {
         });
         RegMenu.add(regPromoMenu);
 
+        refResMenu.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_3, java.awt.event.InputEvent.CTRL_MASK));
         refResMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/add-icon.png"))); // NOI18N
         refResMenu.setText("Registrar Reserva");
         refResMenu.addActionListener(new java.awt.event.ActionListener() {
@@ -343,6 +346,7 @@ public class Principal extends javax.swing.JFrame {
         });
         RegMenu.add(refResMenu);
 
+        regServMenu.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_4, java.awt.event.InputEvent.CTRL_MASK));
         regServMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/add-icon.png"))); // NOI18N
         regServMenu.setText("Registrar Servicio");
         regServMenu.addActionListener(new java.awt.event.ActionListener() {
@@ -352,6 +356,7 @@ public class Principal extends javax.swing.JFrame {
         });
         RegMenu.add(regServMenu);
 
+        regUsuMenu.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_5, java.awt.event.InputEvent.CTRL_MASK));
         regUsuMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/add-icon.png"))); // NOI18N
         regUsuMenu.setText("Registrar Usuario");
         regUsuMenu.addActionListener(new java.awt.event.ActionListener() {
@@ -368,6 +373,7 @@ public class Principal extends javax.swing.JFrame {
         ConMenu.setMnemonic('c');
         ConMenu.setText("Consultas");
 
+        bm_verInfoCliente.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_6, java.awt.event.InputEvent.CTRL_MASK));
         bm_verInfoCliente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/info-icon.png"))); // NOI18N
         bm_verInfoCliente.setText("Consultar Cliente");
         bm_verInfoCliente.addActionListener(new java.awt.event.ActionListener() {
@@ -377,6 +383,7 @@ public class Principal extends javax.swing.JFrame {
         });
         ConMenu.add(bm_verInfoCliente);
 
+        VerInfo_promo.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_7, java.awt.event.InputEvent.CTRL_MASK));
         VerInfo_promo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/info-icon.png"))); // NOI18N
         VerInfo_promo.setText("Consultar Promocion");
         VerInfo_promo.setToolTipText("");
@@ -387,6 +394,7 @@ public class Principal extends javax.swing.JFrame {
         });
         ConMenu.add(VerInfo_promo);
 
+        bm_verInfoProveedor.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_8, java.awt.event.InputEvent.CTRL_MASK));
         bm_verInfoProveedor.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/info-icon.png"))); // NOI18N
         bm_verInfoProveedor.setText("Consultar Proveedor");
         bm_verInfoProveedor.addActionListener(new java.awt.event.ActionListener() {
@@ -396,6 +404,7 @@ public class Principal extends javax.swing.JFrame {
         });
         ConMenu.add(bm_verInfoProveedor);
 
+        conResMenu.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_9, java.awt.event.InputEvent.CTRL_MASK));
         conResMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/info-icon.png"))); // NOI18N
         conResMenu.setText("Consultar Reserva");
         conResMenu.addActionListener(new java.awt.event.ActionListener() {
@@ -405,6 +414,7 @@ public class Principal extends javax.swing.JFrame {
         });
         ConMenu.add(conResMenu);
 
+        conServMenu.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_0, java.awt.event.InputEvent.CTRL_MASK));
         conServMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/info-icon.png"))); // NOI18N
         conServMenu.setText("Consultar Servicio");
         conServMenu.addActionListener(new java.awt.event.ActionListener() {
@@ -420,6 +430,7 @@ public class Principal extends javax.swing.JFrame {
         ModMenu.setMnemonic('m');
         ModMenu.setText("Modificaciones");
 
+        modResMenu.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_1, java.awt.event.InputEvent.ALT_MASK));
         modResMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/edit-icon.png"))); // NOI18N
         modResMenu.setText("Modificar Reserva");
         modResMenu.addActionListener(new java.awt.event.ActionListener() {
@@ -429,6 +440,7 @@ public class Principal extends javax.swing.JFrame {
         });
         ModMenu.add(modResMenu);
 
+        modServMenu.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_2, java.awt.event.InputEvent.ALT_MASK));
         modServMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/edit-icon.png"))); // NOI18N
         modServMenu.setText("Modificar Servicio");
         modServMenu.addActionListener(new java.awt.event.ActionListener() {
@@ -438,6 +450,7 @@ public class Principal extends javax.swing.JFrame {
         });
         ModMenu.add(modServMenu);
 
+        elimResMenu.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_3, java.awt.event.InputEvent.ALT_MASK));
         elimResMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/delete-icon.png"))); // NOI18N
         elimResMenu.setText("Eliminar Reserva");
         elimResMenu.addActionListener(new java.awt.event.ActionListener() {
