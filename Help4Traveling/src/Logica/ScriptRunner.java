@@ -9,6 +9,7 @@ package Logica;
  *
  * @author Hekutoru
  */
+//<editor-fold defaultstate="collapsed">
 /*
  * Added additional null checks when closing the ResultSet and Statements.
  *
@@ -35,6 +36,7 @@ package Logica;
  * CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
+//</editor-fold>
 import java.io.IOException;
 import java.io.LineNumberReader;
 import java.io.PrintWriter;
