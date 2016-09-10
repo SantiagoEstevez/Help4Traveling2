@@ -176,8 +176,8 @@ public class ManejadorServicio {
         Statement st, sti, stc;
         String sql, sqlImagenes, sqlCategorias;
         List<DtServicio> listaServicios = new LinkedList<DtServicio>();
-        List<String> listaImagenes = new LinkedList<String>();
-        Map<String, DtCategoria> listaCategorias = new TreeMap<String, DtCategoria>();
+        //List<String> listaImagenes = new LinkedList<String>();
+        //Map<String, DtCategoria> listaCategorias = new TreeMap<String, DtCategoria>();
 
         sql = "SELECT * FROM help4traveling.servicios";
 
@@ -192,19 +192,21 @@ public class ManejadorServicio {
                 String precio = rsServicios.getString("precio");
                 String origen = rsServicios.getString("origen");
                 String destino = rsServicios.getString("destino");
-
-                sqlImagenes = "SELECT * FROM help4traveling.serviciosImagenes WHERE servicio = '" + nombre + "'";
+                List<String> listaImagenes = new LinkedList<String>();
+                sqlImagenes = "SELECT * FROM help4traveling.serviciosimagenes WHERE servicio = '" + nombre + "'";
                 sti = con.createStatement();
                 rsServImagenes = sti.executeQuery(sqlImagenes);
                 while (rsServImagenes.next()) {
+                    System.out.println(rsServImagenes.getString("imagen"));
                     listaImagenes.add(rsServImagenes.getString("imagen"));
                 }
                 rsServImagenes.close();
                 sti.close();
 
-                sqlCategorias = "SELECT * FROM help4traveling.serviciosCategorias WHERE servicio = '" + nombre + "'";
+                sqlCategorias = "SELECT * FROM help4traveling.servicioscategorias WHERE servicio = '" + nombre + "'";
                 stc = con.createStatement();
                 rsServCategorias = stc.executeQuery(sqlCategorias);
+                Map<String, DtCategoria> listaCategorias = new TreeMap<String, DtCategoria>();
                 while (rsServCategorias.next()) {
                     String nomCat = rsServCategorias.getString("categoria");
                     DtCategoria categoria = new DtCategoria(nomCat, rsServCategorias.getString("categoriaPadre"));

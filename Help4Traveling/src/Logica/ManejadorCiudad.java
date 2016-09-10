@@ -128,12 +128,11 @@ public class ManejadorCiudad {
         System.out.println(sql);
         try {
             st = con.createStatement();
-            System.out.println("Llego aca");
             rs = st.executeQuery(sql);
             rs.next();
             String pais = rs.getString("pais");
             String ciudad = rs.getString("nombre");
-            Pais p = new Pais(rs.getString("pais"), null);
+            Pais p = new Pais(pais, null);
             ciu = new Ciudad(ciudad, p);
             rs.close();
             con.close();
