@@ -39,12 +39,11 @@ public class AltaCategoria2 extends javax.swing.JInternalFrame {
             String nomCat = iter.next();
         }
 
-        DefaultMutableTreeNode raiz = new DefaultMutableTreeNode("Raiz");
+        DefaultMutableTreeNode raiz = new DefaultMutableTreeNode("Categorias");
         DefaultTreeModel modelo = new DefaultTreeModel(raiz);
 
         MostrarArbol(raiz);
         jTreeCategorias.setModel(modelo);
-        jTreeCategorias.expandRow(0);
         //jPanel1.setVisible(false);
 
         jButtonExpandir.setIcon(UIManager.getIcon("Tree.openIcon"));
@@ -127,7 +126,6 @@ public class AltaCategoria2 extends javax.swing.JInternalFrame {
 
         javax.swing.tree.DefaultMutableTreeNode treeNode1 = new javax.swing.tree.DefaultMutableTreeNode("root");
         jTreeCategorias.setModel(new javax.swing.tree.DefaultTreeModel(treeNode1));
-        jTreeCategorias.setRootVisible(false);
         jScrollPane1.setViewportView(jTreeCategorias);
 
         jLabel2.setText("[2] Seleccione el padre de la categoría:");
