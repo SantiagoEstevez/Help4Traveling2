@@ -11,6 +11,7 @@ import Logica.ManejadorCategoria;
 import java.util.Iterator;
 import java.util.List;
 import javax.swing.JOptionPane;
+import javax.swing.UIManager;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 
@@ -25,6 +26,7 @@ public class AltaCategoria2 extends javax.swing.JInternalFrame {
      */
     List<String> listaCategorias;
     private IControladorServicio IControlador;
+    private Boolean expandir = true;
 
     public AltaCategoria2() {
         initComponents();
@@ -36,16 +38,18 @@ public class AltaCategoria2 extends javax.swing.JInternalFrame {
         while (iter.hasNext()) {
             String nomCat = iter.next();
         }
-        
+
         DefaultMutableTreeNode raiz = new DefaultMutableTreeNode("Categorias");
         DefaultTreeModel modelo = new DefaultTreeModel(raiz);
 
         MostrarArbol(raiz);
-        jTree1.setModel(modelo);
+        jTreeCategorias.setModel(modelo);
         //jPanel1.setVisible(false);
+
+        jButtonExpandir.setIcon(UIManager.getIcon("Tree.openIcon"));
     }
-    
-       public void MostrarArbol(DefaultMutableTreeNode nodo) {
+
+    public void MostrarArbol(DefaultMutableTreeNode nodo) {
         ManejadorCategoria mc = ManejadorCategoria.getInstance();
         List<String> listaHijos = mc.obtenerCategoriasHijas(nodo.toString());
         Iterator<String> iter = listaHijos.iterator();
@@ -62,8 +66,6 @@ public class AltaCategoria2 extends javax.swing.JInternalFrame {
         }
 
     }
-    
-    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -74,32 +76,33 @@ public class AltaCategoria2 extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabelCateg = new javax.swing.JLabel();
-        jTextFieldCateg = new javax.swing.JTextField();
+        jLabel1 = new javax.swing.JLabel();
+        jTextFieldNombre = new javax.swing.JTextField();
         jButtonCancelar = new javax.swing.JButton();
         jButtonAceptar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTree1 = new javax.swing.JTree();
+        jTreeCategorias = new javax.swing.JTree();
+        jLabel2 = new javax.swing.JLabel();
+        jButtonExpandir = new javax.swing.JButton();
+        jSeparator1 = new javax.swing.JSeparator();
 
         setClosable(true);
         setIconifiable(true);
         setTitle("Alta Categoria");
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         setFrameIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/add-icon.png"))); // NOI18N
+        setMinimumSize(new java.awt.Dimension(262, 358));
 
-        jLabelCateg.setText("Ingrese el nombre de la nueva categoría:");
+        jLabel1.setText("[1] Ingrese el nombre de la nueva categoría:");
 
-        jTextFieldCateg.addActionListener(new java.awt.event.ActionListener() {
+        jTextFieldNombre.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextFieldCategActionPerformed(evt);
+                jTextFieldNombreActionPerformed(evt);
             }
         });
-        jTextFieldCateg.addKeyListener(new java.awt.event.KeyAdapter() {
+        jTextFieldNombre.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
-                jTextFieldCategKeyReleased(evt);
-            }
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                jTextFieldCategKeyTyped(evt);
+                jTextFieldNombreKeyReleased(evt);
             }
         });
 
@@ -121,7 +124,18 @@ public class AltaCategoria2 extends javax.swing.JInternalFrame {
             }
         });
 
-        jScrollPane1.setViewportView(jTree1);
+        javax.swing.tree.DefaultMutableTreeNode treeNode1 = new javax.swing.tree.DefaultMutableTreeNode("root");
+        jTreeCategorias.setModel(new javax.swing.tree.DefaultTreeModel(treeNode1));
+        jScrollPane1.setViewportView(jTreeCategorias);
+
+        jLabel2.setText("[2] Seleccione el padre de la categoría:");
+
+        jButtonExpandir.setText("Expandir Todas");
+        jButtonExpandir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonExpandirActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -131,46 +145,62 @@ public class AltaCategoria2 extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabelCateg)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(jLabel2)
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButtonCancelar)
-                            .addComponent(jTextFieldCateg, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 48, Short.MAX_VALUE)
-                        .addComponent(jButtonAceptar)
-                        .addGap(28, 28, 28))))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(53, 53, 53)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 268, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(jButtonExpandir)
+                                    .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                        .addComponent(jButtonCancelar)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jButtonAceptar))
+                                    .addComponent(jTextFieldNombre, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING))
+                                .addGap(0, 4, Short.MAX_VALUE))
+                            .addComponent(jSeparator1))
+                        .addContainerGap())))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(18, 18, 18)
-                .addComponent(jLabelCateg)
+                .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextFieldCateg, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(46, 46, 46)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 208, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addComponent(jTextFieldNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButtonExpandir)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jButtonCancelar)
                     .addComponent(jButtonAceptar))
-                .addGap(67, 67, 67))
+                .addGap(10, 10, 10))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextFieldCategActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldCategActionPerformed
-        this.jTextFieldCateg.setText("");
-    }//GEN-LAST:event_jTextFieldCategActionPerformed
+    private void jTextFieldNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldNombreActionPerformed
+        this.jTextFieldNombre.setText("");
+    }//GEN-LAST:event_jTextFieldNombreActionPerformed
 
     private void jButtonAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAceptarActionPerformed
-        String respuesta;
-        respuesta = IControlador.altaDeCategoria(jTextFieldCateg.getText() ,jTree1.getLastSelectedPathComponent().toString());
+        String respuesta, padre;
+        if (jTreeCategorias.getSelectionCount() < 1) {
+            padre = "Categorias";
+        } else {
+            padre = jTreeCategorias.getLastSelectedPathComponent().toString();
+        }
+        System.out.println(padre);
+        respuesta = IControlador.altaDeCategoria(jTextFieldNombre.getText(), padre);
         JOptionPane.showMessageDialog(null, respuesta);
         this.dispose();
     }//GEN-LAST:event_jButtonAceptarActionPerformed
@@ -179,24 +209,42 @@ public class AltaCategoria2 extends javax.swing.JInternalFrame {
         this.dispose();
     }//GEN-LAST:event_jButtonCancelarActionPerformed
 
-    private void jTextFieldCategKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldCategKeyTyped
-
-    }//GEN-LAST:event_jTextFieldCategKeyTyped
-
-    private void jTextFieldCategKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldCategKeyReleased
-        if (jTextFieldCateg.getText().isEmpty()) {
+    private void jTextFieldNombreKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldNombreKeyReleased
+        if (jTextFieldNombre.getText().isEmpty()) {
             jButtonAceptar.setEnabled(false);
         } else {
             jButtonAceptar.setEnabled(true);
         }
-    }//GEN-LAST:event_jTextFieldCategKeyReleased
+    }//GEN-LAST:event_jTextFieldNombreKeyReleased
+
+    private void jButtonExpandirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonExpandirActionPerformed
+        //jTree1.expandPath(jTree1.getSelectionPath());
+        if (expandir) {
+            for (int i = 0; i < jTreeCategorias.getRowCount(); i++) {
+                jTreeCategorias.expandRow(i);
+            }
+            jButtonExpandir.setText("Colapsar Todas");
+            expandir = false;
+            jButtonExpandir.setIcon(UIManager.getIcon("Tree.closedIcon"));
+        } else {
+            for (int i = jTreeCategorias.getRowCount(); i > 0; i--) {
+                jTreeCategorias.collapseRow(i);
+            }
+            jButtonExpandir.setText("Expandir Todas");
+            expandir = true;
+            jButtonExpandir.setIcon(UIManager.getIcon("Tree.openIcon"));
+        }
+    }//GEN-LAST:event_jButtonExpandirActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonAceptar;
     private javax.swing.JButton jButtonCancelar;
-    private javax.swing.JLabel jLabelCateg;
+    private javax.swing.JButton jButtonExpandir;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jTextFieldCateg;
-    private javax.swing.JTree jTree1;
+    private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JTextField jTextFieldNombre;
+    private javax.swing.JTree jTreeCategorias;
     // End of variables declaration//GEN-END:variables
 }
