@@ -258,6 +258,11 @@ public class ActualizarServicio extends javax.swing.JInternalFrame {
                 cb_nombreActionPerformed(evt);
             }
         });
+        cb_nombre.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                cb_nombrePropertyChange(evt);
+            }
+        });
 
         jLabelServ.setText("Seleccione el Servicio que desea modificar:");
 
@@ -286,18 +291,25 @@ public class ActualizarServicio extends javax.swing.JInternalFrame {
 
         btn_seleccionar_imagen.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/search-icon.png"))); // NOI18N
         btn_seleccionar_imagen.setText("Seleccionar");
+        btn_seleccionar_imagen.setFocusable(false);
         btn_seleccionar_imagen.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_seleccionar_imagenActionPerformed(evt);
             }
         });
 
+        lst_imagenes.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                lst_imagenesValueChanged(evt);
+            }
+        });
         jScrollPane3.setViewportView(lst_imagenes);
 
         jLabOrig1.setText("Imágenes:");
 
         btn_eliminar_imagen.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/delete-icon.png"))); // NOI18N
         btn_eliminar_imagen.setText("  Eliminar");
+        btn_eliminar_imagen.setFocusable(false);
         btn_eliminar_imagen.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_eliminar_imagenActionPerformed(evt);
@@ -320,6 +332,8 @@ public class ActualizarServicio extends javax.swing.JInternalFrame {
 
         btn_agregar_categoria.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/previous-icon.png"))); // NOI18N
         btn_agregar_categoria.setText("Agregar");
+        btn_agregar_categoria.setEnabled(false);
+        btn_agregar_categoria.setFocusable(false);
         btn_agregar_categoria.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_agregar_categoriaActionPerformed(evt);
@@ -336,6 +350,7 @@ public class ActualizarServicio extends javax.swing.JInternalFrame {
         btn_eliminar_categoria.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/out-icon.png"))); // NOI18N
         btn_eliminar_categoria.setText("Eliminar");
         btn_eliminar_categoria.setEnabled(false);
+        btn_eliminar_categoria.setFocusable(false);
         btn_eliminar_categoria.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_eliminar_categoriaActionPerformed(evt);
@@ -343,6 +358,7 @@ public class ActualizarServicio extends javax.swing.JInternalFrame {
         });
 
         jButtonExpandir.setText("Expandir");
+        jButtonExpandir.setFocusable(false);
         jButtonExpandir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonExpandirActionPerformed(evt);
@@ -536,29 +552,40 @@ public class ActualizarServicio extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btn_seleccionar_imagenActionPerformed
 
     private void btn_eliminar_imagenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_eliminar_imagenActionPerformed
-        // TODO add your handling code here:
+        //List<int> itemelegido = java.util.Arrays.asList(lst_imagenes.getSelectedIndices());
+        List<String> itemelegido = lst_imagenes.getSelectedValuesList();
+        Iterator<String> it = itemelegido.iterator();
+        while (it.hasNext()) {
+            modeloListaImagenes.removeElement(it.next());
+        }
+        btn_eliminar_imagen.setEnabled(false);
+        btn_seleccionar_imagen.setEnabled(true);
     }//GEN-LAST:event_btn_eliminar_imagenActionPerformed
 
     private void tr_categoriasValueChanged(javax.swing.event.TreeSelectionEvent evt) {//GEN-FIRST:event_tr_categoriasValueChanged
         // TODO add your handling code here:
-        this.categoria_seleccionada = true;
+        //this.categoria_seleccionada = true;
+        btn_agregar_categoria.setEnabled(true);
     }//GEN-LAST:event_tr_categoriasValueChanged
 
     private void btn_agregar_categoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_agregar_categoriaActionPerformed
         // TODO add your handling code here:
-        if (this.categoria_seleccionada) {
-            DefaultMutableTreeNode nodo = (DefaultMutableTreeNode) tr_categorias.getLastSelectedPathComponent();
-            String padre = ManejadorCategoria.getInstance().obtenerPadre(nodo.toString());
+        //if (this.categoria_seleccionada) {
+        DefaultMutableTreeNode nodo = (DefaultMutableTreeNode) tr_categorias.getLastSelectedPathComponent();
+        String padre = ManejadorCategoria.getInstance().obtenerPadre(nodo.toString());
+        if (!categorias.containsKey(nodo.toString())) {
             DtCategoria cat = new DtCategoria(nodo.toString(), padre);
             this.categorias.put(nodo.toString(), cat);
             modeloListaCategorias.addElement(nodo.toString());
-            /*if (padre.equals("Vuelos") || padre.equals("Tipo vuelo")) {
+        }
+        /*if (padre.equals("Vuelos") || padre.equals("Tipo vuelo")) {
                 pn_destinos.setVisible(true);
             } else {
                 pn_destinos.setVisible(false);
             }*/
-        }
-        this.categoria_seleccionada = false;
+        //}
+        //this.categoria_seleccionada = false;
+        btn_agregar_categoria.setEnabled(false);
     }//GEN-LAST:event_btn_agregar_categoriaActionPerformed
 
     private void jButtonExpandirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonExpandirActionPerformed
@@ -585,6 +612,7 @@ public class ActualizarServicio extends javax.swing.JInternalFrame {
         if (itemelegido >= 0) {
             modeloListaCategorias.remove(itemelegido);
             btn_eliminar_categoria.setEnabled(false);
+            btn_agregar_categoria.setEnabled(true);
         }
     }//GEN-LAST:event_btn_eliminar_categoriaActionPerformed
 
@@ -593,6 +621,22 @@ public class ActualizarServicio extends javax.swing.JInternalFrame {
             btn_eliminar_categoria.setEnabled(true);
         }
     }//GEN-LAST:event_lst_categoriasValueChanged
+
+    private void lst_imagenesValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_lst_imagenesValueChanged
+        if (modeloListaImagenes.size() > 2) {
+            btn_seleccionar_imagen.setEnabled(false);
+        } else {
+            btn_seleccionar_imagen.setEnabled(true);
+        }
+        if (lst_imagenes.getSelectedIndex() >= 0) {
+            btn_eliminar_imagen.setEnabled(true);
+        }
+    }//GEN-LAST:event_lst_imagenesValueChanged
+
+    private void cb_nombrePropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_cb_nombrePropertyChange
+        lst_imagenesValueChanged(null);
+        lst_imagenesValueChanged(null);
+    }//GEN-LAST:event_cb_nombrePropertyChange
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Aceptar;
