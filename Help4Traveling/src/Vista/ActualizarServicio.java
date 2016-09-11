@@ -255,19 +255,9 @@ public class ActualizarServicio extends javax.swing.JInternalFrame {
 
         jLabNom.setText("Nombre:");
 
-        cb_nombre.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                cb_nombreItemStateChanged(evt);
-            }
-        });
         cb_nombre.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cb_nombreActionPerformed(evt);
-            }
-        });
-        cb_nombre.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
-            public void propertyChange(java.beans.PropertyChangeEvent evt) {
-                cb_nombrePropertyChange(evt);
             }
         });
 
@@ -319,6 +309,7 @@ public class ActualizarServicio extends javax.swing.JInternalFrame {
 
         btn_eliminar_imagen.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/delete-icon.png"))); // NOI18N
         btn_eliminar_imagen.setText("  Eliminar");
+        btn_eliminar_imagen.setEnabled(false);
         btn_eliminar_imagen.setFocusable(false);
         btn_eliminar_imagen.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -548,7 +539,6 @@ public class ActualizarServicio extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_cb_nombreActionPerformed
 
     private void btn_seleccionar_imagenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_seleccionar_imagenActionPerformed
-        // TODO add your handling code here:
         JFileChooser fc_seleccionar_archivo = new javax.swing.JFileChooser();
         FileNameExtensionFilter filtroImagen = new FileNameExtensionFilter("JPG, PNG & GIF", "jpg", "png", "gif");
         fc_seleccionar_archivo.setFileFilter(filtroImagen);
@@ -561,7 +551,7 @@ public class ActualizarServicio extends javax.swing.JInternalFrame {
             this.imagenes.add(pathimg);
             modeloListaImagenes.addElement(pathimg);
         }
-        if (this.imagenes.size() == 3) {
+        if (this.modeloListaImagenes.size() > 2) {
             this.btn_seleccionar_imagen.setEnabled(false);
         }
     }//GEN-LAST:event_btn_seleccionar_imagenActionPerformed
@@ -631,7 +621,7 @@ public class ActualizarServicio extends javax.swing.JInternalFrame {
             this.categorias.remove(lst_categorias.getSelectedValue());
             modeloListaCategorias.remove(itemelegido);
             btn_eliminar_categoria.setEnabled(false);
-            btn_agregar_categoria.setEnabled(true);
+            //btn_agregar_categoria.setEnabled(true);
         }
     }//GEN-LAST:event_btn_eliminar_categoriaActionPerformed
 
@@ -651,16 +641,6 @@ public class ActualizarServicio extends javax.swing.JInternalFrame {
             btn_eliminar_imagen.setEnabled(true);
         }
     }//GEN-LAST:event_lst_imagenesValueChanged
-
-    private void cb_nombrePropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_cb_nombrePropertyChange
-        lst_imagenesValueChanged(null);
-        lst_imagenesValueChanged(null);
-    }//GEN-LAST:event_cb_nombrePropertyChange
-
-    private void cb_nombreItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cb_nombreItemStateChanged
-        lst_imagenesValueChanged(null);
-        lst_imagenesValueChanged(null);
-    }//GEN-LAST:event_cb_nombreItemStateChanged
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Aceptar;
