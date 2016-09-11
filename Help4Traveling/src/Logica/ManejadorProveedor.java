@@ -146,8 +146,8 @@ public class ManejadorProveedor {
                 String apellido = rsProveedores.getString("apellido");
                 String nickname = rsProveedores.getString("nickname");
                 String correo = rsProveedores.getString("email");
-
-                Date nacimiento = new Date(12,12,1994);
+                String fecha = rsProveedores.getString("fechaNac");
+                Date nacimiento = new Date(fecha);
                 String imagen = "imagen";
                 //String empresa = rsProveedores.getString("Empresa");
                 //String direccion = rsProveedores.getString("Direccion");

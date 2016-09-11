@@ -145,7 +145,8 @@ public class ManejadorCliente {
                 String apellido = rsClientes.getString("apellido");
                 String nickname = rsClientes.getString("nickname");
                 String correo = rsClientes.getString("email");
-                Date nacimiento = new Date(12,12,1994);
+                String fecha = rsClientes.getString("fechaNac");
+                Date nacimiento = new Date(fecha);
                 String imagen = "";
                 
                 Cliente nuevo = new Cliente(nombre, apellido, nickname, correo, nacimiento, imagen);
