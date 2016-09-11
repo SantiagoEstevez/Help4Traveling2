@@ -569,31 +569,35 @@ public class ActualizarServicio extends javax.swing.JInternalFrame {
 
     private void tr_categoriasValueChanged(javax.swing.event.TreeSelectionEvent evt) {//GEN-FIRST:event_tr_categoriasValueChanged
         //this.categoria_seleccionada = true;
-        if (categorias.containsKey(tr_categorias.getLastSelectedPathComponent().toString())) {
-            btn_agregar_categoria.setEnabled(false);
-        } else {
-            btn_agregar_categoria.setEnabled(true);
+        if (tr_categorias.getSelectionCount() > 0) {
+            if (categorias.containsKey(tr_categorias.getLastSelectedPathComponent().toString())) {
+                btn_agregar_categoria.setEnabled(false);
+            } else {
+                btn_agregar_categoria.setEnabled(true);
+            }
         }
     }//GEN-LAST:event_tr_categoriasValueChanged
 
     private void btn_agregar_categoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_agregar_categoriaActionPerformed
         // TODO add your handling code here:
         //if (this.categoria_seleccionada) {
-        DefaultMutableTreeNode nodo = (DefaultMutableTreeNode) tr_categorias.getLastSelectedPathComponent();
-        String padre = ManejadorCategoria.getInstance().obtenerPadre(nodo.toString());
-        if (!categorias.containsKey(nodo.toString())) {
-            DtCategoria cat = new DtCategoria(nodo.toString(), padre);
-            this.categorias.put(nodo.toString(), cat);
-            modeloListaCategorias.addElement(nodo.toString());
+        if (tr_categorias.getSelectionCount() > 0) {
+            DefaultMutableTreeNode nodo = (DefaultMutableTreeNode) tr_categorias.getLastSelectedPathComponent();
+            String padre = ManejadorCategoria.getInstance().obtenerPadre(nodo.toString());
+            if (!categorias.containsKey(nodo.toString())) {
+                DtCategoria cat = new DtCategoria(nodo.toString(), padre);
+                this.categorias.put(nodo.toString(), cat);
+                modeloListaCategorias.addElement(nodo.toString());
+            }
+            /*if (padre.equals("Vuelos") || padre.equals("Tipo vuelo")) {
+                    pn_destinos.setVisible(true);
+                } else {
+                    pn_destinos.setVisible(false);
+                }*/
+            //}
+            //this.categoria_seleccionada = false;
+            btn_agregar_categoria.setEnabled(false);
         }
-        /*if (padre.equals("Vuelos") || padre.equals("Tipo vuelo")) {
-                pn_destinos.setVisible(true);
-            } else {
-                pn_destinos.setVisible(false);
-            }*/
-        //}
-        //this.categoria_seleccionada = false;
-        btn_agregar_categoria.setEnabled(false);
     }//GEN-LAST:event_btn_agregar_categoriaActionPerformed
 
     private void jButtonExpandirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonExpandirActionPerformed
@@ -616,12 +620,14 @@ public class ActualizarServicio extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jButtonExpandirActionPerformed
 
     private void btn_eliminar_categoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_eliminar_categoriaActionPerformed
-        Integer itemelegido = lst_categorias.getSelectedIndex();
-        if (itemelegido >= 0) {
-            this.categorias.remove(lst_categorias.getSelectedValue());
-            modeloListaCategorias.remove(itemelegido);
+        String itemelegido = lst_categorias.getSelectedValue();
+        if (itemelegido != null) {
+            if (categorias.containsKey(itemelegido)) {
+                btn_agregar_categoria.setEnabled(true);
+            }
+            this.categorias.remove(itemelegido);
+            modeloListaCategorias.removeElement(itemelegido);
             btn_eliminar_categoria.setEnabled(false);
-            //btn_agregar_categoria.setEnabled(true);
         }
     }//GEN-LAST:event_btn_eliminar_categoriaActionPerformed
 
