@@ -203,7 +203,7 @@
     <Component class="javax.swing.JButton" name="btnSeleccionarImagen">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/Iconos/buscar.png"/>
+          <Image iconType="3" name="/Iconos/search-icon.png"/>
         </Property>
         <Property name="text" type="java.lang.String" value="Seleccionar Imagen"/>
       </Properties>
@@ -274,7 +274,7 @@
                   <Component id="l_empresa" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Component id="l_direccion" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace pref="29" max="32767" attributes="0"/>
+                  <EmptySpace pref="33" max="32767" attributes="0"/>
               </Group>
               <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">

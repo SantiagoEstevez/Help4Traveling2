@@ -4,37 +4,38 @@
  * and open the template in the editor.
  */
 package Vista;
+
+import Logica.Date;
 import Logica.DtUsuario;
 import Logica.Fabrica;
-import Logica.ControladorUsuario;
-import Logica.Date;
-import javax.swing.JOptionPane;
 import Logica.IControladorUsuario;
 import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
+
 /**
  *
  * @author Santiago
  */
 public class altaUsuario extends javax.swing.JInternalFrame {
+
     private String tipo;
     private IControladorUsuario IControlador;
     private String pathimg;
+
     /**
      * Creates new form altaCliente
      */
     public altaUsuario() {
         Fabrica fabrica = Fabrica.getInstance();
-        this.IControlador= fabrica.getIControladorUsuario();
+        this.IControlador = fabrica.getIControladorUsuario();
         this.tipo = "Cliente";
         this.pathimg = "";
         initComponents();
         this.pn_proveedor.setVisible(false);
     }
-    
+
     public altaUsuario(IControladorUsuario iControlador) {
         IControlador = iControlador;
         this.tipo = "Cliente";
@@ -116,7 +117,7 @@ public class altaUsuario extends javax.swing.JInternalFrame {
 
         sp_anio.setModel(new javax.swing.SpinnerNumberModel(1980, 1916, 2016, 1));
 
-        btnSeleccionarImagen.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/buscar.png"))); // NOI18N
+        btnSeleccionarImagen.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/search-icon.png"))); // NOI18N
         btnSeleccionarImagen.setText("Seleccionar Imagen");
         btnSeleccionarImagen.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -187,7 +188,7 @@ public class altaUsuario extends javax.swing.JInternalFrame {
                 .addComponent(l_empresa)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(l_direccion)
-                .addContainerGap(29, Short.MAX_VALUE))
+                .addContainerGap(33, Short.MAX_VALUE))
             .addGroup(pn_proveedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(pn_proveedorLayout.createSequentialGroup()
                     .addGap(23, 23, 23)
@@ -297,17 +298,17 @@ public class altaUsuario extends javax.swing.JInternalFrame {
     private void btnSeleccionarImagenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSeleccionarImagenActionPerformed
         // TODO add your handling code here:
         this.fc_seleccionar_archivo.setVisible(true);
-        FileNameExtensionFilter filtroImagen=new FileNameExtensionFilter("JPG, PNG & GIF","jpg","png","gif");
+        FileNameExtensionFilter filtroImagen = new FileNameExtensionFilter("JPG, PNG & GIF", "jpg", "png", "gif");
         fc_seleccionar_archivo.setFileFilter(filtroImagen);
         //fc_seleccionar_archivo.setVisible(true);
         int eleccion = this.fc_seleccionar_archivo.showOpenDialog(null);
         //Seleccionamos el fichero
-        if (eleccion == JFileChooser.APPROVE_OPTION){
-            File fichero=this.fc_seleccionar_archivo.getSelectedFile();
+        if (eleccion == JFileChooser.APPROVE_OPTION) {
+            File fichero = this.fc_seleccionar_archivo.getSelectedFile();
             pathimg = fichero.getAbsolutePath();
             System.out.println("pathimg=");
-            System.out.println(pathimg);            
-        }              
+            System.out.println(pathimg);
+        }
     }//GEN-LAST:event_btnSeleccionarImagenActionPerformed
 
     private void chb_proveedorStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_chb_proveedorStateChanged
@@ -317,11 +318,10 @@ public class altaUsuario extends javax.swing.JInternalFrame {
 
     private void chb_proveedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chb_proveedorActionPerformed
         // TODO add your handling code here:
-        if (this.chb_proveedor.isSelected()){
+        if (this.chb_proveedor.isSelected()) {
             this.pn_proveedor.setVisible(true);
             this.tipo = "Proveedor";
-        }
-        else {
+        } else {
             this.pn_proveedor.setVisible(false);
             this.tipo = "Cliente";
         }
@@ -359,8 +359,9 @@ public class altaUsuario extends javax.swing.JInternalFrame {
         this.tf_empresa.setText("");
         this.tf_direccion.setText("");
         this.pn_proveedor.setVisible(false);
-        if (mensaje.equals("Se dio de alta al Usuario Cliente.") || mensaje.equals("Se dio de alta al Usuario Proveedor."))
+        if (mensaje.equals("Se dio de alta al Usuario Cliente.") || mensaje.equals("Se dio de alta al Usuario Proveedor.")) {
             this.setVisible(false);
+        }
         this.chb_proveedor.setSelected(false);
 
     }//GEN-LAST:event_bt_aceptarActionPerformed
@@ -382,7 +383,6 @@ public class altaUsuario extends javax.swing.JInternalFrame {
     private void tf_apellidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tf_apellidoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_tf_apellidoActionPerformed
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bt_aceptar;

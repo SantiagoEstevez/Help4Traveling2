@@ -372,7 +372,7 @@ public class altaServicio extends javax.swing.JInternalFrame {
         ta_descripcion.setRows(5);
         jScrollPane2.setViewportView(ta_descripcion);
 
-        btn_seleccionar_imagen.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/buscar.png"))); // NOI18N
+        btn_seleccionar_imagen.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/search-icon.png"))); // NOI18N
         btn_seleccionar_imagen.setText("Seleccionar Imagen");
         btn_seleccionar_imagen.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
