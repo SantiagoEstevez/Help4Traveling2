@@ -21,6 +21,7 @@ import java.util.List;
 import java.util.Map;
 import javax.swing.DefaultListModel;
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.tree.DefaultMutableTreeNode;
@@ -34,22 +35,22 @@ public class ActualizarServicio extends javax.swing.JInternalFrame {
 
     private IControladorServicio IControlador;
     private List<DtServicio> listaServicios = new ArrayList<DtServicio>();
-    private List<String> listaPaises = new ArrayList<String>();
-    private List<String> listaCiudades1 = new ArrayList<String>();
-    private List<String> listaCiudades2 = new ArrayList<String>();
+    //private List<String> listaPaises1 = new ArrayList<String>();
+    //private List<String> listaPaises2 = new ArrayList<String>();
+    //private List<String> listaCiudades1 = new ArrayList<String>();
+    //private List<String> listaCiudades2 = new ArrayList<String>();
     List<String> imagenes = new ArrayList<String>();
     Map<String, DtCategoria> categorias = new HashMap<String, DtCategoria>();
     DefaultListModel modeloListaImagenes = new DefaultListModel();
     DefaultListModel modeloListaCategorias = new DefaultListModel();
     List<DtCategoria> listaCat = new LinkedList<DtCategoria>();
-    String origen;
-    String destino;
+    String proveedor;
+    boolean tienedestino;
     boolean categoria_seleccionada;
-    private Boolean expandir = true;
+    boolean inicio = true;
+    private boolean expandir = true;
 
-    /**
-     * Creates new form ActualizarServicio
-     */
+    
     public ActualizarServicio() {
         initComponents();
         Fabrica fabrica = Fabrica.getInstance();
@@ -62,9 +63,7 @@ public class ActualizarServicio extends javax.swing.JInternalFrame {
         DefaultTreeModel modelo = new DefaultTreeModel(modeloCategorias);
         MostrarArbol(modeloCategorias);
         this.tr_categorias.setModel(modelo);
-        this.categoria_seleccionada = false;
-        //bajarCiudadesOrigen();
-        //bajarCiudadesDestino();
+        this.categoria_seleccionada = false;        
     }
 
     public void MostrarArbol(DefaultMutableTreeNode nodo) {
@@ -78,11 +77,8 @@ public class ActualizarServicio extends javax.swing.JInternalFrame {
             nodo.add(nuevoNodo);
             System.out.println("Agregue el nodo " + hijo);
         }
-
-        for (int j = 0; j < nodo.getChildCount(); j++) {
+        for (int j = 0; j < nodo.getChildCount(); j++)
             MostrarArbol((DefaultMutableTreeNode) nodo.getChildAt(j));
-        }
-
     }
 
     private void bajarServicios() {
@@ -97,13 +93,16 @@ public class ActualizarServicio extends javax.swing.JInternalFrame {
 
     private void bajarServicio() {
         Integer index = cb_nombre.getSelectedIndex();
+        this.imagenes = new ArrayList<String>();
+        this.categorias = new HashMap<String, DtCategoria>();
+        this.listaServicios = ManejadorServicio.getInstance().listarServicios();
         DtServicio servicio = listaServicios.get(index);
-        //System.out.println(servicio);
         modeloListaImagenes.clear();
         modeloListaCategorias.clear();
         ta_descripcion.setText(servicio.getDescripcion());
         tf_precio.setText(Float.toString(servicio.getPrecio()));
-
+        proveedor = servicio.getNkProveedor();
+        //this.cb_pais_origen.removeAllItems();
         bajarPaisesOrigen();
         String ciudadOrigen = servicio.getNomCiuOrigen();
         String paisOrigen = ManejadorCiudad.getInstance().obtenerCiudad(ciudadOrigen).getPais().getNombre();
@@ -111,41 +110,40 @@ public class ActualizarServicio extends javax.swing.JInternalFrame {
         bajarCiudadesOrigen(paisOrigen);
         cb_ciudad_origen.setSelectedItem(ciudadOrigen);
         if (servicio.getNomCiuDestino() != null) {
-            cb_pais_destino.setEnabled(true);
-            cb_ciudad_destino.setEnabled(true);
-            lb_destino.setEnabled(true);
+            cb_pais_destino.setVisible(true);
+            cb_ciudad_destino.setVisible(true);
+            lb_destino.setVisible(true);
             bajarPaisesDestino();
             String ciudadDestino = servicio.getNomCiuDestino();
             String paisDestino = ManejadorCiudad.getInstance().obtenerCiudad(ciudadDestino).getPais().getNombre();
             cb_pais_destino.setSelectedItem(paisDestino);
             bajarCiudadesDestino(paisDestino);
             cb_ciudad_destino.setSelectedItem(ciudadDestino);
+            tienedestino = true;
         } else {
-            cb_pais_destino.setEnabled(false);
-            cb_ciudad_destino.setEnabled(false);
-            lb_destino.setEnabled(false);
-            cb_pais_destino.removeAllItems();
-            cb_pais_destino.addItem("-");
-            cb_ciudad_destino.removeAllItems();
-            cb_ciudad_destino.addItem("-");
-
+            cb_pais_destino.setVisible(false);
+            cb_ciudad_destino.setVisible(false);
+            lb_destino.setVisible(false);
+            tienedestino = false;
         }
         this.imagenes = servicio.getImagenes();
         for (int i = 0; i < imagenes.size(); i++) {
             modeloListaImagenes.addElement(imagenes.get(i));
-            System.out.println(imagenes.get(i));
+            //System.out.println(imagenes.get(i));
         }
         this.categorias = servicio.getDtCategorias();
         Iterator<DtCategoria> iterc = categorias.values().iterator();
         while (iterc.hasNext()) {
             modeloListaCategorias.addElement(iterc.next().getNombre());
         }
+        inicio = false;
     }
 
     private void bajarPaisesOrigen() {
         this.cb_pais_origen.removeAllItems();
-        this.listaPaises = ManejadorCiudad.getInstance().listarPaises();
-        Iterator<String> iter = this.listaPaises.iterator();
+        List<String> listaPaises = new ArrayList<String>();
+        listaPaises = ManejadorCiudad.getInstance().listarPaises();
+        Iterator<String> iter = listaPaises.iterator();
         while (iter.hasNext()) {
             String pais = iter.next();
             this.cb_pais_origen.addItem(pais);
@@ -154,8 +152,9 @@ public class ActualizarServicio extends javax.swing.JInternalFrame {
 
     private void bajarCiudadesOrigen(String pais) {
         this.cb_ciudad_origen.removeAllItems();
-        this.listaCiudades1 = ManejadorCiudad.getInstance().listarCiudadesPorPais(pais);
-        Iterator<String> iter = this.listaCiudades1.iterator();
+        List<String> listaCiudades = new ArrayList<String>();
+        listaCiudades = ManejadorCiudad.getInstance().listarCiudadesPorPais(pais);
+        Iterator<String> iter = listaCiudades.iterator();
         while (iter.hasNext()) {
             String nomciudad = iter.next();
             this.cb_ciudad_origen.addItem(nomciudad);
@@ -164,8 +163,9 @@ public class ActualizarServicio extends javax.swing.JInternalFrame {
 
     private void bajarPaisesDestino() {
         this.cb_pais_destino.removeAllItems();
-        this.listaPaises = ManejadorCiudad.getInstance().listarPaises();
-        Iterator<String> iter = this.listaPaises.iterator();
+        List<String> listaPaises = new ArrayList<String>();
+        listaPaises = ManejadorCiudad.getInstance().listarPaises();
+        Iterator<String> iter = listaPaises.iterator();
         while (iter.hasNext()) {
             String pais = iter.next();
             this.cb_pais_destino.addItem(pais);
@@ -174,8 +174,9 @@ public class ActualizarServicio extends javax.swing.JInternalFrame {
 
     private void bajarCiudadesDestino(String pais) {
         this.cb_ciudad_destino.removeAllItems();
-        this.listaCiudades2 = ManejadorCiudad.getInstance().listarCiudadesPorPais(pais);
-        Iterator<String> iter = this.listaCiudades2.iterator();
+        List<String> listaCiudades = new ArrayList<String>();
+        listaCiudades = ManejadorCiudad.getInstance().listarCiudadesPorPais(pais);
+        Iterator<String> iter = listaCiudades.iterator();
         while (iter.hasNext()) {
             String nomciudad = iter.next();
             this.cb_ciudad_destino.addItem(nomciudad);
@@ -511,7 +512,27 @@ public class ActualizarServicio extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void AceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AceptarActionPerformed
-        this.dispose();
+        String nombre = this.cb_nombre.getSelectedItem().toString();
+        String descripcion = this.ta_descripcion.getText();
+        String origen = this.cb_ciudad_origen.getSelectedItem().toString();
+        String destino = null;
+        if (tienedestino) 
+            destino = this.cb_ciudad_destino.getSelectedItem().toString();
+        float precio;
+        if (this.tf_precio.getText().equals(""))
+            precio = 0;
+        else 
+            precio = Float.parseFloat(this.tf_precio.getText());
+        //System.out.println(descripcion);
+        DtServicio dts = new DtServicio(nombre, proveedor, descripcion, this.imagenes, this.categorias, precio, origen, destino);
+        String mensaje = IControlador.actualizarUnServicio(dts);
+        JOptionPane.showMessageDialog(null, mensaje);
+        //this.btn_seleccionar_imagen.setEnabled(true);
+        //modeloListaImagenes.clear();
+        //modeloListaCategorias.clear();
+        //this.imagenes = new ArrayList<String>();
+        //this.categorias = new HashMap<String, DtCategoria>(); 
+        //tienedestino = true;
     }//GEN-LAST:event_AceptarActionPerformed
 
     private void CancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CancelarActionPerformed
@@ -519,17 +540,11 @@ public class ActualizarServicio extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_CancelarActionPerformed
 
     private void cb_pais_origenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cb_pais_origenActionPerformed
-        /*
-        if (PaisOrigen.get) {
-        bajarCiudadesOrigen(PaisOrigen.getSelectedItem().toString());
-        }
-         */
+        bajarCiudadesOrigen((String) cb_pais_origen.getSelectedItem());        
     }//GEN-LAST:event_cb_pais_origenActionPerformed
 
     private void cb_pais_destinoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cb_pais_destinoActionPerformed
-        /*
-        bajarCiudadesDestino(PaisDestino.getSelectedItem().toString());
-         */
+        bajarCiudadesDestino((String) cb_pais_destino.getSelectedItem());
     }//GEN-LAST:event_cb_pais_destinoActionPerformed
 
     private void cb_nombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cb_nombreActionPerformed
@@ -558,10 +573,12 @@ public class ActualizarServicio extends javax.swing.JInternalFrame {
 
     private void btn_eliminar_imagenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_eliminar_imagenActionPerformed
         //List<int> itemelegido = java.util.Arrays.asList(lst_imagenes.getSelectedIndices());
-        List<String> itemelegido = lst_imagenes.getSelectedValuesList();
-        Iterator<String> it = itemelegido.iterator();
+        List<String> itemselegidos = lst_imagenes.getSelectedValuesList();
+        Iterator<String> it = itemselegidos.iterator();
         while (it.hasNext()) {
-            modeloListaImagenes.removeElement(it.next());
+            String item = it.next();
+            modeloListaImagenes.removeElement(item);
+            imagenes.remove(item);
         }
         btn_eliminar_imagen.setEnabled(false);
         btn_seleccionar_imagen.setEnabled(true);
@@ -585,17 +602,18 @@ public class ActualizarServicio extends javax.swing.JInternalFrame {
             DefaultMutableTreeNode nodo = (DefaultMutableTreeNode) tr_categorias.getLastSelectedPathComponent();
             String padre = ManejadorCategoria.getInstance().obtenerPadre(nodo.toString());
             if (!categorias.containsKey(nodo.toString())) {
+                if (padre.equals("Vuelos") || padre.equals("Empresas") || padre.equals("Tipo vuelo")) {
+                    tienedestino = true;
+                    cb_pais_destino.setVisible(true);
+                    cb_ciudad_destino.setVisible(true);
+                    lb_destino.setVisible(true);
+                    bajarPaisesDestino();
+                    bajarCiudadesDestino(cb_pais_destino.getSelectedItem().toString());
+                }
                 DtCategoria cat = new DtCategoria(nodo.toString(), padre);
                 this.categorias.put(nodo.toString(), cat);
                 modeloListaCategorias.addElement(nodo.toString());
             }
-            /*if (padre.equals("Vuelos") || padre.equals("Tipo vuelo")) {
-                    pn_destinos.setVisible(true);
-                } else {
-                    pn_destinos.setVisible(false);
-                }*/
-            //}
-            //this.categoria_seleccionada = false;
             btn_agregar_categoria.setEnabled(false);
         }
     }//GEN-LAST:event_btn_agregar_categoriaActionPerformed
@@ -624,6 +642,14 @@ public class ActualizarServicio extends javax.swing.JInternalFrame {
         if (itemelegido != null) {
             if (categorias.containsKey(itemelegido)) {
                 btn_agregar_categoria.setEnabled(true);
+            }
+            String padre = ManejadorCategoria.getInstance().obtenerPadre(itemelegido);
+            if (padre.equals("Vuelos") || padre.equals("Empresas") || padre.equals("Tipo vuelo")) {
+                tienedestino = false;
+                cb_pais_destino.setVisible(false);
+                cb_ciudad_destino.setVisible(false);
+                lb_destino.setVisible(false);
+                
             }
             this.categorias.remove(itemelegido);
             modeloListaCategorias.removeElement(itemelegido);

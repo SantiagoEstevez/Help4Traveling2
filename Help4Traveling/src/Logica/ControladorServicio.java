@@ -25,7 +25,7 @@ public class ControladorServicio implements IControladorServicio {
             mensaje = "ERROR: Debe elegir como mucho 3 imagenes...";
         } else if (dts.getNomCiuOrigen().equals("")) {
             mensaje = "ERROR: La ciudad de origen no puede ser vacía...";
-        } else if (dts.getDtCategorias().size() == 0) {
+        } else if (dts.getDtCategorias().isEmpty()) {
             mensaje = "ERROR: Debe elegir al menos una categoria...";
         }
         return mensaje;
@@ -51,21 +51,9 @@ public class ControladorServicio implements IControladorServicio {
         return categoriasok;
     }
 
-    public String altaServicio(DtServicio dts) {
+    private String altaServicio(DtServicio dts) {
         String mensaje = comprobarCompletitudDatos(dts);
-        Proveedor p;
         if (mensaje.equals("CAMPOSOK")) {
-            /*System.out.print("Origen: ");
-            System.out.println(dts.getNomCiuOrigen());
-            Ciudad co = ManejadorCiudad.getInstance().obtenerCiudad(dts.getNomCiuOrigen());
-            p = ManejadorProveedor.getInstance().obtenerProveedor(dts.getNkProveedor());
-            Servicio s = new Servicio(dts.getNombre(), p, dts.getDescripcion(), dts.getImagenes(), dts.getPrecio(), co);
-            if (!dts.getNomCiuDestino().equals("")) {
-                Ciudad cd = ManejadorCiudad.getInstance().obtenerCiudad(dts.getNomCiuDestino());
-                s.setDestino(cd);
-            }*/
-            //p.agregarServicio(s);
-            //ManejadorServicio.getInstance().agregarServicio(s);
             ManejadorServicio ms = ManejadorServicio.getInstance();
             mensaje = ms.persistirServicio(dts);
         }
@@ -77,6 +65,21 @@ public class ControladorServicio implements IControladorServicio {
         mensaje = altaServicio(dts);
         return mensaje;
     }
+    
+    private String actualizarServicio(DtServicio dts) {
+        String mensaje = comprobarCompletitudDatos(dts);
+        if (mensaje.equals("CAMPOSOK")) {
+            ManejadorServicio ms = ManejadorServicio.getInstance();
+            mensaje = ms.persistirActualizacionServicio(dts);
+        }
+        return mensaje;
+    }
+    
+    public String actualizarUnServicio(DtServicio dts) {
+        String mensaje = "El servicio fue actualizado con exito.";
+        mensaje = actualizarServicio(dts);
+        return mensaje;
+    }    
 
     public void altaDePromocion(DtPromocion dtp) {
         ManejadorServicio ms = ManejadorServicio.getInstance();
@@ -96,19 +99,6 @@ public class ControladorServicio implements IControladorServicio {
                     return ("La categroria base " + nombre + " no pudo ser  creada");
                 }
             } else if ((ManejadorCategoria.getInstance().existeCategoria(NombPadre))) {
-                /*busco si  el padre es valido tengo que saber si el padre es hoja o no, ya que si lo es
-                   debo cambiarlo por una categoria compuesta ya que va a pasar a ser padre de otra categoria
-                    n*/
-
- /* if(ManejadorCategoria.getInstance().obtenerCategoria(NombPadre) instanceof CatHoja){
-                        Categoria papa=ManejadorCategoria.getInstance().obtenerCategoria(NombPadre);
-                        //creo la nueva compuesta con los datos de la simple
-                        Categoria papaCompuesto =new CatCompuesta(NombPadre,papa.getPadre());
-                        //luego la sustituyo
-                        ManejadorCategoria.getInstance().sustituirCategoria(NombPadre, papaCompuesto);
-                    }*/
- /* CatCompuesta instPadre=(CatCompuesta)ManejadorCategoria.getInstance().obtenerCategoria(NombPadre);
-                 */
                 Categoria nueva1 = new CatHoja(nombre, NombPadre);
                 /*((CatCompuesta)instPadre).insertarCategoria(nueva1);*/
                 ManejadorCategoria.getInstance().agregarCategoria(nueva1);
@@ -134,29 +124,12 @@ public class ControladorServicio implements IControladorServicio {
         return ManejadorServicio.getInstance().listarServiciosPromocion(dtp);
     }
 
-    public void actualizarUnServicio() {
-
-    }
-
     public List<String> listarCategorias() {
         ManejadorCategoria mac = ManejadorCategoria.getInstance();
         return mac.getNombresCategorias();
     }
 
     public List<String> listarServiciosCategoria(String categoria) {
-        /*ManejadorServicio mas = ManejadorServicio.getInstance();
-        List<String> listaserv = mas.listarServicios();
-        List<String> listaServiciosCategoria = new ArrayList<String>();
-        Iterator<String> iter =  listaserv.iterator();
-        while   (iter.hasNext()){
-            String serv = iter.next();
-            if (mas.obtenerServicio(serv).existeCategoria(mas.obtenerServicio(serv).obtenerCategoria(cat))){
-                listaServiciosCategoria.add(serv);
-            }
-        }*/
- /*List<String> listaServiciosCategoria = new ArrayList<String>();
-        return listaServiciosCategoria;
-         */
         return ManejadorServicio.getInstance().listarServiciosCategoria(categoria);
     }
 

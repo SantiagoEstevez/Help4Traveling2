@@ -26,7 +26,7 @@ public interface IControladorServicio {
 
     public abstract List<DtServicio> listarServiciosPromocion(DtPromocion dtp);
 
-    public abstract void actualizarUnServicio();
+    public abstract String actualizarUnServicio(DtServicio dts);
 
     public abstract List<String> listarCategorias();
 

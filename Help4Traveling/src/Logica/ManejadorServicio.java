@@ -336,10 +336,10 @@ public class ManejadorServicio {
         if (!existeServicio(serv.getNombre())) {
             //sql = "INSERT INTO help4traveling.servicios (nombre,proveedor,descripcion,precio,origen,destino) VALUES ('" + serv.getNombre() + "','" + serv.getProveedor().getNickname() + "','" + serv.getDescripcion() + "'," + (double) serv.getPrecio() + ",'" + serv.getOrigen().getNombre() + "','" + serv.getDestino().getNombre() + "')";
             sql = "INSERT INTO help4traveling.ofertas (nombre,proveedor) VALUES ('" + serv.getNombre() + "','" + serv.getNkProveedor() + "')";
-            System.out.println(sql);
+            //System.out.println(sql);
             try {
                 st = con.createStatement();
-                System.out.println("antes de insertar");
+                //System.out.println("antes de insertar");
                 st.executeUpdate(sql);
                 //con.close();
                 st.close();
@@ -352,7 +352,7 @@ public class ManejadorServicio {
             System.out.println(sql);
             try {
                 st = con.createStatement();
-                System.out.println("antes de insertar");
+                //System.out.println("antes de insertar");
                 st.executeUpdate(sql);
                 //con.close();
                 st.close();
@@ -380,7 +380,7 @@ public class ManejadorServicio {
                 DtCategoria cat = iterc.next();
                 //sql = "INSERT INTO help4traveling.servicioscategorias (servicio,proveedorServicio,categoria) VALUES ('" + serv.getNombre() + "','" + serv.getProveedor().getNickname() + "','" + iterc.next().getNombre() + "')";
                 sql = "INSERT INTO help4traveling.servicioscategorias (servicio,proveedorServicio,categoria,categoriaPadre) VALUES ('" + serv.getNombre() + "','" + serv.getNkProveedor() + "','" + cat.getNombre() + "','" + cat.getPadre() + "')";
-                System.out.println(sql);
+                //System.out.println(sql);
                 try {
                     st = con.createStatement();
                     System.out.println("antes de categoria");
@@ -397,7 +397,89 @@ public class ManejadorServicio {
             mensaje = "ERROR: El Servicio ingresado ya existe...";
         }
         return mensaje;
-
+    }
+    
+    public String persistirActualizacionServicio(DtServicio serv){
+        conexion = new Conexion();
+        Connection con = conexion.getConnection();
+        Statement st;
+        String mensaje = "Se realizó la actualización del Servicio.";
+        System.out.println(serv.getNombre());
+        String destino = serv.getNomCiuDestino();
+        if (destino != null)
+            destino = "'" + destino + "'";
+        sql = "UPDATE help4traveling.servicios SET descripcion='" + serv.getDescripcion() + "',precio=" + (double) serv.getPrecio() 
+              + ",origen='" + serv.getNomCiuOrigen() + "',destino=" + destino + " WHERE nombre='" + serv.getNombre() + "';";
+        //System.out.println(sql);
+        try {
+            st = con.createStatement();
+            st.executeUpdate(sql);
+            //con.close();
+            st.close();
+            System.out.println("ACTUALICE en servicio:)");
+        } 
+        catch (SQLException e) {
+            System.out.println("No pude ACTUALIZAR :(");
+        }
+        sql = "DELETE FROM help4traveling.serviciosimagenes WHERE servicio='" + serv.getNombre() + "';";
+        //System.out.println(sql);
+        try {
+            st = con.createStatement();
+            st.executeUpdate(sql);
+            st.close();
+            //con.close();
+            System.out.println("ELIMINE :)");
+        } 
+        catch (SQLException e) {
+            System.out.println("No pude ELIMINAR :(");
+        }
+        List<String> imagserv = serv.getImagenes();
+        Iterator<String> iteri = imagserv.iterator();
+        while (iteri.hasNext()) {
+            sql = "INSERT INTO help4traveling.serviciosimagenes (servicio,imagen) VALUES ('" + serv.getNombre() + "','" + iteri.next() + "')";
+            //System.out.println(sql);
+            try {
+                st = con.createStatement();
+                st.executeUpdate(sql);
+                st.close();
+                //con.close();
+                System.out.println("INSERTE :)");
+            } 
+            catch (SQLException e) {
+                System.out.println("No pude INSERTAR :(");
+            }
+        }
+        sql = "DELETE FROM help4traveling.servicioscategorias WHERE servicio='" + serv.getNombre() + "';";
+        //System.out.println(sql);
+        try {
+            st = con.createStatement();
+            st.executeUpdate(sql);
+            st.close();
+            //con.close();
+            System.out.println("ELIMINE :)");
+        } 
+        catch (SQLException e) {
+            System.out.println("No pude ELIMINAR :(");
+        }
+        Map<String, DtCategoria> catserv = serv.getDtCategorias();
+        Iterator<DtCategoria> iterc = catserv.values().iterator();
+        while (iterc.hasNext()) {
+            DtCategoria cat = iterc.next();
+            sql = "INSERT INTO help4traveling.servicioscategorias (servicio,proveedorServicio,categoria,categoriaPadre) VALUES ('" + serv.getNombre() + "','" + serv.getNkProveedor() + "','" + cat.getNombre() + "','" + cat.getPadre() + "')";
+            //System.out.println(sql);
+            try {
+                st = con.createStatement();
+                System.out.println("antes de categoria");
+                st.executeUpdate(sql);
+                st.close();
+                //con.close();
+                System.out.println("INSERTE :)");
+            } 
+            catch (SQLException e) {
+                System.out.println("No pude INSERTAR :(");
+            }
+        }        
+        return mensaje;
     }
 
     public String persistirPromo(DtPromocion promo) {
