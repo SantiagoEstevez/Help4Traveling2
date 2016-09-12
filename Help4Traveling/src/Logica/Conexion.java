@@ -3,6 +3,7 @@ package Logica;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import javax.swing.JOptionPane;
 
 public class Conexion {
 
@@ -25,7 +26,7 @@ public class Conexion {
             } catch (SQLException ex) {
                 System.out.println("ERROR.");
                 System.out.println(ex);
-            }
+                JOptionPane.showMessageDialog(null,"No se pudo establecer la Conexión.","Aviso", JOptionPane.ERROR_MESSAGE);            }
         } catch (Exception e) {
             System.out.println("ERROR.");
             System.out.println(e);

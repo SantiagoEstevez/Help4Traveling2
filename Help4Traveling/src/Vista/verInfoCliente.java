@@ -39,12 +39,12 @@ public class verInfoCliente extends javax.swing.JInternalFrame {
         this.IControlador = fabrica.getIControladorUsuario();
 
         DefaultListModel modelo = new DefaultListModel();
-
+        
         this.listaClientes = this.IControlador.listarClientes();
         Iterator<DtUsuario> i = this.listaClientes.iterator();
         while (i.hasNext()) {
             DtUsuario user = i.next();
-            modelo.addElement(user.getNombre()/*()+"   "+user.getApellido()+"   "+user.getNickname()*/);
+            modelo.addElement(user.getNombre());
         }
 
         jListaClientes.setModel(modelo);

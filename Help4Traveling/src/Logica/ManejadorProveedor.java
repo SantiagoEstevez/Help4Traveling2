@@ -148,10 +148,14 @@ public class ManejadorProveedor {
                 String correo = rsProveedores.getString("email");
                 String fecha = rsProveedores.getString("fechaNac");
                 Date nacimiento = new Date(fecha);
+                String empresa = rsProveedores.getString("empresa");
+                System.out.println(empresa);
+                String link = rsProveedores.getString("link");
+                System.out.println(link);
                 String imagen = "imagen";
                 //String empresa = rsProveedores.getString("Empresa");
                 //String direccion = rsProveedores.getString("Direccion");
-                Proveedor nuevo = new Proveedor(nombre, apellido, nickname, correo, nacimiento, imagen,"empresa","direccion");
+                Proveedor nuevo = new Proveedor(nombre, apellido, nickname, correo, nacimiento, imagen,empresa,link);
                 proveedoresNK.put(nickname, nuevo);
             }
             rsProveedores.close();
@@ -167,7 +171,7 @@ public class ManejadorProveedor {
         Iterator<Proveedor> iter = this.proveedoresNK.values().iterator();
         while (iter.hasNext()){
             Proveedor pr =iter.next();
-            listaProveedores.add(pr.getDtUsuario());
+            listaProveedores.add(pr.getDtProveedor());
         }
             return listaProveedores;
     }           

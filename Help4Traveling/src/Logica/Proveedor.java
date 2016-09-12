@@ -106,6 +106,10 @@ public class Proveedor extends Usuario {
         }
         return listaservicios;
     }
+     public DtProveedor getDtProveedor(){
+        DtProveedor dtp = new DtProveedor(this.getNombre(),this.getApellido(),this.getNickname(),this.getCorreo(),this.getNacimiento(),this.getImagen(),this.empresa,this.link);
+        return dtp;
+     }
         /*
         ArrayList<Servicio> lista = new ArrayList<Servicio>(serviciosNom.values());
         return lista;*/
