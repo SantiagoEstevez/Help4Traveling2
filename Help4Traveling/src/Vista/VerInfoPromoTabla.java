@@ -195,7 +195,7 @@ public class VerInfoPromoTabla extends javax.swing.JInternalFrame {
         });
         jScrollPane2.setViewportView(Usuarios);
 
-        jLabel2.setText("Seleccione la promoción  para la cual desea ver mas información:");
+        jLabel2.setText("Seleccione la promoción para la cual desea ver mas información:");
 
         Actualizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/refresh-icon.png"))); // NOI18N
         Actualizar.setText("Actualizar");
