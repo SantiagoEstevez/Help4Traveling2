@@ -55,7 +55,7 @@ public class ManejadorCategoria {
         Conexion conex = new Conexion();
         Connection con = conex.getConnection();
         Statement st;
-        String sql1 = "SELECT * FROM help4traveling.categorias WHERE nombre='" + nombreCat + "'"; 
+        String sql1 = "SELECT * FROM help4traveling.categorias WHERE nombre='" + nombreCat + "' OR padre ='" + nombreCat + "'"; 
         try {
             st = con.createStatement();
             rs = st.executeQuery(sql1);

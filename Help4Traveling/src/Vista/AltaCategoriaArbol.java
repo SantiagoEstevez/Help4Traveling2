@@ -199,7 +199,7 @@ public class AltaCategoriaArbol extends javax.swing.JInternalFrame {
         } else {
             padre = jTreeCategorias.getLastSelectedPathComponent().toString();
         }
-        System.out.println(padre);
+        System.out.println("Llegué hasta aca"+padre);
         respuesta = IControlador.altaDeCategoria(jTextFieldNombre.getText(), padre);
         JOptionPane.showMessageDialog(null, respuesta);
         this.dispose();
