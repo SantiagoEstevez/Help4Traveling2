@@ -27,23 +27,35 @@ public class VerInfoServicioTabla extends javax.swing.JInternalFrame {
     private IControladorServicio IControlador;
     private List<String> listaCategorias;
     private List<DtServicio> listaServicios = new ArrayList<>();
-    String[] colServicios = {"Nombre", "Precio", "Origen", "Destino"};
+
+    private String[] colServicios = {"Nombre", "Precio", "Origen", "Destino"};
     private DefaultTableModel modeloServicios;
     private DefaultTableCellRenderer centerRenderer;
     private DefaultTableCellRenderer rightRenderer;
+
+    DefaultMutableTreeNode raiz = new DefaultMutableTreeNode("Categorias");
+    DefaultTreeModel modelo = new DefaultTreeModel(raiz);
+
     private Boolean expandir = true;
 
     /**
      * Creates new form verInfoReserva
      */
     private void refrescarCategorias() {
-        this.listaCategorias = this.IControlador.listarCategorias();
-        Iterator<String> i = this.listaCategorias.iterator();
 
+        this.listaCategorias = this.IControlador.listarCategorias();
+        raiz.removeAllChildren();
+        MostrarArbol(raiz);
+        Categorias.setModel(modelo);
+        Categorias.updateUI();
     }
 
     private void refrescarServicios() {
+
+        this.listaServicios = this.IControlador.listarServicios();
+        modeloServicios.getDataVector().removeAllElements();
         Object nodo = Categorias.getLastSelectedPathComponent();
+
         if (nodo != null) {
 
             List<String> servicios = this.IControlador.listarServiciosCategoria(nodo.toString());
@@ -70,45 +82,34 @@ public class VerInfoServicioTabla extends javax.swing.JInternalFrame {
                 }
             }
 
-            Servicios.setModel(modeloServicios);
-            Servicios.getColumnModel().getColumn(1).setCellRenderer(rightRenderer);
         }
+        Servicios.setModel(modeloServicios);
+        Servicios.getColumnModel().getColumn(1).setCellRenderer(rightRenderer);
+        Servicios.updateUI();
     }
 
     public VerInfoServicioTabla() {
-        this.centerRenderer = new DefaultTableCellRenderer();
-        centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
-        this.rightRenderer = new DefaultTableCellRenderer();
-        rightRenderer.setHorizontalAlignment(SwingConstants.RIGHT);
 
+        this.centerRenderer = new DefaultTableCellRenderer();
+        this.centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
+        this.rightRenderer = new DefaultTableCellRenderer();
+        this.rightRenderer.setHorizontalAlignment(SwingConstants.RIGHT);
         this.modeloServicios = new DefaultTableModel(colServicios, 0) {
             @Override
             public boolean isCellEditable(int row, int column) {
                 return false;
             }
         };
+
         initComponents();
 
         Fabrica fabrica = Fabrica.getInstance();
         this.IControlador = fabrica.getIControladorServicio();
 
-        DefaultMutableTreeNode raiz = new DefaultMutableTreeNode("Categorias");
-        DefaultTreeModel modelo = new DefaultTreeModel(raiz);
-
-        MostrarArbol(raiz);
-        Categorias.setModel(modelo);
         Expandir.setIcon(javax.swing.UIManager.getIcon("Tree.openIcon"));
-        this.listaServicios = this.IControlador.listarServicios();
 
-        //fabrica.getIControladorReserva().setReservasDB();
-        //fabrica.getIControladorReserva().setItemsDB();
         refrescarCategorias();
-        if (Categorias.getRowCount() > 0) {
-            refrescarServicios();
-        } else {
-            Servicios.setModel(modeloServicios);
-        }
-
+        refrescarServicios();
     }
 
     /**
@@ -120,15 +121,16 @@ public class VerInfoServicioTabla extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jScrollPane1 = new javax.swing.JScrollPane();
-        Servicios = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         Actualizar = new javax.swing.JButton();
         Aceptar = new javax.swing.JButton();
+        Expandir = new javax.swing.JButton();
+        jSplitPane1 = new javax.swing.JSplitPane();
         jScrollPane3 = new javax.swing.JScrollPane();
         Categorias = new javax.swing.JTree();
-        Expandir = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        Servicios = new javax.swing.JTable();
 
         setClosable(true);
         setIconifiable(true);
@@ -139,31 +141,7 @@ public class VerInfoServicioTabla extends javax.swing.JInternalFrame {
         setMinimumSize(new java.awt.Dimension(600, 240));
         setPreferredSize(new java.awt.Dimension(800, 300));
 
-        Servicios.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Nombre", "Precio", "Origen", "Destino"
-            }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false
-            };
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        Servicios.setColumnSelectionAllowed(true);
-        Servicios.getTableHeader().setReorderingAllowed(false);
-        jScrollPane1.setViewportView(Servicios);
-        Servicios.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-
-        jLabel1.setText("Servicios correspondientes a la categoría seleccionada a la izquierda:");
+        jLabel1.setText("Servicios correspondientes a la categoría seleccionada:");
 
         jLabel2.setText("Categorías disponibles:");
 
@@ -185,6 +163,17 @@ public class VerInfoServicioTabla extends javax.swing.JInternalFrame {
             }
         });
 
+        Expandir.setText("Expandir");
+        Expandir.setFocusable(false);
+        Expandir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ExpandirActionPerformed(evt);
+            }
+        });
+
+        jSplitPane1.setDividerLocation(220);
+        jSplitPane1.setPreferredSize(new java.awt.Dimension(600, 300));
+
         javax.swing.tree.DefaultMutableTreeNode treeNode1 = new javax.swing.tree.DefaultMutableTreeNode("root");
         Categorias.setModel(new javax.swing.tree.DefaultTreeModel(treeNode1));
         Categorias.addTreeSelectionListener(new javax.swing.event.TreeSelectionListener() {
@@ -194,12 +183,30 @@ public class VerInfoServicioTabla extends javax.swing.JInternalFrame {
         });
         jScrollPane3.setViewportView(Categorias);
 
-        Expandir.setText("Expandir");
-        Expandir.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ExpandirActionPerformed(evt);
+        jSplitPane1.setLeftComponent(jScrollPane3);
+
+        Servicios.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Nombre", "Precio", "Origen", "Destino"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
             }
         });
+        Servicios.setColumnSelectionAllowed(true);
+        Servicios.getTableHeader().setReorderingAllowed(false);
+        jScrollPane1.setViewportView(Servicios);
+        Servicios.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+
+        jSplitPane1.setRightComponent(jScrollPane1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -208,21 +215,19 @@ public class VerInfoServicioTabla extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jSplitPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 786, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(Actualizar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 78, Short.MAX_VALUE)
-                        .addComponent(Expandir))
-                    .addComponent(jScrollPane3)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(Aceptar))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 503, Short.MAX_VALUE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(Actualizar)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(Expandir)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(Aceptar, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -233,10 +238,8 @@ public class VerInfoServicioTabla extends javax.swing.JInternalFrame {
                     .addComponent(jLabel2)
                     .addComponent(jLabel1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 194, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                .addGap(18, 18, 18)
+                .addComponent(jSplitPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 206, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(Actualizar)
                     .addComponent(Aceptar)
@@ -266,19 +269,11 @@ public class VerInfoServicioTabla extends javax.swing.JInternalFrame {
     }
 
     private void ActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ActualizarActionPerformed
-        int fila = 0;
-        this.listaServicios = this.IControlador.listarServicios();
-        if (Categorias.getSelectionCount() > 0) {
-            fila = Categorias.getSelectionRows()[0];
-        }
-        //this.IControlador.setReservasDB();
-        //this.IControlador.setItemsDB();
         refrescarCategorias();
-        modeloServicios.getDataVector().removeAllElements();
-        Servicios.setModel(modeloServicios);
-        if (Categorias.getRowCount() > fila) {
-            Categorias.setSelectionRow(fila);
-        }
+        refrescarServicios();
+        Expandir.setText("Expandir");
+        expandir = true;
+        Expandir.setIcon(javax.swing.UIManager.getIcon("Tree.openIcon"));
     }//GEN-LAST:event_ActualizarActionPerformed
 
     private void AceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AceptarActionPerformed
@@ -290,7 +285,6 @@ public class VerInfoServicioTabla extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_CategoriasValueChanged
 
     private void ExpandirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ExpandirActionPerformed
-        //jTree1.expandPath(jTree1.getSelectionPath());
         if (expandir) {
             for (int i = 0; i < Categorias.getRowCount(); i++) {
                 Categorias.expandRow(i);
@@ -318,5 +312,6 @@ public class VerInfoServicioTabla extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JSplitPane jSplitPane1;
     // End of variables declaration//GEN-END:variables
 }
