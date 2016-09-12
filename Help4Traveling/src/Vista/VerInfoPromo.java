@@ -278,7 +278,7 @@ public class VerInfoPromo extends javax.swing.JInternalFrame {
       String[] arr=acortar.split(",");
        String proevedor= arr[1];
        String Nombre=arr[0];
-       DtServicio elegido=ManejadorServicio.getInstance().GetDataServicio(Nombre, proevedor);
+       DtServicio elegido=ManejadorServicio.getInstance().getDtServicio(Nombre, proevedor);
       // Ms
     }//GEN-LAST:event_Bn_VerInfo_ServicioActionPerformed
 

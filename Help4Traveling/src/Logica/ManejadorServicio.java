@@ -131,7 +131,7 @@ public class ManejadorServicio {
         return nuevo;
     }
 
-    public DtServicio GetDataServicio(String nombre, String Proveedor) {
+    public DtServicio getDtServicio(String nombre, String Proveedor) {
 
         ResultSet rsServicio;
 
@@ -272,7 +272,7 @@ public class ManejadorServicio {
                 System.out.println("llegue2");
                 String nombre = rsServiciosProveedor.getString("nombre");
                 String nkproveedor = rsServiciosProveedor.getString("proveedor");
-                ser = GetDataServicio(nombre, nkproveedor);
+                ser = getDtServicio(nombre, nkproveedor);
                 listaServicios.add(ser);
             }
             rsServiciosProveedor.close();
@@ -302,7 +302,7 @@ public class ManejadorServicio {
             while (rsServiciosProveedor.next()) {
                 String nombre = rsServiciosProveedor.getString("nombre");
                 String nkproveedor = rsServiciosProveedor.getString("proveedor");
-                ser = GetDataServicio(nombre, nkproveedor);
+                ser = getDtServicio(nombre, nkproveedor);
                 listaServicios.add(ser);
             }
             rsServiciosProveedor.close();
