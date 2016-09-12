@@ -589,7 +589,7 @@ public class Principal extends javax.swing.JFrame {
 
     private void conServMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_conServMenuActionPerformed
         // TODO add your handling code here:
-        VerInfoServicioTabla vis = new VerInfoServicioTabla();
+        VerInfoServicioArbol vis = new VerInfoServicioArbol();
         escritorio.add(vis);
         centrarVentana(vis);
         vis.setVisible(true);

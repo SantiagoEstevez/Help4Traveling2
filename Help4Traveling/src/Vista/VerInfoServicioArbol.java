@@ -10,6 +10,7 @@ import Logica.Fabrica;
 import Logica.IControladorServicio;
 import Logica.ManejadorCategoria;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 import javax.swing.SwingConstants;
@@ -22,7 +23,7 @@ import javax.swing.tree.DefaultTreeModel;
  *
  * @author tecnoinf
  */
-public class VerInfoServicioTabla extends javax.swing.JInternalFrame {
+public class VerInfoServicioArbol extends javax.swing.JInternalFrame {
 
     private IControladorServicio IControlador;
     private List<String> listaCategorias;
@@ -55,13 +56,27 @@ public class VerInfoServicioTabla extends javax.swing.JInternalFrame {
         this.listaServicios = this.IControlador.listarServicios();
         modeloServicios.getDataVector().removeAllElements();
         Object nodo = Categorias.getLastSelectedPathComponent();
+        System.out.println(nodo);
 
         if (nodo != null) {
 
-            List<String> servicios = this.IControlador.listarServiciosCategoria(nodo.toString());
             List<DtServicio> listaServiciosCategoria = new ArrayList<>();
             listaServiciosCategoria.addAll(this.listaServicios);
-            listaServiciosCategoria.removeIf(p -> !servicios.contains(p.getNombre()));
+
+            if (Categorias.getSelectionCount() > 1) {
+                List list = Arrays.asList(Categorias.getSelectionPaths());
+
+                Iterator catit = list.iterator();
+                while (catit.hasNext()) {
+                    System.out.println(catit.next().toString());
+                    List<String> servicios = this.IControlador.listarServiciosCategoria(catit.next().toString());
+                    listaServiciosCategoria.removeIf(p -> !servicios.contains(p.getNombre()));
+                }
+            } else {
+                List<String> servicios = this.IControlador.listarServiciosCategoria(nodo.toString());
+                listaServiciosCategoria.removeIf(p -> !servicios.contains(p.getNombre()));
+            }
+
             modeloServicios.setRowCount(0);
 
             if (listaServiciosCategoria != null) {
@@ -88,7 +103,7 @@ public class VerInfoServicioTabla extends javax.swing.JInternalFrame {
         Servicios.updateUI();
     }
 
-    public VerInfoServicioTabla() {
+    public VerInfoServicioArbol() {
 
         this.centerRenderer = new DefaultTableCellRenderer();
         this.centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
@@ -136,7 +151,7 @@ public class VerInfoServicioTabla extends javax.swing.JInternalFrame {
         setIconifiable(true);
         setMaximizable(true);
         setResizable(true);
-        setTitle("Ver Info Servicios");
+        setTitle("Ver Info Servicio");
         setFrameIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/info-icon.png"))); // NOI18N
         setMinimumSize(new java.awt.Dimension(600, 240));
         setPreferredSize(new java.awt.Dimension(800, 300));
