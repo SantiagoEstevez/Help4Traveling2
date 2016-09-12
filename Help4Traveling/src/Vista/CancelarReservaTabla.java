@@ -19,7 +19,7 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author tecnoinf
  */
-public class cancelarReserva extends javax.swing.JInternalFrame {
+public class CancelarReservaTabla extends javax.swing.JInternalFrame {
 
     private IControladorReserva IControlador;
     private List<DtReserva> listaReservas;
@@ -29,7 +29,7 @@ public class cancelarReserva extends javax.swing.JInternalFrame {
     private DefaultTableCellRenderer rightRenderer;
 
     /**
-     * Creates new form cancelarReserva
+     * Creates new form CancelarReservaTabla
      */
     private void refrescarReservas() {
         this.listaReservas = this.IControlador.listarReservas();
@@ -53,7 +53,7 @@ public class cancelarReserva extends javax.swing.JInternalFrame {
         jTableRes.getColumnModel().getColumn(4).setCellRenderer(centerRenderer);
     }
 
-    public cancelarReserva() {
+    public CancelarReservaTabla() {
         this.centerRenderer = new DefaultTableCellRenderer();
         centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
         this.rightRenderer = new DefaultTableCellRenderer();

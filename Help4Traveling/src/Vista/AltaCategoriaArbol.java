@@ -19,7 +19,7 @@ import javax.swing.tree.DefaultTreeModel;
  *
  * @author HP Usuario
  */
-public class AltaCategoria2 extends javax.swing.JInternalFrame {
+public class AltaCategoriaArbol extends javax.swing.JInternalFrame {
 
     /**
      * Creates new form altaCategoria
@@ -28,7 +28,7 @@ public class AltaCategoria2 extends javax.swing.JInternalFrame {
     private IControladorServicio IControlador;
     private Boolean expandir = true;
 
-    public AltaCategoria2() {
+    public AltaCategoriaArbol() {
         initComponents();
 
         Fabrica fabrica = Fabrica.getInstance();

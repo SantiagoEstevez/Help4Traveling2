@@ -5,12 +5,13 @@
  */
 package Vista;
 
-import Logica.DtItemReserva;
 import Logica.DtReserva;
 import Logica.Fabrica;
 import Logica.IControladorReserva;
+import Logica.Reserva;
 import java.util.Iterator;
 import java.util.List;
+import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
@@ -19,18 +20,33 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author tecnoinf
  */
-public class verInfoReserva extends javax.swing.JInternalFrame {
+public class ActualizarReservaTabla extends javax.swing.JInternalFrame {
 
     private IControladorReserva IControlador;
     private List<DtReserva> listaReservas;
-    private List<DtItemReserva> listaItems;
-    //private List<DtItems> listaItems;
     String[] colReservas = {"Número", "Fecha", "Estado", "Total", "Cliente"};
-    String[] colItems = {"Nombre", "Cantidad", "Inicio", "Fin"};
     private DefaultTableModel tableModelRes;
-    private DefaultTableModel tableModelItems;
     private DefaultTableCellRenderer centerRenderer;
     private DefaultTableCellRenderer rightRenderer;
+
+    private void modificarReserva(Integer index) {
+        String estado = this.listaReservas.get(index).getEstado().toString();
+        Integer reserva = (int) (long) this.listaReservas.get(index).getId();
+        System.out.println(estado);
+        if (!Reserva.eEstado.REGISTRADA.toString().equals(estado)) {
+            JOptionPane.showMessageDialog(this, "El estado inicial debe ser REGISTRADA, pero es " + estado + ".", "Error", JOptionPane.ERROR_MESSAGE
+            );
+        } else {
+            String nuevo = jComboBoxEstado.getSelectedItem().toString();
+            Object[] opciones = {"No", "Si"};
+            int respuesta = JOptionPane.showOptionDialog(null, "¿Está seguro de cambiar el estado de la reserva a " + nuevo + "?", "Confirmar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, opciones, opciones[1]);
+            if (respuesta == 1) {
+                this.IControlador.actualizarEstadoDeReserva(reserva, nuevo);
+                this.IControlador.setReservasDB();
+                refrescarReservas();
+            }
+        }
+    }
 
     /**
      * Creates new form verInfoReserva
@@ -57,49 +73,12 @@ public class verInfoReserva extends javax.swing.JInternalFrame {
         jTableRes.getColumnModel().getColumn(4).setCellRenderer(centerRenderer);
     }
 
-    private void refrescarItems() {
-        Integer index = jTableRes.getSelectedRow();
-        if (index != -1) {
-            DtReserva res = listaReservas.get(index);
-            Integer reserva = (int) (long) listaReservas.get(index).getId();
-            this.listaItems = this.IControlador.listarItems(reserva);
-            tableModelItems.setRowCount(0);
-            
-            if (listaItems != null) {
-                Iterator<DtItemReserva> it = this.listaItems.iterator();
-
-                while (it.hasNext()) {
-                    DtItemReserva item = it.next();
-                    Object[] fila = {//item.getId(),
-                        item.getOferta().getNombre(),
-                        item.getCantidad(),
-                        item.getInicio().getFecha("-"),
-                        item.getFin().getFecha("-"),};
-
-                    tableModelItems.addRow(fila);
-                }
-            }
-            
-            jTableItems.setModel(tableModelItems);
-            jTableItems.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
-            jTableItems.getColumnModel().getColumn(1).setCellRenderer(centerRenderer);
-            jTableItems.getColumnModel().getColumn(2).setCellRenderer(centerRenderer);
-            jTableItems.getColumnModel().getColumn(3).setCellRenderer(centerRenderer);
-        }
-    }
-
-    public verInfoReserva() {
+    public ActualizarReservaTabla() {
         this.centerRenderer = new DefaultTableCellRenderer();
         centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
         this.rightRenderer = new DefaultTableCellRenderer();
         rightRenderer.setHorizontalAlignment(SwingConstants.RIGHT);
 
-        this.tableModelItems = new DefaultTableModel(colItems, 0) {
-            @Override
-            public boolean isCellEditable(int row, int column) {
-                return false;
-            }
-        };
         this.tableModelRes = new DefaultTableModel(colReservas, 0) {
             @Override
             public boolean isCellEditable(int row, int column) {
@@ -112,15 +91,10 @@ public class verInfoReserva extends javax.swing.JInternalFrame {
         this.IControlador = fabrica.getIControladorReserva();
 
         fabrica.getIControladorReserva().setReservasDB();
-        fabrica.getIControladorReserva().setItemsDB();
         refrescarReservas();
         if (jTableRes.getRowCount() > 0) {
             jTableRes.setRowSelectionInterval(0, 0);
-            refrescarItems();
-        } else {
-            jTableItems.setModel(tableModelItems);
         }
-
     }
 
     /**
@@ -132,49 +106,23 @@ public class verInfoReserva extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTableItems = new javax.swing.JTable();
-        jLabelItems = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
         jTableRes = new javax.swing.JTable();
         jLabelRes = new javax.swing.JLabel();
         jButtonActual = new javax.swing.JButton();
         jButtonCerrar = new javax.swing.JButton();
+        jButtonMod = new javax.swing.JButton();
+        jComboBoxEstado = new javax.swing.JComboBox<>();
+        jLabelEstado = new javax.swing.JLabel();
 
         setClosable(true);
         setIconifiable(true);
         setMaximizable(true);
         setResizable(true);
-        setTitle("Ver Info Reserva");
-        setFrameIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/info-icon.png"))); // NOI18N
-        setMinimumSize(new java.awt.Dimension(440, 240));
-        setPreferredSize(new java.awt.Dimension(600, 336));
-
-        jTableItems.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Nombre", "Cantidad", "Inicio", "Fin"
-            }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false
-            };
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        jTableItems.setColumnSelectionAllowed(true);
-        jTableItems.getTableHeader().setReorderingAllowed(false);
-        jScrollPane1.setViewportView(jTableItems);
-        jTableItems.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-
-        jLabelItems.setText("Servicios y promociones  correspondientes a la reserva seleccionada:");
+        setTitle("Actualizar Reserva");
+        setFrameIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/edit-icon.png"))); // NOI18N
+        setMinimumSize(new java.awt.Dimension(575, 210));
+        setPreferredSize(new java.awt.Dimension(600, 210));
 
         jTableRes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -190,19 +138,9 @@ public class verInfoReserva extends javax.swing.JInternalFrame {
         jTableRes.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jTableRes.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jTableRes.getTableHeader().setReorderingAllowed(false);
-        jTableRes.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jTableResMouseClicked(evt);
-            }
-        });
-        jTableRes.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                jTableResKeyReleased(evt);
-            }
-        });
         jScrollPane3.setViewportView(jTableRes);
 
-        jLabelRes.setText("Seleccione la reserva para la cual desea ver mas información:");
+        jLabelRes.setText("Seleccione la reserva para la cual desea modificar su estado:");
 
         jButtonActual.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/refresh-icon.png"))); // NOI18N
         jButtonActual.setText("Actualizar");
@@ -213,14 +151,27 @@ public class verInfoReserva extends javax.swing.JInternalFrame {
             }
         });
 
-        jButtonCerrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/check-icon.png"))); // NOI18N
-        jButtonCerrar.setText("Aceptar");
+        jButtonCerrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/cancel-icon.png"))); // NOI18N
+        jButtonCerrar.setText("Cerrar");
         jButtonCerrar.setFocusable(false);
         jButtonCerrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonCerrarActionPerformed(evt);
             }
         });
+
+        jButtonMod.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/edit-icon.png"))); // NOI18N
+        jButtonMod.setText("Modificar");
+        jButtonMod.setFocusable(false);
+        jButtonMod.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonModActionPerformed(evt);
+            }
+        });
+
+        jComboBoxEstado.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "PAGADA", "FACTURADA", "CANCELADA" }));
+
+        jLabelEstado.setText("Nuevo estado:");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -229,45 +180,41 @@ public class verInfoReserva extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 586, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 586, Short.MAX_VALUE)
+                    .addComponent(jScrollPane3)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabelRes)
-                            .addComponent(jLabelItems))
+                        .addComponent(jLabelRes)
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jButtonCerrar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jButtonActual)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButtonCerrar)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 61, Short.MAX_VALUE)
+                        .addComponent(jLabelEstado)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jComboBoxEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButtonMod)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabelRes)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 95, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabelItems)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 95, Short.MAX_VALUE)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 98, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButtonActual)
-                    .addComponent(jButtonCerrar))
-                .addContainerGap())
+                    .addComponent(jButtonCerrar)
+                    .addComponent(jButtonMod)
+                    .addComponent(jComboBoxEstado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabelEstado))
+                .addGap(12, 12, 12))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void jTableResMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableResMouseClicked
-        if (jTableRes.getSelectedRowCount() != -1) {
-            refrescarItems();
-        }
-    }//GEN-LAST:event_jTableResMouseClicked
 
     private void jButtonActualActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonActualActionPerformed
         int fila = 0;
@@ -275,32 +222,32 @@ public class verInfoReserva extends javax.swing.JInternalFrame {
             fila = jTableRes.getSelectedRow();
         }
         this.IControlador.setReservasDB();
-        this.IControlador.setItemsDB();
         refrescarReservas();
-        tableModelItems.getDataVector().removeAllElements();
-        jTableItems.setModel(tableModelItems);
         if (jTableRes.getRowCount() > fila) {
             jTableRes.setRowSelectionInterval(fila, fila);
         }
     }//GEN-LAST:event_jButtonActualActionPerformed
 
     private void jButtonCerrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCerrarActionPerformed
-        this.dispose();
+        this.setVisible(false);
     }//GEN-LAST:event_jButtonCerrarActionPerformed
-    private void jTableResKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTableResKeyReleased
+
+    private void jButtonModActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonModActionPerformed
         if (jTableRes.getSelectedRowCount() > 0) {
-            refrescarItems();
+            int fila = jTableRes.getSelectedRow();
+            modificarReserva(jTableRes.getSelectedRow());
+            jTableRes.setRowSelectionInterval(fila, fila);
         }
-    }//GEN-LAST:event_jTableResKeyReleased
+    }//GEN-LAST:event_jButtonModActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonActual;
     private javax.swing.JButton jButtonCerrar;
-    private javax.swing.JLabel jLabelItems;
+    private javax.swing.JButton jButtonMod;
+    private javax.swing.JComboBox<String> jComboBoxEstado;
+    private javax.swing.JLabel jLabelEstado;
     private javax.swing.JLabel jLabelRes;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JTable jTableItems;
     private javax.swing.JTable jTableRes;
     // End of variables declaration//GEN-END:variables
 }

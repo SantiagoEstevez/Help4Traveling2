@@ -511,28 +511,28 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_refResMenuActionPerformed
 
     private void bm_verInfoClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bm_verInfoClienteActionPerformed
-        verInfoCliente fverInfoCliente = new verInfoCliente();
-        escritorio.add(fverInfoCliente);
-        centrarVentana(fverInfoCliente);
-        fverInfoCliente.setVisible(true);
+        VerInfoClienteTabla vic = new VerInfoClienteTabla();
+        escritorio.add(vic);
+        centrarVentana(vic);
+        vic.setVisible(true);
     }//GEN-LAST:event_bm_verInfoClienteActionPerformed
 
     private void bm_verInfoProveedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bm_verInfoProveedorActionPerformed
-        verInfoProveedor fverInfoProveedor = new verInfoProveedor();
-        escritorio.add(fverInfoProveedor);
-        centrarVentana(fverInfoProveedor);
-        fverInfoProveedor.setVisible(true);
+        VerInfoProveedorTabla vip = new VerInfoProveedorTabla();
+        escritorio.add(vip);
+        centrarVentana(vip);
+        vip.setVisible(true);
     }//GEN-LAST:event_bm_verInfoProveedorActionPerformed
 
     private void elimResMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_elimResMenuActionPerformed
-        cancelarReserva cr = new cancelarReserva();
+        CancelarReservaTabla cr = new CancelarReservaTabla();
         escritorio.add(cr);
         centrarVentana(cr);
         cr.setVisible(true);
     }//GEN-LAST:event_elimResMenuActionPerformed
 
     private void conResMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_conResMenuActionPerformed
-        verInfoReserva vir = new verInfoReserva();
+        VerInfoReservaTabla vir = new VerInfoReservaTabla();
         escritorio.add(vir);
         centrarVentana(vir);
         vir.setVisible(true);
@@ -580,14 +580,8 @@ public class Principal extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_externoMenuActionPerformed
 
-    private void VerInfo_promoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_VerInfo_promoActionPerformed
-        VerInfoPromo altacat = new VerInfoPromo();
-        escritorio.add(altacat);
-        centrarVentana(altacat);
-        altacat.setVisible(true);    }//GEN-LAST:event_VerInfo_promoActionPerformed
-
     private void modResMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modResMenuActionPerformed
-        ActualizarReserva ar = new ActualizarReserva();
+        ActualizarReservaTabla ar = new ActualizarReservaTabla();
         escritorio.add(ar);
         centrarVentana(ar);
         ar.setVisible(true);
@@ -614,7 +608,7 @@ public class Principal extends javax.swing.JFrame {
         if (shift) {
             ac = new altaCategoria();
         } else {
-            ac = new AltaCategoria2();
+            ac = new AltaCategoriaArbol();
         }
         escritorio.add(ac);
         centrarVentana(ac);
@@ -647,6 +641,13 @@ public class Principal extends javax.swing.JFrame {
     private void scriptDB2ItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_scriptDB2ItemActionPerformed
         cargarDatos("/Datos/Script-DB2.sql", true);
     }//GEN-LAST:event_scriptDB2ItemActionPerformed
+
+    private void VerInfo_promoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_VerInfo_promoActionPerformed
+        VerInfoPromoTabla vip = new VerInfoPromoTabla();
+        escritorio.add(vip);
+        centrarVentana(vip);
+        vip.setVisible(true);
+    }//GEN-LAST:event_VerInfo_promoActionPerformed
 
     private void internalMenuActionPerformed(java.awt.event.ActionEvent evt) {
         cargarDatos("/Datos/Script-DB2.sql", true);

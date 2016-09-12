@@ -126,6 +126,14 @@ public class ControladorServicio implements IControladorServicio {
         return ManejadorServicio.getInstance().listarServicios();
     }
 
+    public List<DtPromocion> listarPromociones() {
+        return ManejadorServicio.getInstance().listarPromociones();
+    }
+
+    public List<DtServicio> listarServiciosPromocion(DtPromocion dtp) {
+        return ManejadorServicio.getInstance().listarServiciosPromocion(dtp);
+    }
+
     public void actualizarUnServicio() {
 
     }
