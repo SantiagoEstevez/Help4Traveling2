@@ -197,7 +197,7 @@ public class VerInfoClienteTabla extends javax.swing.JInternalFrame {
         });
         jScrollPane2.setViewportView(Clientes);
 
-        jLabel2.setText("Seleccione al cliente  para el cual desea ver mas información:");
+        jLabel2.setText("Seleccione al cliente para el cual desea ver mas información:");
 
         Actualizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/refresh-icon.png"))); // NOI18N
         Actualizar.setText("Actualizar");

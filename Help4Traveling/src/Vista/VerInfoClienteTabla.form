@@ -198,7 +198,7 @@
     </Container>
     <Component class="javax.swing.JLabel" name="jLabel2">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Seleccione al cliente  para el cual desea ver mas informaci&#xf3;n:"/>
+        <Property name="text" type="java.lang.String" value="Seleccione al cliente para el cual desea ver mas informaci&#xf3;n:"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JButton" name="Actualizar">
