@@ -414,9 +414,10 @@ DROP TABLE IF EXISTS `usuarios`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `usuarios` (
   `nickname` varchar(50) COLLATE utf8_spanish_ci NOT NULL,
-  `nombre` varchar(50) COLLATE utf8_spanish_ci DEFAULT NULL,
-  `apellido` varchar(50) COLLATE utf8_spanish_ci DEFAULT NULL,
-  `email` varchar(50) CHARACTER SET ucs2 DEFAULT NULL,
+  `nombre` varchar(50) COLLATE utf8_spanish_ci NOT NULL,
+  `apellido` varchar(50) COLLATE utf8_spanish_ci NOT NULL,
+  `password` varchar(20) COLLATE utf8_spanish_ci NOT NULL,
+  `email` varchar(50) CHARACTER SET ucs2 NOT NULL,
   `imagen` varchar(50) COLLATE utf8_spanish_ci DEFAULT NULL,
   `fechaNac` date DEFAULT NULL,
   PRIMARY KEY (`nickname`)
@@ -429,7 +430,7 @@ CREATE TABLE `usuarios` (
 
 LOCK TABLES `usuarios` WRITE;
 /*!40000 ALTER TABLE `usuarios` DISABLE KEYS */;
-INSERT INTO `usuarios` VALUES ('adippet','Armando','Dippet','tam@outlook.com',NULL,'1967-02-12'),('BruceS','Bruce','Sewell','bruce.swell@gmail.com',NULL,'1978-12-03'),('eWaston','Emma','Watson','e.watson@gmail.com',NULL,'1990-04-15'),('jeffW','jeff','Wiliams','jeff.williams@gmail.com',NULL,'1984-11-27'),('mHooch','Madam','Hooch','segHogar@gmail.com',NULL,'1963-08-05'),('moody','Alastor','Moody','eu.car@eucar.com',NULL,'1965-09-02'),('oWood','Oliver','Wood','quidditch28@gmail.com',NULL,'1988-12-28'),('remus','Remus','Lupin','iberia@gmail.com',NULL,'1970-05-04'),('tCook','Tim','Cook','air.f@gmail.com',NULL,'1960-11-01');
+INSERT INTO `usuarios` VALUES ('adippet','Armando','Dippet','Dippet123','tam@outlook.com',NULL,'1967-02-12'),('BruceS','Bruce','Sewell','Sewell123','bruce.swell@gmail.com',NULL,'1978-12-03'),('eWaston','Emma','Watson','Watson123','e.watson@gmail.com',NULL,'1990-04-15'),('jeffW','jeff','Wiliams','Wiliams123','jeff.williams@gmail.com',NULL,'1984-11-27'),('mHooch','Madam','Hooch','Hooch123','segHogar@gmail.com',NULL,'1963-08-05'),('moody','Alastor','Moody','Moody123','eu.car@eucar.com',NULL,'1965-09-02'),('oWood','Oliver','Wood','Wood123','quidditch28@gmail.com',NULL,'1988-12-28'),('remus','Remus','Lupin','Lupin123','iberia@gmail.com',NULL,'1970-05-04'),('tCook','Tim','Cook','Cook123','air.f@gmail.com',NULL,'1960-11-01');
 /*!40000 ALTER TABLE `usuarios` ENABLE KEYS */;
 UNLOCK TABLES;
 

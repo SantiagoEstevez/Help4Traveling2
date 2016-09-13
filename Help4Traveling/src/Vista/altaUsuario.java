@@ -31,17 +31,17 @@ public class altaUsuario extends javax.swing.JInternalFrame {
         Fabrica fabrica = Fabrica.getInstance();
         this.IControlador = fabrica.getIControladorUsuario();
         this.tipo = "Cliente";
-        this.pathimg = "";
+        this.pathimg = null;
         initComponents();
         this.pn_proveedor.setVisible(false);
     }
 
-    public altaUsuario(IControladorUsuario iControlador) {
+    /*public altaUsuario(IControladorUsuario iControlador) {
         IControlador = iControlador;
         this.tipo = "Cliente";
         initComponents();
         this.pn_proveedor.setVisible(false);
-    }
+    }*/
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -389,10 +389,6 @@ public class altaUsuario extends javax.swing.JInternalFrame {
         System.out.println(mes);
         System.out.println(dia);
         System.out.println(anio);
-        //String nacimiento = dia+mes+anio;
-        //int dd = Integer.parseInt(dia);
-        //int mm = Integer.parseInt(mes);
-        //int aaaa = Integer.parseInt(anio);
         Date nacimiento = new Date(dia, mes, anio);
         if (password.equals(""))
             mensaje = "ERROR: La Password no puede ser vacía...";
@@ -414,12 +410,12 @@ public class altaUsuario extends javax.swing.JInternalFrame {
         this.tf_empresa.setText("");
         this.tf_direccion.setText("");
         this.pn_proveedor.setVisible(false);
-        /*if (mensaje.equals("Se dio de alta al Usuario Cliente.") || mensaje.equals("Se dio de alta al Usuario Proveedor.")) {
+        if (mensaje.equals("Se dio de alta al Usuario Cliente.") || mensaje.equals("Se dio de alta al Usuario Proveedor.")) {
             this.setVisible(false);
-        }*/
+        }
         this.chb_proveedor.setSelected(false);
         this.tipo = "Cliente";
-        this.pathimg = "";
+        this.pathimg = null;
     }//GEN-LAST:event_bt_aceptarActionPerformed
 
     private void bt_cancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_cancelarActionPerformed

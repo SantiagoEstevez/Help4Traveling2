@@ -83,13 +83,7 @@ public class ManejadorCliente {
             //con.close();
         } catch (SQLException e){
             System.out.println("No existe correo :(");
-        }
-	/*Iterator<Cliente> iter = this.clientesNK.values().iterator();
-	while ((iter.hasNext()) && (!existe)) {
-            Cliente cli = iter.next();
-            if (cli.getCorreo() == correo)
-		existe = true;
-	}*/        
+        }	        
 	return existe;        
     }
 
@@ -177,11 +171,14 @@ public class ManejadorCliente {
         Connection con = Conexion.getInstance().getConnection();
         Statement st;
         String mensaje = "Se dio de alta al Usuario Cliente.";
+        String imagen = cli.getImagen();
+        if (imagen != null)
+            imagen = "'" + imagen + "'";
         if (!existeNickname(cli.getNickname())) {
             String fecha = String.valueOf(cli.getNacimiento().getAno()) + "-" + String.valueOf(cli.getNacimiento().getMes()) + "-" + String.valueOf(cli.getNacimiento().getDia());
             String sqlau = "INSERT INTO help4traveling.usuarios (nickname,nombre,apellido,password,email,imagen,fechaNac) " +
-             "VALUES ('" + cli.getNickname() + "','" + cli.getNombre() + "','" + cli.getApellido() + "','" + cli.getPassword() + "','" + cli.getCorreo() + "','" + cli.getImagen() + "','" + fecha + "')";
-            //System.out.println(sqlau);
+             "VALUES ('" + cli.getNickname() + "','" + cli.getNombre() + "','" + cli.getApellido() + "','" + cli.getPassword() + "','" + cli.getCorreo() + "'," + imagen + ",'" + fecha + "')";
+            System.out.println(sqlau);
             String sqlac = "INSERT INTO help4traveling.clientes (nickname) VALUES ('" + cli.getNickname() + "')";
             String sqlai = "INSERT INTO help4traveling.usuariosimagenes (usuario,imagen) VALUES ('" + cli.getNickname() + "','" + cli.getImagen() + "')";
             try {
@@ -189,7 +186,8 @@ public class ManejadorCliente {
                 //System.out.println("antes de insertar");
                 st.executeUpdate(sqlau);
                 st.executeUpdate(sqlac);
-                st.executeUpdate(sqlai);
+                if (imagen != null)
+                    st.executeUpdate(sqlai);
                 con.close();
                 st.close();
                 System.out.println("INSERTE :)");

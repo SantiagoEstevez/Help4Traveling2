@@ -186,20 +186,24 @@ public class ManejadorProveedor {
        //Connection con = conexion.getConnection();
        Statement st;       
      if (!existeNickname(prov.getNickname())) {  
+         String imagen = prov.getImagen();
+        if (imagen != null)
+            imagen = "'" + imagen + "'";
        String fecha = String.valueOf(prov.getNacimiento().getAno()) + "-" + String.valueOf(prov.getNacimiento().getMes()) + "-" + String.valueOf(prov.getNacimiento().getDia());
        String sqlau = "INSERT INTO help4traveling.usuarios " + 
              "(nickname,nombre,apellido,password,email,imagen,fechaNac) " +
              "VALUES ('" + prov.getNickname() + "','" + prov.getNombre() + "','" + prov.getApellido() + "','" + prov.getPassword() + "','" + prov.getCorreo() 
-             + "','" + prov.getImagen() + "','" + fecha + "')";
+             + "'," + imagen + ",'" + fecha + "')";
        System.out.println(sqlau);
-       String sqlai = "INSERT INTO help4traveling.usuariosimagenes (usuario,imagen) VALUES ('" + prov.getNickname() + "','" + prov.getImagen() + "')";
        String sqlap = "INSERT INTO help4traveling.proveedores (nickname,empresa,link) VALUES ('" + prov.getNickname() + "','" + prov.getEmpresa() + "','" + prov.getLink() + "')";
+       String sqlai = "INSERT INTO help4traveling.usuariosimagenes (usuario,imagen) VALUES ('" + prov.getNickname() + "','" + prov.getImagen() + "')";
        try{
            st = con.createStatement();
            //System.out.println("antes de insertar");
            st.executeUpdate(sqlau);
-           st.executeUpdate(sqlai);
            st.executeUpdate(sqlap);
+           if (imagen != null)
+                st.executeUpdate(sqlai);           
            con.close();
            st.close();
            System.out.println("INSERTE :)");
