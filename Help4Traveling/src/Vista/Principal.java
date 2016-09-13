@@ -173,6 +173,9 @@ public class Principal extends javax.swing.JFrame {
         IniMenu = new javax.swing.JMenu();
         internoMenu = new javax.swing.JMenu();
         scriptDB2Item = new javax.swing.JMenuItem();
+        jSeparator4 = new javax.swing.JPopupMenu.Separator();
+        BorrarTablas = new javax.swing.JMenuItem();
+        jMenuItem1 = new javax.swing.JMenuItem();
         externoMenu = new javax.swing.JMenuItem();
         jSeparator1 = new javax.swing.JPopupMenu.Separator();
         cerrarMenu = new javax.swing.JMenuItem();
@@ -239,6 +242,25 @@ public class Principal extends javax.swing.JFrame {
             }
         });
         internoMenu.add(scriptDB2Item);
+        internoMenu.add(jSeparator4);
+
+        BorrarTablas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/delete-icon.png"))); // NOI18N
+        BorrarTablas.setText("Borrar Tablas");
+        BorrarTablas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BorrarTablasActionPerformed(evt);
+            }
+        });
+        internoMenu.add(BorrarTablas);
+
+        jMenuItem1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/delete-icon.png"))); // NOI18N
+        jMenuItem1.setText("Borrar Base");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        internoMenu.add(jMenuItem1);
 
         IniMenu.add(internoMenu);
 
@@ -576,7 +598,7 @@ public class Principal extends javax.swing.JFrame {
             String camino = datos.getAbsolutePath();
             System.out.print("Datos ubicados en: ");
             System.out.println(camino);
-            cargarDatos(camino, false);
+            ejecutarScript(camino, false);
         }
     }//GEN-LAST:event_externoMenuActionPerformed
 
@@ -639,7 +661,7 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_modServMenuActionPerformed
 
     private void scriptDB2ItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_scriptDB2ItemActionPerformed
-        cargarDatos("/Datos/Script-DB2.sql", true);
+        ejecutarScript("/Scripts/Script-DB2.sql", true);
     }//GEN-LAST:event_scriptDB2ItemActionPerformed
 
     private void VerInfo_promoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_VerInfo_promoActionPerformed
@@ -649,8 +671,16 @@ public class Principal extends javax.swing.JFrame {
         vip.setVisible(true);
     }//GEN-LAST:event_VerInfo_promoActionPerformed
 
+    private void BorrarTablasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BorrarTablasActionPerformed
+        ejecutarScript("/Scripts/BorrarTablas.sql", true);
+    }//GEN-LAST:event_BorrarTablasActionPerformed
+
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        Conexion.getInstance().ejecutarSentencia("DROP DATABASE IF EXISTS `help4traveling`", true);
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
+
     private void internalMenuActionPerformed(java.awt.event.ActionEvent evt) {
-        cargarDatos("/Datos/Script-DB2.sql", true);
+        ejecutarScript("/Scripts/Script-DB2.sql", true);
     }
 
     //==========================================================================
@@ -670,7 +700,7 @@ public class Principal extends javax.swing.JFrame {
         cerrarMenu2.setEnabled(true);
     }
 
-    public void cargarDatos(String ruta, Boolean interno) {
+    public void ejecutarScript(String ruta, Boolean interno) {
         System.out.println("Cargando Datos... ");
         //Conexion conexion = new Conexion();
         Connection con = Conexion.getInstance().getConnection();
@@ -714,8 +744,8 @@ public class Principal extends javax.swing.JFrame {
         } catch (IOException ex) {
             /*
         String script = "Script-DB2.sql";
-        String ruta = "/Datos/" + script;
-        cargarDatos(ruta, true);
+        String ruta = "/Scripts/" + script;
+        ejecutarScript(ruta, true);
              */
         }
     }
@@ -764,6 +794,7 @@ public class Principal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuItem BorrarTablas;
     private javax.swing.JMenu ConMenu;
     private javax.swing.JMenu IniMenu;
     private javax.swing.JMenu ModMenu;
@@ -781,9 +812,11 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JFileChooser fc_seleccionar_archivo;
     private javax.swing.JMenu internoMenu;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JPopupMenu.Separator jSeparator2;
     private javax.swing.JPopupMenu.Separator jSeparator3;
+    private javax.swing.JPopupMenu.Separator jSeparator4;
     private javax.swing.JMenuItem modResMenu;
     private javax.swing.JMenuItem modServMenu;
     private javax.swing.JMenuItem opcionesMenu;
