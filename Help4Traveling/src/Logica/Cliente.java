@@ -17,8 +17,8 @@ public class Cliente extends Usuario {
     private Map<Long, Reserva> reservasId;    
     
     //Constructor
-    public Cliente(String nombre, String apellido, String nickname, String correo, Date nacimiento, String imagen) {
-        super(nombre, apellido, nickname, correo, nacimiento, imagen);
+    public Cliente(String nombre, String apellido, String nickname, String password, String correo, Date nacimiento, String imagen) {
+        super(nombre, apellido, nickname, password, correo, nacimiento, imagen);
         this.reservasId = new HashMap<Long, Reserva>();
     }    
     

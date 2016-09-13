@@ -103,7 +103,7 @@ public class ManejadorProveedor {
             rs = st.executeQuery(sql1);
             if (rs.next()) {
                 Date fecha = new Date();
-                p = new Proveedor(rs.getString("nombre"),rs.getString("apellido"),rs.getString("nickname"),rs.getString("email"),fecha,"imagen","empresa","link");
+                p = new Proveedor(rs.getString("nombre"),rs.getString("apellido"),rs.getString("nickname"),rs.getString("password"),rs.getString("email"),fecha,"imagen","empresa","link");
             }            
             rs.close();
             //con.close();
@@ -145,6 +145,7 @@ public class ManejadorProveedor {
 
                 String apellido = rsProveedores.getString("apellido");
                 String nickname = rsProveedores.getString("nickname");
+                String password = rsProveedores.getString("password");
                 String correo = rsProveedores.getString("email");
                 String fecha = rsProveedores.getString("fechaNac");
                 Date nacimiento = new Date(fecha);
@@ -155,7 +156,7 @@ public class ManejadorProveedor {
                 String imagen = "imagen";
                 //String empresa = rsProveedores.getString("Empresa");
                 //String direccion = rsProveedores.getString("Direccion");
-                Proveedor nuevo = new Proveedor(nombre, apellido, nickname, correo, nacimiento, imagen,empresa,link);
+                Proveedor nuevo = new Proveedor(nombre, apellido, nickname, password, correo, nacimiento, imagen,empresa,link);
                 proveedoresNK.put(nickname, nuevo);
             }
             rsProveedores.close();
@@ -177,32 +178,29 @@ public class ManejadorProveedor {
     }           
        
     public String persistirProveedor(Proveedor prov){
-       Conexion conexion;
+       //Conexion conexion;
        System.out.println("Entro a persistir");
+       Connection con = Conexion.getInstance().getConnection();
        //conexion = new Conexion();
        String mensaje = "Se dio de alta al Usuario Proveedor.";
-       Connection con = Conexion.getInstance().getConnection();
-       Statement st;
-       /*char pn = prov.getNombre().charAt(0);
-       char pa = prov.getApellido().charAt(0);
-       StringBuilder sb = new StringBuilder();
-       sb.append(pn);
-       sb.append(pa);
-       String ref = sb.toString();*/
+       //Connection con = conexion.getConnection();
+       Statement st;       
      if (!existeNickname(prov.getNickname())) {  
        String fecha = String.valueOf(prov.getNacimiento().getAno()) + "-" + String.valueOf(prov.getNacimiento().getMes()) + "-" + String.valueOf(prov.getNacimiento().getDia());
        String sqlau = "INSERT INTO help4traveling.usuarios " + 
-             "(nickname,nombre,apellido,email,imagen,fechaNac) " +
-             "VALUES ('" + prov.getNickname() + "','" + prov.getNombre() + "','" + prov.getApellido() + "','" + prov.getCorreo() 
+             "(nickname,nombre,apellido,password,email,imagen,fechaNac) " +
+             "VALUES ('" + prov.getNickname() + "','" + prov.getNombre() + "','" + prov.getApellido() + "','" + prov.getPassword() + "','" + prov.getCorreo() 
              + "','" + prov.getImagen() + "','" + fecha + "')";
        System.out.println(sqlau);
+       String sqlai = "INSERT INTO help4traveling.usuariosimagenes (usuario,imagen) VALUES ('" + prov.getNickname() + "','" + prov.getImagen() + "')";
        String sqlap = "INSERT INTO help4traveling.proveedores (nickname,empresa,link) VALUES ('" + prov.getNickname() + "','" + prov.getEmpresa() + "','" + prov.getLink() + "')";
        try{
            st = con.createStatement();
-           System.out.println("antes de insertar");
+           //System.out.println("antes de insertar");
            st.executeUpdate(sqlau);
+           st.executeUpdate(sqlai);
            st.executeUpdate(sqlap);
-           //con.close();
+           con.close();
            st.close();
            System.out.println("INSERTE :)");
        }
