@@ -57,36 +57,36 @@ public class AltaUsuarioImagen extends javax.swing.JInternalFrame {
         fc_seleccionar_archivo = new javax.swing.JFileChooser();
         jScrollPane1 = new javax.swing.JScrollPane();
         jList1 = new javax.swing.JList<>();
+        jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         tf_nombre = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         tf_apellido = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         tf_nickname = new javax.swing.JTextField();
+        jLabel7 = new javax.swing.JLabel();
+        pf_password = new javax.swing.JPasswordField();
+        jLabel8 = new javax.swing.JLabel();
+        pf_conf_password = new javax.swing.JPasswordField();
         jLabel5 = new javax.swing.JLabel();
         tf_correo = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         sp_dia = new javax.swing.JSpinner();
         sp_mes = new javax.swing.JSpinner();
         sp_anio = new javax.swing.JSpinner();
-        btnSeleccionarImagen = new javax.swing.JButton();
-        chb_proveedor = new javax.swing.JCheckBox();
-        bt_aceptar = new javax.swing.JButton();
-        bt_cancelar = new javax.swing.JButton();
-        jLabel7 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
-        pf_password = new javax.swing.JPasswordField();
-        pf_conf_password = new javax.swing.JPasswordField();
-        tf_empresa = new javax.swing.JTextField();
-        tf_direccion = new javax.swing.JTextField();
-        l_direccion = new javax.swing.JLabel();
-        l_empresa = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
-        jSeparator1 = new javax.swing.JSeparator();
-        jp_foto = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
-        jLabel10 = new javax.swing.JLabel();
+        btnSeleccionarImagen = new javax.swing.JButton();
         btnBorrarImagen = new javax.swing.JButton();
+        jp_foto = new javax.swing.JPanel();
+        jLabel10 = new javax.swing.JLabel();
+        chb_proveedor = new javax.swing.JCheckBox();
+        l_empresa = new javax.swing.JLabel();
+        tf_empresa = new javax.swing.JTextField();
+        l_direccion = new javax.swing.JLabel();
+        tf_direccion = new javax.swing.JTextField();
+        jSeparator1 = new javax.swing.JSeparator();
+        bt_cancelar = new javax.swing.JButton();
+        bt_aceptar = new javax.swing.JButton();
 
         jList1.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
@@ -99,6 +99,8 @@ public class AltaUsuarioImagen extends javax.swing.JInternalFrame {
         setIconifiable(true);
         setTitle("Nuevo Usuario");
         setFrameIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/user-icon.png"))); // NOI18N
+
+        jLabel1.setText("[1] Ingrese los siguientes datos:");
 
         jLabel2.setText("Nombre:");
 
@@ -118,6 +120,16 @@ public class AltaUsuarioImagen extends javax.swing.JInternalFrame {
 
         jLabel4.setText("Nickname:");
 
+        jLabel7.setText("Password:");
+
+        pf_password.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                pf_passwordActionPerformed(evt);
+            }
+        });
+
+        jLabel8.setText("Confirmar:");
+
         jLabel5.setText("Correo:");
 
         tf_correo.addActionListener(new java.awt.event.ActionListener() {
@@ -134,6 +146,8 @@ public class AltaUsuarioImagen extends javax.swing.JInternalFrame {
 
         sp_anio.setModel(new javax.swing.SpinnerNumberModel(1980, 1916, 2016, 1));
 
+        jLabel9.setText("[2] Seleccione una imagen opcional para  el usuario:");
+
         btnSeleccionarImagen.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/search-icon.png"))); // NOI18N
         btnSeleccionarImagen.setText("Seleccionar");
         btnSeleccionarImagen.addActionListener(new java.awt.event.ActionListener() {
@@ -142,60 +156,14 @@ public class AltaUsuarioImagen extends javax.swing.JInternalFrame {
             }
         });
 
-        chb_proveedor.setText("Proveedor");
-        chb_proveedor.addChangeListener(new javax.swing.event.ChangeListener() {
-            public void stateChanged(javax.swing.event.ChangeEvent evt) {
-                chb_proveedorStateChanged(evt);
-            }
-        });
-        chb_proveedor.addActionListener(new java.awt.event.ActionListener() {
+        btnBorrarImagen.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/delete-icon.png"))); // NOI18N
+        btnBorrarImagen.setText("Borrar");
+        btnBorrarImagen.setEnabled(false);
+        btnBorrarImagen.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                chb_proveedorActionPerformed(evt);
+                btnBorrarImagenActionPerformed(evt);
             }
         });
-
-        bt_aceptar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/check-icon.png"))); // NOI18N
-        bt_aceptar.setText("Aceptar");
-        bt_aceptar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                bt_aceptarActionPerformed(evt);
-            }
-        });
-
-        bt_cancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/delete-icon.png"))); // NOI18N
-        bt_cancelar.setText("Cancelar");
-        bt_cancelar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                bt_cancelarActionPerformed(evt);
-            }
-        });
-
-        jLabel7.setText("Password:");
-
-        jLabel8.setText("Confirmar:");
-
-        pf_password.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                pf_passwordActionPerformed(evt);
-            }
-        });
-
-        tf_empresa.setEnabled(false);
-
-        tf_direccion.setEnabled(false);
-        tf_direccion.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                tf_direccionActionPerformed(evt);
-            }
-        });
-
-        l_direccion.setText("Enlace:");
-        l_direccion.setEnabled(false);
-
-        l_empresa.setText("Empresa:");
-        l_empresa.setEnabled(false);
-
-        jLabel1.setText("[1] Ingrese los siguientes datos:");
 
         jp_foto.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -210,16 +178,48 @@ public class AltaUsuarioImagen extends javax.swing.JInternalFrame {
             .addGap(0, 100, Short.MAX_VALUE)
         );
 
-        jLabel9.setText("[2] Seleccione una imagen opcional para  el usuario:");
-
         jLabel10.setText("[3] Determine si el usuario es proveedor:");
 
-        btnBorrarImagen.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/delete-icon.png"))); // NOI18N
-        btnBorrarImagen.setText("Borrar");
-        btnBorrarImagen.setEnabled(false);
-        btnBorrarImagen.addActionListener(new java.awt.event.ActionListener() {
+        chb_proveedor.setText("Proveedor");
+        chb_proveedor.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                chb_proveedorStateChanged(evt);
+            }
+        });
+        chb_proveedor.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnBorrarImagenActionPerformed(evt);
+                chb_proveedorActionPerformed(evt);
+            }
+        });
+
+        l_empresa.setText("Empresa:");
+        l_empresa.setEnabled(false);
+
+        tf_empresa.setEnabled(false);
+
+        l_direccion.setText("Enlace:");
+        l_direccion.setEnabled(false);
+
+        tf_direccion.setEnabled(false);
+        tf_direccion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tf_direccionActionPerformed(evt);
+            }
+        });
+
+        bt_cancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/delete-icon.png"))); // NOI18N
+        bt_cancelar.setText("Cancelar");
+        bt_cancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bt_cancelarActionPerformed(evt);
+            }
+        });
+
+        bt_aceptar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/check-icon.png"))); // NOI18N
+        bt_aceptar.setText("Aceptar");
+        bt_aceptar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bt_aceptarActionPerformed(evt);
             }
         });
 
@@ -273,8 +273,7 @@ public class AltaUsuarioImagen extends javax.swing.JInternalFrame {
                                             .addComponent(btnSeleccionarImagen)
                                             .addComponent(btnBorrarImagen))
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jp_foto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addGap(0, 0, 0))
+                                        .addComponent(jp_foto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(18, 18, 18)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -287,8 +286,7 @@ public class AltaUsuarioImagen extends javax.swing.JInternalFrame {
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                             .addComponent(tf_empresa)
                                             .addComponent(tf_direccion, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                    .addComponent(jLabel10))
-                                .addGap(0, 0, 0)))))
+                                    .addComponent(jLabel10))))))
                 .addGap(12, 12, 12))
         );
 
