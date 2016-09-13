@@ -11,9 +11,9 @@ package Logica;
  */
 public class Conector {
 
-    private static String servidor_original = "jdbc:mysql://localhost:3306/help4traveling?autoReconnect=true&useSSL=false";
+    private static String servidor_original = "jdbc:mysql://localhost:3306/help4traveling?maxReconnects=1&autoReconnect=true&useSSL=false";
     private static String usuario_original = "root";
-    private static String clave_original = "santiagopako";
+    private static String clave_original = "root";
     private static String driver_original = "com.mysql.jdbc.Driver";
 
     private String servidor = servidor_original;
