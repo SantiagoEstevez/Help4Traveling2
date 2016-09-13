@@ -2,7 +2,9 @@ package Logica;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import javax.swing.JOptionPane;
 
 public class Conexion {
@@ -60,5 +62,24 @@ public class Conexion {
 
     public Connection getConnection() {
         return conexion;
+    }
+
+    public void ejecutarSentencia(String sentencia, Boolean update) {
+        Statement st;
+        String sql;
+        sql = sentencia;
+        try {
+            st = conexion.createStatement();
+            if (update) {
+                st.executeUpdate(sql);
+            } else {
+                ResultSet rs;
+                rs = st.executeQuery(sql);
+                rs.close();
+            }
+            st.close();
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+        }
     }
 }

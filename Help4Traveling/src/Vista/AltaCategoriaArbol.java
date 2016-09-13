@@ -88,6 +88,8 @@ public class AltaCategoriaArbol extends javax.swing.JInternalFrame {
 
         setClosable(true);
         setIconifiable(true);
+        setMaximizable(true);
+        setResizable(true);
         setTitle("Alta Categoria");
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         setFrameIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/add-icon.png"))); // NOI18N
@@ -130,7 +132,7 @@ public class AltaCategoriaArbol extends javax.swing.JInternalFrame {
 
         jLabel2.setText("[2] Seleccione el padre de la categoría:");
 
-        jButtonExpandir.setText("Expandir Todas");
+        jButtonExpandir.setText("Expandir");
         jButtonExpandir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonExpandirActionPerformed(evt);
@@ -150,18 +152,21 @@ public class AltaCategoriaArbol extends javax.swing.JInternalFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addComponent(jButtonExpandir)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                        .addComponent(jButtonCancelar)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(jButtonAceptar))
                                     .addComponent(jTextFieldNombre, javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING))
-                                .addGap(0, 4, Short.MAX_VALUE))
-                            .addComponent(jSeparator1))
+                                .addGap(4, 4, 4))
+                            .addComponent(jSeparator1)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jButtonCancelar)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jButtonAceptar)))
                         .addContainerGap())))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButtonExpandir)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -173,13 +178,13 @@ public class AltaCategoriaArbol extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButtonExpandir)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButtonCancelar)
                     .addComponent(jButtonAceptar))
                 .addGap(10, 10, 10))
@@ -199,7 +204,7 @@ public class AltaCategoriaArbol extends javax.swing.JInternalFrame {
         } else {
             padre = jTreeCategorias.getLastSelectedPathComponent().toString();
         }
-        System.out.println("Llegué hasta aca"+padre);
+        System.out.println("Llegué hasta aca" + padre);
         respuesta = IControlador.altaDeCategoria(jTextFieldNombre.getText(), padre);
         JOptionPane.showMessageDialog(null, respuesta);
         this.dispose();
@@ -223,14 +228,14 @@ public class AltaCategoriaArbol extends javax.swing.JInternalFrame {
             for (int i = 0; i < jTreeCategorias.getRowCount(); i++) {
                 jTreeCategorias.expandRow(i);
             }
-            jButtonExpandir.setText("Colapsar Todas");
+            jButtonExpandir.setText("Colapsar");
             expandir = false;
             jButtonExpandir.setIcon(UIManager.getIcon("Tree.closedIcon"));
         } else {
             for (int i = jTreeCategorias.getRowCount(); i > 0; i--) {
                 jTreeCategorias.collapseRow(i);
             }
-            jButtonExpandir.setText("Expandir Todas");
+            jButtonExpandir.setText("Expandir");
             expandir = true;
             jButtonExpandir.setIcon(UIManager.getIcon("Tree.openIcon"));
         }
