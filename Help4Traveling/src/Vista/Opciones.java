@@ -92,6 +92,7 @@ public class Opciones extends javax.swing.JInternalFrame {
         Revertir = new javax.swing.JButton();
         Aplicar = new javax.swing.JButton();
         Probar = new javax.swing.JButton();
+        jSeparator1 = new javax.swing.JSeparator();
 
         setTitle("Opciones");
         setFrameIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/options-icon.png"))); // NOI18N
@@ -214,20 +215,25 @@ public class Opciones extends javax.swing.JInternalFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(Cancelar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(Aceptar)
-                .addContainerGap())
             .addComponent(Opciones)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jSeparator1)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(Cancelar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(Aceptar)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(Opciones)
+                .addComponent(Opciones, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(Aceptar)
                     .addComponent(Cancelar))
@@ -242,6 +248,8 @@ public class Opciones extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_CancelarActionPerformed
 
     private void AceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AceptarActionPerformed
+        sacarDatos();
+        subirDatos();
         this.dispose();
     }//GEN-LAST:event_AceptarActionPerformed
 
@@ -249,32 +257,29 @@ public class Opciones extends javax.swing.JInternalFrame {
         try {
             Connection con = new Conexion().getConnection();
             System.out.println(con);
-            if (con != null) {
+            if ((con != null) && (con.isValid(0))) {
                 JOptionPane.showMessageDialog(this,
                         "Conexión establecida exitosamente.",
                         "Aviso", JOptionPane.INFORMATION_MESSAGE);
                 con.close();
-            } else {
-                JOptionPane.showMessageDialog(this,
-                        "Conexión no establecida.",
-                        "Error", JOptionPane.ERROR_MESSAGE);
             }
+
         } catch (SQLException ex) {
         }
-        imprimirDatos();
+        //imprimirDatos();
     }//GEN-LAST:event_ProbarActionPerformed
 
     private void RevertirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RevertirActionPerformed
         conector.revertir();
         bajarDatos();
         ponerDatos();
-        imprimirDatos();
+        //imprimirDatos();
     }//GEN-LAST:event_RevertirActionPerformed
 
     private void AplicarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AplicarActionPerformed
         sacarDatos();
         subirDatos();
-        imprimirDatos();
+        //imprimirDatos();
     }//GEN-LAST:event_AplicarActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -293,5 +298,6 @@ public class Opciones extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JSeparator jSeparator1;
     // End of variables declaration//GEN-END:variables
 }

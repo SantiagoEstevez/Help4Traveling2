@@ -546,9 +546,9 @@ public class Principal extends javax.swing.JFrame {
         JInternalFrame ventana = escritorio.getSelectedFrame();
         if (ventana != null) {
             ventana.dispose();
+            escritorio.selectFrame(true);
         }
-        System.out.println(escritorio.getAllFrames());
-        if (escritorio.getAllFrames() == null) {
+        if (escritorio.getAllFrames().length == 0) {
             cerrarMenu.setEnabled(false);
             cerrarMenu2.setEnabled(false);
         }
