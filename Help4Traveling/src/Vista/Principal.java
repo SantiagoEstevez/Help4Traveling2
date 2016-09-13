@@ -502,10 +502,10 @@ public class Principal extends javax.swing.JFrame {
 
     private void regUsuMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_regUsuMenuActionPerformed
         // TODO add your handling code here:
-        altaUsuario fAltaUsuario = new altaUsuario();
-        escritorio.add(fAltaUsuario);
-        centrarVentana(fAltaUsuario);
-        fAltaUsuario.setVisible(true);
+        AltaUsuarioImagen au = new AltaUsuarioImagen();
+        escritorio.add(au);
+        centrarVentana(au);
+        au.setVisible(true);
     }//GEN-LAST:event_regUsuMenuActionPerformed
 
     private void RegMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RegMenuActionPerformed
@@ -701,7 +701,6 @@ public class Principal extends javax.swing.JFrame {
     }
 
     public void ejecutarScript(String ruta, Boolean interno) {
-        System.out.println("Cargando Datos... ");
         //Conexion conexion = new Conexion();
         Connection con = Conexion.getInstance().getConnection();
         ScriptRunner runner = new ScriptRunner(con, false, true);
@@ -714,15 +713,15 @@ public class Principal extends javax.swing.JFrame {
             }
             this.setCursor(Cursor.getDefaultCursor());
             JOptionPane.showMessageDialog(this, "El script fue ejecutado correctamente.", "Aviso", JOptionPane.INFORMATION_MESSAGE);
-            System.out.println("Cargando Datos... OK");
+            System.out.println("Corriendo Script... OK");
         } catch (IOException ex) {
-            System.out.println("Cargando Datos... ERROR");
+            System.out.println("Corriendo Script... ERROR");
             Logger
                     .getLogger(Principal.class
                             .getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(this, "El script no pudo cargarse.", "Error", JOptionPane.ERROR_MESSAGE);
         } catch (SQLException ex) {
-            System.out.println("Cargando Datos... ERROR");
+            System.out.println("Corriendo Script... ERROR");
             Logger
                     .getLogger(Principal.class
                             .getName()).log(Level.SEVERE, null, ex);
