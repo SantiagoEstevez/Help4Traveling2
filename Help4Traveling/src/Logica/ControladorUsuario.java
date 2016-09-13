@@ -81,14 +81,14 @@ public class ControladorUsuario implements IControladorUsuario {
     }
 	
     public String altaUsuarioCliente(DtUsuario dtu) {
-        Cliente cli = new Cliente(dtu.getNombre(), dtu.getApellido(), dtu.getNickname(), dtu.getCorreo(), dtu.getNacimiento(), dtu.getImagen());
+        Cliente cli = new Cliente(dtu.getNombre(), dtu.getApellido(), dtu.getNickname(), dtu.getPassword(), dtu.getCorreo(), dtu.getNacimiento(), dtu.getImagen());
 	ManejadorCliente muc = ManejadorCliente.getInstance();
 	//muc.agregarCliente(cli);
         return muc.persistirCliente(cli);
     }
 	
     public String altaUsuarioProveedor(DtUsuario dtu) {
-	Proveedor prov = new Proveedor(dtu.getNombre(), dtu.getApellido(), dtu.getNickname(), dtu.getCorreo(), dtu.getNacimiento(), dtu.getImagen(), dtu.getEmpresa(), dtu.getLink());
+	Proveedor prov = new Proveedor(dtu.getNombre(), dtu.getApellido(), dtu.getNickname(), dtu.getPassword(), dtu.getCorreo(), dtu.getNacimiento(), dtu.getImagen(), dtu.getEmpresa(), dtu.getLink());
 	ManejadorProveedor mup = ManejadorProveedor.getInstance();
 	//mup.agregarProveedor(prov);	
         return mup.persistirProveedor(prov);
@@ -115,42 +115,27 @@ public class ControladorUsuario implements IControladorUsuario {
 	return mensaje;
     }
     
-       public ArrayList<DtUsuario> listarClientes() {
+    public ArrayList<DtUsuario> listarClientes() {
         ManejadorCliente muc = ManejadorCliente.getInstance();
         return muc.listarClientes();
         
     }
-
         
     public ArrayList<DtReserva> listarReservasCliente(DtUsuario dtu){
         ManejadorReserva mr = ManejadorReserva.getInstance();
-        /*ArrayList<DtReserva> reservas = new ArrayList<DtReserva>();
-        if (muc.existeNickname(dtu.getNickname())){
-            reservas = muc.obtenerCliente(dtu.getNickname()).listarReservasCliente();
-        }*/
         return mr.listarReservasCliente(dtu);
     }
-    
-    
-    
+       
     public ArrayList<DtUsuario> listarProveedores() {
         ManejadorProveedor map = ManejadorProveedor.getInstance();
-        return map.listarProveedores();
-        
+        return map.listarProveedores();        
     }
-
         
     public ArrayList<DtServicio> listarServicioProveedor(DtUsuario dtu){
         ManejadorServicio ms = ManejadorServicio.getInstance();
-        /*ArrayList<DtServicio> servicios = new ArrayList<DtServicio>();
-        if (map.existeNickname(dtu.getNickname())){
-            servicios = map.obtenerProveedor(dtu.getNickname()).listarServicios();
-        }*/
         return ms.listarServiciosProveedor(dtu);
     }
-    
-    
-    
+        
     public void verInfoDeProveedor(){
         
     }    

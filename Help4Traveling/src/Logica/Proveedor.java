@@ -24,8 +24,8 @@ public class Proveedor extends Usuario {
     }
 
     //Constructor
-    public Proveedor(String nombre, String apellido, String nickname, String correo, Date nacimiento, String imagen, String empresa, String link) {
-        super(nombre, apellido, nickname, correo, nacimiento, imagen);
+    public Proveedor(String nombre, String apellido, String nickname, String password, String correo, Date nacimiento, String imagen, String empresa, String link) {
+        super(nombre, apellido, nickname, password, correo, nacimiento, imagen);
         this.empresa = empresa;
         this.link = link;
         this.serviciosNom = new HashMap<String,Servicio>();

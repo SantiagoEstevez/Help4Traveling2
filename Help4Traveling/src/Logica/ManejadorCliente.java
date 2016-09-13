@@ -93,7 +93,7 @@ public class ManejadorCliente {
 	return existe;        
     }
 
-    public Cliente obtenerCliente(String nk){
+    /*public Cliente obtenerCliente(String nk){
         
         ResultSet rsCliente;
         Cliente cl = null;
@@ -121,7 +121,7 @@ public class ManejadorCliente {
         }
         return cl; 
         
-    } 
+    } */
         
         //return ((Cliente) clientesNK.get(nk));
 
@@ -144,12 +144,13 @@ public class ManejadorCliente {
                 String nombre = rsClientes.getString("nombre");
                 String apellido = rsClientes.getString("apellido");
                 String nickname = rsClientes.getString("nickname");
+                String password = rsClientes.getString("password");
                 String correo = rsClientes.getString("email");
                 String fecha = rsClientes.getString("fechaNac");
                 Date nacimiento = new Date(fecha);
                 String imagen = "";
                 
-                Cliente nuevo = new Cliente(nombre, apellido, nickname, correo, nacimiento, imagen);
+                Cliente nuevo = new Cliente(nombre, apellido, nickname, password, correo, nacimiento, imagen);
                 clientesNK.put(nickname, nuevo);
             }
             rsClientes.close();
@@ -171,40 +172,34 @@ public class ManejadorCliente {
     }
         
     public String persistirCliente(Cliente cli){
-       //Conexion conexion = new Conexion();
-       Connection con = Conexion.getInstance().getConnection();
-       Statement st;
-       String mensaje = "Se dio de alta al Usuario Cliente.";
-       /*char pn = cli.getNombre().charAt(0);
-       char pa = cli.getApellido().charAt(0);
-       StringBuilder sb = new StringBuilder();
-       sb.append(pn);
-       sb.append(pa);
-       
-       String ref = sb.toString();*/
-    if (!existeNickname(cli.getNickname())) {
-       String fecha = String.valueOf(cli.getNacimiento().getAno()) + "-" + String.valueOf(cli.getNacimiento().getMes()) + "-" + String.valueOf(cli.getNacimiento().getDia());
-       String sqlau = "INSERT INTO help4traveling.usuarios " + 
-             "(nickname,nombre,apellido,email,imagen,fechaNac) " +
-             "VALUES ('" + cli.getNickname() + "','" + cli.getNombre() + "','" + cli.getApellido() + "','" + cli.getCorreo() 
-             + "','" + cli.getImagen() + "','" + fecha + "')";
-       System.out.println(sqlau);
-       String sqlac = "INSERT INTO help4traveling.clientes (nickname) VALUES ('" + cli.getNickname() + "')";
-       try{
-           st = con.createStatement();
-           System.out.println("antes de insertar");
-           st.executeUpdate(sqlau);
-           st.executeUpdate(sqlac);
-           //con.close();
-           st.close();
-           System.out.println("INSERTE :)");
-       }
-	   catch(SQLException e){
-           System.out.println("No pude INSERTAR :(");
-       }       
-    }
-    else mensaje = "ERROR: El Nickname ingresado ya existe.";
-    return mensaje;
+        //Conexion conexion = new Conexion();
+        //Connection con = conexion.getConnection();
+        Connection con = Conexion.getInstance().getConnection();
+        Statement st;
+        String mensaje = "Se dio de alta al Usuario Cliente.";
+        if (!existeNickname(cli.getNickname())) {
+            String fecha = String.valueOf(cli.getNacimiento().getAno()) + "-" + String.valueOf(cli.getNacimiento().getMes()) + "-" + String.valueOf(cli.getNacimiento().getDia());
+            String sqlau = "INSERT INTO help4traveling.usuarios (nickname,nombre,apellido,password,email,imagen,fechaNac) " +
+             "VALUES ('" + cli.getNickname() + "','" + cli.getNombre() + "','" + cli.getApellido() + "','" + cli.getPassword() + "','" + cli.getCorreo() + "','" + cli.getImagen() + "','" + fecha + "')";
+            //System.out.println(sqlau);
+            String sqlac = "INSERT INTO help4traveling.clientes (nickname) VALUES ('" + cli.getNickname() + "')";
+            String sqlai = "INSERT INTO help4traveling.usuariosimagenes (usuario,imagen) VALUES ('" + cli.getNickname() + "','" + cli.getImagen() + "')";
+            try {
+                st = con.createStatement();
+                //System.out.println("antes de insertar");
+                st.executeUpdate(sqlau);
+                st.executeUpdate(sqlac);
+                st.executeUpdate(sqlai);
+                con.close();
+                st.close();
+                System.out.println("INSERTE :)");
+            }
+            catch (SQLException e){
+                System.out.println("No pude INSERTAR :(");
+            }       
+        }
+        else mensaje = "ERROR: El Nickname ingresado ya existe.";
+        return mensaje;
     }
     
  }

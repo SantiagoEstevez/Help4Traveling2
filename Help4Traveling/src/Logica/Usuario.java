@@ -14,6 +14,7 @@ public abstract class Usuario {
     private String apellido;
     private String nickname;
     private String correo;
+    private String password;
     private Date nacimiento;
     private String imagen;
     
@@ -21,11 +22,12 @@ public abstract class Usuario {
         this.nombre = nombre;
     }
 
-    public Usuario(String nombre, String apellido, String nickname, String correo, Date nacimiento, String imagen) {
+    public Usuario(String nombre, String apellido, String nickname, String password, String correo, Date nacimiento, String imagen) {
         this.nombre = nombre;
         this.apellido = apellido;
         this.nickname = nickname;
         this.correo = correo;
+        this.password = password;
         this.nacimiento = nacimiento;
         this.imagen = imagen;
     }
@@ -47,6 +49,10 @@ public abstract class Usuario {
     public String getCorreo() {
         return correo;
     }
+
+    public String getPassword() {
+        return password;
+    }   
     
     public Date getNacimiento() {
         return nacimiento;
@@ -57,7 +63,7 @@ public abstract class Usuario {
     }
     
     public DtUsuario getDtUsuario(){
-        DtUsuario dtu = new DtUsuario(this.nombre,this.apellido,this.nickname,this.correo,this.nacimiento,this.imagen,"","","");
+        DtUsuario dtu = new DtUsuario(this.nombre,this.apellido,this.nickname,this.password,this.correo,this.nacimiento,this.imagen,"","","");
         return dtu;
         //Verificar desdpués
         
@@ -77,6 +83,10 @@ public abstract class Usuario {
         this.nickname = nickname;
     }
 
+    public void setPassword(String password) {
+        this.password = password;
+    }   
+    
     public void setCorreo(String correo) {
         this.correo = correo;
     }
