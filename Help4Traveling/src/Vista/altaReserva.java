@@ -5,39 +5,35 @@
  */
 package Vista;
 
-    import Logica.Fabrica;
-    import Logica.IControladorUsuario;
-    import Logica.ControladorUsuario;
-    import Logica.Date;
-    import Logica.DtUsuario;
-    import Logica.IControladorReserva;
-    import Logica.ManejadorCliente;
-    import Logica.Proveedor;
-    import Logica.Reserva;
-    import Logica.Servicio;
-    import java.awt.Dimension;
-    import java.util.ArrayList;
-    import java.util.HashSet;
-    import java.util.Iterator;
-    import java.util.List;
-    import java.util.Set;
-    import java.util.StringTokenizer;
-    import javax.swing.table.DefaultTableModel;
+import Logica.Date;
+import Logica.DtUsuario;
+import Logica.Fabrica;
+import Logica.IControladorReserva;
+import Logica.IControladorUsuario;
+import Logica.Proveedor;
+import Logica.Reserva;
+import Logica.Servicio;
+import java.awt.Dimension;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.StringTokenizer;
+import javax.swing.table.DefaultTableModel;
 
 public class altaReserva extends javax.swing.JInternalFrame {
+
     private IControladorUsuario IControlador;
     private IControladorReserva IReservas;
     private ArrayList<DtUsuario> listaClientes;
     private static DefaultTableModel modelo;
-    
+
     public altaReserva() {
         initComponents();
-        
+
         //Obtengo interfaces
         Fabrica fabrica = Fabrica.getInstance();
         this.IControlador = fabrica.getIControladorUsuario();
         this.IReservas = fabrica.getIControladorReserva();
-        
+
         //Agregar los usuarios al combo box
         this.listaClientes = this.IControlador.listarClientes();
         Iterator<DtUsuario> i = this.listaClientes.iterator();
@@ -45,18 +41,20 @@ public class altaReserva extends javax.swing.JInternalFrame {
             DtUsuario user = i.next();
             this.clientes.addItem(user.getNickname());
         }
-        
+
         //Setear tabla
         modelo = (DefaultTableModel) items.getModel();
         modelo.setRowCount(0);
-        
+
         //Seteo otros
         total.setText("");
-        clientes.setSelectedIndex(1);
+        if (!listaClientes.isEmpty()) {
+            clientes.setSelectedIndex(1);
+        }
         total.setText("0");
     }
-    
-    public static void agregarItem(Object[] item){
+
+    public static void agregarItem(Object[] item) {
         modelo.addRow(item);
     }
 
@@ -219,16 +217,16 @@ public class altaReserva extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_totalKeyTyped
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-       altaReserva2 listaOfertas = new altaReserva2();
-       Principal.escritorio.add(listaOfertas);
-       Dimension desktopSize = Principal.escritorio.getSize();
-       Dimension FrameSize = listaOfertas.getSize();
-       listaOfertas.setLocation((desktopSize.width - FrameSize.width)/2, (desktopSize.height- FrameSize.height)/2);
-       listaOfertas.setVisible(true);
+        altaReserva2 listaOfertas = new altaReserva2();
+        Principal.escritorio.add(listaOfertas);
+        Dimension desktopSize = Principal.escritorio.getSize();
+        Dimension FrameSize = listaOfertas.getSize();
+        listaOfertas.setLocation((desktopSize.width - FrameSize.width) / 2, (desktopSize.height - FrameSize.height) / 2);
+        listaOfertas.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        for(int i=0;i<modelo.getRowCount();i++){
+        for (int i = 0; i < modelo.getRowCount(); i++) {
             if (!Boolean.valueOf(String.valueOf(modelo.getValueAt(i, 0)))) {
                 modelo.removeRow(i);
             }
@@ -236,52 +234,50 @@ public class altaReserva extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void crearMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_crearMouseClicked
-        
+
         Reserva nReserva = IReservas.nuevaRserva(String.valueOf(clientes.getSelectedItem()), Double.parseDouble(total.getText()));
-        
-        for(int i=0;i<modelo.getRowCount();i++){
-            int cantidad =  Integer.parseInt(String.valueOf(modelo.getValueAt(i, 1)));
-            int dia,mes,ano;
-            
+
+        for (int i = 0; i < modelo.getRowCount(); i++) {
+            int cantidad = Integer.parseInt(String.valueOf(modelo.getValueAt(i, 1)));
+            int dia, mes, ano;
+
             //Fecha inicio
-            StringTokenizer in = new StringTokenizer(String.valueOf(modelo.getValueAt(i, 4)),"-",false);
+            StringTokenizer in = new StringTokenizer(String.valueOf(modelo.getValueAt(i, 4)), "-", false);
             ano = Integer.parseInt(in.nextToken());
             mes = Integer.parseInt(in.nextToken());
             dia = Integer.parseInt(in.nextToken());
-            Date inicio = new Date(dia,mes,ano);
-            
+            Date inicio = new Date(dia, mes, ano);
+
             //Fecha fin
-            StringTokenizer fi = new StringTokenizer(String.valueOf(modelo.getValueAt(i, 5)),"-",false);
+            StringTokenizer fi = new StringTokenizer(String.valueOf(modelo.getValueAt(i, 5)), "-", false);
             ano = Integer.parseInt(fi.nextToken());
             mes = Integer.parseInt(fi.nextToken());
             dia = Integer.parseInt(fi.nextToken());
-            Date fin = new Date(dia,mes,ano);
+            Date fin = new Date(dia, mes, ano);
             String servicio = String.valueOf(modelo.getValueAt(i, 2));
             String proveedor = String.valueOf(modelo.getValueAt(i, 3));
 
             IReservas.agregarItem(nReserva, cantidad, inicio, fin, new Servicio(servicio, new Proveedor(proveedor)));
         }
-       
-        
+
         nReserva.setEstado(Reserva.eEstado.REGISTRADA);
         java.util.Date actual = new java.util.Date();
         String fecha, dia, mes, ano;
         dia = String.valueOf(actual.getDay());
         mes = String.valueOf(actual.getMonth());
-        ano = String.valueOf(actual.getYear()-100);
-        
+        ano = String.valueOf(actual.getYear() - 100);
+
         System.out.println(ano);
-        
+
         ano = "20" + ano;
-        if (mes.length() == 1){
+        if (mes.length() == 1) {
             mes = "0" + mes;
         }
-        if (dia.length() == 1){
+        if (dia.length() == 1) {
             dia = "0" + dia;
         }
-        
-        
-        nReserva.setCreada(new Date(Integer.parseInt(dia),Integer.parseInt(mes),Integer.parseInt(ano)));
+
+        nReserva.setCreada(new Date(Integer.parseInt(dia), Integer.parseInt(mes), Integer.parseInt(ano)));
         IReservas.altaReserva(nReserva);
         this.dispose();
     }//GEN-LAST:event_crearMouseClicked
@@ -289,7 +285,6 @@ public class altaReserva extends javax.swing.JInternalFrame {
     private void crearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_crearActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_crearActionPerformed
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> clientes;

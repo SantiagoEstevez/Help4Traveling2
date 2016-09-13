@@ -42,8 +42,8 @@ public class ManejadorProveedor {
     public boolean existeNickname(String nickname){
         boolean existe = false;
         ResultSet rs;
-        Conexion conex = new Conexion();
-        Connection con = conex.getConnection();
+        //Conexion conexion = new Conexion();
+        Connection con = Conexion.getInstance().getConnection();
         Statement st;
         //String sql1 = "SELECT * FROM mydb.usuarios WHERE Nickname='" + nickname + "' AND Empresa <> NULL AND Link <> NULL)"; 
         String sql1 = "SELECT * FROM help4traveling.usuarios WHERE nickname='" + nickname + "'"; 
@@ -53,7 +53,7 @@ public class ManejadorProveedor {
             if (rs.next())
                 existe = true;
             rs.close();
-            con.close();
+            //con.close();
             st.close();           
         } catch (SQLException e){
             System.out.println("No existe proveedor :(");
@@ -66,8 +66,8 @@ public class ManejadorProveedor {
     public boolean existeCorreo(String correo){
         boolean existe = false;
         ResultSet rs;
-        Conexion conex = new Conexion();
-        Connection con = conex.getConnection();
+        //Conexion conexion = new Conexion();
+        Connection con = Conexion.getInstance().getConnection();
         Statement st;
         String sql1 = "SELECT * FROM help4traveling.usuarios WHERE email='" + correo + "'"; 
         try {
@@ -77,7 +77,7 @@ public class ManejadorProveedor {
                 existe = true;
             rs.close();
             st.close();  
-            con.close();
+            //con.close();
         } catch (SQLException e){
             System.out.println("No existe correo :(");
         }
@@ -93,8 +93,8 @@ public class ManejadorProveedor {
     public Proveedor obtenerProveedor(String nickname){
         ResultSet rs;
         Proveedor p = null;
-        Conexion conex = new Conexion();
-        Connection con = conex.getConnection();
+        //Conexion conexion = new Conexion();
+        Connection con = Conexion.getInstance().getConnection();
         Statement st;
         //String sql1 = "SELECT * FROM mydb.usuarios WHERE Nickname='" + nickname + "' AND Empresa <> NULL AND Link <> NULL)"; 
         String sql1 = "SELECT * FROM help4traveling.usuarios WHERE nickname='" + nickname +"'" ;  
@@ -106,7 +106,7 @@ public class ManejadorProveedor {
                 p = new Proveedor(rs.getString("nombre"),rs.getString("apellido"),rs.getString("nickname"),rs.getString("email"),fecha,"imagen","empresa","link");
             }            
             rs.close();
-            con.close();
+            //con.close();
             st.close();           
         } catch (SQLException e){
             System.out.println("No obtuve proveedor :(");
@@ -121,8 +121,8 @@ public class ManejadorProveedor {
         
         ResultSet rsProveedores;
         
-        conexion = new Conexion();
-        Connection con = conexion.getConnection();
+        //conexion = new Conexion();
+        Connection con = Conexion.getInstance().getConnection();
         Statement st;
               
         sql = "SELECT * FROM help4traveling.usuarios U, help4traveling.proveedores P WHERE U.nickname = P.nickname"; 
@@ -159,7 +159,7 @@ public class ManejadorProveedor {
                 proveedoresNK.put(nickname, nuevo);
             }
             rsProveedores.close();
-            con.close();
+            //con.close();
             st.close();
             
             System.out.println("Usuarios cargados :)");
@@ -179,9 +179,9 @@ public class ManejadorProveedor {
     public String persistirProveedor(Proveedor prov){
        Conexion conexion;
        System.out.println("Entro a persistir");
-       conexion = new Conexion();
+       //conexion = new Conexion();
        String mensaje = "Se dio de alta al Usuario Proveedor.";
-       Connection con = conexion.getConnection();
+       Connection con = Conexion.getInstance().getConnection();
        Statement st;
        /*char pn = prov.getNombre().charAt(0);
        char pa = prov.getApellido().charAt(0);
@@ -202,7 +202,7 @@ public class ManejadorProveedor {
            System.out.println("antes de insertar");
            st.executeUpdate(sqlau);
            st.executeUpdate(sqlap);
-           con.close();
+           //con.close();
            st.close();
            System.out.println("INSERTE :)");
        }

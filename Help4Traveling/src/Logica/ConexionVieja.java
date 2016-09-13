@@ -5,7 +5,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
 
-public class Conexion {
+public class ConexionVieja {
 
     Conector conector = Conector.getInstance();
 
@@ -16,20 +16,7 @@ public class Conexion {
 
     private static Connection conexion;
 
-    private Conexion() {
-        nuevaConexion();
-    }
-
-    public static Conexion getInstance() {
-        return Holder.INSTANCE;
-    }
-
-    private static class Holder {
-
-        private static final Conexion INSTANCE = new Conexion();
-    }
-
-    public void nuevaConexion() {
+    public ConexionVieja() {
         try {
             System.out.print("Conectando al servidor: ");
             Class.forName(driver).newInstance();
@@ -40,7 +27,6 @@ public class Conexion {
                 System.out.println("ERROR.");
                 System.out.println(ex);
                 JOptionPane.showMessageDialog(null, "No se pudo establecer la Conexión.", "Aviso", JOptionPane.ERROR_MESSAGE);
-                conexion.close();
             }
         } catch (Exception e) {
             System.out.println("ERROR.");
@@ -48,17 +34,8 @@ public class Conexion {
         }
     }
 
-    public void cerrarConexion() throws SQLException {
-        if ((conexion != null) && (conexion.isValid(0))) {
-            conexion.close();
-        }
-    }
-
-    public Boolean getEstado() throws SQLException {
-        return ((conexion != null) && (conexion.isValid(0)));
-    }
-
     public Connection getConnection() {
+        System.out.println(conexion);
         return conexion;
     }
 }

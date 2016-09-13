@@ -14,7 +14,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Map;
-import java.util.TreeMap;
 
 /**
  *
@@ -32,7 +31,7 @@ public class DtReserva {
     private Conexion conexion;
     private String sql;
 
-    //Creadores    
+    //Creadores
     public DtReserva(long id, Date creada, Reserva.eEstado estado, double total, String cliente, Map<Integer, ItemReserva> items) {
         this.id = id;
         this.estado = estado;
@@ -48,8 +47,8 @@ public class DtReserva {
     }
 
     public Reserva.eEstado getEstado() {
-        conexion = new Conexion();
-        Connection con = conexion.getConnection();
+        ////conexion = new Conexion();
+        Connection con = Conexion.getInstance().getConnection();
         Statement st;
         ResultSet rsEstado;
         String estado = null;
@@ -64,7 +63,7 @@ public class DtReserva {
             estado = rsEstado.getString("estado");
 
             rsEstado.close();
-            con.close();
+            //con.close();
             st.close();
         } catch (SQLException e) {
             System.out.println("No tiene Estado :(");

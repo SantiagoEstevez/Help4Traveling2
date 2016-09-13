@@ -672,8 +672,8 @@ public class Principal extends javax.swing.JFrame {
 
     public void cargarDatos(String ruta, Boolean interno) {
         System.out.println("Cargando Datos... ");
-        Conexion conexion = new Conexion();
-        Connection con = conexion.getConnection();
+        //Conexion conexion = new Conexion();
+        Connection con = Conexion.getInstance().getConnection();
         ScriptRunner runner = new ScriptRunner(con, false, true);
         try {
             this.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));

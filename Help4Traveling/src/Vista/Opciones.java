@@ -18,7 +18,7 @@ import javax.swing.JOptionPane;
 public class Opciones extends javax.swing.JInternalFrame {
 
     private Conector conector = Conector.getInstance();
-    private Conexion conexion;
+    private Conexion conexion = Conexion.getInstance();
     private String servidor;
     private String usuario;
     private String clave;
@@ -31,6 +31,10 @@ public class Opciones extends javax.swing.JInternalFrame {
         initComponents();
         bajarDatos();
         ponerDatos();
+        try {
+            Cancelar.setEnabled(!conexion.getEstado());
+        } catch (SQLException ex) {
+        }
     }
 
     public void bajarDatos() {
@@ -80,7 +84,7 @@ public class Opciones extends javax.swing.JInternalFrame {
         Cancelar = new javax.swing.JButton();
         Aceptar = new javax.swing.JButton();
         Opciones = new javax.swing.JTabbedPane();
-        Conexion = new javax.swing.JPanel();
+        PanelConexion = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         Servidor = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
@@ -92,6 +96,7 @@ public class Opciones extends javax.swing.JInternalFrame {
         Revertir = new javax.swing.JButton();
         Aplicar = new javax.swing.JButton();
         Probar = new javax.swing.JButton();
+        Cerrar = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
 
         setTitle("Opciones");
@@ -154,62 +159,73 @@ public class Opciones extends javax.swing.JInternalFrame {
             }
         });
 
-        javax.swing.GroupLayout ConexionLayout = new javax.swing.GroupLayout(Conexion);
-        Conexion.setLayout(ConexionLayout);
-        ConexionLayout.setHorizontalGroup(
-            ConexionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(ConexionLayout.createSequentialGroup()
-                .addGroup(ConexionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(ConexionLayout.createSequentialGroup()
+        Cerrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/delete-icon.png"))); // NOI18N
+        Cerrar.setText("Cerrar");
+        Cerrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CerrarActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout PanelConexionLayout = new javax.swing.GroupLayout(PanelConexion);
+        PanelConexion.setLayout(PanelConexionLayout);
+        PanelConexionLayout.setHorizontalGroup(
+            PanelConexionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(PanelConexionLayout.createSequentialGroup()
+                .addGroup(PanelConexionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(PanelConexionLayout.createSequentialGroup()
                         .addGap(12, 12, 12)
-                        .addGroup(ConexionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(PanelConexionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel2)
                             .addComponent(jLabel1)
                             .addComponent(jLabel3)
                             .addComponent(jLabel4))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(ConexionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(PanelConexionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(Usuario)
                             .addComponent(Servidor, javax.swing.GroupLayout.PREFERRED_SIZE, 1, Short.MAX_VALUE)
                             .addComponent(Clave)
                             .addComponent(Driver, javax.swing.GroupLayout.DEFAULT_SIZE, 317, Short.MAX_VALUE)))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, ConexionLayout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelConexionLayout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(Revertir)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(Aplicar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(Cerrar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(Probar)))
                 .addContainerGap())
         );
-        ConexionLayout.setVerticalGroup(
-            ConexionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(ConexionLayout.createSequentialGroup()
+        PanelConexionLayout.setVerticalGroup(
+            PanelConexionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(PanelConexionLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(ConexionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(PanelConexionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(Servidor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(ConexionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(PanelConexionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(Usuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(ConexionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(PanelConexionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(Clave, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(ConexionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(PanelConexionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(Driver, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 42, Short.MAX_VALUE)
-                .addGroup(ConexionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGap(18, 18, 18)
+                .addGroup(PanelConexionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(Probar)
                     .addComponent(Revertir)
-                    .addComponent(Aplicar))
+                    .addComponent(Aplicar)
+                    .addComponent(Cerrar))
                 .addContainerGap())
         );
 
-        Opciones.addTab("Conexión", Conexion);
+        Opciones.addTab("Conexión", PanelConexion);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -255,13 +271,19 @@ public class Opciones extends javax.swing.JInternalFrame {
 
     private void ProbarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ProbarActionPerformed
         try {
-            Connection con = new Conexion().getConnection();
-            System.out.println(con);
-            if ((con != null) && (con.isValid(0))) {
-                JOptionPane.showMessageDialog(this,
-                        "Conexión establecida exitosamente.",
-                        "Aviso", JOptionPane.INFORMATION_MESSAGE);
-                con.close();
+            if (!Conexion.getInstance().getEstado()) {
+                Conexion.getInstance().nuevaConexion();
+            }
+            Connection con = Conexion.getInstance().getConnection();
+            if (con != null) {
+                System.out.println(con);
+                if ((con != null) && (con.isValid(0))) {
+                    JOptionPane.showMessageDialog(this,
+                            "Conexión establecida exitosamente.",
+                            "Aviso", JOptionPane.INFORMATION_MESSAGE);
+                    //con.close();
+                    Cerrar.setEnabled(true);
+                }
             }
 
         } catch (SQLException ex) {
@@ -282,14 +304,24 @@ public class Opciones extends javax.swing.JInternalFrame {
         //imprimirDatos();
     }//GEN-LAST:event_AplicarActionPerformed
 
+    private void CerrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CerrarActionPerformed
+        try {
+            Conexion.getInstance().cerrarConexion();
+        } catch (SQLException ex) {
+        }
+        Cerrar.setEnabled(false);
+        System.out.println("Conexión cerrada.");
+    }//GEN-LAST:event_CerrarActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Aceptar;
     private javax.swing.JButton Aplicar;
     private javax.swing.JButton Cancelar;
+    private javax.swing.JButton Cerrar;
     private javax.swing.JPasswordField Clave;
-    private javax.swing.JPanel Conexion;
     private javax.swing.JTextField Driver;
     private javax.swing.JTabbedPane Opciones;
+    private javax.swing.JPanel PanelConexion;
     private javax.swing.JButton Probar;
     private javax.swing.JButton Revertir;
     private javax.swing.JTextField Servidor;

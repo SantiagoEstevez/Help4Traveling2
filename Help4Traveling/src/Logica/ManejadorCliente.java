@@ -44,8 +44,8 @@ public class ManejadorCliente {
     public boolean existeNickname(String nickname){
         boolean existe = false;
         ResultSet rs;
-        Conexion conex = new Conexion();
-        Connection con = conex.getConnection();
+        //Conexion conexion = new Conexion();
+        Connection con = Conexion.getInstance().getConnection();
         Statement st;
         String sql1 = "SELECT * FROM help4traveling.usuarios WHERE nickname='" + nickname + "'"; 
         try {
@@ -54,7 +54,7 @@ public class ManejadorCliente {
             if (rs.next())
                 existe = true;
             rs.close();
-            con.close();
+            //con.close();
             st.close();           
         } catch (SQLException e){
             System.out.println("No exite cliente :(");
@@ -69,8 +69,8 @@ public class ManejadorCliente {
     public boolean existeCorreo(String correo){
         boolean existe = false;
         ResultSet rs;
-        Conexion conex = new Conexion();
-        Connection con = conex.getConnection();
+        //Conexion conexion = new Conexion();
+        Connection con = Conexion.getInstance().getConnection();
         Statement st;
         String sql1 = "SELECT * FROM help4traveling.usuarios WHERE email='" + correo + "'"; 
         try {
@@ -80,7 +80,7 @@ public class ManejadorCliente {
                 existe = true;
             rs.close();
             st.close();  
-            con.close();
+            //con.close();
         } catch (SQLException e){
             System.out.println("No existe correo :(");
         }
@@ -98,8 +98,8 @@ public class ManejadorCliente {
         ResultSet rsCliente;
         Cliente cl = null;
         
-        conexion = new Conexion();
-        Connection con = conexion.getConnection();
+        //conexion = new Conexion();
+        Connection con = Conexion.getInstance().getConnection();
         Statement st;
         
         sql = "SELECT * FROM help4traveling.usuarios WHERE Nick='" + nk + "'"; 
@@ -113,7 +113,7 @@ public class ManejadorCliente {
 
         
             rsCliente.close();
-            con.close();
+            //con.close();
             st.close();
            
         } catch(SQLException e){
@@ -130,8 +130,8 @@ public class ManejadorCliente {
     public ArrayList<DtUsuario> listarClientes() {
         ResultSet rsClientes;
         
-        conexion = new Conexion();
-        Connection con = conexion.getConnection();
+        //conexion = new Conexion();
+        Connection con = Conexion.getInstance().getConnection();
         Statement st;
        
         sql = "SELECT * FROM help4traveling.usuarios WHERE nickname in (SELECT nickname FROM help4traveling.clientes)";
@@ -153,7 +153,7 @@ public class ManejadorCliente {
                 clientesNK.put(nickname, nuevo);
             }
             rsClientes.close();
-            con.close();
+            //con.close();
             st.close();
             
             System.out.println("Usuarios cargados :)");
@@ -171,8 +171,8 @@ public class ManejadorCliente {
     }
         
     public String persistirCliente(Cliente cli){
-       Conexion conexion = new Conexion();
-       Connection con = conexion.getConnection();
+       //Conexion conexion = new Conexion();
+       Connection con = Conexion.getInstance().getConnection();
        Statement st;
        String mensaje = "Se dio de alta al Usuario Cliente.";
        /*char pn = cli.getNombre().charAt(0);
@@ -195,7 +195,7 @@ public class ManejadorCliente {
            System.out.println("antes de insertar");
            st.executeUpdate(sqlau);
            st.executeUpdate(sqlac);
-           con.close();
+           //con.close();
            st.close();
            System.out.println("INSERTE :)");
        }

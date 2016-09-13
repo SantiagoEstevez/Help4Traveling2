@@ -35,8 +35,8 @@ public class ManejadorReserva {
 
     //Funciones agregadas
     public void altaReserva(Reserva nueva) {
-        conexion = new Conexion();
-        Connection con = conexion.getConnection();
+        //conexion = new Conexion();
+        Connection con = Conexion.getInstance().getConnection();
         Statement st;
         ResultSet rsId;
         String sid;
@@ -69,7 +69,7 @@ public class ManejadorReserva {
 
                             st.executeUpdate(sql);
                         }
-                        con.close();
+                        //con.close();
                         st.close();
                         System.out.println("Reserva creada con exito :)");
                     }
@@ -85,8 +85,8 @@ public class ManejadorReserva {
     }
 
     public void cancelarReserva(long id) {
-        conexion = new Conexion();
-        Connection con = conexion.getConnection();
+        //conexion = new Conexion();
+        Connection con = Conexion.getInstance().getConnection();
         Statement st;
 
         sql = "DELETE FROM ReservasItems "
@@ -97,7 +97,7 @@ public class ManejadorReserva {
             st = con.createStatement();
             System.out.print("Eliminando items...");
             st.executeUpdate(sql);
-            //con.close();
+            ////con.close();
             st.close();
             System.out.println("OK");
 
@@ -110,7 +110,7 @@ public class ManejadorReserva {
             st = con.createStatement();
             System.out.print("Eliminando reserva...");
             st.executeUpdate(sql);
-            con.close();
+            //con.close();
             st.close();
             System.out.println("OK");
 
@@ -154,8 +154,8 @@ public class ManejadorReserva {
     public void modificarEstadoReserva(Integer reserva, String estado) {
         //reservasId.get(reserva).setEstado(Logica.Reserva.eEstado.valueOf(estado));
 
-        conexion = new Conexion();
-        Connection con = conexion.getConnection();
+        //conexion = new Conexion();
+        Connection con = Conexion.getInstance().getConnection();
         Statement st;
 
         sql = "UPDATE Reservas "
@@ -167,7 +167,7 @@ public class ManejadorReserva {
             st = con.createStatement();
             System.out.print("Modificando estado...");
             st.executeUpdate(sql);
-            con.close();
+            //con.close();
             st.close();
             System.out.println("OK");
 
@@ -216,8 +216,8 @@ public class ManejadorReserva {
     }
 
     public ArrayList<DtReserva> listarReservasCliente(DtUsuario user) {
-        conexion = new Conexion();
-        Connection con = conexion.getConnection();
+        //conexion = new Conexion();
+        Connection con = Conexion.getInstance().getConnection();
         Statement st;
         ResultSet rsReservasCliente;
         sql = "SELECT * FROM help4traveling.reservas WHERE cliente='" + user.getNickname() + "'";
@@ -243,7 +243,7 @@ public class ManejadorReserva {
 
             }
             rsReservasCliente.close();
-            con.close();
+            //con.close();
             st.close();
 
         } catch (SQLException e) {
@@ -265,8 +265,8 @@ public class ManejadorReserva {
     public void setReservasDB() {
         ResultSet rsReservas;
 
-        conexion = new Conexion();
-        Connection con = conexion.getConnection();
+        //conexion = new Conexion();
+        Connection con = Conexion.getInstance().getConnection();
         Statement st;
 
         if (con != null) {
@@ -297,7 +297,7 @@ public class ManejadorReserva {
                 }
                 System.out.println();
                 rsReservas.close();
-                con.close();
+                //con.close();
                 st.close();
 
                 System.out.println("Reservas cargadas!");
@@ -313,8 +313,8 @@ public class ManejadorReserva {
         ResultSet rsItems;
         itemsId.clear();
 
-        conexion = new Conexion();
-        Connection con = conexion.getConnection();
+        //conexion = new Conexion();
+        Connection con = Conexion.getInstance().getConnection();
         Statement st;
 
         if (con != null) {
@@ -354,7 +354,7 @@ public class ManejadorReserva {
                 }
                 System.out.println();
                 rsItems.close();
-                con.close();
+                //con.close();
                 st.close();
 
                 System.out.println("Items cargados!");

@@ -22,6 +22,7 @@ public class Help4Traveling {
         Principal p = new Principal();
         p.setLocationRelativeTo(null);
         p.setVisible(true);
+        Conexion.getInstance();
 
         pruebas();
     }

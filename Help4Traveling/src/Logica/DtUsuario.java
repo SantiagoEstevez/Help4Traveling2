@@ -73,8 +73,9 @@ public class DtUsuario {
 
     public Date getNacimiento() {
         return nacimiento;
-        /*conexion = new Conexion();
-       Connection con = conexion.getConnection();
+        /*//conexion = new Conexion();
+       Connection con = Conexion.getInstance().getConnection();
+        if (con != null) {
        Statement st;
        ResultSet rsFecha;
        String fechanac = null;
@@ -88,7 +89,7 @@ public class DtUsuario {
             fechanac = rsFecha.getString("fechaNac");
             
             rsFecha.close();
-            con.close();
+            //con.close();
             st.close();           
         } catch (SQLException e){
             System.out.println("No tiene Fecha :(");
@@ -109,8 +110,9 @@ public class DtUsuario {
 
     public String getEmpresa() {
         return empresa;
-        /*conexion = new Conexion();
-       Connection con = conexion.getConnection();
+        /*//conexion = new Conexion();
+       Connection con = Conexion.getInstance().getConnection();
+        if (con != null) {
        Statement st;
        ResultSet rsEmpresa;
        String empresaprov = null;
@@ -124,7 +126,7 @@ public class DtUsuario {
             empresaprov = rsEmpresa.getString("empresa");
             
             rsEmpresa.close();
-            con.close();
+            //con.close();
             st.close();           
         } catch (SQLException e){
             System.out.println("No tiene Empresa :(");
@@ -137,8 +139,9 @@ public class DtUsuario {
 
     public String getLink() {
         return link;
-        /*conexion = new Conexion();
-       Connection con = conexion.getConnection();
+        /*//conexion = new Conexion();
+       Connection con = Conexion.getInstance().getConnection();
+        if (con != null) {
        Statement st;
        ResultSet rsLink;
        String empresalink = null;
@@ -152,7 +155,7 @@ public class DtUsuario {
             empresalink = rsLink.getString("link");
             
             rsLink.close();
-            con.close();
+            //con.close();
             st.close();           
         } catch (SQLException e){
             System.out.println("No tiene Link :(");

@@ -49,8 +49,8 @@ public class ManejadorServicio {
     public boolean existeServicio(String nombre) {
         boolean existe = false;
         ResultSet rs;
-        Conexion conex = new Conexion();
-        Connection con = conex.getConnection();
+        //Conexion conexion = new Conexion();
+        Connection con = Conexion.getInstance().getConnection();
         Statement st;
         String sql1 = "SELECT * FROM help4traveling.servicios WHERE nombre='" + nombre + "'";
         try {
@@ -60,7 +60,7 @@ public class ManejadorServicio {
                 existe = true;
             }
             rs.close();
-            con.close();
+            //con.close();
             st.close();
         } catch (SQLException e) {
             System.out.println("No exite servicio :(");
@@ -77,8 +77,8 @@ public class ManejadorServicio {
     public Servicio obtenerServicio(String nk) {
 
         ResultSet rsServicio;
-        Conexion conex = new Conexion();
-        Connection con = conex.getConnection();
+        //Conexion conexion = new Conexion();
+        Connection con = Conexion.getInstance().getConnection();
         Statement st;
         String sql1 = "SELECT * FROM help4traveling.servicios S inner join help4traveling.servicioscategorias SC on S.nombre = SC.servicio WHERE S.nombre ='" + nk + "'";
         Servicio nuevo = new Servicio();
@@ -122,7 +122,7 @@ public class ManejadorServicio {
             nuevo.setPrecio(precioint);
 
             rsServicio.close();
-            con.close();
+            //con.close();
             st.close();
         } catch (SQLException e) {
             System.out.println("No existe servicio :(");
@@ -136,8 +136,8 @@ public class ManejadorServicio {
         ResultSet rsServicio;
 
         DtServicio nuevo = null;
-        conexion = new Conexion();
-        Connection con = conexion.getConnection();
+        //conexion = new Conexion();
+        Connection con = Conexion.getInstance().getConnection();
         Statement st;
 
         sql = "SELECT * FROM help4traveling.servicios WHERE nombre='" + nombre + "' and proveedor='" + Proveedor + "'";
@@ -158,7 +158,7 @@ public class ManejadorServicio {
 
             }
             rsServicio.close();
-            con.close();
+            //con.close();
             st.close();
 
         } catch (SQLException e) {
@@ -171,8 +171,8 @@ public class ManejadorServicio {
         ResultSet rsServicios;
         ResultSet rsServImagenes;
         ResultSet rsServCategorias;
-        conexion = new Conexion();
-        Connection con = conexion.getConnection();
+        //conexion = new Conexion();
+        Connection con = Conexion.getInstance().getConnection();
         Statement st, sti, stc;
         String sql, sqlImagenes, sqlCategorias;
         List<DtServicio> listaServicios = new LinkedList<DtServicio>();
@@ -219,7 +219,7 @@ public class ManejadorServicio {
                 listaServicios.add(nuevo);
             }
             rsServicios.close();
-            con.close();
+            //con.close();
             st.close();
 
             System.out.println("Servicios cargados :)");
@@ -231,8 +231,8 @@ public class ManejadorServicio {
 
     public List<String> listarServiciosCategoria(String categoria) {
         ResultSet rsServicios;
-        conexion = new Conexion();
-        Connection con = conexion.getConnection();
+        //conexion = new Conexion();
+        Connection con = Conexion.getInstance().getConnection();
         Statement st;
         String sql;
 
@@ -257,8 +257,8 @@ public class ManejadorServicio {
     }
 
     public ArrayList<DtServicio> listarServiciosProveedor(DtUsuario user) {
-        conexion = new Conexion();
-        Connection con = conexion.getConnection();
+        //conexion = new Conexion();
+        Connection con = Conexion.getInstance().getConnection();
         Statement st;
         ResultSet rsServiciosProveedor;
         sql = "SELECT * FROM help4traveling.servicios WHERE proveedor= '" + user.getNickname() + "'";
@@ -276,7 +276,7 @@ public class ManejadorServicio {
                 listaServicios.add(ser);
             }
             rsServiciosProveedor.close();
-            con.close();
+            //con.close();
             st.close();
 
         } catch (SQLException e) {
@@ -287,8 +287,8 @@ public class ManejadorServicio {
     }
 
     public List<DtServicio> listarServiciosPromocion(DtPromocion promo) {
-        conexion = new Conexion();
-        Connection con = conexion.getConnection();
+        //conexion = new Conexion();
+        Connection con = Conexion.getInstance().getConnection();
         Statement st;
         ResultSet rsServiciosProveedor;
         sql = "SELECT * FROM help4traveling.servicios WHERE proveedor= '" + promo.getNombre() + "'";
@@ -306,7 +306,7 @@ public class ManejadorServicio {
                 listaServicios.add(ser);
             }
             rsServiciosProveedor.close();
-            con.close();
+            //con.close();
             st.close();
 
         } catch (SQLException e) {
@@ -328,8 +328,8 @@ public class ManejadorServicio {
     }
 
     public String persistirServicio(DtServicio serv) {
-        conexion = new Conexion();
-        Connection con = conexion.getConnection();
+        //conexion = new Conexion();
+        Connection con = Conexion.getInstance().getConnection();
         Statement st;
         String mensaje = "Se dio de alta al Servicio.";
         System.out.println(serv.getNombre());
@@ -341,7 +341,7 @@ public class ManejadorServicio {
                 st = con.createStatement();
                 //System.out.println("antes de insertar");
                 st.executeUpdate(sql);
-                //con.close();
+                ////con.close();
                 st.close();
                 System.out.println("INSERTE en oferta:)");
             } catch (SQLException e) {
@@ -354,7 +354,7 @@ public class ManejadorServicio {
                 st = con.createStatement();
                 //System.out.println("antes de insertar");
                 st.executeUpdate(sql);
-                //con.close();
+                ////con.close();
                 st.close();
                 System.out.println("INSERTE en servicio:)");
             } catch (SQLException e) {
@@ -368,7 +368,7 @@ public class ManejadorServicio {
                     st = con.createStatement();
                     st.executeUpdate(sql);
                     st.close();
-                    //con.close();
+                    ////con.close();
                     System.out.println("INSERTE :)");
                 } catch (SQLException e) {
                     System.out.println("No pude INSERTAR :(");
@@ -386,7 +386,7 @@ public class ManejadorServicio {
                     System.out.println("antes de categoria");
                     st.executeUpdate(sql);
                     st.close();
-                    //con.close();
+                    ////con.close();
                     System.out.println("INSERTE :)");
                 } catch (SQLException e) {
                     System.out.println("No pude INSERTAR :(");
@@ -400,8 +400,8 @@ public class ManejadorServicio {
     }
     
     public String persistirActualizacionServicio(DtServicio serv){
-        conexion = new Conexion();
-        Connection con = conexion.getConnection();
+        //conexion = new Conexion();
+        Connection con = Conexion.getInstance().getConnection();
         Statement st;
         String mensaje = "Se realizó la actualización del Servicio.";
         System.out.println(serv.getNombre());
@@ -414,7 +414,7 @@ public class ManejadorServicio {
         try {
             st = con.createStatement();
             st.executeUpdate(sql);
-            //con.close();
+            ////con.close();
             st.close();
             System.out.println("ACTUALICE en servicio:)");
         } 
@@ -427,7 +427,7 @@ public class ManejadorServicio {
             st = con.createStatement();
             st.executeUpdate(sql);
             st.close();
-            //con.close();
+            ////con.close();
             System.out.println("ELIMINE :)");
         } 
         catch (SQLException e) {
@@ -442,7 +442,7 @@ public class ManejadorServicio {
                 st = con.createStatement();
                 st.executeUpdate(sql);
                 st.close();
-                //con.close();
+                ////con.close();
                 System.out.println("INSERTE :)");
             } 
             catch (SQLException e) {
@@ -455,7 +455,7 @@ public class ManejadorServicio {
             st = con.createStatement();
             st.executeUpdate(sql);
             st.close();
-            //con.close();
+            ////con.close();
             System.out.println("ELIMINE :)");
         } 
         catch (SQLException e) {
@@ -472,7 +472,7 @@ public class ManejadorServicio {
                 System.out.println("antes de categoria");
                 st.executeUpdate(sql);
                 st.close();
-                //con.close();
+                ////con.close();
                 System.out.println("INSERTE :)");
             } 
             catch (SQLException e) {
@@ -483,8 +483,8 @@ public class ManejadorServicio {
     }
 
     public String persistirPromo(DtPromocion promo) {
-        conexion = new Conexion();
-        Connection con = conexion.getConnection();
+        //conexion = new Conexion();
+        Connection con = Conexion.getInstance().getConnection();
         Statement st;
         String mensaje = "Almacenando Promo: OK";
         System.out.println(promo.getNombre());
@@ -495,7 +495,7 @@ public class ManejadorServicio {
             try {
                 st = con.createStatement();
                 st.executeUpdate(sql);
-                //con.close();
+                ////con.close();
                 st.close();
                 System.out.println("INSERTE en oferta:)");
             } catch (SQLException e) {
@@ -507,7 +507,7 @@ public class ManejadorServicio {
             try {
                 st = con.createStatement();
                 st.executeUpdate(sql);
-                //con.close();
+                ////con.close();
                 st.close();
                 System.out.println("INSERTE en promocion:)");
             } catch (SQLException e) {
@@ -524,7 +524,7 @@ public class ManejadorServicio {
                     st = con.createStatement();
                     st.executeUpdate(sql);
                     st.close();
-                    //con.close();
+                    ////con.close();
                     System.out.println("INSERTE :)");
                 } catch (SQLException e) {
                     System.out.println("No pude INSERTAR :(");
@@ -544,8 +544,8 @@ public class ManejadorServicio {
 
         ResultSet rsPromociones;
 
-        conexion = new Conexion();
-        Connection con = conexion.getConnection();
+        //conexion = new Conexion();
+        Connection con = Conexion.getInstance().getConnection();
         Statement st;
 
         sql = "SELECT * FROM help4traveling.promociones";
@@ -569,7 +569,7 @@ public class ManejadorServicio {
                 listaResult.add(nuevo);
             }
             rsPromociones.close();
-            con.close();
+            //con.close();
             st.close();
 
             System.out.println("promociones  cargadas :)");
@@ -585,8 +585,8 @@ public class ManejadorServicio {
         ResultSet rsPromociones;
 
         DtPromocion nuevo = null;
-        conexion = new Conexion();
-        Connection con = conexion.getConnection();
+        //conexion = new Conexion();
+        Connection con = Conexion.getInstance().getConnection();
         Statement st;
 
         sql = "SELECT * FROM help4traveling.promociones WHERE nombre='" + nombre + "' and proveedor='" + Proevedor + "'";
@@ -606,7 +606,7 @@ public class ManejadorServicio {
 
             }
             rsPromociones.close();
-            con.close();
+            //con.close();
             st.close();
 
         } catch (SQLException e) {
@@ -621,8 +621,8 @@ public class ManejadorServicio {
 
         ResultSet rsPromociones;
 
-        conexion = new Conexion();
-        Connection con = conexion.getConnection();
+        //conexion = new Conexion();
+        Connection con = Conexion.getInstance().getConnection();
         Statement st;
 
         sql = "SELECT * FROM help4traveling.promocionesservicios WHERE promocion='" + nombpro + "' and proveedorPromocion='" + proev + "'";
@@ -639,7 +639,7 @@ public class ManejadorServicio {
                 listaResult.add(resultado);
             }
             rsPromociones.close();
-            con.close();
+            //con.close();
             st.close();
 
             System.out.println("promociones  cargadas :)");
