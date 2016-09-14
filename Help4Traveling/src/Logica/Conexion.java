@@ -86,21 +86,10 @@ public class Conexion {
     public Boolean probarConexion() {
         Boolean probada = false;
         cerrarConexion();
-        try {
-            abrirConexion();
-            if (getEstado()) {
-                System.out.println(con);
-                if ((con != null) && (con.isValid(0))) {
-                    JOptionPane.showMessageDialog(null,
-                            "Conexión probada exitosamente.",
-                            "Aviso", JOptionPane.INFORMATION_MESSAGE);
-                    probada = true;
-                    Conexion.getInstance().cerrarConexion();
-                }
-            }
-
-        } catch (SQLException e) {
-            System.err.println(e);
+        abrirConexion();
+        if (getEstado()) {
+            probada = true;
+            cerrarConexion();
         }
         return probada;
     }

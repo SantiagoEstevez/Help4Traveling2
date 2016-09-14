@@ -7,6 +7,7 @@ package Vista;
 
 import Logica.Conector;
 import Logica.Conexion;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -20,6 +21,10 @@ public class Opciones extends javax.swing.JInternalFrame {
     private String usuario;
     private String clave;
     private String driver;
+    private String servidorInicial;
+    private String usuarioInicial;
+    private String claveInicial;
+    private String driverInicial;
 
     /**
      * Creates new form Opciones
@@ -28,6 +33,7 @@ public class Opciones extends javax.swing.JInternalFrame {
         initComponents();
         bajarDatos();
         ponerDatos();
+        guardarDatos();
         //Cerrar.setEnabled(!conexion.getEstado());
     }
 
@@ -52,11 +58,25 @@ public class Opciones extends javax.swing.JInternalFrame {
         driver = Driver.getText();
     }
 
+    public void guardarDatos() {
+        servidorInicial = Servidor.getText();
+        usuarioInicial = Usuario.getText();
+        claveInicial = Clave.getText();
+        driverInicial = Driver.getText();
+    }
+
     public void subirDatos() {
         conector.setServidor(servidor);
         conector.setUsuario(usuario);
         conector.setClave(clave);
         conector.setDriver(driver);
+    }
+
+    public void recuperarDatos() {
+        conector.setServidor(servidorInicial);
+        conector.setUsuario(usuarioInicial);
+        conector.setClave(claveInicial);
+        conector.setDriver(driverInicial);
     }
 
     public void imprimirDatos() {
@@ -75,6 +95,7 @@ public class Opciones extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        Aplicar = new javax.swing.JButton();
         Cerrar = new javax.swing.JButton();
         Cancelar = new javax.swing.JButton();
         Aceptar = new javax.swing.JButton();
@@ -89,9 +110,16 @@ public class Opciones extends javax.swing.JInternalFrame {
         jLabel4 = new javax.swing.JLabel();
         Driver = new javax.swing.JTextField();
         Revertir = new javax.swing.JButton();
-        Aplicar = new javax.swing.JButton();
         Probar = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
+
+        Aplicar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/edit-icon.png"))); // NOI18N
+        Aplicar.setText("Aplicar");
+        Aplicar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                AplicarActionPerformed(evt);
+            }
+        });
 
         Cerrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/delete-icon.png"))); // NOI18N
         Cerrar.setText("Cerrar");
@@ -145,14 +173,6 @@ public class Opciones extends javax.swing.JInternalFrame {
             }
         });
 
-        Aplicar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/edit-icon.png"))); // NOI18N
-        Aplicar.setText("Aplicar");
-        Aplicar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                AplicarActionPerformed(evt);
-            }
-        });
-
         Probar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/db-icon.png"))); // NOI18N
         Probar.setText("Probar");
         Probar.addActionListener(new java.awt.event.ActionListener() {
@@ -183,8 +203,6 @@ public class Opciones extends javax.swing.JInternalFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelConexionLayout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(Revertir)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(Aplicar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(Probar)))
                 .addContainerGap())
@@ -211,8 +229,7 @@ public class Opciones extends javax.swing.JInternalFrame {
                 .addGap(18, 18, 18)
                 .addGroup(PanelConexionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(Probar)
-                    .addComponent(Revertir)
-                    .addComponent(Aplicar))
+                    .addComponent(Revertir))
                 .addContainerGap())
         );
 
@@ -251,6 +268,7 @@ public class Opciones extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void CancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CancelarActionPerformed
+        recuperarDatos();
         this.dispose();
     }//GEN-LAST:event_CancelarActionPerformed
 
@@ -261,7 +279,13 @@ public class Opciones extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_AceptarActionPerformed
 
     private void ProbarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ProbarActionPerformed
-        conexion.probarConexion();
+        sacarDatos();
+        subirDatos();
+        if (conexion.probarConexion()) {
+            JOptionPane.showMessageDialog(null,
+                    "Conexión probada exitosamente.",
+                    "Aviso", JOptionPane.INFORMATION_MESSAGE);
+        }
         //Principal.desconectarMenu.setEnabled(true);
         //Cerrar.setEnabled(true);
     }//GEN-LAST:event_ProbarActionPerformed
@@ -276,7 +300,7 @@ public class Opciones extends javax.swing.JInternalFrame {
     private void AplicarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AplicarActionPerformed
         sacarDatos();
         subirDatos();
-        imprimirDatos();
+        //imprimirDatos();
     }//GEN-LAST:event_AplicarActionPerformed
 
     private void CerrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CerrarActionPerformed
@@ -292,7 +316,7 @@ public class Opciones extends javax.swing.JInternalFrame {
     private javax.swing.JButton Cerrar;
     private javax.swing.JPasswordField Clave;
     private javax.swing.JTextField Driver;
-    private javax.swing.JTabbedPane Opciones;
+    public javax.swing.JTabbedPane Opciones;
     private javax.swing.JPanel PanelConexion;
     private javax.swing.JButton Probar;
     private javax.swing.JButton Revertir;

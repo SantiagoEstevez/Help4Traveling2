@@ -12,12 +12,11 @@ import Logica.IControladorUsuario;
 import java.awt.Image;
 import java.io.File;
 import java.io.IOException;
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
 import javax.imageio.ImageIO;
 import javax.swing.ButtonGroup;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.JSpinner;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
@@ -44,7 +43,9 @@ public class AltaUsuarioImagen extends javax.swing.JInternalFrame {
         group.add(rb_cliente);
         group.add(rb_proveedor);
 
-        NumberFormat yearFormatter = new DecimalFormat("####");
+        JSpinner.NumberEditor ne = new JSpinner.NumberEditor(sp_anio, "####");
+        //NumberFormat yearFormatter = new DecimalFormat("####");
+        //yearFormatter.format(sp_anio.getModel().getValue());
         //mostrarImagen(new ImageIcon(getClass().getResource("/Iconos/user.png")).getImage());
     }
 

@@ -671,7 +671,10 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_regPromoMenuActionPerformed
 
     private void opcionesMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_opcionesMenuActionPerformed
+        habilitarMenus(false);
+        cerrarMenu2ActionPerformed(null);
         Opciones o = new Opciones();
+        //JOptionPane.showInternalOptionDialog(escritorio, o.Opciones, "", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, null, null, null);
         abrirVentana(o);
     }//GEN-LAST:event_opcionesMenuActionPerformed
 
