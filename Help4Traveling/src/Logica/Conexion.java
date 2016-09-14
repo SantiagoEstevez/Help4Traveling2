@@ -11,15 +11,10 @@ public class Conexion {
 
     Conector conector = Conector.getInstance();
 
-    private String servidor = conector.getServidor();
-    private String usuario = conector.getUsuario();
-    private String clave = conector.getClave();
-    private String driver = conector.getDriver();
-
-    private static Connection conexion;
+    private static Connection con;
 
     private Conexion() {
-        nuevaConexion();
+        abrirConexion();
     }
 
     public static Conexion getInstance() {
@@ -31,45 +26,95 @@ public class Conexion {
         private static final Conexion INSTANCE = new Conexion();
     }
 
-    public void nuevaConexion() {
+    public Boolean getEstado() {
+        Boolean estado = false;
+        if (con != null) {
+            try {
+                estado = ((con.isValid(0)) && (!con.isClosed()));
+            } catch (SQLException ex) {
+                System.err.println(ex);
+            }
+        }
+        return estado;
+    }
+
+    public Connection getConnection() {
+        return con;
+    }
+
+    public Boolean abrirConexion() {
+        Boolean abierta = false;
+
+        String servidor = conector.getServidor();
+        String usuario = conector.getUsuario();
+        String clave = conector.getClave();
+        String driver = conector.getDriver();
+
         try {
             System.out.print("Conectando al servidor: ");
             Class.forName(driver).newInstance();
             try {
-                conexion = DriverManager.getConnection(servidor, usuario, clave);
+                con = DriverManager.getConnection(servidor, usuario, clave);
                 System.out.println("OK");
+                abierta = true;
             } catch (SQLException ex) {
                 System.out.println("ERROR.");
                 System.out.println(ex);
-                JOptionPane.showMessageDialog(null, "No se pudo establecer la Conexión.", "Aviso", JOptionPane.ERROR_MESSAGE);
-                conexion.close();
+                JOptionPane.showMessageDialog(null, "No se pudo establecer la conexión.", "Aviso", JOptionPane.ERROR_MESSAGE);
+                //con.close();
             }
         } catch (Exception e) {
             System.out.println("ERROR.");
             System.out.println(e);
         }
+        return abierta;
     }
 
-    public void cerrarConexion() throws SQLException {
-        if ((conexion != null) && (conexion.isValid(0))) {
-            conexion.close();
+    public Boolean cerrarConexion() {
+        Boolean cerrada = false;
+        if (this.getEstado()) {
+            try {
+                con.close();
+                cerrada = true;
+            } catch (SQLException ex) {
+                System.err.println(ex);
+            }
         }
+        return cerrada;
     }
 
-    public Boolean getEstado() throws SQLException {
-        return ((conexion != null) && (conexion.isValid(0)));
-    }
+    public Boolean probarConexion() {
+        Boolean probada = false;
+        cerrarConexion();
+        try {
+            abrirConexion();
+            if (getEstado()) {
+                System.out.println(con);
+                if ((con != null) && (con.isValid(0))) {
+                    JOptionPane.showMessageDialog(null,
+                            "Conexión probada exitosamente.",
+                            "Aviso", JOptionPane.INFORMATION_MESSAGE);
+                    probada = true;
+                    Conexion.getInstance().cerrarConexion();
+                }
+            }
 
-    public Connection getConnection() {
-        return conexion;
+        } catch (SQLException e) {
+            System.err.println(e);
+        }
+        return probada;
     }
 
     public void ejecutarSentencia(String sentencia, Boolean update) {
+        if (!this.getEstado()) {
+            JOptionPane.showMessageDialog(null, "No se pudo establecer la conexión.", "Aviso", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
         Statement st;
         String sql;
         sql = sentencia;
         try {
-            st = conexion.createStatement();
+            st = con.createStatement();
             if (update) {
                 st.executeUpdate(sql);
             } else {
@@ -79,6 +124,7 @@ public class Conexion {
             }
             st.close();
         } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "No se pudo ejecutar la sentencia.", "Aviso", JOptionPane.ERROR_MESSAGE);
             System.err.println(e.getMessage());
         }
     }
