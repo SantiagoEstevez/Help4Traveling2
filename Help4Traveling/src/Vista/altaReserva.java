@@ -52,11 +52,12 @@ public class altaReserva extends javax.swing.JInternalFrame {
             clientes.setSelectedIndex(1);
         }
         total.setText("0");
+        sumaPrecios.setText("0");
     }
 
     public static void agregarItem(Object[] item, int cantidad, double precio) {
         modelo.addRow(item);
-        sumaPrecios.setText(String.valueOf(cantidad * precio));
+        sumaPrecios.setText(String.valueOf(Double.parseDouble(sumaPrecios.getText()) + (cantidad * precio)));
     }
 
     /**
@@ -128,17 +129,24 @@ public class altaReserva extends javax.swing.JInternalFrame {
             Class[] types = new Class [] {
                 java.lang.Boolean.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Double.class
             };
+            boolean[] canEdit = new boolean [] {
+                true, false, false, false, false, false, false
+            };
 
             public Class getColumnClass(int columnIndex) {
                 return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
             }
         });
         jScrollPane2.setViewportView(items);
         if (items.getColumnModel().getColumnCount() > 0) {
             items.getColumnModel().getColumn(0).setMinWidth(40);
             items.getColumnModel().getColumn(0).setMaxWidth(40);
-            items.getColumnModel().getColumn(1).setMinWidth(50);
-            items.getColumnModel().getColumn(1).setMaxWidth(50);
+            items.getColumnModel().getColumn(1).setMinWidth(70);
+            items.getColumnModel().getColumn(1).setMaxWidth(70);
             items.getColumnModel().getColumn(4).setMinWidth(100);
             items.getColumnModel().getColumn(4).setMaxWidth(100);
             items.getColumnModel().getColumn(5).setMinWidth(100);
@@ -203,8 +211,8 @@ public class altaReserva extends javax.swing.JInternalFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(27, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(clientes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -220,7 +228,7 @@ public class altaReserva extends javax.swing.JInternalFrame {
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(crear)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         pack();
