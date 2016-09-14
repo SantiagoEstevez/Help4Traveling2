@@ -6,6 +6,7 @@
 package Vista;
 
 import Logica.DtServicio;
+import Logica.Servicio;
 import Logica.Fabrica;
 import Logica.IControladorServicio;
 import java.util.Date;
@@ -60,7 +61,6 @@ public class altaReserva2 extends javax.swing.JInternalFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        cantidad = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         nombreItem = new javax.swing.JTextField();
         inicio = new com.toedter.calendar.JDateChooser();
@@ -68,6 +68,11 @@ public class altaReserva2 extends javax.swing.JInternalFrame {
         agregar = new javax.swing.JButton();
         proveedorItem = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
+        unidad = new javax.swing.JTextField();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        total = new javax.swing.JTextField();
+        cantidad = new javax.swing.JSpinner();
         jScrollPane1 = new javax.swing.JScrollPane();
         Ofertas = new javax.swing.JList<>();
         buscar = new javax.swing.JTextField();
@@ -100,6 +105,27 @@ public class altaReserva2 extends javax.swing.JInternalFrame {
 
         jLabel7.setText("Proveedor:");
 
+        unidad.setEditable(false);
+
+        jLabel8.setText("Precio p/u:");
+
+        jLabel9.setText("Precio total:");
+
+        total.setEditable(false);
+        total.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                totalActionPerformed(evt);
+            }
+        });
+
+        cantidad.setModel(new javax.swing.SpinnerNumberModel(1, 1, 20, 1));
+        cantidad.setValue(1);
+        cantidad.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                cantidadStateChanged(evt);
+            }
+        });
+
         javax.swing.GroupLayout infoItemLayout = new javax.swing.GroupLayout(infoItem.getContentPane());
         infoItem.getContentPane().setLayout(infoItemLayout);
         infoItemLayout.setHorizontalGroup(
@@ -109,41 +135,57 @@ public class altaReserva2 extends javax.swing.JInternalFrame {
                 .addGroup(infoItemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(infoItemLayout.createSequentialGroup()
                         .addGroup(infoItemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel7)
+                            .addComponent(jLabel8))
+                        .addGap(18, 18, 18)
+                        .addGroup(infoItemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(proveedorItem)
+                            .addGroup(infoItemLayout.createSequentialGroup()
+                                .addComponent(unidad, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jLabel9)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(total, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(infoItemLayout.createSequentialGroup()
+                        .addGroup(infoItemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel6)
                             .addComponent(jLabel1)
                             .addComponent(jLabel3)
                             .addComponent(jLabel4))
                         .addGap(9, 9, 9)
-                        .addGroup(infoItemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(infoItemLayout.createSequentialGroup()
-                                .addGap(173, 173, 173)
-                                .addComponent(agregar))
-                            .addComponent(nombreItem, javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(infoItemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(fin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(inicio, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(cantidad, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(infoItemLayout.createSequentialGroup()
-                        .addComponent(jLabel7)
-                        .addGap(18, 18, 18)
-                        .addComponent(proveedorItem)))
+                            .addGroup(infoItemLayout.createSequentialGroup()
+                                .addComponent(cantidad, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addComponent(nombreItem)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, infoItemLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(agregar)))
                 .addContainerGap())
         );
         infoItemLayout.setVerticalGroup(
             infoItemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(infoItemLayout.createSequentialGroup()
-                .addGap(26, 26, 26)
+                .addContainerGap()
                 .addGroup(infoItemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(nombreItem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel6))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(infoItemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(proveedorItem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel7))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(infoItemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(cantidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1))
+                    .addComponent(jLabel7)
+                    .addComponent(proveedorItem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(infoItemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(unidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel8)
+                    .addComponent(jLabel9)
+                    .addComponent(total, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(infoItemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(cantidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(infoItemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel3)
@@ -152,9 +194,9 @@ public class altaReserva2 extends javax.swing.JInternalFrame {
                 .addGroup(infoItemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel4)
                     .addComponent(fin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(18, 18, 18)
                 .addComponent(agregar)
-                .addGap(4, 4, 4))
+                .addGap(6, 6, 6))
         );
 
         setClosable(true);
@@ -238,16 +280,26 @@ public class altaReserva2 extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void OfertasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_OfertasMouseClicked
-        this.infoItem.setSize(357, 260);
+        String sServicio;
+        Servicio oServicio;
+        
+        this.infoItem.setSize(410, 290);
         this.infoItem.setLocationRelativeTo(this);
 
         StringTokenizer st = new StringTokenizer(Ofertas.getSelectedValue(), "~", true);
-        this.nombreItem.setText(st.nextToken());
+        sServicio = st.nextToken();
+        this.nombreItem.setText(sServicio);
         st.nextToken();
         this.proveedorItem.setText(st.nextToken());
         this.inicio.setDate(new Date());
         this.fin.setDate(new Date());
-        this.cantidad.setText("1");
+        //this.cantidad.("1");
+        
+        //Obtengo info extra del servicio 
+        oServicio = IControlador.obtenerServicio(sServicio);
+        this.unidad.setText(String.valueOf(oServicio.getPrecio()));
+        this.total.setText(String.valueOf(oServicio.getPrecio()));
+        
         this.infoItem.setVisible(true);
     }//GEN-LAST:event_OfertasMouseClicked
 
@@ -290,9 +342,19 @@ public class altaReserva2 extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_bBuscarMouseClicked
 
     private void agregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_agregarActionPerformed
-        altaReserva.agregarItem(new Object[]{true, Integer.parseInt(cantidad.getText()), nombreItem.getText(), proveedorItem.getText(), dateToString(inicio.getDate()), dateToString(fin.getDate())});
+        altaReserva.agregarItem(new Object[]{true, Integer.parseInt(String.valueOf(cantidad.getValue())), nombreItem.getText(), proveedorItem.getText(), dateToString(inicio.getDate()), dateToString(fin.getDate()), Double.parseDouble(unidad.getText())}, Integer.parseInt(String.valueOf(cantidad.getValue())),Double.parseDouble(unidad.getText()));
         infoItem.dispose();
     }//GEN-LAST:event_agregarActionPerformed
+
+    private void totalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_totalActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_totalActionPerformed
+
+    private void cantidadStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_cantidadStateChanged
+        double dTotal;
+        dTotal = Double.parseDouble(unidad.getText()) * Double.parseDouble(String.valueOf(cantidad.getValue()));
+        total.setText(String.valueOf(dTotal));
+    }//GEN-LAST:event_cantidadStateChanged
 
     private static String dateToString(Date date) {
         String fecha, dia, mes, ano;
@@ -321,7 +383,7 @@ public class altaReserva2 extends javax.swing.JInternalFrame {
     private javax.swing.JButton agregar;
     private javax.swing.JButton bBuscar;
     private javax.swing.JTextField buscar;
-    private javax.swing.JTextField cantidad;
+    private javax.swing.JSpinner cantidad;
     private javax.swing.JButton confirmar;
     private com.toedter.calendar.JDateChooser fin;
     private javax.swing.JDialog infoItem;
@@ -332,8 +394,12 @@ public class altaReserva2 extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField nombreItem;
     private javax.swing.JTextField proveedorItem;
+    private javax.swing.JTextField total;
+    private javax.swing.JTextField unidad;
     // End of variables declaration//GEN-END:variables
 }
