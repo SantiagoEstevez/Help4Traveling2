@@ -695,12 +695,20 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_VerInfo_promoActionPerformed
 
     private void BorrarTablasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BorrarTablasActionPerformed
-        ejecutarScript("/Scripts/BorrarTablas.sql", true);
+        Object[] opciones = {"No", "Si"};
+        int respuesta = JOptionPane.showOptionDialog(null, "¿Está seguro de borrar las tablas?", "Confirmar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, opciones, opciones[1]);
+        if (respuesta == 1) {
+            ejecutarScript("/Scripts/BorrarTablas.sql", true);
+        }
     }//GEN-LAST:event_BorrarTablasActionPerformed
 
     private void BorrarBaseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BorrarBaseActionPerformed
-        Conexion conexion = Conexion.getInstance();
-        conexion.ejecutarSentencia("DROP DATABASE IF EXISTS `help4traveling`", true);
+        Object[] opciones = {"No", "Si"};
+        int respuesta = JOptionPane.showOptionDialog(null, "¿Está seguro de borrar la base de datos?", "Confirmar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, opciones, opciones[1]);
+        if (respuesta == 1) {
+            Conexion conexion = Conexion.getInstance();
+            conexion.ejecutarSentencia("DROP DATABASE IF EXISTS `help4traveling`", true);
+        }
     }//GEN-LAST:event_BorrarBaseActionPerformed
 
     private void reconectarMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reconectarMenuActionPerformed
