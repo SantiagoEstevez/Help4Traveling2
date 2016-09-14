@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import javax.imageio.ImageIO;
+import javax.swing.ButtonGroup;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -38,6 +39,10 @@ public class AltaUsuarioImagen extends javax.swing.JInternalFrame {
         this.tipo = "Cliente";
         this.pathimg = "";
         initComponents();
+
+        ButtonGroup group = new ButtonGroup();
+        group.add(rb_cliente);
+        group.add(rb_proveedor);
 
         NumberFormat yearFormatter = new DecimalFormat("####");
         //mostrarImagen(new ImageIcon(getClass().getResource("/Iconos/user.png")).getImage());
@@ -83,7 +88,6 @@ public class AltaUsuarioImagen extends javax.swing.JInternalFrame {
         btnBorrarImagen = new javax.swing.JButton();
         jp_foto = new javax.swing.JPanel();
         jLabel10 = new javax.swing.JLabel();
-        chb_proveedor = new javax.swing.JCheckBox();
         l_empresa = new javax.swing.JLabel();
         tf_empresa = new javax.swing.JTextField();
         l_direccion = new javax.swing.JLabel();
@@ -91,6 +95,8 @@ public class AltaUsuarioImagen extends javax.swing.JInternalFrame {
         jSeparator1 = new javax.swing.JSeparator();
         bt_cancelar = new javax.swing.JButton();
         bt_aceptar = new javax.swing.JButton();
+        rb_cliente = new javax.swing.JRadioButton();
+        rb_proveedor = new javax.swing.JRadioButton();
 
         jList1.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
@@ -187,19 +193,7 @@ public class AltaUsuarioImagen extends javax.swing.JInternalFrame {
             .addGap(0, 100, Short.MAX_VALUE)
         );
 
-        jLabel10.setText("[3] Determine si el usuario es proveedor:");
-
-        chb_proveedor.setText("Proveedor");
-        chb_proveedor.addChangeListener(new javax.swing.event.ChangeListener() {
-            public void stateChanged(javax.swing.event.ChangeEvent evt) {
-                chb_proveedorStateChanged(evt);
-            }
-        });
-        chb_proveedor.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                chb_proveedorActionPerformed(evt);
-            }
-        });
+        jLabel10.setText("[3] Determine si el usuario es cliente o proveedor:");
 
         l_empresa.setText("Empresa:");
         l_empresa.setEnabled(false);
@@ -229,6 +223,21 @@ public class AltaUsuarioImagen extends javax.swing.JInternalFrame {
         bt_aceptar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 bt_aceptarActionPerformed(evt);
+            }
+        });
+
+        rb_cliente.setSelected(true);
+        rb_cliente.setText("Cliente");
+        rb_cliente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rb_clienteActionPerformed(evt);
+            }
+        });
+
+        rb_proveedor.setText("Proveedor");
+        rb_proveedor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rb_proveedorActionPerformed(evt);
             }
         });
 
@@ -297,7 +306,10 @@ public class AltaUsuarioImagen extends javax.swing.JInternalFrame {
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                     .addComponent(jp_foto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addComponent(jLabel10)
-                            .addComponent(chb_proveedor))))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(rb_cliente)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(rb_proveedor)))))
                 .addGap(12, 12, 12))
         );
 
@@ -339,7 +351,8 @@ public class AltaUsuarioImagen extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8)
                     .addComponent(pf_conf_password, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(chb_proveedor))
+                    .addComponent(rb_cliente)
+                    .addComponent(rb_proveedor))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(tf_correo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -407,25 +420,6 @@ public class AltaUsuarioImagen extends javax.swing.JInternalFrame {
     public void mostrarImagen(Image img) {
         jp_foto.getGraphics().drawImage(img, 0, 0, 100, 100, java.awt.Color.BLACK, null);
     }
-
-    private void chb_proveedorStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_chb_proveedorStateChanged
-        // TODO add your handling code here:
-
-    }//GEN-LAST:event_chb_proveedorStateChanged
-
-    private void chb_proveedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chb_proveedorActionPerformed
-        // TODO add your handling code here:
-        Boolean cambiar = this.chb_proveedor.isSelected();
-        this.l_empresa.setEnabled(cambiar);
-        this.tf_empresa.setEnabled(cambiar);
-        this.l_direccion.setEnabled(cambiar);
-        this.tf_direccion.setEnabled(cambiar);
-        if (cambiar) {
-            this.tipo = "Proveedor";
-        } else {
-            this.tipo = "Cliente";
-        }
-    }//GEN-LAST:event_chb_proveedorActionPerformed
 
     private void bt_aceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_aceptarActionPerformed
         String mensaje = "";
@@ -506,12 +500,28 @@ public class AltaUsuarioImagen extends javax.swing.JInternalFrame {
         btnBorrarImagen.setEnabled(false);
     }//GEN-LAST:event_btnBorrarImagenActionPerformed
 
+    private void rb_clienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rb_clienteActionPerformed
+        this.tipo = "Cliente";
+        cambiarTipo(tipo.contentEquals("Proveedor"));
+    }//GEN-LAST:event_rb_clienteActionPerformed
+
+    private void rb_proveedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rb_proveedorActionPerformed
+        this.tipo = "Proveedor";
+        cambiarTipo(tipo.contentEquals("Proveedor"));
+    }//GEN-LAST:event_rb_proveedorActionPerformed
+
+    private void cambiarTipo(Boolean proveedor) {
+        this.l_empresa.setEnabled(proveedor);
+        this.tf_empresa.setEnabled(proveedor);
+        this.l_direccion.setEnabled(proveedor);
+        this.tf_direccion.setEnabled(proveedor);
+    }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bt_aceptar;
     private javax.swing.JButton bt_cancelar;
     private javax.swing.JButton btnBorrarImagen;
     private javax.swing.JButton btnSeleccionarImagen;
-    private javax.swing.JCheckBox chb_proveedor;
     private javax.swing.JFileChooser fc_seleccionar_archivo;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -531,6 +541,8 @@ public class AltaUsuarioImagen extends javax.swing.JInternalFrame {
     private javax.swing.JLabel l_empresa;
     private javax.swing.JPasswordField pf_conf_password;
     private javax.swing.JPasswordField pf_password;
+    private javax.swing.JRadioButton rb_cliente;
+    private javax.swing.JRadioButton rb_proveedor;
     private javax.swing.JSpinner sp_anio;
     private javax.swing.JSpinner sp_dia;
     private javax.swing.JSpinner sp_mes;

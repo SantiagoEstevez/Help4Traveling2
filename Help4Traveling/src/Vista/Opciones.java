@@ -32,7 +32,7 @@ public class Opciones extends javax.swing.JInternalFrame {
         bajarDatos();
         ponerDatos();
         try {
-            Cancelar.setEnabled(!conexion.getEstado());
+            Cerrar.setEnabled(!conexion.getEstado());
         } catch (SQLException ex) {
         }
     }
