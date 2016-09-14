@@ -42,7 +42,6 @@ import javax.swing.filechooser.FileNameExtensionFilter;
  */
 public class Principal extends javax.swing.JFrame {
 
-    Conexion conexion = Conexion.getInstance();
     private IControladorUsuario IControlador;
     private String tipo;
     //private String camino;
@@ -59,6 +58,12 @@ public class Principal extends javax.swing.JFrame {
         initComponents();
         this.setLocationRelativeTo(null);
         this.fc_seleccionar_archivo.setVisible(false);
+
+        this.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+        if (!Conexion.getInstance().getEstado()) {
+            habilitarMenus(false);
+        }
+        this.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
 
         //agregarScripts("Datos/");
         //escritorio.updateUI();
@@ -691,10 +696,12 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_BorrarTablasActionPerformed
 
     private void BorrarBaseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BorrarBaseActionPerformed
+        Conexion conexion = Conexion.getInstance();
         conexion.ejecutarSentencia("DROP DATABASE IF EXISTS `help4traveling`", true);
     }//GEN-LAST:event_BorrarBaseActionPerformed
 
     private void reconectarMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reconectarMenuActionPerformed
+        Conexion conexion = Conexion.getInstance();
         try {
             if (!conexion.getEstado()) {
                 conexion.abrirConexion();
@@ -716,18 +723,19 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_reconectarMenuActionPerformed
 
     private void desconectarMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_desconectarMenuActionPerformed
+        Conexion conexion = Conexion.getInstance();
         if (conexion.cerrarConexion()) {
             JOptionPane.showMessageDialog(this,
                     "Conexión cerrada exitosamente.",
                     "Aviso", JOptionPane.INFORMATION_MESSAGE);
-            cerrarMenu2ActionPerformed(null);
-            habilitarMenus(false);
             //desconectarMenu.setEnabled(false);
         } else {
             JOptionPane.showMessageDialog(this,
                     "Conexión inexistente.",
                     "Aviso", JOptionPane.WARNING_MESSAGE);
         }
+        cerrarMenu2ActionPerformed(null);
+        habilitarMenus(false);
     }//GEN-LAST:event_desconectarMenuActionPerformed
 
     private void internalMenuActionPerformed(java.awt.event.ActionEvent evt) {
@@ -752,7 +760,7 @@ public class Principal extends javax.swing.JFrame {
     }
 
     public void ejecutarScript(String ruta, Boolean interno) {
-        //Conexion conexion = new Conexion();
+        Conexion conexion = Conexion.getInstance();
         Connection con = conexion.getConnection();
         if (!conexion.getEstado()) {
             JOptionPane.showMessageDialog(null, "No se pudo establecer la conexión.", "Aviso", JOptionPane.ERROR_MESSAGE);
