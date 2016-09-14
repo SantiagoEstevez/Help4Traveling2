@@ -171,6 +171,9 @@ public class Principal extends javax.swing.JFrame {
         };
         jMenuBar1 = new javax.swing.JMenuBar();
         IniMenu = new javax.swing.JMenu();
+        conectarMenu = new javax.swing.JMenuItem();
+        desconectarMenu = new javax.swing.JMenuItem();
+        jSeparator5 = new javax.swing.JPopupMenu.Separator();
         internoMenu = new javax.swing.JMenu();
         scriptDB2Item = new javax.swing.JMenuItem();
         jSeparator4 = new javax.swing.JPopupMenu.Separator();
@@ -230,6 +233,27 @@ public class Principal extends javax.swing.JFrame {
         IniMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/win-icon.png"))); // NOI18N
         IniMenu.setMnemonic('i');
         IniMenu.setText("Inicio");
+
+        conectarMenu.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_R, java.awt.event.InputEvent.CTRL_MASK));
+        conectarMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/next-icon.png"))); // NOI18N
+        conectarMenu.setText("Reconectar");
+        conectarMenu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                conectarMenuActionPerformed(evt);
+            }
+        });
+        IniMenu.add(conectarMenu);
+
+        desconectarMenu.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_D, java.awt.event.InputEvent.CTRL_MASK));
+        desconectarMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/disconnect-icon.png"))); // NOI18N
+        desconectarMenu.setText("Desconectar");
+        desconectarMenu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                desconectarMenuActionPerformed(evt);
+            }
+        });
+        IniMenu.add(desconectarMenu);
+        IniMenu.add(jSeparator5);
 
         internoMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/db-icon.png"))); // NOI18N
         internoMenu.setText("Ejecutar Script");
@@ -679,6 +703,43 @@ public class Principal extends javax.swing.JFrame {
         Conexion.getInstance().ejecutarSentencia("DROP DATABASE IF EXISTS `help4traveling`", true);
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
+    private void conectarMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_conectarMenuActionPerformed
+        try {
+            if (!Conexion.getInstance().getEstado()) {
+                Conexion.getInstance().nuevaConexion();
+            }
+            Connection con = Conexion.getInstance().getConnection();
+            if (con != null) {
+                if (con.isValid(0)) {
+                    JOptionPane.showMessageDialog(this,
+                            "Conexión establecida exitosamente.",
+                            "Aviso", JOptionPane.INFORMATION_MESSAGE);
+                    //desconectarMenu.setEnabled(true);
+                }
+            }
+
+        } catch (SQLException e) {
+            System.err.println(e);
+        }
+    }//GEN-LAST:event_conectarMenuActionPerformed
+
+    private void desconectarMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_desconectarMenuActionPerformed
+        Connection con = Conexion.getInstance().getConnection();
+        if (con != null) {
+            try {
+                if ((con.isValid(0)) && (!con.isClosed())) {
+                    con.close();
+                    JOptionPane.showMessageDialog(this,
+                            "Conexión cerrada exitosamente.",
+                            "Aviso", JOptionPane.INFORMATION_MESSAGE);
+                    //desconectarMenu.setEnabled(false);
+                }
+            } catch (SQLException e) {
+                System.err.println(e);
+            }
+        }
+    }//GEN-LAST:event_desconectarMenuActionPerformed
+
     private void internalMenuActionPerformed(java.awt.event.ActionEvent evt) {
         ejecutarScript("/Scripts/Script-DB2.sql", true);
     }
@@ -805,6 +866,8 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenuItem cerrarMenu2;
     private javax.swing.JMenuItem conResMenu;
     private javax.swing.JMenuItem conServMenu;
+    private javax.swing.JMenuItem conectarMenu;
+    private javax.swing.JMenuItem desconectarMenu;
     private javax.swing.JMenuItem elimResMenu;
     public static javax.swing.JDesktopPane escritorio;
     private javax.swing.JMenuItem externoMenu;
@@ -816,6 +879,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JPopupMenu.Separator jSeparator2;
     private javax.swing.JPopupMenu.Separator jSeparator3;
     private javax.swing.JPopupMenu.Separator jSeparator4;
+    private javax.swing.JPopupMenu.Separator jSeparator5;
     private javax.swing.JMenuItem modResMenu;
     private javax.swing.JMenuItem modServMenu;
     private javax.swing.JMenuItem opcionesMenu;

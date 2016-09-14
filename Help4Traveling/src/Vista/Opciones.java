@@ -281,12 +281,13 @@ public class Opciones extends javax.swing.JInternalFrame {
                     JOptionPane.showMessageDialog(this,
                             "Conexión establecida exitosamente.",
                             "Aviso", JOptionPane.INFORMATION_MESSAGE);
-                    //con.close();
+                    //Principal.desconectarMenu.setEnabled(true);
                     Cerrar.setEnabled(true);
                 }
             }
 
-        } catch (SQLException ex) {
+        } catch (SQLException e) {
+            System.err.println(e);
         }
         //imprimirDatos();
     }//GEN-LAST:event_ProbarActionPerformed
