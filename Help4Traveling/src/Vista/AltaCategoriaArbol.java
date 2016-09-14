@@ -5,9 +5,11 @@
  */
 package Vista;
 
+import Logica.Conexion;
 import Logica.Fabrica;
 import Logica.IControladorServicio;
 import Logica.ManejadorCategoria;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -24,7 +26,7 @@ public class AltaCategoriaArbol extends javax.swing.JInternalFrame {
     /**
      * Creates new form altaCategoria
      */
-    List<String> listaCategorias;
+    List<String> listaCategorias = new ArrayList<String>();
     private IControladorServicio IControlador;
     private Boolean expandir = true;
 
@@ -33,7 +35,10 @@ public class AltaCategoriaArbol extends javax.swing.JInternalFrame {
 
         Fabrica fabrica = Fabrica.getInstance();
         this.IControlador = fabrica.getIControladorServicio();
-        this.listaCategorias = ManejadorCategoria.getInstance().getNombresCategorias();
+        System.out.println(Conexion.getInstance().getEstado());
+        if (Conexion.getInstance().getEstado()) {
+            this.listaCategorias = ManejadorCategoria.getInstance().getNombresCategorias();
+        }
         Iterator<String> iter = this.listaCategorias.iterator();
         while (iter.hasNext()) {
             String nomCat = iter.next();
@@ -42,7 +47,9 @@ public class AltaCategoriaArbol extends javax.swing.JInternalFrame {
         DefaultMutableTreeNode raiz = new DefaultMutableTreeNode("Categorias");
         DefaultTreeModel modelo = new DefaultTreeModel(raiz);
 
-        MostrarArbol(raiz);
+        if (Conexion.getInstance().getEstado()) {
+            MostrarArbol(raiz);
+        }
         jTreeCategorias.setModel(modelo);
         //jPanel1.setVisible(false);
 

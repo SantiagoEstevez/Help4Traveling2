@@ -6,7 +6,6 @@
 package Vista;
 
 import Logica.Conexion;
-import Logica.Fabrica;
 import Logica.IControladorUsuario;
 import Logica.ScriptRunner;
 import java.awt.AlphaComposite;
@@ -27,8 +26,6 @@ import java.io.InputStreamReader;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Enumeration;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JInternalFrame;
@@ -45,6 +42,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
  */
 public class Principal extends javax.swing.JFrame {
 
+    Conexion conexion = Conexion.getInstance();
     private IControladorUsuario IControlador;
     private String tipo;
     //private String camino;
@@ -65,13 +63,6 @@ public class Principal extends javax.swing.JFrame {
         //agregarScripts("Datos/");
         //escritorio.updateUI();
         //jMenuBar1.updateUI();
-    }
-
-    public Principal(IControladorUsuario IControlador) {
-        initComponents();
-        Fabrica fabrica = Fabrica.getInstance();
-        this.IControlador = fabrica.getIControladorUsuario();
-        this.tipo = "Cliente";
     }
 
     public void internalFrameClosing(InternalFrameEvent e) {
@@ -174,12 +165,12 @@ public class Principal extends javax.swing.JFrame {
         conectarMenu = new javax.swing.JMenuItem();
         desconectarMenu = new javax.swing.JMenuItem();
         jSeparator5 = new javax.swing.JPopupMenu.Separator();
-        internoMenu = new javax.swing.JMenu();
+        ejecutarMenu = new javax.swing.JMenu();
         scriptDB2Item = new javax.swing.JMenuItem();
         jSeparator4 = new javax.swing.JPopupMenu.Separator();
         BorrarTablas = new javax.swing.JMenuItem();
-        jMenuItem1 = new javax.swing.JMenuItem();
-        externoMenu = new javax.swing.JMenuItem();
+        BorrarBase = new javax.swing.JMenuItem();
+        importarMenu = new javax.swing.JMenuItem();
         jSeparator1 = new javax.swing.JPopupMenu.Separator();
         cerrarMenu = new javax.swing.JMenuItem();
         cerrarMenu2 = new javax.swing.JMenuItem();
@@ -239,7 +230,7 @@ public class Principal extends javax.swing.JFrame {
         conectarMenu.setText("Reconectar");
         conectarMenu.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                conectarMenuActionPerformed(evt);
+                reconectarMenuActionPerformed(evt);
             }
         });
         IniMenu.add(conectarMenu);
@@ -255,8 +246,8 @@ public class Principal extends javax.swing.JFrame {
         IniMenu.add(desconectarMenu);
         IniMenu.add(jSeparator5);
 
-        internoMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/db-icon.png"))); // NOI18N
-        internoMenu.setText("Ejecutar Script");
+        ejecutarMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/db-icon.png"))); // NOI18N
+        ejecutarMenu.setText("Ejecutar Script");
 
         scriptDB2Item.setIcon(UIManager.getIcon("Tree.leafIcon"));
         scriptDB2Item.setText("Script-DB2");
@@ -265,8 +256,8 @@ public class Principal extends javax.swing.JFrame {
                 scriptDB2ItemActionPerformed(evt);
             }
         });
-        internoMenu.add(scriptDB2Item);
-        internoMenu.add(jSeparator4);
+        ejecutarMenu.add(scriptDB2Item);
+        ejecutarMenu.add(jSeparator4);
 
         BorrarTablas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/delete-icon.png"))); // NOI18N
         BorrarTablas.setText("Borrar Tablas");
@@ -275,29 +266,29 @@ public class Principal extends javax.swing.JFrame {
                 BorrarTablasActionPerformed(evt);
             }
         });
-        internoMenu.add(BorrarTablas);
+        ejecutarMenu.add(BorrarTablas);
 
-        jMenuItem1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/delete-icon.png"))); // NOI18N
-        jMenuItem1.setText("Borrar Base");
-        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+        BorrarBase.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/delete-icon.png"))); // NOI18N
+        BorrarBase.setText("Borrar Base");
+        BorrarBase.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem1ActionPerformed(evt);
+                BorrarBaseActionPerformed(evt);
             }
         });
-        internoMenu.add(jMenuItem1);
+        ejecutarMenu.add(BorrarBase);
 
-        IniMenu.add(internoMenu);
+        IniMenu.add(ejecutarMenu);
 
-        externoMenu.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_I, java.awt.event.InputEvent.CTRL_MASK));
-        externoMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/db-icon.png"))); // NOI18N
-        externoMenu.setMnemonic('e');
-        externoMenu.setText("Importar Script");
-        externoMenu.addActionListener(new java.awt.event.ActionListener() {
+        importarMenu.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_I, java.awt.event.InputEvent.CTRL_MASK));
+        importarMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/db-icon.png"))); // NOI18N
+        importarMenu.setMnemonic('e');
+        importarMenu.setText("Importar Script");
+        importarMenu.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                externoMenuActionPerformed(evt);
+                importarMenuActionPerformed(evt);
             }
         });
-        IniMenu.add(externoMenu);
+        IniMenu.add(importarMenu);
         IniMenu.add(jSeparator1);
 
         cerrarMenu.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_W, java.awt.event.InputEvent.CTRL_MASK));
@@ -610,9 +601,9 @@ public class Principal extends javax.swing.JFrame {
         cerrarMenu2.setEnabled(false);
     }//GEN-LAST:event_cerrarMenu2ActionPerformed
 
-    private void externoMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_externoMenuActionPerformed
+    private void importarMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_importarMenuActionPerformed
         JFileChooser selector = new JFileChooser();
-        selector.setDialogTitle("Elegir Script");
+        selector.setDialogTitle("Importar Script");
         FileNameExtensionFilter filter = new FileNameExtensionFilter("SQL Scripts (.sql)", "sql");
         selector.setFileFilter(filter);
         selector.setVisible(true);
@@ -624,7 +615,7 @@ public class Principal extends javax.swing.JFrame {
             System.out.println(camino);
             ejecutarScript(camino, false);
         }
-    }//GEN-LAST:event_externoMenuActionPerformed
+    }//GEN-LAST:event_importarMenuActionPerformed
 
     private void modResMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modResMenuActionPerformed
         ActualizarReservaTabla ar = new ActualizarReservaTabla();
@@ -699,21 +690,22 @@ public class Principal extends javax.swing.JFrame {
         ejecutarScript("/Scripts/BorrarTablas.sql", true);
     }//GEN-LAST:event_BorrarTablasActionPerformed
 
-    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-        Conexion.getInstance().ejecutarSentencia("DROP DATABASE IF EXISTS `help4traveling`", true);
-    }//GEN-LAST:event_jMenuItem1ActionPerformed
+    private void BorrarBaseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BorrarBaseActionPerformed
+        conexion.ejecutarSentencia("DROP DATABASE IF EXISTS `help4traveling`", true);
+    }//GEN-LAST:event_BorrarBaseActionPerformed
 
-    private void conectarMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_conectarMenuActionPerformed
+    private void reconectarMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reconectarMenuActionPerformed
         try {
-            if (!Conexion.getInstance().getEstado()) {
-                Conexion.getInstance().nuevaConexion();
+            if (!conexion.getEstado()) {
+                conexion.abrirConexion();
             }
-            Connection con = Conexion.getInstance().getConnection();
+            Connection con = conexion.getConnection();
             if (con != null) {
                 if (con.isValid(0)) {
                     JOptionPane.showMessageDialog(this,
                             "Conexión establecida exitosamente.",
                             "Aviso", JOptionPane.INFORMATION_MESSAGE);
+                    this.habilitarMenus(true);
                     //desconectarMenu.setEnabled(true);
                 }
             }
@@ -721,22 +713,20 @@ public class Principal extends javax.swing.JFrame {
         } catch (SQLException e) {
             System.err.println(e);
         }
-    }//GEN-LAST:event_conectarMenuActionPerformed
+    }//GEN-LAST:event_reconectarMenuActionPerformed
 
     private void desconectarMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_desconectarMenuActionPerformed
-        Connection con = Conexion.getInstance().getConnection();
-        if (con != null) {
-            try {
-                if ((con.isValid(0)) && (!con.isClosed())) {
-                    con.close();
-                    JOptionPane.showMessageDialog(this,
-                            "Conexión cerrada exitosamente.",
-                            "Aviso", JOptionPane.INFORMATION_MESSAGE);
-                    //desconectarMenu.setEnabled(false);
-                }
-            } catch (SQLException e) {
-                System.err.println(e);
-            }
+        if (conexion.cerrarConexion()) {
+            JOptionPane.showMessageDialog(this,
+                    "Conexión cerrada exitosamente.",
+                    "Aviso", JOptionPane.INFORMATION_MESSAGE);
+            cerrarMenu2ActionPerformed(null);
+            habilitarMenus(false);
+            //desconectarMenu.setEnabled(false);
+        } else {
+            JOptionPane.showMessageDialog(this,
+                    "Conexión inexistente.",
+                    "Aviso", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_desconectarMenuActionPerformed
 
@@ -763,7 +753,11 @@ public class Principal extends javax.swing.JFrame {
 
     public void ejecutarScript(String ruta, Boolean interno) {
         //Conexion conexion = new Conexion();
-        Connection con = Conexion.getInstance().getConnection();
+        Connection con = conexion.getConnection();
+        if (!conexion.getEstado()) {
+            JOptionPane.showMessageDialog(null, "No se pudo establecer la conexión.", "Aviso", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
         ScriptRunner runner = new ScriptRunner(con, false, true);
         try {
             this.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
@@ -777,18 +771,13 @@ public class Principal extends javax.swing.JFrame {
             System.out.println("Corriendo Script... OK");
         } catch (IOException ex) {
             System.out.println("Corriendo Script... ERROR");
-            Logger
-                    .getLogger(Principal.class
-                            .getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(this, "El script no pudo cargarse.", "Error", JOptionPane.ERROR_MESSAGE);
+            this.setCursor(Cursor.getDefaultCursor());
         } catch (SQLException ex) {
             System.out.println("Corriendo Script... ERROR");
-            Logger
-                    .getLogger(Principal.class
-                            .getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(this, "El script no pudo ejecutarse.", "Error", JOptionPane.ERROR_MESSAGE);
+            this.setCursor(Cursor.getDefaultCursor());
         }
-        this.setCursor(Cursor.getDefaultCursor());
     }
 
     public void agregarScripts(String ruta) {
@@ -799,7 +788,7 @@ public class Principal extends javax.swing.JFrame {
                 System.out.println(script);
                 JMenuItem internal = new JMenuItem(script, UIManager.getIcon("Tree.leafIcon"));
                 internal.addActionListener(this::internalMenuActionPerformed);
-                internoMenu.add(internal);
+                ejecutarMenu.add(internal);
             }
         } catch (IOException ex) {
             /*
@@ -808,6 +797,15 @@ public class Principal extends javax.swing.JFrame {
         ejecutarScript(ruta, true);
              */
         }
+    }
+
+    public void habilitarMenus(Boolean habilitar) {
+        desconectarMenu.setEnabled(habilitar);
+        ejecutarMenu.setEnabled(habilitar);
+        importarMenu.setEnabled(habilitar);
+        RegMenu.setEnabled(habilitar);
+        ConMenu.setEnabled(habilitar);
+        ModMenu.setEnabled(habilitar);
     }
 
     /**
@@ -854,6 +852,7 @@ public class Principal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuItem BorrarBase;
     private javax.swing.JMenuItem BorrarTablas;
     private javax.swing.JMenu ConMenu;
     private javax.swing.JMenu IniMenu;
@@ -868,13 +867,12 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenuItem conServMenu;
     private javax.swing.JMenuItem conectarMenu;
     private javax.swing.JMenuItem desconectarMenu;
+    private javax.swing.JMenu ejecutarMenu;
     private javax.swing.JMenuItem elimResMenu;
     public static javax.swing.JDesktopPane escritorio;
-    private javax.swing.JMenuItem externoMenu;
     private javax.swing.JFileChooser fc_seleccionar_archivo;
-    private javax.swing.JMenu internoMenu;
+    private javax.swing.JMenuItem importarMenu;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JPopupMenu.Separator jSeparator2;
     private javax.swing.JPopupMenu.Separator jSeparator3;

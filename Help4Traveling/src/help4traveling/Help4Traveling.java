@@ -7,6 +7,7 @@ package help4traveling;
 
 import Logica.*;
 import Vista.Principal;
+import java.awt.Cursor;
 
 public class Help4Traveling {
 
@@ -22,7 +23,12 @@ public class Help4Traveling {
         Principal p = new Principal();
         p.setLocationRelativeTo(null);
         p.setVisible(true);
-        Conexion.getInstance();
+
+        p.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+        if (!Conexion.getInstance().getEstado()) {
+            p.habilitarMenus(false);
+        }
+        p.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
 
         pruebas();
     }

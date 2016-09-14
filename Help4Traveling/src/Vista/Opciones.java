@@ -7,9 +7,6 @@ package Vista;
 
 import Logica.Conector;
 import Logica.Conexion;
-import java.sql.Connection;
-import java.sql.SQLException;
-import javax.swing.JOptionPane;
 
 /**
  *
@@ -31,10 +28,7 @@ public class Opciones extends javax.swing.JInternalFrame {
         initComponents();
         bajarDatos();
         ponerDatos();
-        try {
-            Cerrar.setEnabled(!conexion.getEstado());
-        } catch (SQLException ex) {
-        }
+        //Cerrar.setEnabled(!conexion.getEstado());
     }
 
     public void bajarDatos() {
@@ -81,6 +75,7 @@ public class Opciones extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        Cerrar = new javax.swing.JButton();
         Cancelar = new javax.swing.JButton();
         Aceptar = new javax.swing.JButton();
         Opciones = new javax.swing.JTabbedPane();
@@ -96,8 +91,15 @@ public class Opciones extends javax.swing.JInternalFrame {
         Revertir = new javax.swing.JButton();
         Aplicar = new javax.swing.JButton();
         Probar = new javax.swing.JButton();
-        Cerrar = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
+
+        Cerrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/delete-icon.png"))); // NOI18N
+        Cerrar.setText("Cerrar");
+        Cerrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CerrarActionPerformed(evt);
+            }
+        });
 
         setTitle("Opciones");
         setFrameIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/options-icon.png"))); // NOI18N
@@ -159,14 +161,6 @@ public class Opciones extends javax.swing.JInternalFrame {
             }
         });
 
-        Cerrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/delete-icon.png"))); // NOI18N
-        Cerrar.setText("Cerrar");
-        Cerrar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                CerrarActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout PanelConexionLayout = new javax.swing.GroupLayout(PanelConexion);
         PanelConexion.setLayout(PanelConexionLayout);
         PanelConexionLayout.setHorizontalGroup(
@@ -192,8 +186,6 @@ public class Opciones extends javax.swing.JInternalFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(Aplicar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(Cerrar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(Probar)))
                 .addContainerGap())
         );
@@ -220,8 +212,7 @@ public class Opciones extends javax.swing.JInternalFrame {
                 .addGroup(PanelConexionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(Probar)
                     .addComponent(Revertir)
-                    .addComponent(Aplicar)
-                    .addComponent(Cerrar))
+                    .addComponent(Aplicar))
                 .addContainerGap())
         );
 
@@ -270,26 +261,9 @@ public class Opciones extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_AceptarActionPerformed
 
     private void ProbarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ProbarActionPerformed
-        try {
-            if (!Conexion.getInstance().getEstado()) {
-                Conexion.getInstance().nuevaConexion();
-            }
-            Connection con = Conexion.getInstance().getConnection();
-            if (con != null) {
-                System.out.println(con);
-                if ((con != null) && (con.isValid(0))) {
-                    JOptionPane.showMessageDialog(this,
-                            "Conexión establecida exitosamente.",
-                            "Aviso", JOptionPane.INFORMATION_MESSAGE);
-                    //Principal.desconectarMenu.setEnabled(true);
-                    Cerrar.setEnabled(true);
-                }
-            }
-
-        } catch (SQLException e) {
-            System.err.println(e);
-        }
-        //imprimirDatos();
+        conexion.probarConexion();
+        //Principal.desconectarMenu.setEnabled(true);
+        //Cerrar.setEnabled(true);
     }//GEN-LAST:event_ProbarActionPerformed
 
     private void RevertirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RevertirActionPerformed
@@ -302,16 +276,13 @@ public class Opciones extends javax.swing.JInternalFrame {
     private void AplicarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AplicarActionPerformed
         sacarDatos();
         subirDatos();
-        //imprimirDatos();
+        imprimirDatos();
     }//GEN-LAST:event_AplicarActionPerformed
 
     private void CerrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CerrarActionPerformed
-        try {
-            Conexion.getInstance().cerrarConexion();
-        } catch (SQLException ex) {
-        }
-        Cerrar.setEnabled(false);
-        System.out.println("Conexión cerrada.");
+        conexion.cerrarConexion();
+        //Cerrar.setEnabled(false);
+        //System.out.println("Conexión cerrada.");
     }//GEN-LAST:event_CerrarActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
