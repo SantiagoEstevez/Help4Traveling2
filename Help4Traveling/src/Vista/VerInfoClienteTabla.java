@@ -95,7 +95,7 @@ public class VerInfoClienteTabla extends javax.swing.JInternalFrame {
             String ruta = u.getImagen();
             System.out.println("Ruta: " + ruta);
             if (ruta == null) {
-                //jp_foto.getGraphics().create(0, 0, 100, 100);
+                jp_foto.repaint();
             } else {
                 File fichero = new File(ruta);
                 System.out.println("Fichero: " + fichero);
