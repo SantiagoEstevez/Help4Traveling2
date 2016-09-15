@@ -190,6 +190,7 @@ public class ManejadorProveedor {
             String imagen = prov.getImagen();
             if (imagen != null) {
                 imagen = "'" + imagen + "'";
+                imagen = imagen.replace("\\", "\\\\");
             }
             String fecha = String.valueOf(prov.getNacimiento().getAno()) + "-" + String.valueOf(prov.getNacimiento().getMes()) + "-" + String.valueOf(prov.getNacimiento().getDia());
             String sqlau = "INSERT INTO help4traveling.usuarios "
@@ -211,6 +212,7 @@ public class ManejadorProveedor {
                 st.close();
                 System.out.println("INSERTE :)");
             } catch (SQLException e) {
+                mensaje = "ERROR: No se pudo insertar.";
                 System.out.println("No pude INSERTAR :(");
             }
         } else {

@@ -60,13 +60,15 @@ public class VerInfoClienteTabla extends javax.swing.JInternalFrame {
         this.IControlador = fabrica.getIControladorUsuario();
 
         refrescarClientes();
-        /*if (Clientes.getRowCount() > 0) {
+        /*
+        if (Clientes.getRowCount() > 0) {
             Clientes.setRowSelectionInterval(0, 0);
             refrescarImagen();
             refrescarReservas();
         } else {
             Reservas.setModel(modeloReservas);
-        }*/
+        }
+         */
     }
 
     /**
@@ -136,6 +138,7 @@ public class VerInfoClienteTabla extends javax.swing.JInternalFrame {
             }
         ));
         Clientes.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        Clientes.setMinimumSize(new java.awt.Dimension(90, 64));
         Clientes.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         Clientes.getTableHeader().setReorderingAllowed(false);
         Clientes.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -222,7 +225,7 @@ public class VerInfoClienteTabla extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addComponent(lbClientes)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 86, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 118, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lbReservas)
@@ -230,7 +233,7 @@ public class VerInfoClienteTabla extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 106, Short.MAX_VALUE)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 138, Short.MAX_VALUE)
                         .addGap(10, 10, 10)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(Actualizar)
