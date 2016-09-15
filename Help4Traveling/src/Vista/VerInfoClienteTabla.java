@@ -59,17 +59,14 @@ public class VerInfoClienteTabla extends javax.swing.JInternalFrame {
         Fabrica fabrica = Fabrica.getInstance();
         this.IControlador = fabrica.getIControladorUsuario();
 
-        //fabrica.getIControladorReserva().setReservasDB();
-        //fabrica.getIControladorReserva().setItemsDB();
         refrescarClientes();
-        if (Clientes.getRowCount() > 0) {
+        /*if (Clientes.getRowCount() > 0) {
             Clientes.setRowSelectionInterval(0, 0);
             refrescarImagen();
             refrescarReservas();
         } else {
             Reservas.setModel(modeloReservas);
-        }
-
+        }*/
     }
 
     /**
