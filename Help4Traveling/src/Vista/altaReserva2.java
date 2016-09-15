@@ -343,7 +343,15 @@ public class altaReserva2 extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_bBuscarMouseClicked
 
     private void agregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_agregarActionPerformed
-        altaReserva.agregarItem(new Object[]{true, Integer.parseInt(String.valueOf(cantidad.getValue())), nombreItem.getText(), proveedorItem.getText(), dateToString(inicio.getDate()), dateToString(fin.getDate()), Double.parseDouble(unidad.getText())}, Integer.parseInt(String.valueOf(cantidad.getValue())),Double.parseDouble(unidad.getText()));
+        int iCantidad = Integer.parseInt(String.valueOf(cantidad.getValue()));
+        String sNombreItem = nombreItem.getText();
+        String sProveedor = proveedorItem.getText();
+        String sInicio = dateToString(inicio.getDate());
+        String sFin = dateToString(fin.getDate());
+        double dUnidad = Double.parseDouble(unidad.getText());
+        double dTotal = Double.parseDouble(total.getText());
+        
+        altaReserva.agregarItem(new Object[]{true, iCantidad, sNombreItem, sProveedor, sInicio, sFin, dUnidad, dTotal}, dTotal);
         infoItem.dispose();
     }//GEN-LAST:event_agregarActionPerformed
 

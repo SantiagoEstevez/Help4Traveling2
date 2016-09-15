@@ -55,9 +55,9 @@ public class altaReserva extends javax.swing.JInternalFrame {
         sumaPrecios.setText("0");
     }
 
-    public static void agregarItem(Object[] item, int cantidad, double precio) {
+    public static void agregarItem(Object[] item, double dTotal) {
         modelo.addRow(item);
-        sumaPrecios.setText(String.valueOf(Double.parseDouble(sumaPrecios.getText()) + (cantidad * precio)));
+        sumaPrecios.setText(String.valueOf(Double.parseDouble(sumaPrecios.getText()) + (dTotal)));
     }
 
     /**
@@ -123,14 +123,14 @@ public class altaReserva extends javax.swing.JInternalFrame {
 
             },
             new String [] {
-                "", "Cantidad", "Item", "Proveedor", "Inicio", "Fin", "Precio"
+                "", "Cantidad", "Item", "Proveedor", "Inicio", "Fin", "Precio p/u", "Precio total"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Boolean.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Double.class
+                java.lang.Boolean.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Double.class, java.lang.Double.class
             };
             boolean[] canEdit = new boolean [] {
-                true, false, false, false, false, false, false
+                true, false, false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -153,6 +153,8 @@ public class altaReserva extends javax.swing.JInternalFrame {
             items.getColumnModel().getColumn(5).setMaxWidth(100);
             items.getColumnModel().getColumn(6).setMinWidth(100);
             items.getColumnModel().getColumn(6).setMaxWidth(100);
+            items.getColumnModel().getColumn(7).setMinWidth(100);
+            items.getColumnModel().getColumn(7).setMaxWidth(100);
         }
 
         crear.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/check-icon.png"))); // NOI18N
@@ -254,7 +256,15 @@ public class altaReserva extends javax.swing.JInternalFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         for (int i = 0; i < modelo.getRowCount(); i++) {
             if (!Boolean.valueOf(String.valueOf(modelo.getValueAt(i, 0)))) {
+                
+                //Resto el valor del item del total.
+                double dItem = Double.parseDouble(String.valueOf(modelo.getValueAt(i, 7)));
+                double dTotal = Double.parseDouble(sumaPrecios.getText());
+                sumaPrecios.setText(String.valueOf(dTotal - dItem));
+                
+                //Elimino item
                 modelo.removeRow(i);
+                i += -1;
             }
         }
     }//GEN-LAST:event_jButton2ActionPerformed
