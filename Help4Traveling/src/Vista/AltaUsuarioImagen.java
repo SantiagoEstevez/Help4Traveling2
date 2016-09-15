@@ -13,6 +13,7 @@ import java.awt.Image;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import javax.imageio.ImageIO;
 import javax.swing.ButtonGroup;
 import javax.swing.JFileChooser;
@@ -476,7 +477,7 @@ public class AltaUsuarioImagen extends javax.swing.JInternalFrame {
         //Seleccionamos el fichero
         if (eleccion == JFileChooser.APPROVE_OPTION) {
             File fichero = this.fc_seleccionar_archivo.getSelectedFile();
-            pathimg = fichero.toPath();
+            pathimg = Paths.get(fichero.getPath());
             //System.out.println(pathimg);
             mostrarImagen(extraerImagen(fichero));
             btnBorrarImagen.setEnabled(true);
@@ -509,8 +510,9 @@ public class AltaUsuarioImagen extends javax.swing.JInternalFrame {
         String imagen = null;
         if (pathimg != null) {
             imagen = pathimg.toString();
+            //imagen.replaceall("\\", "\\\\");
+            System.out.println(imagen);
         }
-        //System.out.println(imagen);
 
         if (password.equals("")) {
             mensaje = "ERROR: Password no puede estar vacío.";

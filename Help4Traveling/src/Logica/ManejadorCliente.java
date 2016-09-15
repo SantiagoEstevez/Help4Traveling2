@@ -175,8 +175,9 @@ public class ManejadorCliente {
         Statement st;
         String mensaje = "Se dio de alta al Usuario Cliente.";
         String imagen = cli.getImagen();
-        if ((imagen != null) && (imagen != "")) {
+        if (imagen != null) {
             imagen = "'" + imagen + "'";
+            imagen = imagen.replace("\\", "\\\\");
         }
         if (!existeNickname(cli.getNickname())) {
             String fecha = String.valueOf(cli.getNacimiento().getAno()) + "-" + String.valueOf(cli.getNacimiento().getMes()) + "-" + String.valueOf(cli.getNacimiento().getDia());
@@ -191,7 +192,8 @@ public class ManejadorCliente {
                 st.executeUpdate(sqlau);
                 st.executeUpdate(sqlac);
                 if ((imagen != null) && (imagen != "")) {
-                    st.executeUpdate(sqlai);
+                    //st.executeUpdate(sqlai);
+                    con.prepareStatement(sqlai);
                 }
                 //con.close();
                 st.close();
