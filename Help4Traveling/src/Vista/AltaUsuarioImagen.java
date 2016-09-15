@@ -121,6 +121,11 @@ public class AltaUsuarioImagen extends javax.swing.JInternalFrame {
                 tf_nombreActionPerformed(evt);
             }
         });
+        tf_nombre.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                obligatorioKeyReleased(evt);
+            }
+        });
 
         jLabel3.setText("Apellido:");
 
@@ -129,8 +134,19 @@ public class AltaUsuarioImagen extends javax.swing.JInternalFrame {
                 tf_apellidoActionPerformed(evt);
             }
         });
+        tf_apellido.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                obligatorioKeyReleased(evt);
+            }
+        });
 
         jLabel4.setText("Nickname:");
+
+        tf_nickname.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                obligatorioKeyReleased(evt);
+            }
+        });
 
         jLabel7.setText("Password:");
 
@@ -139,16 +155,31 @@ public class AltaUsuarioImagen extends javax.swing.JInternalFrame {
                 pf_passwordActionPerformed(evt);
             }
         });
+        pf_password.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                obligatorioKeyReleased(evt);
+            }
+        });
 
         jLabel8.setText("Confirmar:");
 
         pf_conf_password.setNextFocusableComponent(tf_correo);
+        pf_conf_password.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                obligatorioKeyReleased(evt);
+            }
+        });
 
         jLabel5.setText("Correo:");
 
         tf_correo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 tf_correoActionPerformed(evt);
+            }
+        });
+        tf_correo.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                obligatorioKeyReleased(evt);
             }
         });
 
@@ -200,6 +231,11 @@ public class AltaUsuarioImagen extends javax.swing.JInternalFrame {
         l_empresa.setEnabled(false);
 
         tf_empresa.setEnabled(false);
+        tf_empresa.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                obligatorioKeyReleased(evt);
+            }
+        });
 
         l_direccion.setText("Enlace:");
         l_direccion.setEnabled(false);
@@ -208,6 +244,11 @@ public class AltaUsuarioImagen extends javax.swing.JInternalFrame {
         tf_direccion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 tf_direccionActionPerformed(evt);
+            }
+        });
+        tf_direccion.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                obligatorioKeyReleased(evt);
             }
         });
 
@@ -221,6 +262,7 @@ public class AltaUsuarioImagen extends javax.swing.JInternalFrame {
 
         bt_aceptar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/check-icon.png"))); // NOI18N
         bt_aceptar.setText("Aceptar");
+        bt_aceptar.setEnabled(false);
         bt_aceptar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 bt_aceptarActionPerformed(evt);
@@ -504,18 +546,36 @@ public class AltaUsuarioImagen extends javax.swing.JInternalFrame {
     private void rb_clienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rb_clienteActionPerformed
         this.tipo = "Cliente";
         cambiarTipo(tipo.contentEquals("Proveedor"));
+        bt_aceptar.setEnabled(obligatorio());
     }//GEN-LAST:event_rb_clienteActionPerformed
 
     private void rb_proveedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rb_proveedorActionPerformed
         this.tipo = "Proveedor";
         cambiarTipo(tipo.contentEquals("Proveedor"));
+        bt_aceptar.setEnabled(obligatorio());
     }//GEN-LAST:event_rb_proveedorActionPerformed
+
+    private void obligatorioKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_obligatorioKeyReleased
+        bt_aceptar.setEnabled(obligatorio());
+    }//GEN-LAST:event_obligatorioKeyReleased
 
     private void cambiarTipo(Boolean proveedor) {
         this.l_empresa.setEnabled(proveedor);
         this.tf_empresa.setEnabled(proveedor);
         this.l_direccion.setEnabled(proveedor);
         this.tf_direccion.setEnabled(proveedor);
+    }
+
+    public Boolean obligatorio() {
+        Boolean o = !((tf_nombre.getText().isEmpty())
+                || (tf_apellido.getText().isEmpty())
+                || (tf_nickname.getText().isEmpty())
+                || (tf_correo.getText().isEmpty()));
+        if (rb_proveedor.isSelected()) {
+            return (o && !((tf_empresa.getText().isEmpty())
+                    || (tf_direccion.getText().isEmpty())));
+        }
+        return o;
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

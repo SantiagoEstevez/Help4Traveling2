@@ -704,7 +704,8 @@ public class Principal extends javax.swing.JFrame {
 
     private void BorrarBaseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BorrarBaseActionPerformed
         Object[] opciones = {"No", "Si"};
-        int respuesta = JOptionPane.showOptionDialog(null, "¿Está seguro de borrar la base de datos?", "Confirmar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, opciones, opciones[1]);
+        int respuesta = JOptionPane.showOptionDialog(null, "¿Está seguro de borrar la base de datos"
+                + "?", "Confirmar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, opciones, opciones[1]);
         if (respuesta == 1) {
             Conexion conexion = Conexion.getInstance();
             conexion.ejecutarSentencia("DROP DATABASE IF EXISTS `help4traveling`", true);

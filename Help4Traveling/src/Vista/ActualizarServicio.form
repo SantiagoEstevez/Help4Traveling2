@@ -118,17 +118,20 @@
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
                       <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                          <Group type="102" attributes="0">
+                          <Group type="102" alignment="0" attributes="0">
                               <Component id="jLabNom" min="-2" max="-2" attributes="0"/>
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
                               <Component id="cb_nombre" max="32767" attributes="0"/>
                           </Group>
                           <Component id="jLabelServ" alignment="0" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Component id="lProveedor" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="tfProveedor" max="32767" attributes="0"/>
                   </Group>
               </Group>
-              <EmptySpace max="-2" attributes="0"/>
+              <EmptySpace min="-2" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -141,6 +144,8 @@
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="jLabNom" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="cb_nombre" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="lProveedor" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="tfProveedor" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="-2" max="-2" attributes="0"/>
               <Component id="jSeparator1" min="-2" pref="10" max="-2" attributes="0"/>
@@ -494,7 +499,17 @@
     </Component>
     <Component class="javax.swing.JLabel" name="jLabelPrecio1">
       <Properties>
-        <Property name="text" type="java.lang.String" value="(U$S)"/>
+        <Property name="text" type="java.lang.String" value="(U$D)"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lProveedor">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Proveedor:"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="tfProveedor">
+      <Properties>
+        <Property name="editable" type="boolean" value="false"/>
       </Properties>
     </Component>
   </SubComponents>

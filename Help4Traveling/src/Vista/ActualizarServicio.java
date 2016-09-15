@@ -50,7 +50,6 @@ public class ActualizarServicio extends javax.swing.JInternalFrame {
     boolean inicio = true;
     private boolean expandir = true;
 
-    
     public ActualizarServicio() {
         initComponents();
         Fabrica fabrica = Fabrica.getInstance();
@@ -63,7 +62,7 @@ public class ActualizarServicio extends javax.swing.JInternalFrame {
         DefaultTreeModel modelo = new DefaultTreeModel(modeloCategorias);
         MostrarArbol(modeloCategorias);
         this.tr_categorias.setModel(modelo);
-        this.categoria_seleccionada = false;        
+        this.categoria_seleccionada = false;
     }
 
     public void MostrarArbol(DefaultMutableTreeNode nodo) {
@@ -77,8 +76,9 @@ public class ActualizarServicio extends javax.swing.JInternalFrame {
             nodo.add(nuevoNodo);
             System.out.println("Agregue el nodo " + hijo);
         }
-        for (int j = 0; j < nodo.getChildCount(); j++)
+        for (int j = 0; j < nodo.getChildCount(); j++) {
             MostrarArbol((DefaultMutableTreeNode) nodo.getChildAt(j));
+        }
     }
 
     private void bajarServicios() {
@@ -99,6 +99,7 @@ public class ActualizarServicio extends javax.swing.JInternalFrame {
         DtServicio servicio = listaServicios.get(index);
         modeloListaImagenes.clear();
         modeloListaCategorias.clear();
+        tfProveedor.setText(proveedor);
         ta_descripcion.setText(servicio.getDescripcion());
         tf_precio.setText(Float.toString(servicio.getPrecio()));
         proveedor = servicio.getNkProveedor();
@@ -110,9 +111,9 @@ public class ActualizarServicio extends javax.swing.JInternalFrame {
         bajarCiudadesOrigen(paisOrigen);
         cb_ciudad_origen.setSelectedItem(ciudadOrigen);
         if (servicio.getNomCiuDestino() != null) {
-            cb_pais_destino.setVisible(true);
-            cb_ciudad_destino.setVisible(true);
-            lb_destino.setVisible(true);
+            cb_pais_destino.setEnabled(true);
+            cb_ciudad_destino.setEnabled(true);
+            lb_destino.setEnabled(true);
             bajarPaisesDestino();
             String ciudadDestino = servicio.getNomCiuDestino();
             String paisDestino = ManejadorCiudad.getInstance().obtenerCiudad(ciudadDestino).getPais().getNombre();
@@ -121,10 +122,14 @@ public class ActualizarServicio extends javax.swing.JInternalFrame {
             cb_ciudad_destino.setSelectedItem(ciudadDestino);
             tienedestino = true;
         } else {
-            cb_pais_destino.setVisible(false);
-            cb_ciudad_destino.setVisible(false);
-            lb_destino.setVisible(false);
-            tienedestino = false;
+            cb_pais_destino.setEnabled(false);
+            cb_ciudad_destino.setEnabled(false);
+            lb_destino.setEnabled(false);
+            cb_pais_destino.removeAllItems();
+            cb_pais_destino.addItem("-");
+            cb_ciudad_destino.removeAllItems();
+            cb_ciudad_destino.addItem("-");
+
         }
         this.imagenes = servicio.getImagenes();
         for (int i = 0; i < imagenes.size(); i++) {
@@ -225,6 +230,8 @@ public class ActualizarServicio extends javax.swing.JInternalFrame {
         btn_eliminar_categoria = new javax.swing.JButton();
         jButtonExpandir = new javax.swing.JButton();
         jLabelPrecio1 = new javax.swing.JLabel();
+        lProveedor = new javax.swing.JLabel();
+        tfProveedor = new javax.swing.JTextField();
 
         setClosable(true);
         setIconifiable(true);
@@ -368,7 +375,11 @@ public class ActualizarServicio extends javax.swing.JInternalFrame {
         });
         jButtonExpandir.setIcon(UIManager.getIcon("Tree.openIcon"));
 
-        jLabelPrecio1.setText("(U$S)");
+        jLabelPrecio1.setText("(U$D)");
+
+        lProveedor.setText("Proveedor:");
+
+        tfProveedor.setEditable(false);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -436,12 +447,15 @@ public class ActualizarServicio extends javax.swing.JInternalFrame {
                                     .addComponent(cb_ciudad_origen, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addGroup(layout.createSequentialGroup()
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                                 .addComponent(jLabNom)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(cb_nombre, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addComponent(jLabelServ, javax.swing.GroupLayout.Alignment.LEADING))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(18, 18, 18)
+                        .addComponent(lProveedor)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(tfProveedor)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -452,7 +466,9 @@ public class ActualizarServicio extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabNom)
-                    .addComponent(cb_nombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cb_nombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lProveedor)
+                    .addComponent(tfProveedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -516,13 +532,15 @@ public class ActualizarServicio extends javax.swing.JInternalFrame {
         String descripcion = this.ta_descripcion.getText();
         String origen = this.cb_ciudad_origen.getSelectedItem().toString();
         String destino = null;
-        if (tienedestino) 
+        if (tienedestino) {
             destino = this.cb_ciudad_destino.getSelectedItem().toString();
+        }
         float precio;
-        if (this.tf_precio.getText().equals(""))
+        if (this.tf_precio.getText().equals("")) {
             precio = 0;
-        else 
+        } else {
             precio = Float.parseFloat(this.tf_precio.getText());
+        }
         //System.out.println(descripcion);
         DtServicio dts = new DtServicio(nombre, proveedor, descripcion, this.imagenes, this.categorias, precio, origen, destino);
         String mensaje = IControlador.actualizarUnServicio(dts);
@@ -531,7 +549,7 @@ public class ActualizarServicio extends javax.swing.JInternalFrame {
         //modeloListaImagenes.clear();
         //modeloListaCategorias.clear();
         //this.imagenes = new ArrayList<String>();
-        //this.categorias = new HashMap<String, DtCategoria>(); 
+        //this.categorias = new HashMap<String, DtCategoria>();
         //tienedestino = true;
     }//GEN-LAST:event_AceptarActionPerformed
 
@@ -540,7 +558,7 @@ public class ActualizarServicio extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_CancelarActionPerformed
 
     private void cb_pais_origenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cb_pais_origenActionPerformed
-        bajarCiudadesOrigen((String) cb_pais_origen.getSelectedItem());        
+        bajarCiudadesOrigen((String) cb_pais_origen.getSelectedItem());
     }//GEN-LAST:event_cb_pais_origenActionPerformed
 
     private void cb_pais_destinoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cb_pais_destinoActionPerformed
@@ -649,7 +667,7 @@ public class ActualizarServicio extends javax.swing.JInternalFrame {
                 cb_pais_destino.setVisible(false);
                 cb_ciudad_destino.setVisible(false);
                 lb_destino.setVisible(false);
-                
+
             }
             this.categorias.remove(itemelegido);
             modeloListaCategorias.removeElement(itemelegido);
@@ -702,10 +720,12 @@ public class ActualizarServicio extends javax.swing.JInternalFrame {
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
+    private javax.swing.JLabel lProveedor;
     private javax.swing.JLabel lb_destino;
     private javax.swing.JList<String> lst_categorias;
     private javax.swing.JList<String> lst_imagenes;
     private javax.swing.JTextPane ta_descripcion;
+    private javax.swing.JTextField tfProveedor;
     private javax.swing.JTextField tf_precio;
     private javax.swing.JTree tr_categorias;
     // End of variables declaration//GEN-END:variables
