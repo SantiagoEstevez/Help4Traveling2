@@ -144,7 +144,7 @@ public class ManejadorCliente {
                 String correo = rsClientes.getString("email");
                 String fecha = rsClientes.getString("fechaNac");
                 Date nacimiento = new Date(fecha);
-                String imagen = "";
+                String imagen = rsClientes.getString("imagen");
 
                 Cliente nuevo = new Cliente(nombre, apellido, nickname, password, correo, nacimiento, imagen);
                 clientesNK.put(nickname, nuevo);

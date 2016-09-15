@@ -453,7 +453,7 @@ public class AltaUsuarioImagen extends javax.swing.JInternalFrame {
     public Image extraerImagen(File fichero) {
         Image img = null;
         try {
-            img = ImageIO.read(fichero);
+            img = ImageIO.read(fichero).getScaledInstance(100, 100, Image.SCALE_SMOOTH);
         } catch (IOException e) {
             e.printStackTrace();
         }
