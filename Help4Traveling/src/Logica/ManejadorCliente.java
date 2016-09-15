@@ -175,7 +175,7 @@ public class ManejadorCliente {
         Statement st;
         String mensaje = "Se dio de alta al Usuario Cliente.";
         String imagen = cli.getImagen();
-        if (imagen != null) {
+        if ((imagen != null) && (imagen != "")) {
             imagen = "'" + imagen + "'";
         }
         if (!existeNickname(cli.getNickname())) {
@@ -190,14 +190,16 @@ public class ManejadorCliente {
                 //System.out.println("antes de insertar");
                 st.executeUpdate(sqlau);
                 st.executeUpdate(sqlac);
-                if (imagen != null) {
+                if ((imagen != null) && (imagen != "")) {
                     st.executeUpdate(sqlai);
                 }
                 //con.close();
                 st.close();
                 System.out.println("INSERTE :)");
             } catch (SQLException e) {
+                mensaje = "ERROR: No se pudo insertar.";
                 System.out.println("No pude INSERTAR :(");
+                System.out.println(e);
             }
         } else {
             mensaje = "ERROR: El Nickname ingresado ya existe.";

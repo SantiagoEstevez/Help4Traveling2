@@ -36,89 +36,6 @@ public class VerInfoClienteTabla extends javax.swing.JInternalFrame {
     private DefaultTableCellRenderer centerRenderer;
     private DefaultTableCellRenderer rightRenderer;
 
-    /**
-     * Creates new form verInfoReserva
-     */
-    private void refrescarClientes() {
-        this.listaClientes = this.IControlador.listarClientes();
-        Iterator<DtUsuario> i = this.listaClientes.iterator();
-        modeloClientes.getDataVector().removeAllElements();
-
-        while (i.hasNext()) {
-            DtUsuario u = i.next();
-            Object[] fila = {
-                u.getNickname(),
-                u.getNombre(),
-                u.getApellido(),
-                u.getNacimiento().getFecha("-"),
-                u.getImagen()
-            };
-            modeloClientes.addRow(fila);
-        }
-        Clientes.setModel(modeloClientes);
-        Clientes.getColumnModel().getColumn(3).setCellRenderer(centerRenderer);
-    }
-
-    private void refrescarReservas() {
-        Integer index = Clientes.getSelectedRow();
-        if (index != -1) {
-            DtUsuario u = listaClientes.get(index);
-            this.listaReservas = this.IControlador.listarReservasCliente(u);
-            modeloReservas.setRowCount(0);
-
-            if (listaReservas != null) {
-                Iterator<DtReserva> it = this.listaReservas.iterator();
-
-                while (it.hasNext()) {
-                    DtReserva r = it.next();
-                    Object[] fila = {
-                        r.getId(),
-                        r.getCreada().getFecha("-"),
-                        r.getEstado(),
-                        r.getTotal()
-                    };
-                    modeloReservas.addRow(fila);
-                }
-            }
-
-            Reservas.setModel(modeloReservas);
-            Reservas.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
-            Reservas.getColumnModel().getColumn(1).setCellRenderer(centerRenderer);
-            Reservas.getColumnModel().getColumn(3).setCellRenderer(rightRenderer);
-        }
-    }
-
-    private void refrescarFoto() {
-        Integer index = Clientes.getSelectedRow();
-        if (index != -1) {
-            DtUsuario u = listaClientes.get(index);
-            String ruta = u.getImagen();
-            System.out.println("Ruta: " + ruta);
-            if (ruta == null) {
-                jp_foto.repaint();
-            } else {
-                File fichero = new File(ruta);
-                System.out.println("Fichero: " + fichero);
-                mostrarImagen(extraerImagen(fichero));
-            }
-
-        }
-    }
-
-    public Image extraerImagen(File fichero) {
-        Image img = null;
-        try {
-            img = ImageIO.read(fichero).getScaledInstance(100, 100, Image.SCALE_SMOOTH);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return img;
-    }
-
-    public void mostrarImagen(Image img) {
-        jp_foto.getGraphics().drawImage(img, 0, 0, 100, 100, java.awt.Color.BLACK, null);
-    }
-
     public VerInfoClienteTabla() {
         this.centerRenderer = new DefaultTableCellRenderer();
         centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
@@ -147,7 +64,7 @@ public class VerInfoClienteTabla extends javax.swing.JInternalFrame {
         refrescarClientes();
         if (Clientes.getRowCount() > 0) {
             Clientes.setRowSelectionInterval(0, 0);
-            refrescarFoto();
+            refrescarImagen();
             refrescarReservas();
         } else {
             Reservas.setModel(modeloReservas);
@@ -172,8 +89,8 @@ public class VerInfoClienteTabla extends javax.swing.JInternalFrame {
         lbClientes = new javax.swing.JLabel();
         Actualizar = new javax.swing.JButton();
         Aceptar = new javax.swing.JButton();
-        jp_foto = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
+        jpImagen = new javax.swing.JPanel();
 
         setClosable(true);
         setIconifiable(true);
@@ -256,21 +173,22 @@ public class VerInfoClienteTabla extends javax.swing.JInternalFrame {
             }
         });
 
-        jp_foto.setBackground(new java.awt.Color(255, 255, 255));
-        jp_foto.setMinimumSize(new java.awt.Dimension(100, 100));
-
-        javax.swing.GroupLayout jp_fotoLayout = new javax.swing.GroupLayout(jp_foto);
-        jp_foto.setLayout(jp_fotoLayout);
-        jp_fotoLayout.setHorizontalGroup(
-            jp_fotoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 100, Short.MAX_VALUE)
-        );
-        jp_fotoLayout.setVerticalGroup(
-            jp_fotoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 100, Short.MAX_VALUE)
-        );
-
         jLabel1.setText("Imagen:");
+
+        jpImagen.setBackground(new java.awt.Color(255, 255, 255));
+        jpImagen.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jpImagen.setPreferredSize(new java.awt.Dimension(105, 105));
+
+        javax.swing.GroupLayout jpImagenLayout = new javax.swing.GroupLayout(jpImagen);
+        jpImagen.setLayout(jpImagenLayout);
+        jpImagenLayout.setHorizontalGroup(
+            jpImagenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 101, Short.MAX_VALUE)
+        );
+        jpImagenLayout.setVerticalGroup(
+            jpImagenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 101, Short.MAX_VALUE)
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -279,23 +197,26 @@ public class VerInfoClienteTabla extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 586, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(Actualizar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(Aceptar))
-                    .addComponent(lbClientes)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(lbClientes)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jScrollPane1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(lbReservas)
-                                .addGap(192, 192, 192)))
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addComponent(jScrollPane1))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1)
-                            .addComponent(jp_foto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel1)
+                                .addGap(60, 60, 60))
+                            .addComponent(jpImagen, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -304,30 +225,117 @@ public class VerInfoClienteTabla extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addComponent(lbClientes)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 90, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 86, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lbReservas)
                     .addComponent(jLabel1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(0, 0, 0)
-                        .addComponent(jp_foto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(Actualizar)
-                    .addComponent(Aceptar))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 106, Short.MAX_VALUE)
+                        .addGap(10, 10, 10)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(Actualizar)
+                            .addComponent(Aceptar)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jpImagen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+    /**
+     * Creates new form verInfoReserva
+     */
+
+    private void refrescarClientes() {
+        this.listaClientes = this.IControlador.listarClientes();
+        Iterator<DtUsuario> i = this.listaClientes.iterator();
+        modeloClientes.getDataVector().removeAllElements();
+
+        while (i.hasNext()) {
+            DtUsuario u = i.next();
+            Object[] fila = {
+                u.getNickname(),
+                u.getNombre(),
+                u.getApellido(),
+                u.getNacimiento().getFecha("-"),
+                u.getImagen()
+            };
+            modeloClientes.addRow(fila);
+        }
+        Clientes.setModel(modeloClientes);
+        Clientes.getColumnModel().getColumn(3).setCellRenderer(centerRenderer);
+    }
+
+    private void refrescarReservas() {
+        Integer index = Clientes.getSelectedRow();
+        if (index != -1) {
+            DtUsuario u = listaClientes.get(index);
+            this.listaReservas = this.IControlador.listarReservasCliente(u);
+            modeloReservas.setRowCount(0);
+
+            if (listaReservas != null) {
+                Iterator<DtReserva> it = this.listaReservas.iterator();
+
+                while (it.hasNext()) {
+                    DtReserva r = it.next();
+                    Object[] fila = {
+                        r.getId(),
+                        r.getCreada().getFecha("-"),
+                        r.getEstado(),
+                        r.getTotal()
+                    };
+                    modeloReservas.addRow(fila);
+                }
+            }
+
+            Reservas.setModel(modeloReservas);
+            Reservas.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
+            Reservas.getColumnModel().getColumn(1).setCellRenderer(centerRenderer);
+            Reservas.getColumnModel().getColumn(3).setCellRenderer(rightRenderer);
+        }
+    }
+
+    private void refrescarImagen() {
+        Integer index = Clientes.getSelectedRow();
+        if (index > -1) {
+            DtUsuario u = listaClientes.get(index);
+            String ruta = u.getImagen();
+            if (ruta != null) {
+                File imagen = new File(ruta);
+                if (imagen.exists() && (imagen.isFile()) && (imagen.canRead())) {
+                    //System.out.println("Fichero: " + imagen);
+                    mostrarImagen(extraerImagen(imagen));
+                } else {
+                    jpImagen.repaint();
+                }
+            } else {
+                jpImagen.repaint();
+                //mostrarImagen(new ImageIcon(getClass().getResource("/Iconos/user.png")).getImage());
+            }
+        }
+    }
+
+    public Image extraerImagen(File imagen) {
+        Image img = null;
+        try {
+            img = ImageIO.read(imagen).getScaledInstance(100, 100, Image.SCALE_SMOOTH);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return img;
+    }
+
+    public void mostrarImagen(Image img) {
+        jpImagen.getGraphics().drawImage(img, 2, 2, 100, 100, java.awt.Color.BLACK, null);
+    }
 
     private void ClientesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ClientesMouseClicked
         if (Clientes.getSelectedRowCount() > 0) {
-            refrescarFoto();
+            refrescarImagen();
             refrescarReservas();
         }
     }//GEN-LAST:event_ClientesMouseClicked
@@ -353,7 +361,7 @@ public class VerInfoClienteTabla extends javax.swing.JInternalFrame {
 
     private void ClientesKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_ClientesKeyReleased
         if (Clientes.getSelectedRowCount() > 0) {
-            refrescarFoto();
+            refrescarImagen();
             refrescarReservas();
         }
     }//GEN-LAST:event_ClientesKeyReleased
@@ -366,7 +374,7 @@ public class VerInfoClienteTabla extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JPanel jp_foto;
+    private javax.swing.JPanel jpImagen;
     private javax.swing.JLabel lbClientes;
     private javax.swing.JLabel lbReservas;
     // End of variables declaration//GEN-END:variables
