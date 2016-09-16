@@ -400,6 +400,7 @@ public class ManejadorServicio {
                     System.out.println("INSERTE :)");
                 } catch (SQLException e) {
                     System.out.println("No pude INSERTAR :(");
+                    System.out.println(e);
                 }
             }
             Map<String, DtCategoria> catserv = serv.getDtCategorias();

@@ -9,10 +9,6 @@ import static Logica.Reserva.eEstado.CANCELADA;
 import static Logica.Reserva.eEstado.FACTURADA;
 import static Logica.Reserva.eEstado.PAGADA;
 import static Logica.Reserva.eEstado.REGISTRADA;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.Map;
 
 /**
@@ -47,12 +43,13 @@ public class DtReserva {
     }
 
     public Reserva.eEstado getEstado() {
+        String estado = this.estado.toString();
+        Reserva.eEstado estadoret = null;
+        /*
         ////conexion = new Conexion();
         Connection con = Conexion.getInstance().getConnection();
         Statement st;
         ResultSet rsEstado;
-        String estado = null;
-        Reserva.eEstado estadoret = null;
 
         String sql1 = "SELECT * FROM reservas WHERE numero='" + this.id + "'";
         try {
@@ -69,6 +66,7 @@ public class DtReserva {
             System.out.println("No tiene Estado :(");
             System.err.println(e.getMessage());
         }
+         */
 
         switch (estado) {
             case "REGISTRADA":

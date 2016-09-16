@@ -46,13 +46,8 @@
                   </Group>
                   <Group type="102" attributes="0">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" attributes="0">
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
-                                  <Component id="jLabel1" alignment="0" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                          </Group>
+                          <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
+                          <Component id="jLabel1" alignment="0" min="-2" max="-2" attributes="0"/>
                           <Component id="jScrollPane1" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
@@ -75,7 +70,7 @@
               <EmptySpace min="-2" max="-2" attributes="0"/>
               <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
-              <Component id="jScrollPane2" pref="133" max="32767" attributes="0"/>
+              <Component id="jScrollPane2" pref="122" max="32767" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
                       <Group type="103" groupAlignment="3" attributes="0">
@@ -83,7 +78,7 @@
                           <Component id="jLabel3" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
-                      <Component id="jScrollPane1" pref="133" max="32767" attributes="0"/>
+                      <Component id="jScrollPane1" pref="140" max="32767" attributes="0"/>
                       <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="Actualizar" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -93,10 +88,10 @@
                   <Group type="102" attributes="0">
                       <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
                       <Component id="jpImagen" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                      <EmptySpace min="0" pref="79" max="32767" attributes="0"/>
                   </Group>
               </Group>
-              <EmptySpace max="-2" attributes="0"/>
+              <EmptySpace min="-2" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -112,7 +107,7 @@
         <Component class="javax.swing.JTable" name="Servicios">
           <Properties>
             <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-              <Table columnCount="4" rowCount="4">
+              <Table columnCount="4" rowCount="0">
                 <Column editable="false" title="Nombre" type="java.lang.Object"/>
                 <Column editable="false" title="Precio" type="java.lang.Object"/>
                 <Column editable="false" title="Origen" type="java.lang.Object"/>
@@ -166,7 +161,7 @@
         <Component class="javax.swing.JTable" name="Proveedores">
           <Properties>
             <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-              <Table columnCount="6" rowCount="4">
+              <Table columnCount="6" rowCount="0">
                 <Column editable="true" title="Alias" type="java.lang.Object"/>
                 <Column editable="true" title="Nombre" type="java.lang.Object"/>
                 <Column editable="true" title="Apellido" type="java.lang.Object"/>

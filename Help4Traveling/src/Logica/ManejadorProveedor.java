@@ -154,7 +154,7 @@ public class ManejadorProveedor {
                 System.out.println(empresa);
                 String link = rsProveedores.getString("link");
                 System.out.println(link);
-                String imagen = "imagen";
+                String imagen = rsProveedores.getString("imagen");;
                 //String empresa = rsProveedores.getString("Empresa");
                 //String direccion = rsProveedores.getString("Direccion");
                 Proveedor nuevo = new Proveedor(nombre, apellido, nickname, password, correo, nacimiento, imagen, empresa, link);

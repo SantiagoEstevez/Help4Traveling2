@@ -97,15 +97,12 @@ public class VerInfoClienteTabla extends javax.swing.JInternalFrame {
         setResizable(true);
         setTitle("Ver Info Cliente");
         setFrameIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/info-icon.png"))); // NOI18N
-        setMinimumSize(new java.awt.Dimension(440, 240));
-        setPreferredSize(new java.awt.Dimension(600, 336));
+        setMinimumSize(new java.awt.Dimension(500, 350));
+        setPreferredSize(new java.awt.Dimension(600, 400));
 
         Reservas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
                 "Número", "Fecha", "Estado", "Total"
@@ -128,10 +125,7 @@ public class VerInfoClienteTabla extends javax.swing.JInternalFrame {
 
         Clientes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+
             },
             new String [] {
                 "Alias", "Nombre", "Apellido", "Nacimiento", "Imagen"
@@ -142,8 +136,8 @@ public class VerInfoClienteTabla extends javax.swing.JInternalFrame {
         Clientes.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         Clientes.getTableHeader().setReorderingAllowed(false);
         Clientes.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                ClientesMouseClicked(evt);
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                ClientesMouseReleased(evt);
             }
         });
         Clientes.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -225,16 +219,16 @@ public class VerInfoClienteTabla extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addComponent(lbClientes)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 118, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lbReservas)
                     .addComponent(jLabel1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 138, Short.MAX_VALUE)
-                        .addGap(10, 10, 10)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 140, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(Actualizar)
                             .addComponent(Aceptar)))
@@ -333,13 +327,6 @@ public class VerInfoClienteTabla extends javax.swing.JInternalFrame {
         jpImagen.getGraphics().drawImage(img, 2, 2, 100, 100, java.awt.Color.BLACK, null);
     }
 
-    private void ClientesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ClientesMouseClicked
-        if (Clientes.getSelectedRowCount() > 0) {
-            refrescarImagen();
-            refrescarReservas();
-        }
-    }//GEN-LAST:event_ClientesMouseClicked
-
     private void ActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ActualizarActionPerformed
         int fila = 0;
         if (Clientes.getSelectedRowCount() > 0) {
@@ -365,6 +352,13 @@ public class VerInfoClienteTabla extends javax.swing.JInternalFrame {
             refrescarReservas();
         }
     }//GEN-LAST:event_ClientesKeyReleased
+
+    private void ClientesMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ClientesMouseReleased
+        if (Clientes.getSelectedRowCount() > 0) {
+            refrescarImagen();
+            refrescarReservas();
+        }
+    }//GEN-LAST:event_ClientesMouseReleased
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Aceptar;
