@@ -11,8 +11,10 @@ import Logica.DtUsuario;
 import Logica.Fabrica;
 import Logica.IControladorServicio;
 import Logica.ManejadorProveedor;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
 import javax.swing.event.TableModelEvent;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -104,11 +106,24 @@ public class AltaPromocion extends javax.swing.JInternalFrame {
     }
 
     public DtPromocion armarDtPromo() {
+
+        Integer index = 0;
+        List<DtServicio> listaServiciosPromo = new ArrayList<>();
+        Iterator<DtServicio> i = listaServicios.iterator();
+        while (i.hasNext()) {
+            DtServicio serv = i.next();
+            if (Integer.parseInt(modelo.getValueAt(index, 0).toString()) > 0) {
+                listaServiciosPromo.add(serv);
+            }
+            index++;
+        }
+
         DtPromocion dtp = new DtPromocion(
                 jTextFieldPromo.getText(),
                 jComboBoxProv.getSelectedItem().toString(),
                 jTextFieldDesc.getText(),
-                jTextFieldFinal.getText());
+                jTextFieldFinal.getText(),
+                listaServiciosPromo);
         System.out.println(dtp);
         return dtp;
     }
@@ -202,6 +217,16 @@ public class AltaPromocion extends javax.swing.JInternalFrame {
                 "Cantidad", "Nombre", "Proveedor", "Precio"
             }
         ));
+        jTableOfertas.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTableOfertasMouseClicked(evt);
+            }
+        });
+        jTableOfertas.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                jTableOfertasPropertyChange(evt);
+            }
+        });
         jTableOfertas.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 jTableOfertasKeyReleased(evt);
@@ -359,7 +384,17 @@ public class AltaPromocion extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jButtonCancelarActionPerformed
 
     private void jButtonAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAceptarActionPerformed
-        IControlador.altaDePromocion(armarDtPromo());
+        if (Double.parseDouble(jTextFieldTotal.getText()) > 0) {
+            String mensaje = IControlador.altaDePromocion(armarDtPromo());
+            if (mensaje.startsWith("ERROR")) {
+                JOptionPane.showMessageDialog(null, mensaje, "Error", JOptionPane.ERROR_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(null, mensaje, "Aviso", JOptionPane.INFORMATION_MESSAGE);
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Una promoción debe incluir al menos un servicio.", "Advertencia", JOptionPane.WARNING_MESSAGE);
+        }
+
     }//GEN-LAST:event_jButtonAceptarActionPerformed
 
     private void jTextFieldPromoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldPromoKeyReleased
@@ -381,6 +416,14 @@ public class AltaPromocion extends javax.swing.JInternalFrame {
     private void jTableOfertasKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTableOfertasKeyReleased
         calcularTotal();
     }//GEN-LAST:event_jTableOfertasKeyReleased
+
+    private void jTableOfertasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableOfertasMouseClicked
+        calcularTotal();
+    }//GEN-LAST:event_jTableOfertasMouseClicked
+
+    private void jTableOfertasPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jTableOfertasPropertyChange
+        calcularTotal();
+    }//GEN-LAST:event_jTableOfertasPropertyChange
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;

@@ -65,7 +65,7 @@ public class ControladorServicio implements IControladorServicio {
         mensaje = altaServicio(dts);
         return mensaje;
     }
-    
+
     private String actualizarServicio(DtServicio dts) {
         String mensaje = comprobarCompletitudDatos(dts);
         if (mensaje.equals("CAMPOSOK")) {
@@ -74,16 +74,16 @@ public class ControladorServicio implements IControladorServicio {
         }
         return mensaje;
     }
-    
+
     public String actualizarUnServicio(DtServicio dts) {
         String mensaje = "El servicio fue actualizado con exito.";
         mensaje = actualizarServicio(dts);
         return mensaje;
-    }    
+    }
 
-    public void altaDePromocion(DtPromocion dtp) {
+    public String altaDePromocion(DtPromocion dtp) {
         ManejadorServicio ms = ManejadorServicio.getInstance();
-        ms.persistirPromo(dtp);
+        return ms.persistirPromo(dtp);
     }
 
     public String altaDeCategoria(String nombre, String NombPadre) {

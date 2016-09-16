@@ -74,6 +74,34 @@ public class ManejadorServicio {
         //return serviciosNom.containsKey(nombre);
     }
 
+    public boolean existePromo(String nombre) {
+        boolean existe = false;
+        ResultSet rs;
+        //Conexion conexion = new Conexion();
+        Connection con = Conexion.getInstance().getConnection();
+        Statement st;
+        String sql1 = "SELECT * FROM help4traveling.promociones WHERE nombre='" + nombre + "'";
+        try {
+            st = con.createStatement();
+            rs = st.executeQuery(sql1);
+            if (rs.next()) {
+                existe = true;
+            }
+            rs.close();
+            con.close();
+            st.close();
+        } catch (SQLException e) {
+            System.out.println("No exite servicio :(");
+        }
+        if (existe) {
+            System.out.println("Existe Servicio");
+        } else {
+            System.out.println("NO Existe Servico");
+        }
+        return existe;
+        //return serviciosNom.containsKey(nombre);
+    }
+
     public Servicio obtenerServicio(String nk) {
 
         ResultSet rsServicio;
@@ -290,22 +318,22 @@ public class ManejadorServicio {
         //conexion = new Conexion();
         Connection con = Conexion.getInstance().getConnection();
         Statement st;
-        ResultSet rsServiciosProveedor;
-        sql = "SELECT * FROM help4traveling.servicios WHERE proveedor= '" + promo.getNombre() + "'";
+        ResultSet rsServiciosPromo;
+        sql = "SELECT * FROM help4traveling.promocionesservicios WHERE promocion= '" + promo.getNombre() + "'";
 
         List<DtServicio> listaServicios = new ArrayList<DtServicio>();
         try {
             st = con.createStatement();
-            rsServiciosProveedor = st.executeQuery(sql);
+            rsServiciosPromo = st.executeQuery(sql);
 
             DtServicio ser;
-            while (rsServiciosProveedor.next()) {
-                String nombre = rsServiciosProveedor.getString("nombre");
-                String nkproveedor = rsServiciosProveedor.getString("proveedor");
+            while (rsServiciosPromo.next()) {
+                String nombre = rsServiciosPromo.getString("servicio");
+                String nkproveedor = rsServiciosPromo.getString("proveedorServicio");
                 ser = getDtServicio(nombre, nkproveedor);
                 listaServicios.add(ser);
             }
-            rsServiciosProveedor.close();
+            rsServiciosPromo.close();
             con.close();
             st.close();
 
@@ -482,9 +510,9 @@ public class ManejadorServicio {
         //conexion = new Conexion();
         Connection con = Conexion.getInstance().getConnection();
         Statement st;
-        String mensaje = "Almacenando Promo: OK";
+        String mensaje = "Promo almacenada correctamente.";
         System.out.println(promo.getNombre());
-        if (!existeServicio(promo.getNombre())) {
+        if (!existePromo(promo.getNombre())) {
             //sql = "INSERT INTO help4traveling.servicios (nombre,proveedor,descripcion,precio,origen,destino) VALUES ('" + serv.getNombre() + "','" + serv.getProveedor().getNickname() + "','" + serv.getDescripcion() + "'," + (double) serv.getPrecio() + ",'" + serv.getOrigen().getNombre() + "','" + serv.getDestino().getNombre() + "')";
             sql = "INSERT INTO help4traveling.ofertas (nombre,proveedor) VALUES ('" + promo.getNombre() + "','" + promo.getProveedor() + "')";
             System.out.println(sql);
@@ -503,7 +531,7 @@ public class ManejadorServicio {
             try {
                 st = con.createStatement();
                 st.executeUpdate(sql);
-                con.close();
+                //con.close();
                 st.close();
                 System.out.println("INSERTE en promocion:)");
             } catch (SQLException e) {
@@ -511,28 +539,37 @@ public class ManejadorServicio {
                 System.err.println(e);
             }
 
-            // PASAR LISTA DE SERVICIOS ASOCIADOS EN DT
-            /*
-            List<String> servicios = listarServiciosDePromociones(promo.getNombre(), promo.getProveedor());
-            Iterator<String> it = servicios.iterator();
-            con = Conexion.getInstance().getConnection();
-            while (it.hasNext()) {
-                sql = "INSERT INTO help4traveling.promocionesservicios"
-                        + " (promocion,proveedorPromocion,servicio,proveedorServicio) VALUES ('"
-                        + promo.getNombre() + "','" + promo.getProveedor() + "','" + it.next() + "')";
+            //List<String> servicios = listarServiciosDePromociones(promo.getNombre(), promo.getProveedor());
+            List<DtServicio> servicios = promo.getServicios();
+
+            if (servicios != null) {
+                Iterator<DtServicio> it = servicios.iterator();
+                while (it.hasNext()) {
+                    DtServicio dts = it.next();
+                    String servicio = dts.getNombre();
+                    String proveedor = dts.getNkProveedor();
+                    sql = "INSERT INTO help4traveling.promocionesservicios"
+                            + " (promocion,proveedorPromocion,servicio,proveedorServicio) VALUES ('"
+                            + promo.getNombre() + "','" + promo.getProveedor() + "','" + servicio + "','" + proveedor + "')";
+                    try {
+                        st = con.createStatement();
+                        st.executeUpdate(sql);
+                        st.close();
+                        System.out.println("INSERTE :)");
+                    } catch (SQLException e) {
+                        System.out.println("No pude INSERTAR :(");
+                        System.err.println(e);
+                    }
+                }
                 try {
-                    st = con.createStatement();
-                    st.executeUpdate(sql);
-                    st.close();
                     con.close();
-                    System.out.println("INSERTE :)");
-                } catch (SQLException e) {
+                } catch (SQLException ex) {
                     System.out.println("No pude INSERTAR :(");
+                    System.err.println(ex);
                 }
             }
-             */
         } else {
-            mensaje = "ERROR: La promo ingresada ya existe...";
+            mensaje = "ERROR: La promo ingresada ya existe.";
         }
         return mensaje;
 

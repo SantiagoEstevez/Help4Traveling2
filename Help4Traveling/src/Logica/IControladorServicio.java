@@ -16,7 +16,7 @@ public interface IControladorServicio {
 
     public abstract String altaDeServicio(DtServicio dts);
 
-    public abstract void altaDePromocion(DtPromocion dtp);
+    public abstract String altaDePromocion(DtPromocion dtp);
 
     public abstract String altaDeCategoria(String nombre, String NombPadre);
 

@@ -5,6 +5,8 @@
  */
 package Logica;
 
+import java.util.List;
+
 /**
  *
  * @author HP Usuario
@@ -16,7 +18,7 @@ public class DtPromocion {
     private String proveedor;
     private String precio;
     private String descuento;
-    //private List<DtServicio> servicios;
+    private List<DtServicio> servicios;
 
     public DtPromocion(String nombre, String proveedor, String precio, String descuento/*, List<DtServicio> servicios*/) {
         this.nombre = nombre;
@@ -24,6 +26,14 @@ public class DtPromocion {
         this.precio = precio;
         this.descuento = descuento;
         //this.servicios = servicios;
+    }
+
+    public DtPromocion(String nombre, String proveedor, String precio, String descuento, List<DtServicio> servicios) {
+        this.nombre = nombre;
+        this.proveedor = proveedor;
+        this.precio = precio;
+        this.descuento = descuento;
+        this.servicios = servicios;
     }
 
     public String getNombre() {
@@ -42,9 +52,7 @@ public class DtPromocion {
         return descuento;
     }
 
-    /*
     public List<DtServicio> getServicios() {
         return servicios;
     }
-     */
 }
