@@ -60,9 +60,12 @@ public class Principal extends javax.swing.JFrame {
         this.fc_seleccionar_archivo.setVisible(false);
 
         this.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+
+        /*
         if (!Conexion.getInstance().getEstado()) {
             habilitarMenus(false);
         }
+         */
         this.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
 
         //agregarScripts("Datos/");

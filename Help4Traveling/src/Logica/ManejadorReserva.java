@@ -18,7 +18,10 @@ public class ManejadorReserva {
     private String sql;
     private Map<Long, Reserva> reservasId;
     private Map<Integer, List<ItemReserva>> itemsId;
-    public static enum eEstado {REGISTRADA, CANCELADA, PAGADA, FACTURADA};    
+
+    public static enum eEstado {
+        REGISTRADA, CANCELADA, PAGADA, FACTURADA
+    };
 
     private ManejadorReserva() {
         reservasId = new HashMap<>();
@@ -69,7 +72,7 @@ public class ManejadorReserva {
 
                             st.executeUpdate(sql);
                         }
-                        //con.close();
+                        con.close();
                         st.close();
                         System.out.println("Reserva creada con exito :)");
                     }
@@ -97,7 +100,7 @@ public class ManejadorReserva {
             st = con.createStatement();
             System.out.print("Eliminando items...");
             st.executeUpdate(sql);
-            ////con.close();
+            //con.close();
             st.close();
             System.out.println("OK");
 
@@ -110,7 +113,7 @@ public class ManejadorReserva {
             st = con.createStatement();
             System.out.print("Eliminando reserva...");
             st.executeUpdate(sql);
-            //con.close();
+            con.close();
             st.close();
             System.out.println("OK");
 
@@ -139,7 +142,7 @@ public class ManejadorReserva {
     public List<DtItemReserva> listarItems(Integer reserva) {
         List<DtItemReserva> listaItems = new ArrayList<>();
         List<ItemReserva> itemsReserva = this.itemsId.get(reserva);
-        
+
         if (itemsReserva != null) {
             Iterator<ItemReserva> iter = itemsReserva.iterator();
             while (iter.hasNext()) {
@@ -147,7 +150,7 @@ public class ManejadorReserva {
                 listaItems.add(item.getDtItem());
             }
         }
-        
+
         return listaItems;
     }
 
@@ -167,7 +170,7 @@ public class ManejadorReserva {
             st = con.createStatement();
             System.out.print("Modificando estado...");
             st.executeUpdate(sql);
-            //con.close();
+            con.close();
             st.close();
             System.out.println("OK");
 
@@ -243,7 +246,7 @@ public class ManejadorReserva {
 
             }
             rsReservasCliente.close();
-            //con.close();
+            con.close();
             st.close();
 
         } catch (SQLException e) {
@@ -297,7 +300,7 @@ public class ManejadorReserva {
                 }
                 System.out.println();
                 rsReservas.close();
-                //con.close();
+                con.close();
                 st.close();
 
                 System.out.println("Reservas cargadas!");
@@ -354,7 +357,7 @@ public class ManejadorReserva {
                 }
                 System.out.println();
                 rsItems.close();
-                //con.close();
+                con.close();
                 st.close();
 
                 System.out.println("Items cargados!");

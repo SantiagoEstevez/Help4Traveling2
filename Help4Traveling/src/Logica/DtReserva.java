@@ -63,7 +63,7 @@ public class DtReserva {
             estado = rsEstado.getString("estado");
 
             rsEstado.close();
-            //con.close();
+            con.close();
             st.close();
         } catch (SQLException e) {
             System.out.println("No tiene Estado :(");

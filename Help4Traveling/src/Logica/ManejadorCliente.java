@@ -56,7 +56,7 @@ public class ManejadorCliente {
                 existe = true;
             }
             rs.close();
-            //con.close();
+            con.close();
             st.close();
         } catch (SQLException e) {
             System.out.println("No exite cliente :(");
@@ -85,7 +85,7 @@ public class ManejadorCliente {
             }
             rs.close();
             st.close();
-            //con.close();
+            con.close();
         } catch (SQLException e) {
             System.out.println("No existe correo :(");
         }
@@ -112,7 +112,7 @@ public class ManejadorCliente {
 
 
             rsCliente.close();
-            //con.close();
+            con.close();
             st.close();
 
         } catch(SQLException e){
@@ -150,7 +150,7 @@ public class ManejadorCliente {
                 clientesNK.put(nickname, nuevo);
             }
             rsClientes.close();
-            //con.close();
+            con.close();
             st.close();
 
             System.out.println("Usuarios cargados :)");
@@ -191,11 +191,11 @@ public class ManejadorCliente {
                 //System.out.println("antes de insertar");
                 st.executeUpdate(sqlau);
                 st.executeUpdate(sqlac);
-                if ((imagen != null) && (imagen != "")) {
+                if ((imagen != null) && (!imagen.equals(""))) {
                     //st.executeUpdate(sqlai);
                     con.prepareStatement(sqlai);
                 }
-                //con.close();
+                con.close();
                 st.close();
                 System.out.println("INSERTE :)");
             } catch (SQLException e) {

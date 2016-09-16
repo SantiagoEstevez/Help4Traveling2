@@ -14,7 +14,6 @@ public class Conexion {
     private static Connection con;
 
     private Conexion() {
-        abrirConexion();
     }
 
     public static Conexion getInstance() {
@@ -39,6 +38,7 @@ public class Conexion {
     }
 
     public Connection getConnection() {
+        abrirConexion();
         return con;
     }
 
@@ -60,8 +60,8 @@ public class Conexion {
             } catch (SQLException ex) {
                 System.out.println("ERROR.");
                 System.out.println(ex);
-                JOptionPane.showMessageDialog(null, "No se pudo establecer la conexión.", "Aviso", JOptionPane.ERROR_MESSAGE);
-                //con.close();
+                JOptionPane.showMessageDialog(null, "Error: No se pudo establecer la conexión.", "Aviso", JOptionPane.ERROR_MESSAGE);
+                con.close();
             }
         } catch (Exception e) {
             System.out.println("ERROR.");

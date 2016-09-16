@@ -647,7 +647,7 @@ public class altaServicio extends javax.swing.JInternalFrame {
             DtCategoria cat = new DtCategoria(nodo.toString(), padre);
             this.categorias.put(nodo.toString(), cat);
             modeloListaCategorias.addElement(nodo.toString());
-            if (padre.equals("Vuelos") || padre.equals("Tipo vuelo")) {
+            if ((padre != null) && (padre.equals("Vuelos") || padre.equals("Tipo vuelo"))) {
                 pn_destinos.setVisible(true);
             } else {
                 pn_destinos.setVisible(false);

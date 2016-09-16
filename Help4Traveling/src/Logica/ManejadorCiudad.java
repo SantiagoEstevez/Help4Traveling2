@@ -57,7 +57,7 @@ public class ManejadorCiudad {
             }
             rs.close();
             st.close();
-            //con.close();
+            con.close();
             System.out.println("Paises cargados :)");
         } catch (SQLException e) {
             System.out.println("No pude cargar Paises :(");
@@ -81,7 +81,7 @@ public class ManejadorCiudad {
             }
             rs.close();
             st.close();
-            //con.close();
+            con.close();
             System.out.println("Paises cargados :)");
         } catch (SQLException e) {
             System.out.println("No pude cargar Paises :(");
@@ -104,7 +104,7 @@ public class ManejadorCiudad {
             Pais p = new Pais(rs.getString("pais"), null);
             ciu = new Ciudad(rs.getString("nombre"), p);
             rs.close();
-            //con.close();
+            con.close();
             st.close();
         } catch (SQLException e) {
             System.out.println("No obtuve ciudad :(");
@@ -135,7 +135,7 @@ public class ManejadorCiudad {
             Pais p = new Pais(pais, null);
             ciu = new Ciudad(ciudad, p);
             rs.close();
-            //con.close();
+            con.close();
             st.close();
 
         } catch (SQLException e) {

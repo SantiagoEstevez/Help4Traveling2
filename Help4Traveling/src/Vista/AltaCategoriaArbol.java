@@ -36,9 +36,9 @@ public class AltaCategoriaArbol extends javax.swing.JInternalFrame {
         Fabrica fabrica = Fabrica.getInstance();
         this.IControlador = fabrica.getIControladorServicio();
         System.out.println(Conexion.getInstance().getEstado());
-        if (Conexion.getInstance().getEstado()) {
-            this.listaCategorias = ManejadorCategoria.getInstance().getNombresCategorias();
-        }
+        //if (Conexion.getInstance().getEstado()) {
+        this.listaCategorias = ManejadorCategoria.getInstance().getNombresCategorias();
+        //}
         Iterator<String> iter = this.listaCategorias.iterator();
         while (iter.hasNext()) {
             String nomCat = iter.next();
@@ -47,9 +47,9 @@ public class AltaCategoriaArbol extends javax.swing.JInternalFrame {
         DefaultMutableTreeNode raiz = new DefaultMutableTreeNode("Categorias");
         DefaultTreeModel modelo = new DefaultTreeModel(raiz);
 
-        if (Conexion.getInstance().getEstado()) {
-            MostrarArbol(raiz);
-        }
+        //if (Conexion.getInstance().getEstado()) {
+        MostrarArbol(raiz);
+        //}
         jTreeCategorias.setModel(modelo);
         //jPanel1.setVisible(false);
 

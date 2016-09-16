@@ -63,7 +63,7 @@ public class ManejadorCategoria {
                 existe = true;
             }
             rs.close();
-            //con.close();
+            con.close();
             st.close();
         } catch (SQLException e) {
             System.out.println("error :(");
@@ -114,7 +114,7 @@ public class ManejadorCategoria {
                 System.out.println("antes de insertar");
                 st.executeUpdate(sqlau);
 
-                //con.close();
+                con.close();
                 st.close();
                 System.out.println("YA INSERTE :)");
             } catch (SQLException e) {
@@ -144,7 +144,7 @@ public class ManejadorCategoria {
             }
             rs.close();
             st.close();
-            //con.close();
+            con.close();
         } catch (SQLException e) {
             System.out.println("No pude obtener categorias :(");
         }
@@ -172,7 +172,7 @@ public class ManejadorCategoria {
             }
             rsCategorias.close();
             st.close();
-            //con.close();
+            con.close();
         } catch (SQLException e) {
             System.out.println("No pude obtener categorias :(");
         }
@@ -196,7 +196,7 @@ public class ManejadorCategoria {
             }
             rs.close();
             st.close();
-            //con.close();
+            con.close();
         } catch (SQLException e) {
             System.out.println("No pude obtener categorias :(");
         }
@@ -220,7 +220,7 @@ public class ManejadorCategoria {
             }
             rsCategorias.close();
             st.close();
-            //con.close();
+            con.close();
         } catch (SQLException e) {
             System.out.println("No pude obtener categorias :(");
         }
@@ -246,7 +246,7 @@ public class ManejadorCategoria {
             }
             rs.close();
             st.close();
-            //con.close();
+            con.close();
         } catch (SQLException e) {
             System.out.println("No pude LISTAR :(");
         }

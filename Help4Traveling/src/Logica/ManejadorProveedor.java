@@ -57,7 +57,7 @@ public class ManejadorProveedor {
                 existe = true;
             }
             rs.close();
-            //con.close();
+            con.close();
             st.close();
         } catch (SQLException e) {
             System.out.println("No existe proveedor :(");
@@ -82,7 +82,7 @@ public class ManejadorProveedor {
             }
             rs.close();
             st.close();
-            //con.close();
+            con.close();
         } catch (SQLException e) {
             System.out.println("No existe correo :(");
         }
@@ -111,7 +111,7 @@ public class ManejadorProveedor {
                 p = new Proveedor(rs.getString("nombre"), rs.getString("apellido"), rs.getString("nickname"), rs.getString("password"), rs.getString("email"), fecha, "imagen", "empresa", "link");
             }
             rs.close();
-            //con.close();
+            con.close();
             st.close();
         } catch (SQLException e) {
             System.out.println("No obtuve proveedor :(");
@@ -161,7 +161,7 @@ public class ManejadorProveedor {
                 proveedoresNK.put(nickname, nuevo);
             }
             rsProveedores.close();
-            //con.close();
+            con.close();
             st.close();
 
             System.out.println("Usuarios cargados :)");
@@ -208,7 +208,7 @@ public class ManejadorProveedor {
                 if (imagen != null) {
                     st.executeUpdate(sqlai);
                 }
-                //con.close();
+                con.close();
                 st.close();
                 System.out.println("INSERTE :)");
             } catch (SQLException e) {

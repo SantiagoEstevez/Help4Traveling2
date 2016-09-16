@@ -60,7 +60,7 @@ public class ManejadorServicio {
                 existe = true;
             }
             rs.close();
-            //con.close();
+            con.close();
             st.close();
         } catch (SQLException e) {
             System.out.println("No exite servicio :(");
@@ -122,7 +122,7 @@ public class ManejadorServicio {
             nuevo.setPrecio(precioint);
 
             rsServicio.close();
-            //con.close();
+            con.close();
             st.close();
         } catch (SQLException e) {
             System.out.println("No existe servicio :(");
@@ -158,7 +158,7 @@ public class ManejadorServicio {
 
             }
             rsServicio.close();
-            //con.close();
+            con.close();
             st.close();
 
         } catch (SQLException e) {
@@ -219,7 +219,7 @@ public class ManejadorServicio {
                 listaServicios.add(nuevo);
             }
             rsServicios.close();
-            //con.close();
+            con.close();
             st.close();
 
             System.out.println("Servicios cargados :)");
@@ -276,7 +276,7 @@ public class ManejadorServicio {
                 listaServicios.add(ser);
             }
             rsServiciosProveedor.close();
-            //con.close();
+            con.close();
             st.close();
 
         } catch (SQLException e) {
@@ -306,7 +306,7 @@ public class ManejadorServicio {
                 listaServicios.add(ser);
             }
             rsServiciosProveedor.close();
-            //con.close();
+            con.close();
             st.close();
 
         } catch (SQLException e) {
@@ -341,7 +341,7 @@ public class ManejadorServicio {
                 st = con.createStatement();
                 //System.out.println("antes de insertar");
                 st.executeUpdate(sql);
-                ////con.close();
+                //con.close();
                 st.close();
                 System.out.println("INSERTE en oferta:)");
             } catch (SQLException e) {
@@ -354,7 +354,7 @@ public class ManejadorServicio {
                 st = con.createStatement();
                 //System.out.println("antes de insertar");
                 st.executeUpdate(sql);
-                ////con.close();
+                //con.close();
                 st.close();
                 System.out.println("INSERTE en servicio:)");
             } catch (SQLException e) {
@@ -368,7 +368,7 @@ public class ManejadorServicio {
                     st = con.createStatement();
                     st.executeUpdate(sql);
                     st.close();
-                    ////con.close();
+                    //con.close();
                     System.out.println("INSERTE :)");
                 } catch (SQLException e) {
                     System.out.println("No pude INSERTAR :(");
@@ -386,7 +386,7 @@ public class ManejadorServicio {
                     System.out.println("antes de categoria");
                     st.executeUpdate(sql);
                     st.close();
-                    ////con.close();
+                    con.close();
                     System.out.println("INSERTE :)");
                 } catch (SQLException e) {
                     System.out.println("No pude INSERTAR :(");
@@ -398,27 +398,27 @@ public class ManejadorServicio {
         }
         return mensaje;
     }
-    
-    public String persistirActualizacionServicio(DtServicio serv){
+
+    public String persistirActualizacionServicio(DtServicio serv) {
         //conexion = new Conexion();
         Connection con = Conexion.getInstance().getConnection();
         Statement st;
         String mensaje = "Se realizó la actualización del Servicio.";
         System.out.println(serv.getNombre());
         String destino = serv.getNomCiuDestino();
-        if (destino != null)
+        if (destino != null) {
             destino = "'" + destino + "'";
-        sql = "UPDATE help4traveling.servicios SET descripcion='" + serv.getDescripcion() + "',precio=" + (double) serv.getPrecio() 
-              + ",origen='" + serv.getNomCiuOrigen() + "',destino=" + destino + " WHERE nombre='" + serv.getNombre() + "';";
+        }
+        sql = "UPDATE help4traveling.servicios SET descripcion='" + serv.getDescripcion() + "',precio=" + (double) serv.getPrecio()
+                + ",origen='" + serv.getNomCiuOrigen() + "',destino=" + destino + " WHERE nombre='" + serv.getNombre() + "';";
         //System.out.println(sql);
         try {
             st = con.createStatement();
             st.executeUpdate(sql);
-            ////con.close();
+            //con.close();
             st.close();
             System.out.println("ACTUALICE en servicio:)");
-        } 
-        catch (SQLException e) {
+        } catch (SQLException e) {
             System.out.println("No pude ACTUALIZAR :(");
         }
         sql = "DELETE FROM help4traveling.serviciosimagenes WHERE servicio='" + serv.getNombre() + "';";
@@ -427,10 +427,9 @@ public class ManejadorServicio {
             st = con.createStatement();
             st.executeUpdate(sql);
             st.close();
-            ////con.close();
+            //con.close();
             System.out.println("ELIMINE :)");
-        } 
-        catch (SQLException e) {
+        } catch (SQLException e) {
             System.out.println("No pude ELIMINAR :(");
         }
         List<String> imagserv = serv.getImagenes();
@@ -442,10 +441,9 @@ public class ManejadorServicio {
                 st = con.createStatement();
                 st.executeUpdate(sql);
                 st.close();
-                ////con.close();
+                //con.close();
                 System.out.println("INSERTE :)");
-            } 
-            catch (SQLException e) {
+            } catch (SQLException e) {
                 System.out.println("No pude INSERTAR :(");
             }
         }
@@ -455,10 +453,9 @@ public class ManejadorServicio {
             st = con.createStatement();
             st.executeUpdate(sql);
             st.close();
-            ////con.close();
+            //con.close();
             System.out.println("ELIMINE :)");
-        } 
-        catch (SQLException e) {
+        } catch (SQLException e) {
             System.out.println("No pude ELIMINAR :(");
         }
         Map<String, DtCategoria> catserv = serv.getDtCategorias();
@@ -472,13 +469,12 @@ public class ManejadorServicio {
                 System.out.println("antes de categoria");
                 st.executeUpdate(sql);
                 st.close();
-                ////con.close();
+                con.close();
                 System.out.println("INSERTE :)");
-            } 
-            catch (SQLException e) {
+            } catch (SQLException e) {
                 System.out.println("No pude INSERTAR :(");
             }
-        }        
+        }
         return mensaje;
     }
 
@@ -495,27 +491,31 @@ public class ManejadorServicio {
             try {
                 st = con.createStatement();
                 st.executeUpdate(sql);
-                ////con.close();
+                //con.close();
                 st.close();
                 System.out.println("INSERTE en oferta:)");
             } catch (SQLException e) {
                 System.out.println("No pude INSERTAR :(");
             }
             sql = "INSERT INTO help4traveling.promociones (nombre,proveedor,descuento,total) "
-                    + "VALUES ('" + promo.getNombre() + "','" + promo.getProveedor() + "','" + promo.getDescuento() + ",'" + promo.getPrecio() + "')";
+                    + "VALUES ('" + promo.getNombre() + "','" + promo.getProveedor() + "','" + promo.getDescuento() + "','" + promo.getPrecio() + "')";
             System.out.println(sql);
             try {
                 st = con.createStatement();
                 st.executeUpdate(sql);
-                ////con.close();
+                con.close();
                 st.close();
                 System.out.println("INSERTE en promocion:)");
             } catch (SQLException e) {
                 System.out.println("No pude INSERTAR :(");
+                System.err.println(e);
             }
 
+            // PASAR LISTA DE SERVICIOS ASOCIADOS EN DT
+            /*
             List<String> servicios = listarServiciosDePromociones(promo.getNombre(), promo.getProveedor());
             Iterator<String> it = servicios.iterator();
+            con = Conexion.getInstance().getConnection();
             while (it.hasNext()) {
                 sql = "INSERT INTO help4traveling.promocionesservicios"
                         + " (promocion,proveedorPromocion,servicio,proveedorServicio) VALUES ('"
@@ -524,13 +524,13 @@ public class ManejadorServicio {
                     st = con.createStatement();
                     st.executeUpdate(sql);
                     st.close();
-                    ////con.close();
+                    con.close();
                     System.out.println("INSERTE :)");
                 } catch (SQLException e) {
                     System.out.println("No pude INSERTAR :(");
                 }
             }
-
+             */
         } else {
             mensaje = "ERROR: La promo ingresada ya existe...";
         }
@@ -569,7 +569,7 @@ public class ManejadorServicio {
                 listaResult.add(nuevo);
             }
             rsPromociones.close();
-            //con.close();
+            con.close();
             st.close();
 
             System.out.println("promociones  cargadas :)");
@@ -606,7 +606,7 @@ public class ManejadorServicio {
 
             }
             rsPromociones.close();
-            //con.close();
+            con.close();
             st.close();
 
         } catch (SQLException e) {
@@ -639,7 +639,7 @@ public class ManejadorServicio {
                 listaResult.add(resultado);
             }
             rsPromociones.close();
-            //con.close();
+            con.close();
             st.close();
 
             System.out.println("promociones  cargadas :)");
