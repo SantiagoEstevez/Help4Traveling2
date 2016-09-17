@@ -129,7 +129,6 @@ public class ActualizarServicio extends javax.swing.JInternalFrame {
             cb_pais_destino.addItem("-");
             cb_ciudad_destino.removeAllItems();
             cb_ciudad_destino.addItem("-");
-
         }
         this.imagenes = servicio.getImagenes();
         for (int i = 0; i < imagenes.size(); i++) {

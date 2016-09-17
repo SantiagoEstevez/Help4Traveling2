@@ -375,8 +375,11 @@ public class ManejadorServicio {
             } catch (SQLException e) {
                 System.out.println("No pude INSERTAR :(");
             }
+            String ciudestino = serv.getNomCiuDestino();
+            if (ciudestino != null)
+                ciudestino = "'" + ciudestino + "'";
             sql = "INSERT INTO help4traveling.servicios (nombre,proveedor,descripcion,precio,origen,destino) "
-                    + "VALUES ('" + serv.getNombre() + "','" + serv.getNkProveedor() + "','" + serv.getDescripcion() + "'," + (double) serv.getPrecio() + ",'" + serv.getNomCiuOrigen() + "','" + serv.getNomCiuDestino() + "')";
+                    + "VALUES ('" + serv.getNombre() + "','" + serv.getNkProveedor() + "','" + serv.getDescripcion() + "'," + (double) serv.getPrecio() + ",'" + serv.getNomCiuOrigen() + "'," + ciudestino + ")";
             System.out.println(sql);
             try {
                 st = con.createStatement();
@@ -409,13 +412,13 @@ public class ManejadorServicio {
                 DtCategoria cat = iterc.next();
                 //sql = "INSERT INTO help4traveling.servicioscategorias (servicio,proveedorServicio,categoria) VALUES ('" + serv.getNombre() + "','" + serv.getProveedor().getNickname() + "','" + iterc.next().getNombre() + "')";
                 sql = "INSERT INTO help4traveling.servicioscategorias (servicio,proveedorServicio,categoria,categoriaPadre) VALUES ('" + serv.getNombre() + "','" + serv.getNkProveedor() + "','" + cat.getNombre() + "','" + cat.getPadre() + "')";
-                //System.out.println(sql);
+                System.out.println(sql);
                 try {
                     st = con.createStatement();
-                    System.out.println("antes de categoria");
+                    //System.out.println("antes de categoria");
                     st.executeUpdate(sql);
                     st.close();
-                    con.close();
+                    //con.close();
                     System.out.println("INSERTE :)");
                 } catch (SQLException e) {
                     System.out.println("No pude INSERTAR :(");
@@ -434,12 +437,12 @@ public class ManejadorServicio {
         Statement st;
         String mensaje = "Se realizó la actualización del Servicio.";
         System.out.println(serv.getNombre());
-        String destino = serv.getNomCiuDestino();
-        if (destino != null) {
-            destino = "'" + destino + "'";
+        String ciudestino = serv.getNomCiuDestino();
+        if (ciudestino != null) {
+            ciudestino = "'" + ciudestino + "'";
         }
         sql = "UPDATE help4traveling.servicios SET descripcion='" + serv.getDescripcion() + "',precio=" + (double) serv.getPrecio()
-                + ",origen='" + serv.getNomCiuOrigen() + "',destino=" + destino + " WHERE nombre='" + serv.getNombre() + "';";
+                + ",origen='" + serv.getNomCiuOrigen() + "',destino=" + ciudestino + " WHERE nombre='" + serv.getNombre() + "';";
         //System.out.println(sql);
         try {
             st = con.createStatement();
@@ -498,7 +501,7 @@ public class ManejadorServicio {
                 System.out.println("antes de categoria");
                 st.executeUpdate(sql);
                 st.close();
-                con.close();
+                //con.close();
                 System.out.println("INSERTE :)");
             } catch (SQLException e) {
                 System.out.println("No pude INSERTAR :(");
