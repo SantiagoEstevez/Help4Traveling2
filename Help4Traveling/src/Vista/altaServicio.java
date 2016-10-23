@@ -46,81 +46,12 @@ public class altaServicio extends javax.swing.JInternalFrame {
     List<DtCategoria> listaCat = new LinkedList<DtCategoria>();
     String nkproveedor;
     String origen;
+    boolean tienedestino;
     String destino;
     boolean categoria_seleccionada;
     private Boolean expandir = true;
 
-    /**
-     * Creates new form altaServicio
-     */
-    /*private DefaultMutableTreeNode encontrarNodoCat(String nomcat, DefaultMutableTreeNode raiz) {
-        DefaultMutableTreeNode nodoCat = null;
-        Enumeration e = raiz.breadthFirstEnumeration();
-        while (e.hasMoreElements()) {
-               nodoCat = (DefaultMutableTreeNode) e.nextElement();
-               if (nomcat.equals(nodoCat.getUserObject().toString())) {
-                   return nodoCat;
-               }
-        }
-        return null;
-    }
-
-    private LinkedList<String> listarHijos(String padre) {
-        this.listaCat = ManejadorCategoria.getInstance().listarCategorias();
-        LinkedList<String> listaHijos = new LinkedList<String>();
-        Iterator<DtCategoria> iter = this.listaCat.iterator();
-        while (iter.hasNext()) {
-		DtCategoria cat = iter.next();
-		if (cat.equals(padre)) {
-		    listaHijos.addLast(cat.getNombre());
-		}
-	}
-        return listaHijos;
-    }
-
-    private void crearArbolCategorias() {
-        DefaultMutableTreeNode raiz = new DefaultMutableTreeNode("Categorias");
-	this.listaCat = ManejadorCategoria.getInstance().listarCategorias();
-        LinkedList<String> listaTratados = new LinkedList<String>();
-	Iterator<DtCategoria> iter = this.listaCat.iterator();
-        while (iter.hasNext()) {
-		DtCategoria cat = iter.next();
-                //System.out.print(cat);
-                //String padre = iter.next().getPadre();
-                //System.out.println(padre);
-                System.out.print(cat.getNombre());
-                System.out.println(cat.getPadre());
-		if (cat.getNombre().equals(cat.getPadre())) {
-		    DefaultMutableTreeNode nodoCat = new DefaultMutableTreeNode();
-		    nodoCat.setUserObject(cat.getNombre());
-		    raiz.add(nodoCat);
-		    //listaCat.remove(cat);
-		    listaTratados.addLast(cat.getNombre());
-		}
-	}
-	while (!listaTratados.isEmpty()) {
-		Iterator<String> itertr = listaTratados.iterator();
-
-		while (itertr.hasNext()) {
-			String nomcat = itertr.next();
-                        System.out.println("Llego aca");
-			LinkedList<String> listaHijos = listarHijos(nomcat);
-			Iterator<String> iterh = listaHijos.iterator();
-			while (iterh.hasNext()) {
-				String hijo = iterh.next();
-				DefaultMutableTreeNode nodoCat = new DefaultMutableTreeNode();
-				nodoCat.setUserObject(hijo);
-				DefaultMutableTreeNode padre = encontrarNodoCat(nomcat, raiz);
-				padre.add(nodoCat);
-				//listaCat.remove(cat.getNombre());
-				listaTratados.addLast(hijo);
-			}
-			listaTratados.remove(nomcat);
-		}
-	}
-        DefaultTreeModel modeloArbol = new DefaultTreeModel(raiz);
-	this.tr_categorias.setModel(modeloArbol);
-    }*/
+    
     private void cargarPaisesOrigen() {
         this.listaPaises = ManejadorCiudad.getInstance().listarPaises();
         Iterator<String> iter = this.listaPaises.iterator();
@@ -185,14 +116,14 @@ public class altaServicio extends javax.swing.JInternalFrame {
     }
 
     public altaServicio() {
-        //this.tr_categorias.setVisible(false);
         initComponents();
         Fabrica fabrica = Fabrica.getInstance();
         this.IControlador = fabrica.getIControladorServicio();
         cargarPaisesOrigen();
         cargarPaisesDestino();
         cargarProveedores();
-        //crearArbolCategorias();
+        this.tienedestino = false;
+        this.destino = null;
         this.pn_destinos.setVisible(false);
         this.tf_nombre_s.setText("");
         this.tf_precio.setText("");
@@ -209,7 +140,7 @@ public class altaServicio extends javax.swing.JInternalFrame {
 
     }
 
-    public void VerArbol() {
+    /*public void VerArbol() {
         initComponents();
         Fabrica fabrica = Fabrica.getInstance();
         DefaultMutableTreeNode raiz = new DefaultMutableTreeNode("Categorias");
@@ -218,7 +149,7 @@ public class altaServicio extends javax.swing.JInternalFrame {
         MostrarArbol(raiz);
         tr_categorias.setModel(modelo);
 
-    }
+    }*/
 
     public void MostrarArbol(DefaultMutableTreeNode nodo) {
         ManejadorCategoria mc = ManejadorCategoria.getInstance();
@@ -393,7 +324,7 @@ public class altaServicio extends javax.swing.JInternalFrame {
         tf_precio.setText("50");
         tf_precio.setToolTipText("");
 
-        jLabel3.setText("(USD)");
+        jLabel3.setText("(U$D)");
 
         tr_categorias.addTreeSelectionListener(new javax.swing.event.TreeSelectionListener() {
             public void valueChanged(javax.swing.event.TreeSelectionEvent evt) {
@@ -552,15 +483,6 @@ public class altaServicio extends javax.swing.JInternalFrame {
         } else {
             precio = Float.parseFloat(this.tf_precio.getText());
         }
-        //String origen = this.tf_origen.getText();
-        //String categoria = this.tr_categoria.getSelectionPath().toString();
-        //JOptionPane.showMessageDialog(null,categoria );
-        /*DtCategoria cat1 = new DtCategoria("Alojamientos","Alojamientos");
-        DtCategoria cat2 = new DtCategoria("Alaska","Cruceros");
-        DtCategoria cat3 = new DtCategoria("Air France","Empresas");
-        this.categorias.put("Alojamiento",cat1);
-        this.categorias.put("Alaska",cat2);
-        this.categorias.put("Air France",cat3);*/
         DtServicio dts = new DtServicio(nombre, this.nkproveedor, descripcion, this.imagenes, categorias, precio, this.origen, this.destino);
         String mensaje = IControlador.altaDeServicio(dts);
         JOptionPane.showMessageDialog(null, mensaje);
@@ -572,22 +494,18 @@ public class altaServicio extends javax.swing.JInternalFrame {
         this.btn_seleccionar_imagen.setEnabled(true);
         modeloListaImagenes.clear();
         modeloListaCategorias.clear();
-        pn_destinos.setVisible(false);
+        this.pn_destinos.setVisible(false);
+        this.tienedestino = false;
+        this.destino = null;
         this.imagenes = new LinkedList<String>();
         this.categorias = new HashMap<String, DtCategoria>();
-        //this.lst_imagenes.setModel(modeloListaImagenes);
-        //this.lst_categorias.setModel(modeloListaCategorias);
-        //this.tf_origen.setText("");
-
     }//GEN-LAST:event_bt_aceptar_sActionPerformed
 
     private void bt_cancelar_sActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_cancelar_sActionPerformed
         // TODO add your handling code here:
         this.setVisible(false);
         this.tr_categorias.setVisible(false);
-        this.tf_nombre_s.setText("");
-        //this.tf_origen.setText("");
-
+        this.tf_nombre_s.setText("");    
     }//GEN-LAST:event_bt_cancelar_sActionPerformed
 
     private void cb_paises_origenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cb_paises_origenActionPerformed
@@ -647,11 +565,11 @@ public class altaServicio extends javax.swing.JInternalFrame {
             DtCategoria cat = new DtCategoria(nodo.toString(), padre);
             this.categorias.put(nodo.toString(), cat);
             modeloListaCategorias.addElement(nodo.toString());
-            if ((padre != null) && (padre.equals("Vuelos") || padre.equals("Tipo vuelo"))) {
-                pn_destinos.setVisible(true);
-            } else {
-                pn_destinos.setVisible(false);
-            }
+            if (padre.equals("Vuelos") || padre.equals("Empresas") || padre.equals("Tipo vuelo"))
+                this.tienedestino = true;
+            if (this.tienedestino)
+                this.pn_destinos.setVisible(true);
+            else this.pn_destinos.setVisible(false);            
         }
         this.categoria_seleccionada = false;
     }//GEN-LAST:event_jButton1ActionPerformed
