@@ -174,7 +174,7 @@ public class Principal extends javax.swing.JFrame {
         desconectarMenu = new javax.swing.JMenuItem();
         jSeparator5 = new javax.swing.JPopupMenu.Separator();
         ejecutarMenu = new javax.swing.JMenu();
-        recrearBaseItem = new javax.swing.JMenuItem();
+        crearBaseItem = new javax.swing.JMenuItem();
         jSeparator4 = new javax.swing.JPopupMenu.Separator();
         borrarTablasItem = new javax.swing.JMenuItem();
         borrarBaseItem = new javax.swing.JMenuItem();
@@ -259,14 +259,14 @@ public class Principal extends javax.swing.JFrame {
         ejecutarMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/db-icon.png"))); // NOI18N
         ejecutarMenu.setText("Ejecutar Script");
 
-        recrearBaseItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/redo-icon.png"))); // NOI18N
-        recrearBaseItem.setText("Recrear Base");
-        recrearBaseItem.addActionListener(new java.awt.event.ActionListener() {
+        crearBaseItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/redo-icon.png"))); // NOI18N
+        crearBaseItem.setText("Crear Base");
+        crearBaseItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                recrearBaseItemActionPerformed(evt);
+                crearBaseItemActionPerformed(evt);
             }
         });
-        ejecutarMenu.add(recrearBaseItem);
+        ejecutarMenu.add(crearBaseItem);
         ejecutarMenu.add(jSeparator4);
 
         borrarTablasItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/delete-icon.png"))); // NOI18N
@@ -280,6 +280,7 @@ public class Principal extends javax.swing.JFrame {
 
         borrarBaseItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/delete-icon.png"))); // NOI18N
         borrarBaseItem.setText("Borrar Base");
+        borrarBaseItem.setEnabled(false);
         borrarBaseItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 borrarBaseItemActionPerformed(evt);
@@ -475,7 +476,12 @@ public class Principal extends javax.swing.JFrame {
 
         conAccMenu.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_PERIOD, java.awt.event.InputEvent.CTRL_MASK));
         conAccMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/help-icon.png"))); // NOI18N
-        conAccMenu.setText("Consultar Accesos");
+        conAccMenu.setText("Consultar Acceso al Sitio");
+        conAccMenu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                conAccMenuActionPerformed(evt);
+            }
+        });
         ConMenu.add(conAccMenu);
 
         jMenuBar1.add(ConMenu);
@@ -695,9 +701,9 @@ public class Principal extends javax.swing.JFrame {
         abrirVentana(as);
     }//GEN-LAST:event_modServMenuActionPerformed
 
-    private void recrearBaseItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_recrearBaseItemActionPerformed
+    private void crearBaseItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_crearBaseItemActionPerformed
         ejecutarScript("/Scripts/help4traveling.sql", true);
-    }//GEN-LAST:event_recrearBaseItemActionPerformed
+    }//GEN-LAST:event_crearBaseItemActionPerformed
 
     private void VerInfo_promoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_VerInfo_promoActionPerformed
         VerInfoPromoTabla vip = new VerInfoPromoTabla();
@@ -762,6 +768,13 @@ public class Principal extends javax.swing.JFrame {
         habilitarMenus(false);
     }//GEN-LAST:event_desconectarMenuActionPerformed
 
+    private void conAccMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_conAccMenuActionPerformed
+        VerRegistroSitio vrs = new VerRegistroSitio();
+        escritorio.add(vrs);
+        centrarVentana(vrs);
+        vrs.setVisible(true);
+    }//GEN-LAST:event_conAccMenuActionPerformed
+
     private void internalMenuActionPerformed(java.awt.event.ActionEvent evt) {
         ejecutarScript("/Scripts/Script-DB2.sql", true);
     }
@@ -807,7 +820,7 @@ public class Principal extends javax.swing.JFrame {
             this.setCursor(Cursor.getDefaultCursor());
         } catch (SQLException ex) {
             System.out.println("Corriendo Script... ERROR");
-            JOptionPane.showMessageDialog(this, "El script no pudo ejecutarse.", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "El script fue ejecutado con errores.", "Error", JOptionPane.ERROR_MESSAGE);
             this.setCursor(Cursor.getDefaultCursor());
         }
     }
@@ -899,6 +912,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenuItem conResMenu;
     private javax.swing.JMenuItem conServMenu;
     private javax.swing.JMenuItem conectarMenu;
+    private javax.swing.JMenuItem crearBaseItem;
     private javax.swing.JMenuItem desconectarMenu;
     private javax.swing.JMenu ejecutarMenu;
     private javax.swing.JMenuItem elimResMenu;
@@ -915,7 +929,6 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenuItem modResMenu;
     private javax.swing.JMenuItem modServMenu;
     private javax.swing.JMenuItem opcionesMenu;
-    private javax.swing.JMenuItem recrearBaseItem;
     private javax.swing.JMenuItem refResMenu;
     private javax.swing.JMenuItem regCatMenu;
     private javax.swing.JMenuItem regPromoMenu;

@@ -56,15 +56,15 @@
                 <Property name="text" type="java.lang.String" value="Ejecutar Script"/>
               </Properties>
               <SubComponents>
-                <MenuItem class="javax.swing.JMenuItem" name="recrearBaseItem">
+                <MenuItem class="javax.swing.JMenuItem" name="crearBaseItem">
                   <Properties>
                     <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                       <Image iconType="3" name="/Iconos/redo-icon.png"/>
                     </Property>
-                    <Property name="text" type="java.lang.String" value="Recrear Base"/>
+                    <Property name="text" type="java.lang.String" value="Crear Base"/>
                   </Properties>
                   <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="recrearBaseItemActionPerformed"/>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="crearBaseItemActionPerformed"/>
                   </Events>
                 </MenuItem>
                 <MenuItem class="javax.swing.JPopupMenu$Separator" name="jSeparator4">
@@ -86,6 +86,7 @@
                       <Image iconType="3" name="/Iconos/delete-icon.png"/>
                     </Property>
                     <Property name="text" type="java.lang.String" value="Borrar Base"/>
+                    <Property name="enabled" type="boolean" value="false"/>
                   </Properties>
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="borrarBaseItemActionPerformed"/>
@@ -355,8 +356,11 @@
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/Iconos/help-icon.png"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Consultar Accesos"/>
+                <Property name="text" type="java.lang.String" value="Consultar Acceso al Sitio"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="conAccMenuActionPerformed"/>
+              </Events>
             </MenuItem>
           </SubComponents>
         </Menu>
