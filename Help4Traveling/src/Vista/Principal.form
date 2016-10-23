@@ -56,20 +56,20 @@
                 <Property name="text" type="java.lang.String" value="Ejecutar Script"/>
               </Properties>
               <SubComponents>
-                <MenuItem class="javax.swing.JMenuItem" name="scriptDB2Item">
+                <MenuItem class="javax.swing.JMenuItem" name="recrearBaseItem">
                   <Properties>
-                    <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-                      <Connection code="UIManager.getIcon(&quot;Tree.leafIcon&quot;)" type="code"/>
+                    <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                      <Image iconType="3" name="/Iconos/redo-icon.png"/>
                     </Property>
-                    <Property name="text" type="java.lang.String" value="Script-DB2"/>
+                    <Property name="text" type="java.lang.String" value="Recrear Base"/>
                   </Properties>
                   <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="scriptDB2ItemActionPerformed"/>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="recrearBaseItemActionPerformed"/>
                   </Events>
                 </MenuItem>
                 <MenuItem class="javax.swing.JPopupMenu$Separator" name="jSeparator4">
                 </MenuItem>
-                <MenuItem class="javax.swing.JMenuItem" name="BorrarTablas">
+                <MenuItem class="javax.swing.JMenuItem" name="borrarTablasItem">
                   <Properties>
                     <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                       <Image iconType="3" name="/Iconos/delete-icon.png"/>
@@ -77,10 +77,10 @@
                     <Property name="text" type="java.lang.String" value="Borrar Tablas"/>
                   </Properties>
                   <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BorrarTablasActionPerformed"/>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="borrarTablasItemActionPerformed"/>
                   </Events>
                 </MenuItem>
-                <MenuItem class="javax.swing.JMenuItem" name="BorrarBase">
+                <MenuItem class="javax.swing.JMenuItem" name="borrarBaseItem">
                   <Properties>
                     <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                       <Image iconType="3" name="/Iconos/delete-icon.png"/>
@@ -88,7 +88,7 @@
                     <Property name="text" type="java.lang.String" value="Borrar Base"/>
                   </Properties>
                   <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BorrarBaseActionPerformed"/>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="borrarBaseItemActionPerformed"/>
                   </Events>
                 </MenuItem>
               </SubComponents>
@@ -199,7 +199,7 @@
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/Iconos/add-icon.png"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Registrar Categoria"/>
+                <Property name="text" type="java.lang.String" value="Registrar Categor&#xed;a"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="regCatMenuActionPerformed"/>
@@ -229,6 +229,7 @@
                   <Image iconType="3" name="/Iconos/add-icon.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Registrar Reserva"/>
+                <Property name="enabled" type="boolean" value="false"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="refResMenuActionPerformed"/>
@@ -295,7 +296,7 @@
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/Iconos/info-icon.png"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Consultar Promocion"/>
+                <Property name="text" type="java.lang.String" value="Consultar Promoci&#xf3;n"/>
                 <Property name="toolTipText" type="java.lang.String" value=""/>
               </Properties>
               <Events>
@@ -343,6 +344,19 @@
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="conServMenuActionPerformed"/>
               </Events>
+            </MenuItem>
+            <MenuItem class="javax.swing.JPopupMenu$Separator" name="jSeparator6">
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="conAccMenu">
+              <Properties>
+                <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
+                  <KeyStroke key="Ctrl+PERIOD"/>
+                </Property>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/Iconos/help-icon.png"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Consultar Accesos"/>
+              </Properties>
             </MenuItem>
           </SubComponents>
         </Menu>
