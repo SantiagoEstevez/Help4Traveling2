@@ -159,60 +159,64 @@ public class ManejadorServicio {
         return nuevo;
     }
 
-    public DtServicio getDtServicio(String nombre, String Proveedor) {
-
-        ResultSet rsServicio;
-
-        DtServicio nuevo = null;
-        //conexion = new Conexion();
+    public DtServicio getDtServicio(String nombre, String proveedor) {
+        ResultSet rsServ, rsCat, rsImg;
         Connection con = Conexion.getInstance().getConnection();
-        Statement st;
-
-        sql = "SELECT * FROM help4traveling.servicios WHERE nombre='" + nombre + "' and proveedor='" + Proveedor + "'";
-
+        DtServicio nuevo = null;
+        Statement stServ, stImg, stCat;
+        String sql = "SELECT * FROM help4traveling.servicios WHERE nombre='" + nombre + "' AND proveedor='" + proveedor + "'";
         try {
-            st = con.createStatement();
-            rsServicio = st.executeQuery(sql);
-
-            while (rsServicio.next()) {
-                String nombre1 = rsServicio.getString("nombre");
-                String proveedor = rsServicio.getString("proveedor");
-                String descripcion = rsServicio.getString("descripcion");
-                String precio = rsServicio.getString("precio");
-                String origen = rsServicio.getString("origen");
-                String destino = rsServicio.getString("destino");
+            stServ = con.createStatement();
+            rsServ = stServ.executeQuery(sql);
+            while (rsServ.next()) {
+                String descripcion = rsServ.getString("descripcion");
+                String precio = rsServ.getString("precio");
+                String origen = rsServ.getString("origen");
+                String destino = rsServ.getString("destino");
                 Float valor = Float.parseFloat(precio);
-                nuevo = new DtServicio(nombre1, proveedor, descripcion, null, null, valor, origen, destino);
-
+                List<String> imagenes = new ArrayList<String>();
+                sql = "SELECT * FROM help4traveling.serviciosimagenes WHERE servicio='" + nombre + "'";
+                stImg = con.createStatement();
+                rsImg = stImg.executeQuery(sql);
+                while (rsImg.next()) {
+                    imagenes.add(rsImg.getString("imagen"));
+                }
+                rsImg.close();
+                stImg.close();
+                Map<String,DtCategoria> categorias = new HashMap<String,DtCategoria>();
+                sql = "SELECT * FROM help4traveling.servicioscategorias WHERE servicio='" + nombre + "' AND proveedorServicio='" + proveedor + "'";
+                stCat = con.createStatement();
+                rsCat = stCat.executeQuery(sql);
+                while (rsCat.next()) {
+                    DtCategoria dtCat = new DtCategoria(rsCat.getString("categoria"),rsCat.getString("categoriaPadre"));
+                    categorias.put(rsCat.getString("categoria"),dtCat);
+                }
+                rsCat.close();
+                stCat.close();
+                nuevo = new DtServicio(nombre, proveedor, descripcion, imagenes, categorias, valor, origen, destino);                
             }
-            rsServicio.close();
+            rsServ.close();
             con.close();
-            st.close();
-
-        } catch (SQLException e) {
-            System.out.println("No pude cargar usuarios :(");
+            stServ.close();            
+        } 
+        catch (SQLException e) {
+            System.out.println("No pude crear DtServicio :(");            
         }
-        return nuevo;
+        return nuevo;        
     }
 
     public List<DtServicio> listarServicios() {
         ResultSet rsServicios;
         ResultSet rsServImagenes;
         ResultSet rsServCategorias;
-        //conexion = new Conexion();
         Connection con = Conexion.getInstance().getConnection();
         Statement st, sti, stc;
-        String sql, sqlImagenes, sqlCategorias;
+        String sqlServicio, sqlImagenes, sqlCategorias;
         List<DtServicio> listaServicios = new LinkedList<DtServicio>();
-        //List<String> listaImagenes = new LinkedList<String>();
-        //Map<String, DtCategoria> listaCategorias = new TreeMap<String, DtCategoria>();
-
-        sql = "SELECT * FROM help4traveling.servicios";
-
+        sqlServicio = "SELECT * FROM help4traveling.servicios";
         try {
             st = con.createStatement();
-            rsServicios = st.executeQuery(sql);
-
+            rsServicios = st.executeQuery(sqlServicio);
             while (rsServicios.next()) {
                 String nombre = rsServicios.getString("nombre");
                 String proveedor = rsServicios.getString("proveedor");
@@ -224,13 +228,10 @@ public class ManejadorServicio {
                 sqlImagenes = "SELECT * FROM help4traveling.serviciosimagenes WHERE servicio = '" + nombre + "'";
                 sti = con.createStatement();
                 rsServImagenes = sti.executeQuery(sqlImagenes);
-                while (rsServImagenes.next()) {
-                    System.out.println(rsServImagenes.getString("imagen"));
+                while (rsServImagenes.next())                    
                     listaImagenes.add(rsServImagenes.getString("imagen"));
-                }
                 rsServImagenes.close();
                 sti.close();
-
                 sqlCategorias = "SELECT * FROM help4traveling.servicioscategorias WHERE servicio = '" + nombre + "'";
                 stc = con.createStatement();
                 rsServCategorias = stc.executeQuery(sqlCategorias);
@@ -242,14 +243,12 @@ public class ManejadorServicio {
                 }
                 rsServCategorias.close();
                 stc.close();
-
                 DtServicio nuevo = new DtServicio(nombre, proveedor, descripcion, listaImagenes, listaCategorias, Float.parseFloat(precio), origen, destino);
                 listaServicios.add(nuevo);
             }
-            rsServicios.close();
-            con.close();
+            rsServicios.close();            
             st.close();
-
+            con.close();
             System.out.println("Servicios cargados :)");
         } catch (SQLException e) {
             System.out.println("No pude cargar servicios :(");
@@ -259,7 +258,6 @@ public class ManejadorServicio {
 
     public List<String> listarServiciosCategoria(String categoria) {
         ResultSet rsServicios;
-        //conexion = new Conexion();
         Connection con = Conexion.getInstance().getConnection();
         Statement st;
         String sql;
@@ -280,12 +278,10 @@ public class ManejadorServicio {
             System.out.println("No pude cargar servicios");
             System.err.println(e.getMessage());
         }
-
         return listaServicios;
     }
 
     public ArrayList<DtServicio> listarServiciosProveedor(DtUsuario user) {
-        //conexion = new Conexion();
         Connection con = Conexion.getInstance().getConnection();
         Statement st;
         ResultSet rsServiciosProveedor;
@@ -314,8 +310,20 @@ public class ManejadorServicio {
         return listaServicios;
     }
 
+    
+    public List<DtServicio> getDtServicios() {
+        List<DtServicio> listaDtServ = new LinkedList<DtServicio>();
+        Iterator<Servicio> iter = this.serviciosNom.values().iterator();
+        while (iter.hasNext()) {
+            Servicio serv = iter.next();
+            DtServicio dtServ = serv.getDtServicio();
+            listaDtServ.add(dtServ);
+        }
+        return listaDtServ;
+    }
+
+    
     public List<DtServicio> listarServiciosPromocion(DtPromocion promo) {
-        //conexion = new Conexion();
         Connection con = Conexion.getInstance().getConnection();
         Statement st;
         ResultSet rsServiciosPromo;
@@ -344,17 +352,86 @@ public class ManejadorServicio {
         return listaServicios;
     }
 
-    public List<DtServicio> getDtServicios() {
-        List<DtServicio> listaDtServ = new LinkedList<DtServicio>();
-        Iterator<Servicio> iter = this.serviciosNom.values().iterator();
-        while (iter.hasNext()) {
-            Servicio serv = iter.next();
-            DtServicio dtServ = serv.getDtServicio();
-            listaDtServ.add(dtServ);
+    public List<DtPromocion> listarPromociones() {
+        List<DtPromocion> promociones = null;
+        ResultSet rs;
+        Statement st;        
+        try {
+            Connection con = Conexion.getInstance().getConnection();
+            st = con.createStatement();
+            String sql = "SELECT * FROM help4traveling.promociones";
+            rs = st.executeQuery(sql);
+            promociones = new LinkedList<DtPromocion>();
+            while (rs.next()) {
+                String nombre = rs.getString("nombre");
+                String proveedor = rs.getString("proveedor");
+                String descuento = rs.getString("descuento");
+                String total = rs.getString("total");
+                DtPromocion nuevo = new DtPromocion(nombre, proveedor, descuento, total);
+                promociones.add(nuevo);
+            }
+            rs.close();
+            con.close();
+            st.close();
+            System.out.println("promociones  cargadas :)");
+        } catch (SQLException e) {
+            System.out.println("No pude cargar promociones :(");
         }
-        return listaDtServ;
+        return promociones;
     }
 
+    public DtPromocion getDTPromocion(String nombre, String Proevedor) {
+        ResultSet rsPromociones;
+        DtPromocion nuevo = null;
+        Connection con = Conexion.getInstance().getConnection();
+        Statement st;
+        sql = "SELECT * FROM help4traveling.promociones WHERE nombre='" + nombre + "' and proveedor='" + Proevedor + "'";
+        try {
+            st = con.createStatement();
+            rsPromociones = st.executeQuery(sql);
+            while (rsPromociones.next()) {
+                String nombre1 = rsPromociones.getString("nombre");
+                String proveedor = rsPromociones.getString("proveedor");
+                String descuento = rsPromociones.getString("descuento");
+                String total = rsPromociones.getString("total");
+                nuevo = new DtPromocion(nombre1, proveedor, descuento, total/*, servicios*/);
+
+            }
+            rsPromociones.close();
+            con.close();
+            st.close();
+
+        } catch (SQLException e) {
+            System.out.println("No pude cargar usuarios :(");
+        }
+        return nuevo;
+    }
+
+    public List<String> listarServiciosDePromociones(String nombpro, String proev) {
+        List<String> listaResult = new LinkedList<String>();
+        ResultSet rsPromociones;
+        Connection con = Conexion.getInstance().getConnection();
+        Statement st;
+        sql = "SELECT * FROM help4traveling.promocionesservicios WHERE promocion='" + nombpro + "' and proveedorPromocion='" + proev + "'";
+        try {
+            st = con.createStatement();
+            rsPromociones = st.executeQuery(sql);
+            while (rsPromociones.next()) {
+                String nombre = rsPromociones.getString("servicio");
+                String proveedor = rsPromociones.getString("proveedorServicio");
+                String resultado = nombre + "," + proveedor;
+                listaResult.add(resultado);
+            }
+            rsPromociones.close();
+            con.close();
+            st.close();
+            System.out.println("promociones  cargadas :)");
+        } catch (SQLException e) {
+            System.out.println("No pude cargar promociones :(");
+        }
+        return listaResult;
+    }
+    
     public String persistirServicio(DtServicio serv) {
         //conexion = new Conexion();
         Connection con = Conexion.getInstance().getConnection();
@@ -578,117 +655,5 @@ public class ManejadorServicio {
         return mensaje;
 
     }
-
-    public List<DtPromocion> listarPromociones() {
-
-        List<DtPromocion> listaResult = new LinkedList<DtPromocion>();
-
-        ResultSet rsPromociones;
-
-        //conexion = new Conexion();
-        Connection con = Conexion.getInstance().getConnection();
-        Statement st;
-
-        sql = "SELECT * FROM help4traveling.promociones";
-
-        try {
-            st = con.createStatement();
-            rsPromociones = st.executeQuery(sql);
-
-            while (rsPromociones.next()) {
-                String nombre = rsPromociones.getString("nombre");
-                String proveedor = rsPromociones.getString("proveedor");
-                String descuento = rsPromociones.getString("descuento");
-                String total = rsPromociones.getString("total");
-                //  Date nacimiento = new Date(12,12,1994);
-                //String imagen = "";
-                //
-
-                List<String> servicios = listarServiciosDePromociones(nombre, total);
-
-                DtPromocion nuevo = new DtPromocion(nombre, proveedor, descuento, total);
-                listaResult.add(nuevo);
-            }
-            rsPromociones.close();
-            con.close();
-            st.close();
-
-            System.out.println("promociones  cargadas :)");
-        } catch (SQLException e) {
-            System.out.println("No pude cargar promociones :(");
-        }
-
-        return listaResult;
-    }
-
-    public DtPromocion getDTPromocion(String nombre, String Proevedor) {
-
-        ResultSet rsPromociones;
-
-        DtPromocion nuevo = null;
-        //conexion = new Conexion();
-        Connection con = Conexion.getInstance().getConnection();
-        Statement st;
-
-        sql = "SELECT * FROM help4traveling.promociones WHERE nombre='" + nombre + "' and proveedor='" + Proevedor + "'";
-
-        try {
-            st = con.createStatement();
-            rsPromociones = st.executeQuery(sql);
-
-            //  Date fecha = new Date();
-            while (rsPromociones.next()) {
-                String nombre1 = rsPromociones.getString("nombre");
-                String proveedor = rsPromociones.getString("proveedor");
-                String descuento = rsPromociones.getString("descuento");
-                String total = rsPromociones.getString("total");
-
-                nuevo = new DtPromocion(nombre1, proveedor, descuento, total/*, servicios*/);
-
-            }
-            rsPromociones.close();
-            con.close();
-            st.close();
-
-        } catch (SQLException e) {
-            System.out.println("No pude cargar usuarios :(");
-        }
-        return nuevo;
-    }
-
-    public List<String> listarServiciosDePromociones(String nombpro, String proev) {
-
-        List<String> listaResult = new LinkedList<String>();
-
-        ResultSet rsPromociones;
-
-        //conexion = new Conexion();
-        Connection con = Conexion.getInstance().getConnection();
-        Statement st;
-
-        sql = "SELECT * FROM help4traveling.promocionesservicios WHERE promocion='" + nombpro + "' and proveedorPromocion='" + proev + "'";
-
-        try {
-            st = con.createStatement();
-            rsPromociones = st.executeQuery(sql);
-
-            while (rsPromociones.next()) {
-                String nombre = rsPromociones.getString("servicio");
-                String proveedor = rsPromociones.getString("proveedorServicio");
-                String resultado = nombre + "," + proveedor;
-
-                listaResult.add(resultado);
-            }
-            rsPromociones.close();
-            con.close();
-            st.close();
-
-            System.out.println("promociones  cargadas :)");
-        } catch (SQLException e) {
-            System.out.println("No pude cargar promociones :(");
-        }
-
-        return listaResult;
-    }
-
+    
 }

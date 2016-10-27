@@ -120,6 +120,49 @@ public class ManejadorProveedor {
         return p;
         //return ((Proveedor) proveedoresNK.get(nickname));
     }
+    
+    public DtUsuario getDtProveedor(String nickname) {
+        ResultSet rsUsu, rsProv, rsImg;
+        DtUsuario nuevo = null;
+        Statement stUsu, stProv, stImg;
+        try {
+            Connection con = Conexion.getInstance().getConnection();
+            stUsu = con.createStatement();
+            String sql = "SELECT * FROM help4traveling.usuarios WHERE nickname='" + nickname + "'";
+            rsUsu = stUsu.executeQuery(sql);
+            stProv = con.createStatement();
+            sql = "SELECT * FROM help4traveling.proveedores WHERE nickname='" + nickname + "'";
+            rsProv = stProv.executeQuery(sql);
+            if (rsUsu.next() && rsProv.next()) {
+                String nombre = rsUsu.getString("nombre");
+                String apellido = rsUsu.getString("apellido");
+                String correo = rsUsu.getString("email");      
+                Date fecha = new Date(rsUsu.getString("fechaNac"));
+                String imagen = null;
+                stImg = con.createStatement();
+                sql = "SELECT * FROM help4traveling.usuariosimagenes WHERE usuario='" + nickname + "'";
+                rsImg = stImg.executeQuery(sql);
+                if (rsImg.next())
+                    imagen = rsImg.getString("imagen");
+                rsImg.close();
+                stImg.close();
+                String empresa = rsProv.getString("empresa");
+                String enlace = rsProv.getString("link");
+                nuevo = new DtUsuario(nombre, apellido, nickname, "password", correo, fecha, imagen, "Proveedor", empresa, enlace);                            
+            }
+            rsProv.close();
+            stProv.close();
+            rsUsu.close();
+            stUsu.close();
+            con.close();
+            System.out.println("Se obtuvo Proveedor :)");
+        } 
+        catch (SQLException e) {
+            System.out.println("No obtuve Proveedor :(");
+            System.err.println(e.getMessage());
+        }
+        return nuevo;        
+    }
 
     public ArrayList<DtUsuario> listarProveedores() {
 
